@@ -1,4 +1,4 @@
-package com.dongnaemarket.controller;
+package com.marketdongnae.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

@@ -4,8 +4,8 @@
 
 <mapper namespace="Goods">
 	<insert id="insert" parameterType="hashMap">
-		insert into member(email,user_name,user_psw) 
-		values(#{email},#{user_name},#{user_psw})
+		insert into member(m_id, m_pwd, m_email,m_name,m_phone,si_id)  
+		values(#{m_id},#{m_pwd},#{m_email},#{m_name},#{m_phone},#{si_id})
 	</insert>
 	
 	<select id="getmember" resultType="hashMap">

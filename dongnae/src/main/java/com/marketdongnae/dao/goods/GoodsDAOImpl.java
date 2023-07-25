@@ -1,4 +1,4 @@
-package com.marketdongnae.dao;
+package com.marketdongnae.dao.goods;
 
 public class GoodsDAOImpl implements GoodsDAO {
 

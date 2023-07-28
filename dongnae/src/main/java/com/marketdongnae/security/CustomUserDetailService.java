@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.marketdongnae.dao.member.memberDAO;
+import com.marketdongnae.mapper.MemberMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -13,20 +13,19 @@ import lombok.extern.log4j.Log4j;
 public class CustomUserDetailService implements UserDetailsService{
 
 	@Autowired
-	private memberDAO memberDAO;
+	private MemberMapper memberMapper;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		log.warn("Load User By UserName : " + username);
+	public UserDetails loadUserByUsername(String m_id) throws UsernameNotFoundException {
+		log.warn("Load User By UserName : " + m_id);
 		
 		//userName means userId
 		
-		CustomUserDetails member = memberDAO.readMember(username);
+		CustomUserDetails member = memberMapper.select(m_id);
 		if(member==null) {
-			throw new UsernameNotFoundException(username);
+			throw new UsernameNotFoundException(m_id);
 		}
-		log.warn("queried by member mapper : " + member);
+		log.warn("queried by member mapper : " + m_id);
 		
 		
 		return member;

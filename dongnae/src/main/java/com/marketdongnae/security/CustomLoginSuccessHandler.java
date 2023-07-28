@@ -22,28 +22,28 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		// TODO Auto-generated method stub
 		log.warn("Login success");
 
-		List<String> roleNames = new ArrayList<>();
-
-		authentication.getAuthorities().forEach(authority -> {
-			roleNames.add(authority.getAuthority());
-
-		});
-
-		log.warn("ROLE NAMES : " + roleNames);
-
-		if (roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/");
-			return;
-		}
-		if (roleNames.contains("ROLE_MEMBER")) {
-			response.sendRedirect("/");
-			return;
-		}
-		if (roleNames.contains("ROLE_USER")) {
-			response.sendRedirect("/");
-			return;
-
-		}
+//		List<String> roleNames = new ArrayList<>();
+//
+//		authentication.getAuthorities().forEach(authority -> {
+//			roleNames.add(authority.getAuthority());
+//
+//		});
+//
+//		log.warn("ROLE NAMES : " + roleNames);
+//
+//		if (roleNames.contains("ROLE_ADMIN")) {
+//			response.sendRedirect("/");
+//			return;
+//		}
+//		if (roleNames.contains("ROLE_MEMBER")) {
+//			response.sendRedirect("/");
+//			return;
+//		}
+//		if (roleNames.contains("ROLE_USER")) {
+//			response.sendRedirect("/");
+//			return;
+//
+//		}
 
 		response.sendRedirect("/");
 

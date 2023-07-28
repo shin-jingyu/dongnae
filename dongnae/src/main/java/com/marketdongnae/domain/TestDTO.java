@@ -12,7 +12,6 @@ public class TestDTO {
 	SqlSessionTemplate sqlsessionTemplate;
 
 	public int insert(Map<String, Object> map) {
-		return sqlsessionTemplate.insert("Goods.insert", map) ;
+		return sqlsessionTemplate.insert("Test.insert", map) ;
 	}
-
 }

@@ -176,6 +176,16 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>5.3.1.RELEASE</version>
 		</dependency>
+		
+		
+		<!-- 
+		시큐리티 버전 설정 중 추가해봄
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>2.3.12.RELEASE</version>
+        </dependency>
+         -->
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->

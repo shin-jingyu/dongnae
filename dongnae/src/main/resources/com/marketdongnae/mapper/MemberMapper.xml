@@ -2,6 +2,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="member">
-
+<mapper namespace="member" >
+	<insert id="readmeber" parameterType="com.meraketdongnae.secuirty.CustomUserDetails">
+		insert into member (...) values (#{},#{})	
+	</insert>
 </mapper>    

@@ -8,5 +8,7 @@ public interface GoodsService {
 
 	List<GoodsDTO> getList();
 
+	void insertGoods(GoodsDTO goodsDTO);
+
 
 }

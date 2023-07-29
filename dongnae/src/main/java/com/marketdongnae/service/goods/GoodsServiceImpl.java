@@ -8,9 +8,11 @@ import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.mapper.goods.GoodsMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @Service
 @AllArgsConstructor
+@Log4j
 public class GoodsServiceImpl implements GoodsService {
 
 	private final GoodsMapper goodsMapper;
@@ -21,5 +23,14 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		return goodsMapper.getList();
 	}
+
+	@Override
+	public void insertGoods(GoodsDTO goodsDTO) {
+		// TODO Auto-generated method stub
+		log.info(goodsDTO);
+		goodsMapper.insertGoods(goodsDTO);
+	}
+	
+	
 
 }

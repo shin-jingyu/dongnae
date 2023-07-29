@@ -12,10 +12,13 @@ public interface MemberMapper {
 
 	public Integer updateMember(Map<String, Object> map);
 
+	// 반복 구현 후 지우기 
 	public Map<String, Object> getBuy(String b_id);
 
 	public Map<String, Object> getSold(String s_id);
 
-	public List<Map<String, Object>> getReviewList(int m_number);
+	public List<Map<String, Object>> getSoldList(int m_number);
+
+	public List<Map<String, Object>> getBuyList(int m_number);
 
 }

@@ -38,7 +38,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getReviewList(int m_number) {
-		return memberMapper.getReviewList( m_number);
+	public List<Map<String, Object>> getSoldList(int m_number) {
+		return memberMapper.getSoldList( m_number);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBuyList(int m_number) {
+		return memberMapper.getBuyList( m_number);
 	}
 }

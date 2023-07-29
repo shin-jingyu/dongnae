@@ -22,6 +22,7 @@
 		where m_id = #{m_id}
 	</select>
 	
+		<!-- 반복 구현 후 지우기  -->
 	<select id="getBuy" resultType="hashMap">	 
 		select * from buy where b_id = #{b_id}
 	</select>
@@ -30,7 +31,11 @@
 		select * from sold where s_id = #{s_id}
 	</select>
 	
-	<select id="getReviewList" resultType="hashMap">	 
+	<select id="getSoldList" resultType="hashMap">	 
 		select * from sold where m_number = #{m_number}
+	</select>
+	
+	<select id="getBuyList" resultType="hashMap">	 
+		select * from buy where m_number = #{m_number}
 	</select>
 </mapper> 

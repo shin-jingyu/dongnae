@@ -62,14 +62,10 @@ public class MemberController {
 	@GetMapping("/member/buyList")
 	public ModelAndView buyList() {
 		// 기능구현 전이라 일단 고정 값으로 테스트 중 : testId2, 1
-		String m_id = "testId2";
-		String b_id = "1";
-		Map<String, Object> member =  memberService.getMember(m_id);
-		Map<String, Object> buy =  memberService.getBuy(b_id);
+		int m_number = 8;
+		List<Map<String, Object>> buyList =  memberService.getBuyList(m_number);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("isFaile", false);
-		mv.addObject("member", member);
-		mv.addObject("buy", buy);
+		mv.addObject("buyList", buyList);
 		mv.setViewName("/member/buyList");
 		return mv;		
 	}
@@ -78,14 +74,11 @@ public class MemberController {
 	@GetMapping("/member/soldList")
 	public ModelAndView soldList() {
 		// 기능구현 전이라 일단 고정 값으로 테스트 중 : testId2, 1
-		String m_id = "testId2";
-		String s_id = "1";
-		Map<String, Object> member =  memberService.getMember(m_id);
-		Map<String, Object> sold =  memberService.getSold(s_id);
+		int m_number = 8;
+		List<Map<String, Object>> soldList =  memberService.getSoldList(m_number);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("isFaile", false);
-		mv.addObject("member", member);
-		mv.addObject("sold", sold);
+		mv.addObject("soldList", soldList);
 		mv.setViewName("/member/soldList");
 		return mv;		
 	}
@@ -93,20 +86,16 @@ public class MemberController {
 	@GetMapping("/member/review")
 	public ModelAndView getReviewList() {
 		// 기능구현 전이라 일단 고정 값으로 테스트 중 : testId2, 8, '1'
-		String m_id = "testId2";
 		int m_number = 8;
-		String s_id = "1";
-		Map<String, Object> sold =  memberService.getSold(s_id);
 		
-		List<Map<String, Object>> reviewList =  memberService.getReviewList(m_number);
+		List<Map<String, Object>> soldList =  memberService.getSoldList(m_number);
 		int sum = 0 ;
-		for (Map<String, Object> review : reviewList) {
-			sum += (int) review.get("s_score");
+		for (Map<String, Object> sold : soldList) {
+			sum += (int) sold.get("s_score");
 		}
-		int avgScore = (int) Math.ceil(sum/ reviewList.size()) ;
+		int avgScore = (int) Math.ceil(sum/ soldList.size()) ;
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("sold", sold);
-		mv.addObject("reviewList", reviewList);
+		mv.addObject("soldList", soldList);
 		mv.addObject("avgScore", avgScore);
 		mv.setViewName("/member/review");
 		return mv;		

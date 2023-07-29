@@ -14,5 +14,7 @@ public interface MemberService {
 
 	Map<String, Object> getSold(String s_id);
 
-	List<Map<String, Object>> getReviewList (int m_number);
+	List<Map<String, Object>> getSoldList (int m_number);
+
+	List<Map<String, Object>> getBuyList(int m_number);
 }

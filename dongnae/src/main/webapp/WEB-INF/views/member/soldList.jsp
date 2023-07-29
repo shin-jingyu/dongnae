@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +16,13 @@
 <body>
 <div class="container">
 	<h1>판매내역</h1>
-	
-		<div>상품이름 : ${sold.g_name}</div>
-		<div>가격 : <fmt:formatNumber value="${sold.g_price}"/> </div>
-		<div>판매일 : ${sold.s_regdate}</div>
-		
+	<c:forEach var="sold" items="${soldList}">
+		<div class="card">
+			<div>상품이름 : ${sold.g_name}</div>
+			<div>가격 : <fmt:formatNumber value="${sold.g_price}"/> </div>
+			<div>판매일 : ${sold.s_regdate}</div>
+		</div>
+	</c:forEach>
 </div>
 </body>
 </html>

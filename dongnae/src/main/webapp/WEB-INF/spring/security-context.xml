@@ -14,7 +14,9 @@
 	<bean id="customAuthenticationProvider" class="com.marketdongnae.security.CustomAuthenticationProvider"></bean>
 	
 	<security:http>
-		
+			
+			<security:csrf disabled="true"/>
+			
 <!-- 		<security:intercept-url pattern="/sample/all" access="permitAll"/> -->
 		
 <!-- 		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/> -->

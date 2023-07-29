@@ -9,4 +9,8 @@
 	</select>
 	
 	
+	<select id="insertGoods" resultType="com.marketdongnae.domain.GoodsDTO">
+		
+	</select>
+	
 </mapper>    

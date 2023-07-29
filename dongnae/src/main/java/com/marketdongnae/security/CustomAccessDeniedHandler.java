@@ -20,9 +20,9 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler{@Override
 	
 	log.error("Access Denied Handler");
 	
-	log.error("Redirect...");
-	
-	response.sendRedirect("/accessError");
+//	log.error("Redirect...");
+//	
+//	response.sendRedirect("/accessError");
 		
 	}
 

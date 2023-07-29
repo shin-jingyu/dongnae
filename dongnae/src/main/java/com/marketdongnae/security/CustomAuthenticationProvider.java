@@ -12,12 +12,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
 	private UserDetailsService userDetilasService;
-	
-	
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		// TODO Auto-generated method stub
 		
 		String username = (String)authentication.getPrincipal();
 		String password = (String)authentication.getCredentials();

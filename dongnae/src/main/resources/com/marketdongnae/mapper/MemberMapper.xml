@@ -1,9 +1,36 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="member" >
-	<insert id="readmeber" parameterType="com.meraketdongnae.secuirty.CustomUserDetails">
-		insert into member (...) values (#{},#{})	
-	</insert>
-</mapper>    
+ 
+<mapper namespace="com.marketdongnae.mapper.MemberMapper">  <!-- 이전 dao일 때: <mapper namespace="Test"> -->
+	<!--  참고하기
+	<select id="loginID" resultType="ddi.main.security.CustomUserDetails">
+		select * from CUSTOMMEMBER where ID=#{username}
+	</select>
+ 	-->
+ 	<select id="select" resultType="com.marketdongnae.security.CustomUserDetails">	<!-- id는 Mapper 인터페이스에 정의된 메서드명과 동일하게 -->
+		select * from member where m_id = #{m_id}
+	</select>
+ 	
+	<select id="getMember" resultType="hashMap">	 
+		select * from member where m_id = #{m_id}
+	</select>
+	
+	<select id="updateMember" parameterType="hashMap" > 
+		update member
+			set m_pwd = #{m_pwd}, m_name = #{m_name}, m_phone=#{m_phone}, si_id = #{si_id}
+		where m_id = #{m_id}
+	</select>
+	
+	<select id="getBuy" resultType="hashMap">	 
+		select * from buy where b_id = #{b_id}
+	</select>
+	
+	<select id="getSold" resultType="hashMap">	 
+		select * from sold where s_id = #{s_id}
+	</select>
+	
+	<select id="getReviewList" resultType="hashMap">	 
+		select * from sold where m_number = #{m_number}
+	</select>
+</mapper> 

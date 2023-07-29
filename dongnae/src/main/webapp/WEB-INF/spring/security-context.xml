@@ -14,7 +14,9 @@
 	<bean id="customAuthenticationProvider" class="com.marketdongnae.security.CustomAuthenticationProvider"></bean>
 	
 	<security:http>
-		
+			
+			<security:csrf disabled="true"/>
+			
 <!-- 		<security:intercept-url pattern="/sample/all" access="permitAll"/> -->
 		
 <!-- 		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/> -->
@@ -22,7 +24,6 @@
 <!-- 		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/> -->
 		
 		<security:access-denied-handler ref="customAccessDenied" />
-<!-- 		<security:form-login/> -->
 		<security:form-login login-page="/member/login" authentication-success-handler-ref="customLoginSuccess"/>
 		
 		<security:logout logout-url="/customLogout" invalidate-session="true"/>

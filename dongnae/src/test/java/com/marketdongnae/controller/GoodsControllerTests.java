@@ -1,5 +1,7 @@
 package com.marketdongnae.controller;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,12 @@ public class GoodsControllerTests {
 	private GoodsService service;
 	
 	@Test
+	public void getList() {
+		service.getList();
+		assertNotNull(service.getList());
+	}
+	
+	@Test
 	public void uploadTest() {
 		GoodsDTO dto = new GoodsDTO();
 		GoodsPictureDTO picture = new GoodsPictureDTO();
@@ -33,6 +41,7 @@ public class GoodsControllerTests {
 		picture.setG_pic03("testPicture3");
 		
 		dto.setG_name("testName");
+		dto.setG_price(10000);
 		dto.setGoodsPictureDTO(picture);
 		
 		service.insertGoods(dto);

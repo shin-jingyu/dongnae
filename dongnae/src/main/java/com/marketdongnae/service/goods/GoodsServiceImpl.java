@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
-import com.marketdongnae.mapper.goods.GoodsMapper;
+import com.marketdongnae.mapper.GoodsMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -28,6 +28,7 @@ public class GoodsServiceImpl implements GoodsService {
 	public void insertGoods(GoodsDTO goodsDTO) {
 		// TODO Auto-generated method stub
 		log.info(goodsDTO);
+		log.info("mapper gogo");
 		goodsMapper.insertGoods(goodsDTO);
 	}
 	

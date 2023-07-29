@@ -1,16 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.marketdongnae.mapper.goods.GoodsMapper">
+<mapper namespace="com.marketdongnae.mapper.GoodsMapper">
 	
-	<select id="getList" resultType="com.marketdongnae.domain.GoodsDTO">
+	<select id="getList" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		select * from goods
 	</select>
 	
 	
-	<select id="insertGoods" resultType="com.marketdongnae.domain.GoodsDTO">
-		
+	<select id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
+		insert into goods (g_name, g_price, g_pic01, g_pic02, g_pic03) 
+		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03})
 	</select>
 	
 </mapper>    

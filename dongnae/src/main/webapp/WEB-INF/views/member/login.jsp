@@ -12,7 +12,6 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 
 <body>
-
 <form class="container" action="/login.do" method="post">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   <div class="mb-3">
@@ -28,6 +27,5 @@
 	</div>
   <button class="btn btn-primary" id="login">Submit</button>
 </form>
-
 </body>
 </html>

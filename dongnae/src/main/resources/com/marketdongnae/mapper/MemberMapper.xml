@@ -9,7 +9,7 @@
 	
  	<select id="regist" parameterType="hashMap">	 
 		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id )
-		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} ) ;
+		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{m_id} ) ;
 	</select>
  	
 	<select id="getMember" resultType="hashMap">	 
@@ -37,5 +37,11 @@
 	
 	<select id="getBuyList" resultType="hashMap">	 
 		select * from buy where m_number = #{m_number}
+	</select>
+	
+	<select id="changePassword" parameterType="hashMap" > 
+		update member
+			set m_pwd = #{new_password}
+		where m_id = #{m_id}
 	</select>
 </mapper> 

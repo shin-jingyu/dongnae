@@ -17,16 +17,14 @@ public class CustomUserDetailService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String m_id) throws UsernameNotFoundException {
-		log.warn("Load User By UserName : " + m_id);
+		System.out.println("2번) Provide에서 요청한 함수 CustomUserDetailService에서 실행해서 db에서 id에 맞는 member 정보 리턴 ");
+		log.warn("2. Load User By UserName(m_id) : " + m_id);
 		
-		//userName means userId
-		
-		CustomUserDetails member = memberMapper.select(m_id);
+		CustomUserDetails member = memberMapper.loginID(m_id);
 		if(member==null) {
 			throw new UsernameNotFoundException(m_id);
 		}
-		log.warn("queried by member mapper : " + m_id);
-		
+		log.warn("3. queried by member mapper : " + m_id);
 		
 		return member;
 	}

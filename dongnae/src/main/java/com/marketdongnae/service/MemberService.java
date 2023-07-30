@@ -5,6 +5,7 @@ import java.util.Map;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberService {
+	CustomUserDetails loginID(String m_id);
 
 	Map<String, Object> getMember(String m_id);
 
@@ -17,4 +18,6 @@ public interface MemberService {
 	List<Map<String, Object>> getSoldList (int m_number);
 
 	List<Map<String, Object>> getBuyList(int m_number);
+
+	Integer regist(Map<String, Object> map);
 }

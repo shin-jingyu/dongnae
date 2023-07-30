@@ -17,6 +17,11 @@ public class MemberServiceImpl implements MemberService {
 	MemberMapper memberMapper;
 
 	@Override
+	public CustomUserDetails loginID(String m_id) {
+		return memberMapper.loginID(m_id);
+	}
+	
+	@Override
 	public Map<String, Object> getMember(String m_id) {
 		return memberMapper.getMember(m_id);
 	}
@@ -46,4 +51,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<Map<String, Object>> getBuyList(int m_number) {
 		return memberMapper.getBuyList( m_number);
 	}
+
+	@Override
+	public Integer regist(Map<String, Object> map) {
+		Integer result = memberMapper.regist(map);
+		return result ;
+	}
+
+
 }

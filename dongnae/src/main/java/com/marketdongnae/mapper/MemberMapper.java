@@ -6,13 +6,15 @@ import java.util.Map;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberMapper {
-	public CustomUserDetails select(String m_id);
+	public CustomUserDetails loginID(String m_id);
+	
+	
+	
 	
 	public Map<String, Object> getMember(String m_id);
 
 	public Integer updateMember(Map<String, Object> map);
 
-	// 반복 구현 후 지우기 
 	public Map<String, Object> getBuy(String b_id);
 
 	public Map<String, Object> getSold(String s_id);
@@ -20,5 +22,7 @@ public interface MemberMapper {
 	public List<Map<String, Object>> getSoldList(int m_number);
 
 	public List<Map<String, Object>> getBuyList(int m_number);
+
+	public Integer regist(Map<String, Object> map);
 
 }

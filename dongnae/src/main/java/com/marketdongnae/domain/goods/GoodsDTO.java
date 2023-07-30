@@ -14,7 +14,9 @@ public class GoodsDTO {
 	private int g_price;
 	private Timestamp g_regdate;
 	private int g_like;
-	private GoodsPictureDTO goodsPictureDTO;
-	
+	private String filePath;
+	private String g_pic01;
+	private String g_pic02;
+	private String g_pic03;
 	
 }

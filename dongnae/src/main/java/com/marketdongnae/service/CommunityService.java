@@ -1,5 +1,5 @@
 package com.marketdongnae.service;
 
-public interface GoodsService {
+public interface CommunityService {
 
 }

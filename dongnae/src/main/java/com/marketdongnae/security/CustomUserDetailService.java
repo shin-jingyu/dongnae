@@ -28,6 +28,4 @@ public class CustomUserDetailService implements UserDetailsService{
 		
 		return member;
 	}
-
-	
 }

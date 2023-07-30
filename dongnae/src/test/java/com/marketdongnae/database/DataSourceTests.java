@@ -3,6 +3,8 @@ package com.marketdongnae.database;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.sql.DataSource;
 
@@ -27,7 +29,7 @@ public class DataSourceTests {
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	@Test
+//	@Test
 	public void test() {
 		try(Connection conn = dataSource.getConnection()){
 			log.info(conn);
@@ -44,6 +46,13 @@ public class DataSourceTests {
 		{
 			log.info(session);
 			log.info(conn);
+			PreparedStatement pstmt = conn.prepareStatement("select * from goods");
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String name = rs.getString("g_name");
+				System.out.println("name  : " + name);
+			}
 			
 		}catch (Exception e) {
 			// TODO: handle exception

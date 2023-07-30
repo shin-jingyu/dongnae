@@ -34,19 +34,43 @@
 	</servlet-mapping>
 
 
-	<!-- UTF-8 filter -->
 	<filter>
-		<filter-name>encoding</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
-	</filter>
+		<init-param>
+<<<<<<< HEAD
 
+			<param-name>forceEncoding</param-name>
+
+			<param-value>true</param-value>
+
+=======
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+>>>>>>> branch 'main' of https://github.com/nohbin/dongnaeMarket.git
+		</init-param>
+	</filter>
 	<filter-mapping>
-		<filter-name>encoding</filter-name>
-		<servlet-name>appServlet</servlet-name>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- file upload -->
+	<filter>
+		<display-name>springMultipartFilter</display-name>
+		<filter-name>springMultipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springMultipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 	<!-- Security filter-->
@@ -63,6 +87,8 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
+
 	</filter-mapping>
+
 
 </web-app>

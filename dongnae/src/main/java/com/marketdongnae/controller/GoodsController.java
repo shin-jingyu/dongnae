@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
-import com.marketdongnae.domain.goods.GoodsPictureDTO;
 import com.marketdongnae.service.goods.GoodsService;
 
 import lombok.AllArgsConstructor;
@@ -59,7 +58,6 @@ public class GoodsController {
 			uploadPath.mkdirs();
 		}
 		log.info("Upload FilePath  : " + filePath);
-		GoodsPictureDTO goodsPictureDTO = new GoodsPictureDTO();
 		
 	    String[] picFileNames = new String[6];
 
@@ -85,17 +83,12 @@ public class GoodsController {
 	        }
 	    } // FOR END
 		
-	    goodsPictureDTO.setFilePath(filePath);
-	    goodsPictureDTO.setG_pic01(picFileNames[0]);
-	    goodsPictureDTO.setG_pic01(picFileNames[1]);
-	    goodsPictureDTO.setG_pic01(picFileNames[2]);
-	    
-	    goodsDTO.setGoodsPictureDTO(goodsPictureDTO);
-	    
-//	    goodsService.insertGoods(goodsDTO);
-	    
-	    return null;
-	    
+	    goodsDTO.setFilePath(filePath);
+	    goodsDTO.setG_pic01(picFileNames[0]);
+	    goodsDTO.setG_pic01(picFileNames[1]);
+	    goodsDTO.setG_pic01(picFileNames[2]);
+	    goodsService.insertGoods(goodsDTO);
+	    return "/goods/getList";
 	}
 	
 	

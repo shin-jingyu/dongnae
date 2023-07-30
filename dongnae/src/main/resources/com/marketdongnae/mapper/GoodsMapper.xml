@@ -10,9 +10,21 @@
 	</select>
 	
 	
-	<select id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
+	<insert id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
 		insert into goods (g_name, g_price, g_pic01, g_pic02, g_pic03) 
 		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03})
-	</select>
+	</insert>
+	
+	<update id="updateGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
+		update goods
+			set 
+				g_name = #{g_name}, 
+				g_price = #{g_price}, 
+				g_pic01 = #{g_pic01}, 
+				g_pic02 = #{g_pic02}, 
+				g_pic03 = #{g_pic03}, 
+				g_picpath = #{g_picpath}
+		where g_id = #{g_id}
+	</update>
 	
 </mapper>    

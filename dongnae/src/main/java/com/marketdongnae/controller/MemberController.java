@@ -24,6 +24,7 @@ import com.marketdongnae.service.TestService;
 
 @Controller
 public class MemberController {
+	
 	@Autowired
 	MemberService memberService;
 	@Autowired 

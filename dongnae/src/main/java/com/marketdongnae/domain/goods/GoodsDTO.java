@@ -12,11 +12,11 @@ public class GoodsDTO {
 	private int m_number;
 	private String g_name;
 	private int g_price;
-	private Timestamp g_regdate;
-	private int g_like;
-	private String filePath;
 	private String g_pic01;
 	private String g_pic02;
 	private String g_pic03;
+	private String g_picpath;
+	private int g_like;
+	private Timestamp g_regdate;
 	
 }

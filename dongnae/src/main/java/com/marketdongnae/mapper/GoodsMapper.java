@@ -12,4 +12,8 @@ public interface GoodsMapper {
 
 	void insertGoods(GoodsDTO goodsDTO);
 
+	void updateGoods(GoodsDTO goodsDTO);
+	
+	void deleteGoods(GoodsDTO goodsDTO);
+
 }

@@ -21,6 +21,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		log.warn("Login success");
+		System.out.println("3번) 성공하면 CustomLoginSuccessHandler로 감");
 
 //		List<String> roleNames = new ArrayList<>();
 //

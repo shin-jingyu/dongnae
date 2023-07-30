@@ -29,7 +29,7 @@
 		authentication-failure-url="/member/loginFail"
 		/>
 		
-		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+		<security:logout logout-url="/member/logout" invalidate-session="true"/>
 	</security:http>
 	
 	<security:authentication-manager>

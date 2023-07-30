@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.TestDTO;
@@ -15,7 +16,7 @@ import com.marketdongnae.security.CustomUserDetails;
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberMapper memberMapper;
-
+	
 	@Override
 	public CustomUserDetails loginID(String m_id) {
 		return memberMapper.loginID(m_id);
@@ -44,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<Map<String, Object>> getSoldList(int m_number) {
-		return memberMapper.getSoldList( m_number);
+		return memberMapper.getSoldList(  m_number);
 	}
 
 	@Override
@@ -55,6 +56,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Integer regist(Map<String, Object> map) {
 		Integer result = memberMapper.regist(map);
+		return result ;
+	}
+
+	@Override
+	public Integer changePassword(Map<String, Object> map) {
+		Integer result = memberMapper.changePassword(map);
 		return result ;
 	}
 

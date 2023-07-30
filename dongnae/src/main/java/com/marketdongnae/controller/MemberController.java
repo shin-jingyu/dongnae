@@ -29,13 +29,12 @@ public class MemberController {
 	@Autowired 
 	CustomAuthenticationProvider customAuthenticationProvider;
 	@Autowired
-	BCryptPasswordEncoder passwordEncoder ; 
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("/member/detail")
-	public ModelAndView detail() {
-		// 로그인 기능구현 전이라 일단 고정아이디 값으로 테스트 중 : test1
-		// String m_id = (String) map.get("m_id");
-		String m_id = "test1";
+	public ModelAndView detail(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
 		Map<String, Object> member =  memberService.getMember(m_id);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("isFaile", false);
@@ -52,10 +51,55 @@ public class MemberController {
 		return mv;		
 	}
 	
+	@GetMapping("/member/changePassword")
+	public ModelAndView changePassword(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
+		mv.addObject("m_id", m_id);
+		return mv;	
+	}
+	
+	@PostMapping("/member/changePassword")
+	public ModelAndView changePassword_post(@RequestParam Map<String, Object> map
+			, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
+		Map<String, Object> member =  memberService.getMember(m_id);
+		
+		// 입력한 현재 비밀번호가 맞는지 확인
+		String rawPwd = (String) map.get("current_password"); 
+		String encodedPwd = (String) member.get("m_pwd");
+		if( !passwordEncoder.matches(rawPwd , encodedPwd) ) {
+			mv.addObject("password", "wrongCurrent");
+			mv.setViewName("/member/changePassword");
+			return mv;
+		};
+		
+		// 새 비밀번호와 확인이 일치하는지 확인
+		String newPwd = (String) map.get("new_password");
+		String confirmPwd = (String) map.get("new_password_confirm");
+		if( !newPwd.equals(confirmPwd) ) {
+			mv.addObject("password", "WrongConfirm");
+			mv.setViewName("/member/changePassword");
+			return mv;
+		};
+		
+		// 새 비밀번호로 변경
+		String newEncodePwd = passwordEncoder.encode(newPwd);
+		map.put("new_password", newEncodePwd);
+		memberService.changePassword(map);
+		
+		mv.setViewName("redirect:/");
+		return mv;		
+	}
+	
 	@GetMapping("/member/point")
-	public ModelAndView review() {
-		// 기능구현 전이라 일단 고정 값으로 테스트 중 : testId2, 1
-		String m_id = "test1";
+	public ModelAndView review(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
+		// 기능구현 전이라 일단 고정 값으로 테스트 중 : b_id
 		String b_id = "1";
 		Map<String, Object> member =  memberService.getMember(m_id);
 		Map<String, Object> buy =  memberService.getBuy(b_id);
@@ -67,8 +111,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/buyList")
-	public ModelAndView buyList() {
-		int m_number = 1;
+	public ModelAndView buyList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
+		Map<String, Object> member =  memberService.getMember(m_id);
+		int m_number = (int) member.get("m_number");
 		List<Map<String, Object>> buyList =  memberService.getBuyList(m_number);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("buyList", buyList);
@@ -78,8 +125,11 @@ public class MemberController {
 	
 	
 	@GetMapping("/member/soldList")
-	public ModelAndView soldList() {
-		int m_number = 1;
+	public ModelAndView soldList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
+		Map<String, Object> member =  memberService.getMember(m_id);
+		int m_number = (int) member.get("m_number");
 		List<Map<String, Object>> soldList =  memberService.getSoldList(m_number);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("isFaile", false);
@@ -89,9 +139,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/review")
-	public ModelAndView getReviewList() {
-		int m_number = 1;
-		
+	public ModelAndView getReviewList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id =  (String) session.getAttribute("m_id");
+		Map<String, Object> member =  memberService.getMember(m_id);
+		int m_number = (int) member.get("m_number");
 		List<Map<String, Object>> soldList =  memberService.getSoldList(m_number);
 		int sum = 0 ;
 		for (Map<String, Object> sold : soldList) {
@@ -111,7 +163,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/loginFail")
-	public ModelAndView login_fail(HttpServletRequest request) { 
+	public ModelAndView loginFail() { 
 		// 나중에 ajax로 바꿀 예정 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("login", "fail");
@@ -119,6 +171,16 @@ public class MemberController {
 		return mv;
 	}
 	
+	// /member/loginSuccess는 CustomLoginSuccessHandler에서 이동함
+	
+	@GetMapping("/logout")
+	public ModelAndView logout(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		session.invalidate();
+		mv.setViewName("redirect:/"); // 왜 홈화면이 아니라 로그인창으로 연결되지?
+		return mv;
+	}
 	
 	@GetMapping("/member/regist")
 	public ModelAndView regist() {

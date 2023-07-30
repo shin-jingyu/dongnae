@@ -25,4 +25,6 @@ public interface MemberMapper {
 
 	public Integer regist(Map<String, Object> map);
 
+	public Integer changePassword(Map<String, Object> map);
+
 }

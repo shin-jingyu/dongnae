@@ -20,11 +20,11 @@
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">비밀번호</label>
-		<input name="m_pwd" id="m_pwd" type="m_pwd" value="${member.m_pwd}">
+		<input name="m_pwd" id="m_pwd" type="password" value="${member.m_pwd}">
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">이름</label>
-		<input name="m_name" id="m_name" type="m_name" value="${member.m_name}">
+		<input name="m_name" id="m_name" type="text" value="${member.m_name}">
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">이메일</label>

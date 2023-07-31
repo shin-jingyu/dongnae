@@ -44,16 +44,16 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 		<init-param>
-<<<<<<< HEAD
+
 
 			<param-name>forceEncoding</param-name>
 
 			<param-value>true</param-value>
 
-=======
+
 			<param-name>forceEncoding</param-name>
 			<param-value>true</param-value>
->>>>>>> branch 'main' of https://github.com/nohbin/dongnaeMarket.git
+
 		</init-param>
 	</filter>
 	<filter-mapping>

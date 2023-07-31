@@ -29,7 +29,7 @@ public class DataSourceTests {
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-//	@Test
+	@Test
 	public void test() {
 		try(Connection conn = dataSource.getConnection()){
 			log.info(conn);

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+import com.marketdongnae.dto.JSONLoginDto;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -25,9 +27,11 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler{
 	log.error("Redirect...");
 	
 	response.sendRedirect("/accessError");
-		
+	
+//	// ajax security 테스트 중
+//	JSONLoginDto jsonLoginDto = new JSONLoginDto() ; 
+//	jsonLoginDto.setResult("success");
+//	jsonLoginDto.setMessage("success");
+//	AjaxAuthenticationEntryPoint ajaxAuthenticationEntryPoint = new AjaxAuthenticationEntryPoint("/member/login");
 	}
-
-	
-	
 }

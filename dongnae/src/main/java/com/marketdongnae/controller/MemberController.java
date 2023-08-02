@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.MemberService;
-import com.marketdongnae.service.TestService;
 
 
 @Controller

@@ -44,22 +44,8 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 		<init-param>
-<<<<<<< HEAD
-=======
-
-
-			<param-name>forceEncoding</param-name>
-
-			<param-value>true</param-value>
-
-
->>>>>>> refs/remotes/origin/main
 			<param-name>forceEncoding</param-name>
 			<param-value>true</param-value>
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/main
 		</init-param>
 	</filter>
 	<filter-mapping>

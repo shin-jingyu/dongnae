@@ -27,18 +27,28 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="community" items="${list}">
+			
+				
+			<c:forEach var="community" items="${list}"  >
 				<tr>
+					<c:forEach var="category" items="${category}"  >
+						<td>${si_area.si_area}</td>
+					</c:forEach>
 					
 					<td>${community.mu_name }</td>
+					<td>${community.m_number}</td>
+					<td>${community.mu_data}</td>
+					<td>${community.mu_c}</td>
+					<td>${con}</td>
 				
 				</tr>
-				
 			</c:forEach>
-			<td></td>
+			
 			
 		</tbody>
 	</table>
+		<button onclick="location.href='write'">글쓰기</button>
 	</div>
+	
 </body>
 </html>

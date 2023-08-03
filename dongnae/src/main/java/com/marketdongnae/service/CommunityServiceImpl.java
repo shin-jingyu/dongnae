@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.community.CommunityDTO;
+
 import com.marketdongnae.mapper.CommunityMapper;
 
 @Service("CommunityService")
@@ -18,6 +19,12 @@ public class CommunityServiceImpl implements CommunityService {
 		List<CommunityDTO> list = communityMapper.getCommunity();
 		return list;
 	}
+
+	
+	
+
+	
+
 
 
 

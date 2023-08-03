@@ -3,9 +3,20 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.marketdongnae.mapper.CommunityMapper">
-	
+
 	<!-- 게시판 불러오기 -->
 	<select id="getCommunity" resultType="com.marketdongnae.domain.community.CommunityDTO">
-		SELECT * FROM community
+		SELECT * FROM dongnae.community
 	</select>
+	
+	<select id="communityAll" resultType="hashMap">
+		select DISTINCT
+		 S.si_area, C.mu_name, M.m_id, C.mu_data , C.mu_c ,
+		(select count(*) from heart where heart.mu_id = #{community.mu_id} ) as heart,
+		(select count(*) from comment where comment.mu_id = #{community.mu_id}) as comment
+		from community as C, si_area as S, member as M 
+		where  C.m_number = M.m_number and M.si_id = S.si_id 
+	</select>
+
+
 </mapper>

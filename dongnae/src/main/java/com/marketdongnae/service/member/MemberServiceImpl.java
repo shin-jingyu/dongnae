@@ -1,4 +1,4 @@
-package com.marketdongnae.service;
+package com.marketdongnae.service.member;
 
 import java.util.List;
 import java.util.Map;

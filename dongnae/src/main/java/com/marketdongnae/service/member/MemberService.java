@@ -1,4 +1,4 @@
-package com.marketdongnae.service;
+package com.marketdongnae.service.member;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +25,5 @@ public interface MemberService {
 	Integer regist(Map<String, Object> map);
 
 	Integer changePassword(Map<String, Object> map);
+	
 }

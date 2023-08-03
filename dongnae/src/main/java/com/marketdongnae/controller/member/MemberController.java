@@ -1,4 +1,4 @@
-package com.marketdongnae.controller;
+package com.marketdongnae.controller.member;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
-import com.marketdongnae.service.MemberService;
+import com.marketdongnae.service.member.MemberService;
 
 
 @Controller

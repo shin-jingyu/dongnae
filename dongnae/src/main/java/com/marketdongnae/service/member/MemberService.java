@@ -4,25 +4,28 @@ import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.marketdongnae.domain.member.BuyDTO;
+import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.SoldDTO;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberService {
 	
 	CustomUserDetails loginID(String m_id);
 
-	Map<String, Object> getMember(String m_id);
+	MemberDTO getMember(String m_id);
 
-	Integer updateMember(Map<String, Object> map);
+	Integer updateMember(MemberDTO memberDTO);
 
-	Map<String, Object> getBuy(String b_id);
+	BuyDTO getBuy(String b_id);
 
-	Map<String, Object> getSold(String s_id);
+	SoldDTO getSold(String s_id);
 
-	List<Map<String, Object>> getSoldList( int m_number);
+	List<SoldDTO> getSoldList( int m_number);
 
-	List<Map<String, Object>> getBuyList(  int m_number);
+	List<BuyDTO> getBuyList(  int m_number);
 
-	Integer regist(Map<String, Object> map);
+	Integer regist(MemberDTO memberDTO);
 
 	Integer changePassword(Map<String, Object> map);
 	

@@ -13,29 +13,39 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marketdongnae.controller.GoodsController;
+import com.marketdongnae.domain.member.BuyDTO;
+import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.SoldDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
+import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 
 @Controller
+@Log4j
+@AllArgsConstructor
+@RequestMapping("/member/")
 public class MemberController {
 	
-	@Autowired
-	MemberService memberService;
-	@Autowired 
-	CustomAuthenticationProvider customAuthenticationProvider;
-	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
+	private final MemberService memberService;
+	private final CustomAuthenticationProvider customAuthenticationProvider;
+	private final BCryptPasswordEncoder passwordEncoder;
 	
-	@GetMapping("/member/detail")
+	@GetMapping("detail")
 	public ModelAndView detail(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id =  (String) session.getAttribute("m_id");
-		Map<String, Object> member =  memberService.getMember(m_id);
+		MemberDTO member =  memberService.getMember(m_id);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("isFaile", false);
 		mv.addObject("member", member);
@@ -43,15 +53,17 @@ public class MemberController {
 		return mv;		
 	}
 	
-	@PostMapping("/member/update")
+	@PostMapping("update")
 	public ModelAndView modify(@RequestParam Map<String, Object> map) {		
 		ModelAndView mv = new ModelAndView();
-		memberService.updateMember(map);
+		ObjectMapper objectMapper = new ObjectMapper();
+		MemberDTO memberDTO = objectMapper.convertValue(map, MemberDTO.class);
+		memberService.updateMember(memberDTO);
 		mv.setViewName("/home");
 		return mv;		
 	}
 	
-	@GetMapping("/member/changePassword")
+	@GetMapping("changePassword")
 	public ModelAndView changePassword(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -60,17 +72,17 @@ public class MemberController {
 		return mv;	
 	}
 	
-	@PostMapping("/member/changePassword")
+	@PostMapping("changePassword")
 	public ModelAndView changePassword_post(@RequestParam Map<String, Object> map
 			, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		String m_id =  (String) session.getAttribute("m_id");
-		Map<String, Object> member =  memberService.getMember(m_id);
+		MemberDTO member =  memberService.getMember(m_id);
 		
 		// 입력한 현재 비밀번호가 맞는지 확인
 		String rawPwd = (String) map.get("current_password"); 
-		String encodedPwd = (String) member.get("m_pwd");
+		String encodedPwd = (String) member.getM_pwd();
 		if( !passwordEncoder.matches(rawPwd , encodedPwd) ) {
 			mv.addObject("password", "wrongCurrent");
 			mv.setViewName("/member/changePassword");
@@ -95,14 +107,14 @@ public class MemberController {
 		return mv;		
 	}
 	
-	@GetMapping("/member/point")
+	@GetMapping("point")
 	public ModelAndView review(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id =  (String) session.getAttribute("m_id");
 		// 기능구현 전이라 일단 고정 값으로 테스트 중 : b_id
 		String b_id = "1";
-		Map<String, Object> member =  memberService.getMember(m_id);
-		Map<String, Object> buy =  memberService.getBuy(b_id);
+		MemberDTO member =  memberService.getMember(m_id);
+		BuyDTO buy =  memberService.getBuy(b_id);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("member", member);
 		mv.addObject("buy", buy);
@@ -110,13 +122,13 @@ public class MemberController {
 		return mv;		
 	}
 	
-	@GetMapping("/member/buyList")
+	@GetMapping("buyList")
 	public ModelAndView buyList(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id =  (String) session.getAttribute("m_id");
-		Map<String, Object> member =  memberService.getMember(m_id);
-		int m_number = (int) member.get("m_number");
-		List<Map<String, Object>> buyList =  memberService.getBuyList(m_number);
+		MemberDTO member =  memberService.getMember(m_id);
+		int m_number =  member.getM_number();
+		List<BuyDTO> buyList =  memberService.getBuyList(m_number);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("buyList", buyList);
 		mv.setViewName("/member/buyList");
@@ -124,13 +136,13 @@ public class MemberController {
 	}
 	
 	
-	@GetMapping("/member/soldList")
+	@GetMapping("soldList")
 	public ModelAndView soldList(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id =  (String) session.getAttribute("m_id");
-		Map<String, Object> member =  memberService.getMember(m_id);
-		int m_number = (int) member.get("m_number");
-		List<Map<String, Object>> soldList =  memberService.getSoldList(m_number);
+		MemberDTO member =  memberService.getMember(m_id);
+		int m_number = member.getM_number();
+		List<SoldDTO> soldList =  memberService.getSoldList(m_number);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("isFaile", false);
 		mv.addObject("soldList", soldList);
@@ -138,16 +150,16 @@ public class MemberController {
 		return mv;		
 	}
 	
-	@GetMapping("/member/review")
+	@GetMapping("review")
 	public ModelAndView getReviewList(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id =  (String) session.getAttribute("m_id");
-		Map<String, Object> member =  memberService.getMember(m_id);
-		int m_number = (int) member.get("m_number");
-		List<Map<String, Object>> soldList =  memberService.getSoldList(m_number);
+		MemberDTO member =  memberService.getMember(m_id);
+		int m_number =  member.getM_number();
+		List<SoldDTO> soldList =  memberService.getSoldList(m_number);
 		int sum = 0 ;
-		for (Map<String, Object> sold : soldList) {
-			sum += (int) sold.get("s_score");
+		for (SoldDTO sold : soldList) {
+			sum += (int) sold.getS_score();
 		}
 		int avgScore = (int) Math.ceil(sum/ soldList.size()) ;
 		ModelAndView mv = new ModelAndView();
@@ -157,12 +169,12 @@ public class MemberController {
 		return mv;		
 	}
 	
-	@GetMapping("/member/login")
+	@GetMapping("login")
 	public ModelAndView login() {
 		return new ModelAndView("member/login");
 	}
 	
-	@GetMapping("/member/loginFail")
+	@GetMapping("loginFail")
 	public ModelAndView loginFail() { 
 		// 나중에 ajax로 바꿀 예정 
 		ModelAndView mv = new ModelAndView();
@@ -173,7 +185,7 @@ public class MemberController {
 	
 	// /member/loginSuccess는 CustomLoginSuccessHandler에서 이동함
 	
-	@GetMapping("/logout")
+	@GetMapping("logout")
 	public ModelAndView logout(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -182,19 +194,21 @@ public class MemberController {
 		return mv;
 	}
 	
-	@GetMapping("/member/regist")
+	@GetMapping("regist")
 	public ModelAndView regist() {
 		return new ModelAndView("member/regist");
 	}
 	
-	@PostMapping("/member/regist")
+	@PostMapping("regist")
 	public ModelAndView regist_post(@RequestParam Map<String, Object> map) {
 		System.out.println("가입하기 POST");
 		ModelAndView mv = new ModelAndView();
 		String pwd1 = (String) map.get("m_pwd");
 		String pwd2 = passwordEncoder.encode(pwd1);
 		map.put("m_pwd", pwd2);
-		memberService.regist(map);
+		ObjectMapper objectMapper = new ObjectMapper();
+		MemberDTO memberDTO = objectMapper.convertValue(map, MemberDTO.class);
+		memberService.regist(memberDTO);
 		System.out.println(map.toString());
 		mv.setViewName("/member/login");
 		return mv;		

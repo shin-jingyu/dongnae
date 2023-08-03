@@ -15,7 +15,6 @@
 </h1>
 <P>  The time on the server is ${serverTime}. </P>
 <!-- 임시 회원 메뉴 -->
-<P> 반갑습니다. ${m_id} 님! </P>
 <div>
 	<a class="btn btn-secondary" href="/member/detail">내 프로필</a>
 	<a class="btn btn-secondary" href="/member/changePassword">비밀번호 변경</a>
@@ -23,9 +22,17 @@
 	<a class="btn btn-secondary" href="/member/buyList">구매내역</a>
 	<a class="btn btn-secondary" href="/member/review">내 거래 후기</a>
 	<a class="btn btn-secondary" href="/member/point">내 페이포인트</a>
-	<a class="btn btn-info" href="/member/login">로그인</a>
-	<a class="btn btn-info" href="/member/regist">회원가입</a>
-	<a class="btn btn-info" href="/logout">로그아웃</a>
+	
+	<c:choose>
+		<c:when test="${empty m_id}">  
+			<a class="btn btn-info" href="/member/login">로그인</a>
+			<a class="btn btn-info" href="/member/regist">회원가입</a>
+		</c:when>
+		<c:otherwise>
+			<a class="btn btn-info" href="/logout">로그아웃</a>
+			<P> 반갑습니다. ${m_id} 님! </P>
+		</c:otherwise>
+	</c:choose>
 </div>
 </body>
 </html>

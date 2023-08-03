@@ -20,8 +20,6 @@
 		<security:csrf disabled="true"/>
  		<security:intercept-url pattern="/member/**" access="permitAll"/>  
 		
-
-		
 		<security:access-denied-handler ref="customAccessDenied" />
 		
 		<security:form-login 
@@ -30,7 +28,6 @@
 		authentication-success-handler-ref="customLoginSuccess"
 		authentication-failure-url="/member/loginFail"
 		/>
-		
 		<security:logout logout-url="/member/logout" invalidate-session="true"/>
 	</security:http>
 	

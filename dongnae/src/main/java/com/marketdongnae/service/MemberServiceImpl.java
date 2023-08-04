@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.TestDTO;
 import com.marketdongnae.mapper.MemberMapper;
-import com.marketdongnae.mapper.TestMapper;
 import com.marketdongnae.security.CustomUserDetails;
 
 @Service

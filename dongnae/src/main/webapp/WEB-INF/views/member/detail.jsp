@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,27 +18,23 @@
 <form name="updateForm" action=update method="post">
 	<div class="form-group row">
 		<label class="col-sm-2">아이디</label>
-		<input readonly name="m_id" id="m_id" type="text" value="${member.m_id}">
-	</div>
-	<div class="form-group row">
-		<label class="col-sm-2">비밀번호</label>
-		<input name="m_pwd" id="m_pwd" type="password" value="${member.m_pwd}">
+		<input readonly name="m_id"  type="text" value="${member.m_id}">
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">이름</label>
-		<input name="m_name" id="m_name" type="text" value="${member.m_name}">
+		<input name="m_name"   type="text" value="${member.m_name}">
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">이메일</label>
-		<input readonly name="m_email" id="m_email" type="text" value="${member.m_email}">
+		<input readonly name="m_email"   type="text" value="${member.m_email}">
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">핸드폰</label>
-		<input name="m_phone" id="m_phone" type="text" value="${member.m_phone}">
+		<input name="m_phone" type="text" value="${member.m_phone}">
 	</div>
 	<div class="form-group row">
 		<label class="col-sm-2">내 동네</label>
-		<select name="si_id" id="si_id">
+		<select name="si_id"  >
 		  <option value="1" ${ (member.si_id == "1")? "selected" : "" }>수원</option>
 		  <option value="2" ${ (member.si_id == "2")? "selected" : "" }>화성</option>
 		  <option value="3" ${ (member.si_id == "3")? "selected" : "" }>오산</option>

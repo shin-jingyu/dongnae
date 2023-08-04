@@ -16,11 +16,12 @@
 <body>
 <div class="container">
 	<h1>판매내역</h1>
-	<c:forEach var="sold" items="${soldList}">
+	<!-- list를 전달해야하는데 @ModelAttribute로는 dto로만 전달돼서, dto내에 list 변수를 만들어서 set해서 전달함 -->
+	<c:forEach var="d" items="${dealDTO.dealDTOList}">
 		<div class="card">
-			<div>상품이름 : ${sold.g_name}</div>
-			<div>가격 : <fmt:formatNumber value="${sold.g_price}"/> </div>
-			<div>판매일 : ${sold.s_regdate}</div>
+			<div>상품이름 : ${d.g_name}</div>
+			<div>가격 : <fmt:formatNumber value="${d.g_price}"/> </div>
+			<div>판매일 : ${d.d_regdate}</div>
 		</div>
 	</c:forEach>
 </div>

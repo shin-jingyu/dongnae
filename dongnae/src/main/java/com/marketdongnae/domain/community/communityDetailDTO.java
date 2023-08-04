@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import lombok.Data;
 @Data
-public class CommunityDetailDTO {
+public class communityDetailDTO {
 	private int mu_id ;
 	private String mu_name ; 
 	private String mu_detail ;

@@ -48,7 +48,7 @@
 		<tr>	
 			<td colspan="2" class="text-center">
 				<button onclick="location.href='community'">목록으로</button>
-				<button>수정하기</button>
+				<button onclick="location.href='updateCommunity?mu_id=${communityAll.mu_id }'">수정하기</button>
 				<button>삭제하기</button>
 				
 			</td>

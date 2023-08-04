@@ -1,4 +1,4 @@
-package com.marketdongnae.service;
+package com.marketdongnae.service.Community;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
-import com.marketdongnae.domain.community.CommunityDetailDTO;
+import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.mapper.CommunityMapper;
 
 @Service("CommunityService")
@@ -30,6 +30,17 @@ public class CommunityServiceImpl implements CommunityService {
 	public void updateCount(String mu_id) {
 		communityMapper.updateCount(mu_id);
 		
+	}
+
+	@Override
+	public void insertCommunity(communityDetailDTO community) {
+		communityMapper.insertCommunity(community);
+		
+	}
+
+	@Override
+	public void updateCommunity(communityDetailDTO community) {
+		communityMapper.updateCommunity(community);
 	}
 	
 	

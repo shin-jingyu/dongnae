@@ -1,4 +1,4 @@
-package com.marketdongnae.service;
+package com.marketdongnae.service.member;
 
 import java.util.List;
 import java.util.Map;
@@ -8,13 +8,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.TestDTO;
+import com.marketdongnae.domain.member.BuyDTO;
+import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.SoldDTO;
+import com.marketdongnae.mapper.GoodsMapper;
 import com.marketdongnae.mapper.MemberMapper;
 import com.marketdongnae.security.CustomUserDetails;
+import com.marketdongnae.service.goods.GoodsServiceImpl;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @Service
+@AllArgsConstructor
+@Log4j
 public class MemberServiceImpl implements MemberService {
-	@Autowired
-	MemberMapper memberMapper;
+	private final MemberMapper memberMapper;
 	
 	@Override
 	public CustomUserDetails loginID(String m_id) {
@@ -22,39 +31,39 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Map<String, Object> getMember(String m_id) {
+	public MemberDTO getMember(String m_id) {
 		return memberMapper.getMember(m_id);
 	}
 
 	@Override
-	public Integer updateMember(Map<String, Object> map) {
-		Integer result = memberMapper.updateMember(map);
+	public Integer updateMember(MemberDTO memberDTO) {
+		Integer result = memberMapper.updateMember(memberDTO);
 		return result ;
 	}
 
 	@Override
-	public Map<String, Object> getBuy(String b_id) {
+	public BuyDTO getBuy(String b_id) {
 		return memberMapper.getBuy(b_id);
 	}
 
 	@Override
-	public Map<String, Object> getSold(String s_id) {
+	public SoldDTO getSold(String s_id) {
 		return memberMapper.getSold(s_id);
 	}
 
 	@Override
-	public List<Map<String, Object>> getSoldList(int m_number) {
+	public List<SoldDTO> getSoldList(int m_number) {
 		return memberMapper.getSoldList(  m_number);
 	}
 
 	@Override
-	public List<Map<String, Object>> getBuyList(int m_number) {
+	public List<BuyDTO> getBuyList(int m_number) {
 		return memberMapper.getBuyList( m_number);
 	}
 
 	@Override
-	public Integer regist(Map<String, Object> map) {
-		Integer result = memberMapper.regist(map);
+	public Integer regist(MemberDTO memberDTO) {
+		Integer result = memberMapper.regist(memberDTO);
 		return result ;
 	}
 

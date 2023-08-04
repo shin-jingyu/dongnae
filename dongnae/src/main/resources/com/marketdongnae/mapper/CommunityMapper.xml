@@ -5,18 +5,20 @@
 <mapper namespace="com.marketdongnae.mapper.CommunityMapper">
 
 	<!-- 게시판 불러오기 -->
-	<select id="getCommunity" resultType="com.marketdongnae.domain.community.CommunityDTO">
-		SELECT * FROM dongnae.community
+	<select id="communityAll" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
+		SELECT * FROM dongnae.communityall
 	</select>
 	
-	<select id="communityAll" resultType="hashMap">
-		select DISTINCT
-		 S.si_area, C.mu_name, M.m_id, C.mu_data , C.mu_c ,
-		(select count(*) from heart where heart.mu_id = #{community.mu_id} ) as heart,
-		(select count(*) from comment where comment.mu_id = #{community.mu_id}) as comment
-		from community as C, si_area as S, member as M 
-		where  C.m_number = M.m_number and M.si_id = S.si_id 
+	<!-- 게시판 상세보기 -->
+	<select id="communityDetail" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
+		SELECT * FROM dongnae.communityall where mu_id = #{communityall.mu_id}
 	</select>
-
-
+	<!-- 조회수 증가 -->
+	<update id="updateCount" parameterType="string" >
+		update community 
+		set community.mu_c =  community.mu_c +1
+		where community.mu_id = #{communityall.mu_id};	
+	</update>
+	
+	
 </mapper>

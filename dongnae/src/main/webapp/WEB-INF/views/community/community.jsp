@@ -24,23 +24,21 @@
 				<th>작성시간</th>
 				<th>조회수</th>
 				<th>좋아요</th>
+				<th>댓글수</th>
 			</tr>
 		</thead>
 		<tbody>
 			
 				
-			<c:forEach var="community" items="${list}"  >
-				<tr>
-					<c:forEach var="category" items="${category}"  >
-						<td>${si_area.si_area}</td>
-					</c:forEach>
-					
-					<td>${community.mu_name }</td>
-					<td>${community.m_number}</td>
-					<td>${community.mu_data}</td>
-					<td>${community.mu_c}</td>
-					<td>${con}</td>
-				
+			<c:forEach var="communityAll" items="${list}"  >
+				<tr>				
+					<td>${communityAll.si_area}</td>
+					<td><a href="communityDetail?mu_id=${communityAll.mu_id }">${communityAll.mu_name}</a></td>
+					<td>${communityAll.m_id}</td>
+					<td>${communityAll.mu_data}</td>
+					<td>${communityAll.mu_c}</td>
+					<td>${communityAll.heart}</td>
+					<td>${communityAll.comment}</td>
 				</tr>
 			</c:forEach>
 			

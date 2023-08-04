@@ -32,7 +32,7 @@ public class GoodsController {
 	
 	@GetMapping(value = "getListgoods")
 	public List<GoodsDTO> goods_List_Get() {
-		return goodsService.getList();
+		return goodsService.getGoodsList();
 	}
 	
 	@PostMapping(value = "insertgoods")

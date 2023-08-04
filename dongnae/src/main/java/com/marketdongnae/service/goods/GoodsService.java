@@ -8,7 +8,7 @@ import com.marketdongnae.domain.goods.GoodsDTO;
 
 public interface GoodsService {
 
-	List<GoodsDTO> getList();
+	List<GoodsDTO> getGoodsList();
 
 	void insertGoods(GoodsDTO goodsDTO);
 

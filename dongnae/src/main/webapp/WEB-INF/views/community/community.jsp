@@ -45,7 +45,7 @@
 			
 		</tbody>
 	</table>
-		<button onclick="location.href='write'">글쓰기</button>
+		<button onclick="location.href='insertCommunity'">글쓰기</button>
 	</div>
 	
 </body>

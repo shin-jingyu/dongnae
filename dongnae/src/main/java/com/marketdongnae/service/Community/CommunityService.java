@@ -1,9 +1,9 @@
-package com.marketdongnae.service;
+package com.marketdongnae.service.Community;
 
 import java.util.List;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
-import com.marketdongnae.domain.community.CommunityDetailDTO;
+import com.marketdongnae.domain.community.communityDetailDTO;
 
 
 public interface CommunityService {
@@ -13,4 +13,8 @@ public interface CommunityService {
 	public CommunityAllDTO communityDetail(String mu_id);
 	//조회수 증가
 	public void  updateCount(String mu_id);
+	//글쓰기
+	public void insertCommunity(communityDetailDTO community);
+	//수정하기
+	public void updateCommunity(communityDetailDTO community);
 }

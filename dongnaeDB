@@ -1,0 +1,29 @@
+
+-- 테이블 생성 SQL
+CREATE TABLE `Goods` (
+	`g_id`	int	NOT NULL,
+	`c2_id`	int	NOT NULL,
+	`m_number`	int	NOT NULL,
+	`g_name`	varchar(255)	NULL,
+	`g_price`	int	NOT NULL,
+	`g_pic01`	varchar(255)	NULL,
+	`g_pic02`	varchar(255)	NULL,
+	`g_pic03`	varchar(2Goods55)	NULL,
+	`g_picpath`	varchar(255)	NULL,
+	`g_like`	int	NULL,
+	`g_regdate`	DATETIME	NULL	DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE `Goods` ADD CONSTRAINT `PK_GOODS` PRIMARY KEY (
+	`g_id`
+);
+
+CREATE TABLE `wishlist` (
+	`wish_id`	int	NOT NULL,
+	`m_number`	int	NOT NULL	COMMENT 'unique',
+	`g_id`	int	NOT NULL
+);
+
+ALTER TABLE `wishlist` ADD CONSTRAINT `PK_WISHLIST` PRIMARY KEY (
+	`wish_id`
+);

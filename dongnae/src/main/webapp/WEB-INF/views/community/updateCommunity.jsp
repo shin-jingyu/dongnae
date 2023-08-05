@@ -25,7 +25,35 @@
 	<h2>수정하기</h2>
 		<div>
 			<form action="/updateCommunity" method="post">
-			
+				<table class="table table-borderd table table-hover">
+				<tr>
+					<td>글이름</td>
+					<td>${community.mu_name }</td>
+				</tr>
+				
+				<tr>
+					<td>지역</td>
+					<td>${community.si_area }</td>
+				</tr>
+				<tr>
+					<td>카테고리</td>
+					<td>${community.ca_l }</td>
+				</tr>
+				<tr>
+					<td>작성자</td>
+					<td>${community.mu_name }</td>
+				</tr>
+				<tr>
+					<td>작성시간</td>
+					<td>${community.mu_data }</td>
+				</tr>
+				<tr>
+					<td colspan="2">글 내용</td>
+				</tr>	
+				<tr>	
+					<td colspan="2">${community.mu_detail }</td>
+				</tr>
+				</table>	
 			</form>
 		</div>
 	</div>

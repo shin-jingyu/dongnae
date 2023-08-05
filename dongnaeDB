@@ -87,3 +87,74 @@ insert into category_goods_1 (c1_category) values ('공구/산업용품');
 insert into category_goods_1 (c1_category) values ('무료나눔');
 
 
+-- community 테이블 --------------------------------------------
+
+CREATE TABLE `category` (
+  `ca_id` int NOT NULL AUTO_INCREMENT,
+  `ca_l` varchar(255) NOT NULL,
+  PRIMARY KEY (`ca_id`),
+  UNIQUE KEY `ca_id_UNIQUE` (`ca_id`)
+);
+
+insert into category(ca_l)
+values('사건사고');
+insert into category(ca_l)
+values('분실/실종');
+insert into category(ca_l)
+values('일상');
+insert into category(ca_l)
+values('맛집');
+insert into category(ca_l)
+values('취미');
+insert into category(ca_l)
+values('동네질문');
+
+
+CREATE TABLE `comment` (
+  `com_id` int NOT NULL AUTO_INCREMENT,
+  `com_c` varchar(255) NOT NULL,
+  `m_number` int NOT NULL,
+  `mu_id` int NOT NULL,
+  PRIMARY KEY (`com_id`),
+  UNIQUE KEY `com_id_UNIQUE` (`com_id`)
+);
+
+CREATE TABLE `community` (
+  `mu_id` int NOT NULL AUTO_INCREMENT,
+  `mu_name` varchar(255) NOT NULL,
+  `mu_detail` longtext NOT NULL,
+  `mu_i1` varchar(255) DEFAULT NULL,
+  `mu_i2` varchar(255) DEFAULT NULL,
+  `mu_i3` varchar(255) DEFAULT NULL,
+  `mu_c` int DEFAULT '0',
+  `mu_data` datetime DEFAULT CURRENT_TIMESTAMP,
+  `ca_id` int NOT NULL,
+  `m_number` int NOT NULL,
+  PRIMARY KEY (`mu_id`),
+  UNIQUE KEY `mu_id_UNIQUE` (`mu_id`)
+); 
+
+CREATE TABLE `heart` (
+  `h_id` int NOT NULL AUTO_INCREMENT,
+  `mu_id` int NOT NULL,
+  `m_number` int NOT NULL,
+  `h_num` int NOT NULL,
+  PRIMARY KEY (`h_id`),
+  UNIQUE KEY `h_id_UNIQUE` (`h_id`)
+);
+
+create view communityall
+as
+select DISTINCT
+	C.mu_id,Ca.ca_l, S.si_area, C.mu_name, C.mu_detail, M.m_id, C.mu_data , C.mu_c ,
+	(select
+count(*)
+from heart
+where heart.mu_id = C.mu_id ) as heart,
+(select
+count(*)
+from comment 
+where comment.mu_id =C.mu_id) as comment
+from community as C, si_area as S, member as M ,category as Ca
+where  C.m_number = M.m_number and M.si_id = S.si_id and Ca.ca_id = C.ca_id;
+

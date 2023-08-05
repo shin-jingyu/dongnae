@@ -22,4 +22,6 @@ public interface CommunityMapper {
 	public void insertCommunity(communityDetailDTO community);
 	//수정하기
 	public void updateCommunity(communityDetailDTO community);
+	//삭제하기
+	public void deleteCommunity(String mu_id);
 }

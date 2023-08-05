@@ -28,13 +28,20 @@
 	
 	<update id="updateCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
 		update community
-		set mu_name = #{mu_name}
-			mu_detail = #{mu_detail}
-			mu_i1 =#{mu_i1}
-			mu_i2 =#{mu_i2}
-			mu_i3 =#{mu_i3}
+		set mu_name = #{mu_name},
+			mu_detail = #{mu_detail},
+			mu_i1 =#{mu_i1},
+			mu_i2 =#{mu_i2},
+			mu_i3 =#{mu_i3},
 			ca_id =#{ca_id}
-		where community.mu_id = #{communityall.mu_id};
+		where community.mu_id = #{mu_id};
 	</update>
+	
+	<delete id="deleteCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
+		delete from community where community.mu_id = #{mu_id};
+	</delete>
+	
+	
+	
 	
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ public class CommunityController {
 		return "community/community";
 	}
 	
+	
 	@GetMapping("/communityDetail")
 	public ModelAndView view(@RequestParam String mu_id){
 		communityService.updateCount(mu_id);
@@ -38,11 +40,12 @@ public class CommunityController {
 		return new ModelAndView("community/communityDetail","community",detailDTO);
 	}
 	
+	
+	
 	@GetMapping("/insertCommunity")
 	public String insertCommunity() {
 		return "community/insertCommunity";
 	}
-	
 	@PostMapping("/insertCommunity")
 	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
 		System.out.println("글등록");
@@ -50,10 +53,25 @@ public class CommunityController {
 		return "redirect:community";
 	}
 	
+	
+	
 	@GetMapping("/updateCommunity")
 	public ModelAndView update(@RequestParam String mu_id) {
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
-		return new ModelAndView("community/updateCommunity","update",detailDTO);
+		return new ModelAndView("community/updateCommunity","community",detailDTO);
+	}
+	@PostMapping("/updateCommunity")
+	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
+		System.out.println("글 수정하기 ");
+		communityService.updateCommunity(communityDetailDTO);
+		return "redirect:community";
+	}
+	
+	@GetMapping("/deleteCommunity/{mu_id}")
+	public String deleteCommunity(@PathVariable String mu_id) {
+		System.out.println("글삭제");
+		communityService.deleteCommunity(mu_id);
+		return "redirect:community";
 	}
 	
 }

@@ -42,6 +42,13 @@ public class CommunityServiceImpl implements CommunityService {
 	public void updateCommunity(communityDetailDTO community) {
 		communityMapper.updateCommunity(community);
 	}
+
+	@Override
+	public void deleteCommunity(String mu_id) {
+		communityMapper.deleteCommunity(mu_id);
+		
+	}
+
 	
 	
 	

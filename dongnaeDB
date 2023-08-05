@@ -1,5 +1,7 @@
 
 -- 테이블 생성 SQL
+
+--상품 테이블
 CREATE TABLE `Goods` (
 	`g_id`	int	NOT NULL,
 	`c2_id`	int	NOT NULL,
@@ -23,7 +25,7 @@ CHANGE COLUMN `g_id` `g_id` INT NOT NULL AUTO_INCREMENT ;
 
 
 
-
+-- 키워드 테이블
 CREATE TABLE `keyword` (
 	`key_id`	int	NOT NULL,
 	`m_number`	int	NOT NULL,
@@ -38,12 +40,13 @@ ALTER TABLE `dongnae`.`keyword`
 CHANGE COLUMN `key_id` `key_id` INT NOT NULL AUTO_INCREMENT ;
 
 
-
+-- 카테고리 대분류 테이블
 CREATE TABLE `category_goods_1` (
 	`c1_id`	int	NOT NULL,
 	`c1_category`	varchar(255)	NOT NULL
 );
 
+-- 카테고리 중분류 테이블
 CREATE TABLE `category_goods_2` (
 	`c2_id`	int	NOT NULL ,
 	`c2_category`	varchar(255)	NOT NULL,
@@ -63,28 +66,6 @@ ALTER TABLE `category_goods_2` ADD CONSTRAINT `PK_CATEGORY_GOODS_2` PRIMARY KEY 
 
 ALTER TABLE `dongnae`.`category_goods_2` 
 CHANGE COLUMN `c2_id` `c2_id` INT NOT NULL AUTO_INCREMENT ;
-
-
-
-
-
--- 카테고리 목록
-insert into category_goods_1 (c1_category) values ('수입명품');
-insert into category_goods_1 (c1_category) values ('패션의류');
-insert into category_goods_1 (c1_category) values ('패션잡화');
-insert into category_goods_1 (c1_category) values ('뷰티');
-insert into category_goods_1 (c1_category) values ('모바일/태블릿');
-insert into category_goods_1 (c1_category) values ('가전제품');
-insert into category_goods_1 (c1_category) values ('노트북/PC');
-insert into category_goods_1 (c1_category) values ('카메라/캠코더');
-insert into category_goods_1 (c1_category) values ('가구/인테리어');
-insert into category_goods_1 (c1_category) values ('리빙/생활');
-insert into category_goods_1 (c1_category) values ('게임');
-insert into category_goods_1 (c1_category) values ('반려동물');
-insert into category_goods_1 (c1_category) values ('도서/음반');
-insert into category_goods_1 (c1_category) values ('스포츠');
-insert into category_goods_1 (c1_category) values ('공구/산업용품');
-insert into category_goods_1 (c1_category) values ('무료나눔');
 
 
 -- community 테이블 --------------------------------------------
@@ -203,4 +184,87 @@ as select W.wish_id , W.m_number  , G.g_id , G.g_name  , G.g_price
 from wishlist as W, goods as G
 where W.m_number = G.m_number ;
 
+
+-- 카테고리 sample 목록
+insert into category_goods_1 (c1_category) values ('수입명품');
+insert into category_goods_1 (c1_category) values ('패션의류');
+insert into category_goods_1 (c1_category) values ('패션잡화');
+insert into category_goods_1 (c1_category) values ('뷰티');
+insert into category_goods_1 (c1_category) values ('모바일/태블릿');
+insert into category_goods_1 (c1_category) values ('가전제품');
+insert into category_goods_1 (c1_category) values ('노트북/PC');
+insert into category_goods_1 (c1_category) values ('카메라/캠코더');
+insert into category_goods_1 (c1_category) values ('가구/인테리어');
+insert into category_goods_1 (c1_category) values ('리빙/생활');
+insert into category_goods_1 (c1_category) values ('게임');
+insert into category_goods_1 (c1_category) values ('반려동물');
+insert into category_goods_1 (c1_category) values ('도서/음반');
+insert into category_goods_1 (c1_category) values ('스포츠');
+insert into category_goods_1 (c1_category) values ('공구/산업용품');
+insert into category_goods_1 (c1_category) values ('무료나눔');
+
+insert into category_goods_2(c1_id , c2_category) values (1, '여성신발');
+insert into category_goods_2(c1_id , c2_category) values (1, '남성신발');
+insert into category_goods_2(c1_id , c2_category) values (1, '가방/핸드백');
+insert into category_goods_2(c1_id , c2_category) values (1, '지갑/벨트');
+insert into category_goods_2(c1_id , c2_category) values (1, '여성의류');
+insert into category_goods_2(c1_id , c2_category) values (1, '남성의류');
+insert into category_goods_2(c1_id , c2_category) values (1, '패션잡화');
+insert into category_goods_2(c1_id , c2_category) values (1, '시계/쥬얼리');
+insert into category_goods_2(c1_id , c2_category) values (1, '유아');
+insert into category_goods_2(c1_id , c2_category) values (1, '기타');
+
+insert into category_goods_2(c1_id , c2_category) values (2, '여성의류');
+insert into category_goods_2(c1_id , c2_category) values (2, '남성의류');
+insert into category_goods_2(c1_id , c2_category) values (2, '교복/단체복');
+
+insert into category_goods_2(c1_id , c2_category) values (3, '운동화');
+insert into category_goods_2(c1_id , c2_category) values (3, '여성신발');
+insert into category_goods_2(c1_id , c2_category) values (3, '남성신발');
+insert into category_goods_2(c1_id , c2_category) values (3, '가방/핸드백');
+insert into category_goods_2(c1_id , c2_category) values (3, '지갑/벨트');
+insert into category_goods_2(c1_id , c2_category) values (3, '악세서리/귀금속');
+insert into category_goods_2(c1_id , c2_category) values (3, '시계');
+insert into category_goods_2(c1_id , c2_category) values (3, '선글라스/안경');
+insert into category_goods_2(c1_id , c2_category) values (3, '모자');
+insert into category_goods_2(c1_id , c2_category) values (3, '기타/잡화');
+
+
+insert into category_goods_2(c1_id , c2_category) values (5, '스마트폰_삼성');
+insert into category_goods_2(c1_id , c2_category) values (5, '스마트폰_애플');
+insert into category_goods_2(c1_id , c2_category) values (5, '스마트폰_엘지');
+insert into category_goods_2(c1_id , c2_category) values (5, '스마트폰_기타');
+insert into category_goods_2(c1_id , c2_category) values (5, '태블릿PC_삼성');
+insert into category_goods_2(c1_id , c2_category) values (5, '태블릿PC_애플');
+insert into category_goods_2(c1_id , c2_category) values (5, '태블릿PC_기타');
+insert into category_goods_2(c1_id , c2_category) values (5, '스마트워치');
+insert into category_goods_2(c1_id , c2_category) values (5, '일반/피처폰');
+insert into category_goods_2(c1_id , c2_category) values (5, '케이스/거치대/보호필름');
+insert into category_goods_2(c1_id , c2_category) values (5, '배터리/충전기/케이블');
+insert into category_goods_2(c1_id , c2_category) values (5, '메모리/젠더/리더기');
+
+insert into category_goods_2(c1_id , c2_category) values (6, '냉장고');
+insert into category_goods_2(c1_id , c2_category) values (6, 'TV');
+insert into category_goods_2(c1_id , c2_category) values (6, '세탁기/건조기');
+insert into category_goods_2(c1_id , c2_category) values (6, '주방가전');
+insert into category_goods_2(c1_id , c2_category) values (6, '스마트홈');
+insert into category_goods_2(c1_id , c2_category) values (6, '영상가전');
+insert into category_goods_2(c1_id , c2_category) values (6, '음향가전');
+insert into category_goods_2(c1_id , c2_category) values (6, '계절가전');
+insert into category_goods_2(c1_id , c2_category) values (6, '생활가전');
+insert into category_goods_2(c1_id , c2_category) values (6, '미용가전');
+insert into category_goods_2(c1_id , c2_category) values (6, '기타가전');
+
+insert into category_goods_2(c1_id , c2_category) values (7, '노트북_삼성');
+insert into category_goods_2(c1_id , c2_category) values (7, '노트북_엘지');
+insert into category_goods_2(c1_id , c2_category) values (7, '맥북');
+insert into category_goods_2(c1_id , c2_category) values (7, '데스크탑PC');
+insert into category_goods_2(c1_id , c2_category) values (7, '모니터');
+insert into category_goods_2(c1_id , c2_category) values (7, '컴퓨터부품');
+insert into category_goods_2(c1_id , c2_category) values (7, '키보드/마우스');
+insert into category_goods_2(c1_id , c2_category) values (7, '스피커');
+insert into category_goods_2(c1_id , c2_category) values (7, '프린터/복합기');
+insert into category_goods_2(c1_id , c2_category) values (7, '공유기/랜카드');
+insert into category_goods_2(c1_id , c2_category) values (7, '소프트웨어');
+insert into category_goods_2(c1_id , c2_category) values (7, '기타 주변기기');
 

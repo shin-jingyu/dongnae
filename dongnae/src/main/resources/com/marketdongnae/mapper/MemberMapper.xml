@@ -42,4 +42,9 @@
 			set m_pwd = #{new_password}
 		where m_id = #{m_id}
 	</select>
+	
+		
+	<select id="getWish_viewList" resultType="com.marketdongnae.domain.member.Wish_viewDTO">	 
+		select * from wish_view where m_number = #{m_number} ;
+	</select>
 </mapper> 

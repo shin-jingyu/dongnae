@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.marketdongnae.domain.member.DealDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberService {
@@ -32,5 +33,7 @@ public interface MemberService {
 	int getAvgScore(String m_id);
 	
 	int getPoint(String m_id);
+
+	List<Wish_viewDTO> getWish_viewList(String m_id);
 	
 }

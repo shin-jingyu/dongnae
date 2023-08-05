@@ -13,6 +13,7 @@ import com.marketdongnae.domain.TestDTO;
 import com.marketdongnae.domain.member.DealDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.mapper.GoodsMapper;
 import com.marketdongnae.mapper.MemberMapper;
 import com.marketdongnae.security.CustomUserDetails;
@@ -143,6 +144,14 @@ public class MemberServiceImpl implements MemberService {
 			
 		Integer result = memberMapper.changePassword(passwordDTO);
 		return result ;
+	}
+
+	@Override
+	public List<Wish_viewDTO> getWish_viewList(String m_id) {
+		MemberDTO member =  memberMapper.getMember(m_id);
+		int m_number =  member.getM_number();
+		List<Wish_viewDTO> wish_viewList =  memberMapper.getWish_viewList(m_number);
+		return wish_viewList;
 	}
 
 

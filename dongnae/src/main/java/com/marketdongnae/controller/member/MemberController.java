@@ -25,6 +25,7 @@ import com.marketdongnae.controller.GoodsController;
 import com.marketdongnae.domain.member.DealDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.goods.GoodsService;
@@ -88,23 +89,18 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	// @@ 로그인,로그아웃 이건 바꿀 수 있으려나?
 	@GetMapping("loginFail")
-	public ModelAndView loginFail() { 
+	public String loginFail(Model model) { 
 		// 나중에 ajax로 바꿀 예정 
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("login", "fail");
-		mv.setViewName("/member/login");
-		return mv;
+		model.addAttribute("login", "fail");
+		return "member/login";
 	}
 	// /member/loginSuccess는 CustomLoginSuccessHandler에서 이동함
 	@GetMapping("logout")
-	public ModelAndView logout(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView();
+	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		mv.setViewName("redirect:/"); // 왜 홈화면이 아니라 로그인창으로 연결되지?
-		return mv;
+		return "redirect:/";
 	}
 	
 	@GetMapping("regist")
@@ -149,6 +145,18 @@ public class MemberController {
 		return "member/point";		
 	}
 	
+	@GetMapping("wishlist")
+	public String wishlist(@ModelAttribute("wish_viewDTO") Wish_viewDTO wish_viewDTO, HttpServletRequest request) {
+		String m_id =  getSessionM_Id(request);
+		wish_viewDTO.setWish_viewDTOList(memberService.getWish_viewList(m_id));
+		return "member/wishlist";		
+	}
 	
+//	@PostMapping("cancelWish")
+//	public String cancelWish(HttpServletRequest request) {
+//		String m_id =  getSessionM_Id(request);
+//		memberService.changePassword(m_id, passwordDTO);
+//		return "redirect:/member/wishlist";
+//	}
 	
 }

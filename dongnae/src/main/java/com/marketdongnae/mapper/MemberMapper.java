@@ -6,6 +6,7 @@ import java.util.Map;
 import com.marketdongnae.domain.member.DealDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberMapper {
@@ -25,5 +26,7 @@ public interface MemberMapper {
 	public Integer regist(MemberDTO memberDTO);
 
 	public Integer changePassword(PasswordDTO passwordDTO);
+
+	public List<Wish_viewDTO> getWish_viewList(int m_number);
 
 }

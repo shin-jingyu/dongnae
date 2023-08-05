@@ -22,6 +22,7 @@
 	<a class="btn btn-secondary" href="/member/buyList">구매내역</a>
 	<a class="btn btn-secondary" href="/member/review">내 거래 후기</a>
 	<a class="btn btn-secondary" href="/member/point">내 페이포인트</a>
+	<a class="btn btn-secondary" href="/member/wishlist">찜목록</a>
 	
 	<c:choose>
 		<c:when test="${empty m_id}">  

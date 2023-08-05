@@ -3,11 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>판매내역</title>
+<title>판매 중 상품</title>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -15,13 +16,13 @@
 
 <body>
 <div class="container">
-	<h1>판매내역</h1>
-	<!-- list를 전달해야하는데 @ModelAttribute로는 dto로만 전달돼서, dto내에 list 변수를 만들어서 set해서 전달함 -->
-	<c:forEach var="s" items="${soldList}">
+	<h1>판매 중 상품</h1>
+	<c:forEach var="o" items="${onSaleList}">
 		<div class="card">
-			<div>상품이름 : ${s.g_name}</div>
-			<div>가격 : <fmt:formatNumber value="${s.g_price}"/> </div>
-			<div>판매일 : ${s.d_regdate}</div>
+			<c:set var="g_id" value="${o.g_id}" />
+			<div>상품이름 : ${o.g_name}</div>
+			<div>가격 : <fmt:formatNumber value="${o.g_price}"/> </div>
+			<a class="btn btn-secondary" href="/goods/edit?g_id=${g_id}">수정하기</a>
 		</div>
 	</c:forEach>
 </div>

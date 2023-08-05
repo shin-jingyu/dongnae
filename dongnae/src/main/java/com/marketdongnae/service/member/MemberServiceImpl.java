@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.TestDTO;
-import com.marketdongnae.domain.member.DealDTO;
+import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -60,19 +60,19 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public List<DealDTO> getSoldList(String m_id) {
+	public List<Deal_viewDTO> getSoldList(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> soldlist =  memberMapper.getSoldList( m_number);
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_number);
 		return soldlist;
 	}
 	
 	
 	@Override
-	public List<DealDTO> getBuyList(String m_id) {
+	public List<Deal_viewDTO> getBuyList(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> buylist =  memberMapper.getBuyList(m_number);
+		List<Deal_viewDTO> buylist =  memberMapper.getBuyList(m_number);
 		return buylist;
 	}
 
@@ -80,9 +80,9 @@ public class MemberServiceImpl implements MemberService {
 	public int getAvgScore(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> soldlist =  memberMapper.getSoldList( m_number);
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_number);
 		int sum = 0 ;
-		for (DealDTO sold : soldlist) {
+		for (Deal_viewDTO sold : soldlist) {
 			sum += (int) sold.getD_score();
 		}
 		int avgScore = (int) Math.ceil(sum/ soldlist.size()) ;
@@ -90,11 +90,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public List<DealDTO> getDealList(String m_id) {
+	public List<Deal_viewDTO> getDealList(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> dealList =  memberMapper.getDealList(m_number);
+		List<Deal_viewDTO> dealList =  memberMapper.getDealList(m_number);
 		return dealList;
+	}
+	
+	@Override
+	public List<Deal_viewDTO> getOnSaleList(String m_id) {
+		MemberDTO member =  memberMapper.getMember(m_id);
+		int m_number =  member.getM_number();
+		List<Deal_viewDTO> onSaleList =  memberMapper.getOnSaleList(m_number);
+		return onSaleList;
 	}
 	
 	@Override
@@ -160,4 +168,5 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	
 }

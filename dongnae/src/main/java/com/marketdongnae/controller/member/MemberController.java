@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marketdongnae.controller.GoodsController;
-import com.marketdongnae.domain.member.DealDTO;
+import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -118,31 +118,38 @@ public class MemberController {
 	// modelAndView 로 그냥 하는 게 더 직관적임
 	// 굳이 통일하는 게 더 안좋은 것
 	@GetMapping("soldList")
-	public String soldList(@ModelAttribute("dealDTO") DealDTO dealDTO, HttpServletRequest request) {
+	public String soldList(Model model,HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getSoldList(m_id));
+		model.addAttribute("soldList", memberService.getSoldList(m_id));
 		return "member/soldList";		
 	}
 	
 	@GetMapping("buyList")
-	public String buyList(@ModelAttribute("dealDTO") DealDTO dealDTO, HttpServletRequest request) {
+	public String buyList(Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getBuyList(m_id));
+		model.addAttribute("buyList", memberService.getBuyList(m_id));
 		return "member/buyList";		
+	}
+	
+	@GetMapping("onSaleList")
+	public String onSaleList(Model model, HttpServletRequest request) {
+		String m_id =  getSessionM_Id(request);
+		model.addAttribute("onSaleList", memberService.getOnSaleList(m_id));
+		return "member/onSaleList";		
 	}
 
 	@GetMapping("review")
-	public String getReviewList(@ModelAttribute("dealDTO") DealDTO dealDTO, Model model, HttpServletRequest request) {
+	public String getReviewList( Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getSoldList(m_id));
+		model.addAttribute("soldList", memberService.getSoldList(m_id));
 		model.addAttribute("avgScore", memberService.getAvgScore(m_id));
 		return "member/review";		
 	}
 	
 	@GetMapping("point")
-	public String review(@ModelAttribute("dealDTO") DealDTO dealDTO, Model model, HttpServletRequest request) {
+	public String review( Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getDealList(m_id));
+		model.addAttribute("dealList", memberService.getDealList(m_id));
 		model.addAttribute("m_point", memberService.getPoint(m_id));
 		return "member/point";		
 	}

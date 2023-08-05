@@ -20,6 +20,7 @@
 	<a class="btn btn-secondary" href="/member/changePassword">비밀번호 변경</a>
 	<a class="btn btn-secondary" href="/member/soldList">판매내역</a>
 	<a class="btn btn-secondary" href="/member/buyList">구매내역</a>
+	<a class="btn btn-secondary" href="/member/onSaleList">판매 중 상품</a>
 	<a class="btn btn-secondary" href="/member/review">내 거래 후기</a>
 	<a class="btn btn-secondary" href="/member/point">내 페이포인트</a>
 	<a class="btn btn-secondary" href="/member/wishlist">찜목록</a>

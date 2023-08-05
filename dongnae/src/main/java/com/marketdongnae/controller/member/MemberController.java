@@ -114,7 +114,9 @@ public class MemberController {
 		return "member/login";		
 	}
 
-	// list를 전달해야하는데 @ModelAttribute로는 dto로만 전달돼서, dto내에 list 변수를 만들어서 set해서 전달함
+	// list를 전달해야하는데 @ModelAttribute로는 dto로만 전달돼서, dto내에 list 변수를 만들어서 set해서 전달함\
+	// modelAndView 로 그냥 하는 게 더 직관적임
+	// 굳이 통일하는 게 더 안좋은 것
 	@GetMapping("soldList")
 	public String soldList(@ModelAttribute("dealDTO") DealDTO dealDTO, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
@@ -146,17 +148,17 @@ public class MemberController {
 	}
 	
 	@GetMapping("wishlist")
-	public String wishlist(@ModelAttribute("wish_viewDTO") Wish_viewDTO wish_viewDTO, HttpServletRequest request) {
+	public String wishlist(Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		wish_viewDTO.setWish_viewDTOList(memberService.getWish_viewList(m_id));
+		model.addAttribute("wish_viewList", memberService.getWish_viewList(m_id));
 		return "member/wishlist";		
 	}
 	
-//	@PostMapping("cancelWish")
-//	public String cancelWish(HttpServletRequest request) {
-//		String m_id =  getSessionM_Id(request);
-//		memberService.changePassword(m_id, passwordDTO);
-//		return "redirect:/member/wishlist";
-//	}
+	@GetMapping("cancelWish")
+	public String cancelWish(HttpServletRequest request) {
+		int wish_id = Integer.parseInt(request.getParameter("wish_id"));
+		memberService.deleteWish(wish_id);
+		return "redirect:/member/wishlist";
+	}
 	
 }

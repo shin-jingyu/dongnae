@@ -43,8 +43,11 @@
 		where m_id = #{m_id}
 	</select>
 	
-		
 	<select id="getWish_viewList" resultType="com.marketdongnae.domain.member.Wish_viewDTO">	 
 		select * from wish_view where m_number = #{m_number} ;
+	</select>
+	
+	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
+		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
 </mapper> 

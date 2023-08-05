@@ -13,7 +13,4 @@ public class Wish_viewDTO  {
 	private String	 g_name ;
 	private int g_price ;
 
-	private List<Wish_viewDTO> Wish_viewDTOList;
-	
-	
 }

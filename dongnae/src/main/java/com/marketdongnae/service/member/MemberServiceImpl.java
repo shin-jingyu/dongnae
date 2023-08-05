@@ -154,8 +154,10 @@ public class MemberServiceImpl implements MemberService {
 		return wish_viewList;
 	}
 
-
-	
-
+	@Override
+	public void deleteWish(int wish_id) {
+		memberMapper.deleteWish( wish_id);
+		
+	}
 
 }

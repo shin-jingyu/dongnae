@@ -1,5 +1,6 @@
 package com.marketdongnae.domain.member;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
@@ -15,9 +16,10 @@ public class MemberDTO {
 	private String m_email	;
 	private String m_phone	;
 	private int m_point	;
-	private Timestamp  m_regdate	;
+	private Date  m_regdate	;
 	private int si_id		;
 	private String m_auth		;
 
+	
 
 }

@@ -17,14 +17,14 @@
 <div class="container">
 	<h1>내 거래 점수 : ${avgScore} 점</h1>
 	<h1>내 거래 후기</h1>
-		<c:forEach var="sold" items="${soldList}">
+		<c:forEach var="d" items="${dealDTO.dealDTOList}">
 			<div class="card">
 				<img class="card-img-top"  style="width: 20%;" src="https://cdn.pixabay.com/photo/2021/03/08/09/56/assessment-6078645_1280.png"  />
 				<div class="card-body">
-					<div>구매자번호 : ${sold.b_m_number}</div>
-					<div>거래후기 : ${sold.s_review}</div>
-					<div>거래일 : ${sold.s_regdate}</div>
-					<div>받은 거래점수 : ${sold.s_score}점</div>
+					<div>구매자번호 : ${d.d_m_number}</div>
+					<div>거래후기 : ${d.d_review}</div>
+					<div>거래일 : ${d.d_regdate}</div>
+					<div>받은 거래점수 : ${d.d_score}점</div>
 				</div>
 			</div>
 	</c:forEach>

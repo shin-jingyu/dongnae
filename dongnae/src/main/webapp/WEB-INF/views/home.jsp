@@ -29,7 +29,7 @@
 			<a class="btn btn-info" href="/member/regist">회원가입</a>
 		</c:when>
 		<c:otherwise>
-			<a class="btn btn-info" href="/logout">로그아웃</a>
+			<a class="btn btn-info" href="/member/logout">로그아웃</a>
 			<P> 반갑습니다. ${m_id} 님! </P>
 		</c:otherwise>
 	</c:choose>

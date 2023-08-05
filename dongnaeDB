@@ -164,8 +164,6 @@ CREATE TABLE `Member` (
 	`d_m_number`int	NOT NULL,
 	`d_regdate`	timestamp	NULL DEFAULT CURRENT_TIMESTAMP,
 	`g_id`		int	NOT NULL,
-	`g_price`	int	NULL,
-	`g_name`	varchar(255)	NULL,
 	`d_score`	int	NULL,
 	`d_review`	varchar(255)	NULL
 );

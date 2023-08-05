@@ -158,3 +158,49 @@ where comment.mu_id =C.mu_id) as comment
 from community as C, si_area as S, member as M ,category as Ca
 where  C.m_number = M.m_number and M.si_id = S.si_id and Ca.ca_id = C.ca_id;
 
+
+
+--
+-- 회원
+CREATE TABLE `Member` (
+	`m_number`	int	NOT NULL	unique primary key  auto_increment,
+	`m_id`	varchar(255)	NOT NULL	unique,
+	`m_pwd`	varchar(255)	NOT NULL,
+	`m_name`	varchar(255)	NOT NULL,
+	`m_email`	varchar(255)	NOT NULL	unique,
+	`m_phone`	varchar(255)	NOT NULL,
+	`m_point`	int	NULL DEFAULT 0 ,
+	`m_regdate`	timestamp	NULL	DEFAULT CURRENT_TIMESTAMP,
+	`si_id`	int	NOT NULL,
+    `m_auth`	varchar(50)	NOT NULL	DEFAULT 'ROLE_MEMBER'
+);
+
+-- 거래 
+ CREATE TABLE `deal` (
+	`d_id`		int	NOT NULL unique primary key  auto_increment,
+	`m_number`	int	NOT NULL,
+    `d_type`	varchar(255)	NULL	,
+	`d_m_number`int	NOT NULL,
+	`d_regdate`	timestamp	NULL DEFAULT CURRENT_TIMESTAMP,
+	`g_id`		int	NOT NULL,
+	`g_price`	int	NULL,
+	`g_name`	varchar(255)	NULL,
+	`d_score`	int	NULL,
+	`d_review`	varchar(255)	NULL
+);
+
+-- 찜목록
+CREATE TABLE `wishlist` (
+	`wish_id`	int	NOT NULL primary key auto_increment,
+	`m_number`	int	NOT NULL	,
+	`g_id`	int	NOT NULL,
+    unique ( m_number, g_id)
+);
+
+-- 찜목록 조회 위한 wish_view
+create view wish_view
+as select W.wish_id , W.m_number  , G.g_id , G.g_name  , G.g_price
+from wishlist as W, goods as G
+where W.m_number = G.m_number ;
+
+

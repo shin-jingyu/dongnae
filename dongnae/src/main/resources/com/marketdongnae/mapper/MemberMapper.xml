@@ -25,16 +25,20 @@
 		where m_id = #{m_id}
 	</select>
 	
-	<select id="getDealList" resultType="com.marketdongnae.domain.member.DealDTO">	 
-		select * from deal where  m_number = #{m_number} ;
+	<select id="getDealList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
+		select * from deal_view where  m_number = #{m_number} ;
 	</select>
 	
-	<select id="getSoldList" resultType="com.marketdongnae.domain.member.DealDTO">	 
-		select * from deal where m_number = #{m_number} and d_type = 'sold'; 
+	<select id="getSoldList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
+		select * from deal_view where m_number = #{m_number} and d_type = 'sold'; 
 	</select>
 	
-	<select id="getBuyList" resultType="com.marketdongnae.domain.member.DealDTO">	 
-		select * from deal where m_number = #{m_number} and d_type = 'buy'; 
+	<select id="getBuyList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
+		select * from deal_view where m_number = #{m_number} and d_type = 'buy'; 
+	</select>
+	
+	<select id="getOnSaleList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
+		select * from deal_view where m_number = #{m_number} and d_type = 'onSale'; 
 	</select>
 	
 	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 

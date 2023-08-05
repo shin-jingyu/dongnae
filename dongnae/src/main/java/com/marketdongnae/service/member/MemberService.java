@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.marketdongnae.domain.member.DealDTO;
+import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -20,11 +20,13 @@ public interface MemberService {
 
 	Integer updateMember(MemberDTO memberDTO);
 
-	List<DealDTO> getSoldList(String m_id);
+	List<Deal_viewDTO> getSoldList(String m_id);
 
-	List<DealDTO> getBuyList(String m_id) ;
+	List<Deal_viewDTO> getBuyList(String m_id) ;
 	
-	List<DealDTO> getDealList(String m_id);
+	List<Deal_viewDTO> getDealList(String m_id);
+	
+	List<Deal_viewDTO> getOnSaleList(String m_id);
 	
 	Integer regist(MemberDTO memberDTO);
 
@@ -37,5 +39,6 @@ public interface MemberService {
 	List<Wish_viewDTO> getWish_viewList(String m_id);
 
 	void deleteWish(int wish_id);
+
 	
 }

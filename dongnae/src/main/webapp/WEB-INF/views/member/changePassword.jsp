@@ -13,7 +13,7 @@
 
 <body>
 <div class="container">
-<h1>비밀번호 변경 ${password.message} </h1>
+<h1>비밀번호 변경 </h1>
 <form name="changePassword" action=changePassword method="post">
 <input hidden name="m_id"  type="text" value="${m_id}">  
 	<div class="form-group row">

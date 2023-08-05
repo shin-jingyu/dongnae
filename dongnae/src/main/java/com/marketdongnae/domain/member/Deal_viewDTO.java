@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class DealDTO {
+public class Deal_viewDTO  {
 	private int d_id	;	
 	private int	 m_number 	;
 	private String d_type ;
@@ -18,9 +18,6 @@ public class DealDTO {
 	private int d_score ;
 	private String d_review ;
 	
-	private int avgScore ; 
+	private int avgScore ;  // ?
 
-	private List<DealDTO> dealDTOList;
-	
-	
 }

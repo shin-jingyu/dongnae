@@ -17,11 +17,11 @@
 <body>
 <div class="container">
 	<h1>구매내역</h1>
-	<c:forEach var="d" items="${dealDTO.dealDTOList}">
+	<c:forEach var="b" items="${buyList}">
 		<div class="card">
-			<div>상품이름 : ${d.g_name}</div>
-			<div>가격 : <fmt:formatNumber value="${d.g_price}"/> </div>
-			<div>구매일 : ${d.d_regdate}</div>
+			<div>상품이름 : ${b.g_name}</div>
+			<div>가격 : <fmt:formatNumber value="${b.g_price}"/> </div>
+			<div>구매일 : ${b.d_regdate}</div>
 		</div>
 	</c:forEach>
 </div>

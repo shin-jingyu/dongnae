@@ -36,13 +36,13 @@
 	  </div>
 	  <div class="mb-3">
 	    <label class="form-label">지역</label>
-	    <select name="do_id" id="do_id"  name = "do_id">
+<%-- 	    <select name="do_id" id="do_id"  name = "do_id">
 	   	  <option  value="1" ${ (member.si_id == "1")? "selected" : "" }>도/광역시</option>
 		  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>경기</option>
 		  <option value="2" ${ (member.si_id == "2")? "selected" : "" }>충남</option>
 		  <option value="3" ${ (member.si_id == "3")? "selected" : "" }>전라</option>
 		  <option value="4" ${ (member.si_id == "4")? "selected" : "" }>경상</option>
-		</select>
+		</select> --%>
 		<%-- 
 		<select style="display: none;" name="si_default" id="si_default"  name = "si_default">
 		  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>시/구</option>

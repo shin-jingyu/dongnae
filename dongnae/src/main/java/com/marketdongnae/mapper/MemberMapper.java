@@ -29,4 +29,6 @@ public interface MemberMapper {
 
 	public List<Wish_viewDTO> getWish_viewList(int m_number);
 
+	public void deleteWish(int wish_id);
+
 }

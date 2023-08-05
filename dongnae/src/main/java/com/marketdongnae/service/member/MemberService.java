@@ -35,5 +35,7 @@ public interface MemberService {
 	int getPoint(String m_id);
 
 	List<Wish_viewDTO> getWish_viewList(String m_id);
+
+	void deleteWish(int wish_id);
 	
 }

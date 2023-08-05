@@ -17,11 +17,12 @@
 <body>
 <div class="container">
 	<h1>찜 목록</h1>
-	<c:forEach var="w" items="${wish_viewDTO.wish_viewDTOList}">
+	<c:forEach var="w" items="${wish_viewList}">
 		<div class="card">
+			<c:set var="wish_id" value="${w.wish_id}" />
 			<div>상품이름 : ${w.g_name}</div>
 			<div>가격 : <fmt:formatNumber value="${w.g_price}"/> </div>
-			<a class="btn btn-secondary" href="/member/cancelWish">찜 취소</a>
+			<a class="btn btn-secondary" href="/member/cancelWish?wish_id=${wish_id}">찜 취소</a>
 		</div>
 	</c:forEach>
 </div>

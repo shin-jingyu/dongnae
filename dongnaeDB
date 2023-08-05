@@ -160,13 +160,21 @@ CREATE TABLE `Member` (
  CREATE TABLE `deal` (
 	`d_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_number`	int	NOT NULL,
-    `d_type`	varchar(255)	NULL	,
-	`d_m_number`int	NOT NULL,
+   	`d_type`	varchar(255)	NULL	,
+	`d_m_number`int	NULL,
 	`d_regdate`	timestamp	NULL DEFAULT CURRENT_TIMESTAMP,
 	`g_id`		int	NOT NULL,
 	`d_score`	int	NULL,
-	`d_review`	varchar(255)	NULL
+	`d_review`	varchar(255)	NULL,
+     unique ( m_number, d_type, d_m_number, g_id)
 );
+
+
+-- 거래 + 상품 조회 view
+create view deal_view
+as select  D.d_id, D.m_number, D.d_type, D.d_m_number, D.d_regdate, D.d_score, D.d_review, G.g_id, G.g_price, G.g_name
+from deal as D, goods as G
+where G.m_number = D.m_number ;
 
 -- 찜목록
 CREATE TABLE `wishlist` (

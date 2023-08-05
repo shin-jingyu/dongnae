@@ -68,5 +68,22 @@ CHANGE COLUMN `c2_id` `c2_id` INT NOT NULL AUTO_INCREMENT ;
 
 
 
+-- 카테고리 목록
+insert into category_goods_1 (c1_category) values ('수입명품');
+insert into category_goods_1 (c1_category) values ('패션의류');
+insert into category_goods_1 (c1_category) values ('패션잡화');
+insert into category_goods_1 (c1_category) values ('뷰티');
+insert into category_goods_1 (c1_category) values ('모바일/태블릿');
+insert into category_goods_1 (c1_category) values ('가전제품');
+insert into category_goods_1 (c1_category) values ('노트북/PC');
+insert into category_goods_1 (c1_category) values ('카메라/캠코더');
+insert into category_goods_1 (c1_category) values ('가구/인테리어');
+insert into category_goods_1 (c1_category) values ('리빙/생활');
+insert into category_goods_1 (c1_category) values ('게임');
+insert into category_goods_1 (c1_category) values ('반려동물');
+insert into category_goods_1 (c1_category) values ('도서/음반');
+insert into category_goods_1 (c1_category) values ('스포츠');
+insert into category_goods_1 (c1_category) values ('공구/산업용품');
+insert into category_goods_1 (c1_category) values ('무료나눔');
 
 

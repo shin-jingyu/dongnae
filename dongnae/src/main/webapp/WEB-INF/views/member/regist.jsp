@@ -11,6 +11,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			url:"/member/regist/do_area", 
+			type: 'POST',
+			dataType: "json",
+			success: function(data){
+				var options = "";
+				for(var i= 0 ; i< data.length; i++){
+					options+= "<option value='" + data[i].do_id + "'>" + data[i].do_area + "</option>"
+				}
+				$("#do_id").html(options);
+			},
+			error: function(){
+				alert("error load area");
+			}
+		});
+	})
+	/*  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>경기</option> */
+</script>
+
 <body>
 
 <form class="container" action="/member/regist" method="post">
@@ -36,24 +57,19 @@
 	  </div>
 	  <div class="mb-3">
 	    <label class="form-label">지역</label>
-<%-- 	    <select name="do_id" id="do_id"  name = "do_id">
-	   	  <option  value="1" ${ (member.si_id == "1")? "selected" : "" }>도/광역시</option>
-		  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>경기</option>
-		  <option value="2" ${ (member.si_id == "2")? "selected" : "" }>충남</option>
-		  <option value="3" ${ (member.si_id == "3")? "selected" : "" }>전라</option>
-		  <option value="4" ${ (member.si_id == "4")? "selected" : "" }>경상</option>
-		</select> --%>
+	    <select id="do_id" name="do_id"></select>
 		<%-- 
 		<select style="display: none;" name="si_default" id="si_default"  name = "si_default">
 		  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>시/구</option>
 		</select>
 		 --%>
-	    <select  name="si_id" id="si_id"  name = "si_id">
-		  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>수원</option>
+	   <select  name="si_id" id="si_id"  name = "si_id">
+	   		<option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>시/구</option>
+		  <%-- <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>수원</option>
 		  <option value="2" ${ (member.si_id == "2")? "selected" : "" }>화성</option>
 		  <option value="3" ${ (member.si_id == "3")? "selected" : "" }>오산</option>
-		  <option value="4" ${ (member.si_id == "4")? "selected" : "" }>평택</option>
-		</select>
+		  <option value="4" ${ (member.si_id == "4")? "selected" : "" }>평택</option> --%>
+		</select> 
 	  </div>
 	  <button class="btn btn-primary" id="login">Submit</button>
 </form>

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.marketdongnae.domain.TestDTO;
-import com.marketdongnae.domain.member.DealDTO;
+import com.marketdongnae.domain.member.Deal_viewDTO;
+import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -34,23 +34,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.loginID(m_id);
 	}
 	
+
+	@Override
+	public List<Do_areaDTO> getDoList() {
+		return memberMapper.getDoList();
+	}
+
+	
 	@Override
 	public MemberDTO getMember(String m_id) {
 		return memberMapper.getMember(m_id);
 	}
 	
-	// 이렇게 set이 아니라 통째로 넣으려고 하면 안됨 
-	// 그래서 일단은 dto를 받아서 set으로 했는데 개선필요!!@@
-	@Override
-	public MemberDTO getMember_DTO(String m_id, MemberDTO memberDTO) {
-		MemberDTO md = memberMapper.getMember(m_id);
-		memberDTO.setM_id(md.getM_id());
-		memberDTO.setM_name(md.getM_name());
-		memberDTO.setM_pwd(md.getM_pwd());
-		memberDTO.setM_email(md.getM_email());
-		memberDTO.setM_phone(md.getM_phone());
-		return memberMapper.getMember(m_id);
-	}
 
 	@Override
 	public Integer updateMember(MemberDTO memberDTO) {
@@ -60,19 +55,19 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public List<DealDTO> getSoldList(String m_id) {
+	public List<Deal_viewDTO> getSoldList(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> soldlist =  memberMapper.getSoldList( m_number);
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_number);
 		return soldlist;
 	}
 	
 	
 	@Override
-	public List<DealDTO> getBuyList(String m_id) {
+	public List<Deal_viewDTO> getBuyList(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> buylist =  memberMapper.getBuyList(m_number);
+		List<Deal_viewDTO> buylist =  memberMapper.getBuyList(m_number);
 		return buylist;
 	}
 
@@ -80,9 +75,9 @@ public class MemberServiceImpl implements MemberService {
 	public int getAvgScore(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> soldlist =  memberMapper.getSoldList( m_number);
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_number);
 		int sum = 0 ;
-		for (DealDTO sold : soldlist) {
+		for (Deal_viewDTO sold : soldlist) {
 			sum += (int) sold.getD_score();
 		}
 		int avgScore = (int) Math.ceil(sum/ soldlist.size()) ;
@@ -90,11 +85,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public List<DealDTO> getDealList(String m_id) {
+	public List<Deal_viewDTO> getDealList(String m_id) {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		int m_number =  member.getM_number();
-		List<DealDTO> dealList =  memberMapper.getDealList(m_number);
+		List<Deal_viewDTO> dealList =  memberMapper.getDealList(m_number);
 		return dealList;
+	}
+	
+	@Override
+	public List<Deal_viewDTO> getOnSaleList(String m_id) {
+		MemberDTO member =  memberMapper.getMember(m_id);
+		int m_number =  member.getM_number();
+		List<Deal_viewDTO> onSaleList =  memberMapper.getOnSaleList(m_number);
+		return onSaleList;
 	}
 	
 	@Override
@@ -115,18 +118,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Integer changePassword(String m_id, PasswordDTO passwordDTO) {
+	public String changePassword(String m_id, PasswordDTO passwordDTO) {
 		MemberDTO member = memberMapper.getMember(m_id);
 		passwordDTO.setM_id(m_id);
 		
 		// 입력한 현재 비밀번호가 맞는지 확인
 		String rawPwd =  passwordDTO.getCurrent_password();
 		String encodedPwd = (String) member.getM_pwd();
-		System.out.println("####rawPwd:"+ passwordEncoder.encode(rawPwd) );
-		System.out.println("####encodedPwd:"+encodedPwd );
 		if( !passwordEncoder.matches(rawPwd , encodedPwd) ) {
 			passwordDTO.setMessage("wrongCurrent");
-			return null;
+			return "fail";
 		};
 
 		// 새 비밀번호와 확인이 일치하는지 확인
@@ -134,7 +135,7 @@ public class MemberServiceImpl implements MemberService {
 		String confirmPwd = passwordDTO.getNew_password_confirm();
 		if( !newPwd.equals(confirmPwd) ) {
 			passwordDTO.setMessage("WrongConfirm");
-			return null;
+			return "fail";
 			};
 			
 		// 새 비밀번호로 변경
@@ -142,8 +143,8 @@ public class MemberServiceImpl implements MemberService {
 		passwordDTO.setNew_password(newEncodePwd);  
 		passwordDTO.setMessage("success");
 			
-		Integer result = memberMapper.changePassword(passwordDTO);
-		return result ;
+		memberMapper.changePassword(passwordDTO);
+		return "success" ;
 	}
 
 	@Override
@@ -160,4 +161,5 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	
 }

@@ -4,7 +4,8 @@ import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.marketdongnae.domain.member.DealDTO;
+import com.marketdongnae.domain.member.Deal_viewDTO;
+import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -13,22 +14,24 @@ import com.marketdongnae.security.CustomUserDetails;
 public interface MemberService {
 	
 	CustomUserDetails loginID(String m_id);
-
-	MemberDTO getMember_DTO(String m_id, MemberDTO memberDTO);
 	
+	List<Do_areaDTO> getDoList();
+
 	MemberDTO getMember(String m_id);
 
 	Integer updateMember(MemberDTO memberDTO);
 
-	List<DealDTO> getSoldList(String m_id);
+	List<Deal_viewDTO> getSoldList(String m_id);
 
-	List<DealDTO> getBuyList(String m_id) ;
+	List<Deal_viewDTO> getBuyList(String m_id) ;
 	
-	List<DealDTO> getDealList(String m_id);
+	List<Deal_viewDTO> getDealList(String m_id);
+	
+	List<Deal_viewDTO> getOnSaleList(String m_id);
 	
 	Integer regist(MemberDTO memberDTO);
 
-	Integer changePassword(String m_id, PasswordDTO passwordDTO);
+	String changePassword(String m_id, PasswordDTO passwordDTO);
 
 	int getAvgScore(String m_id);
 	
@@ -37,5 +40,8 @@ public interface MemberService {
 	List<Wish_viewDTO> getWish_viewList(String m_id);
 
 	void deleteWish(int wish_id);
+
+	
+
 	
 }

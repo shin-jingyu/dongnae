@@ -24,7 +24,7 @@
 			<th>구분</th>
 			<th>금액</th>
 		</tr>
-			<c:forEach var="d" items="${dealDTO.dealDTOList}">
+			<c:forEach var="d" items="${dealList}">
 			<c:choose>
 				<c:when test="${d.d_type == 'buy'}">  
 				<tr>

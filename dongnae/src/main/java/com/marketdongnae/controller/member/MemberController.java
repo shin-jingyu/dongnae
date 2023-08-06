@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marketdongnae.controller.goods.GoodsController;
-import com.marketdongnae.domain.member.DealDTO;
+import com.marketdongnae.domain.member.Deal_viewDTO;
+import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -52,9 +54,9 @@ public class MemberController {
 	}
 	
 	@GetMapping("detail")
-	public String detail(@ModelAttribute("member") MemberDTO memberDTO, HttpServletRequest request) {
+	public String detail(Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		memberService.getMember_DTO(m_id, memberDTO);
+		model.addAttribute("member",  memberService.getMember(m_id));
 		return "member/detail" ;		
 	}
 	
@@ -73,12 +75,10 @@ public class MemberController {
 	
 	
 	@PostMapping("changePassword")
-	public String changePassword_post(@ModelAttribute ("password") PasswordDTO passwordDTO
-			, HttpServletRequest request) {
+	public String changePassword_post(@ModelAttribute ("password") PasswordDTO passwordDTO , HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		memberService.changePassword(m_id, passwordDTO);
-		
-		if ( passwordDTO.getMessage().equals("wrongCurrent") || passwordDTO.getMessage().equals("WrongConfirm")) 
+		String result = memberService.changePassword(m_id, passwordDTO);
+		if ( result == "fail") 
 			return "member/changePassword";
 		else 
 			return "redirect:/";
@@ -91,11 +91,11 @@ public class MemberController {
 	
 	@GetMapping("loginFail")
 	public String loginFail(Model model) { 
-		// 나중에 ajax로 바꿀 예정 
 		model.addAttribute("login", "fail");
 		return "member/login";
 	}
-	// /member/loginSuccess는 CustomLoginSuccessHandler에서 이동함
+	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
+	
 	@GetMapping("logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -113,36 +113,47 @@ public class MemberController {
 		memberService.regist(memberDTO);
 		return "member/login";		
 	}
+	
+	@PostMapping("regist/do_area")
+	@ResponseBody
+	public List<Do_areaDTO> regist_do_area_post() {
+		 List<Do_areaDTO> doList =  memberService.getDoList();
+		return doList;		
+	}
 
-	// list를 전달해야하는데 @ModelAttribute로는 dto로만 전달돼서, dto내에 list 변수를 만들어서 set해서 전달함\
-	// modelAndView 로 그냥 하는 게 더 직관적임
-	// 굳이 통일하는 게 더 안좋은 것
 	@GetMapping("soldList")
-	public String soldList(@ModelAttribute("dealDTO") DealDTO dealDTO, HttpServletRequest request) {
+	public String soldList(Model model,HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getSoldList(m_id));
+		model.addAttribute("soldList", memberService.getSoldList(m_id));
 		return "member/soldList";		
 	}
 	
 	@GetMapping("buyList")
-	public String buyList(@ModelAttribute("dealDTO") DealDTO dealDTO, HttpServletRequest request) {
+	public String buyList(Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getBuyList(m_id));
+		model.addAttribute("buyList", memberService.getBuyList(m_id));
 		return "member/buyList";		
+	}
+	
+	@GetMapping("onSaleList")
+	public String onSaleList(Model model, HttpServletRequest request) {
+		String m_id =  getSessionM_Id(request);
+		model.addAttribute("onSaleList", memberService.getOnSaleList(m_id));
+		return "member/onSaleList";		
 	}
 
 	@GetMapping("review")
-	public String getReviewList(@ModelAttribute("dealDTO") DealDTO dealDTO, Model model, HttpServletRequest request) {
+	public String getReviewList( Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getSoldList(m_id));
+		model.addAttribute("soldList", memberService.getSoldList(m_id));
 		model.addAttribute("avgScore", memberService.getAvgScore(m_id));
 		return "member/review";		
 	}
 	
 	@GetMapping("point")
-	public String review(@ModelAttribute("dealDTO") DealDTO dealDTO, Model model, HttpServletRequest request) {
+	public String review( Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
-		dealDTO.setDealDTOList(memberService.getDealList(m_id));
+		model.addAttribute("dealList", memberService.getDealList(m_id));
 		model.addAttribute("m_point", memberService.getPoint(m_id));
 		return "member/point";		
 	}

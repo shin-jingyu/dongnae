@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.member.Deal_viewDTO;
+import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -32,6 +33,13 @@ public class MemberServiceImpl implements MemberService {
 	public CustomUserDetails loginID(String m_id) {
 		return memberMapper.loginID(m_id);
 	}
+	
+
+	@Override
+	public List<Do_areaDTO> getDoList() {
+		return memberMapper.getDoList();
+	}
+
 	
 	@Override
 	public MemberDTO getMember(String m_id) {

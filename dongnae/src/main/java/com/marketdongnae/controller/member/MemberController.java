@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marketdongnae.controller.GoodsController;
 import com.marketdongnae.domain.member.Deal_viewDTO;
+import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
@@ -110,6 +112,13 @@ public class MemberController {
 	public String regist_post(@ModelAttribute("member") MemberDTO memberDTO) {
 		memberService.regist(memberDTO);
 		return "member/login";		
+	}
+	
+	@PostMapping("regist/do_area")
+	@ResponseBody
+	public List<Do_areaDTO> regist_do_area_post() {
+		 List<Do_areaDTO> doList =  memberService.getDoList();
+		return doList;		
 	}
 
 	@GetMapping("soldList")

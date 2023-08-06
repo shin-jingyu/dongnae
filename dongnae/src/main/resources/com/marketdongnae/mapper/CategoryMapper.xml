@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.marketdongnae.mapper.CategoryMapper">
+	
+	<select id="getCategory1" resultType="com.marketdongnae.domain.category.Category_Goods_1">
+		select * from category_goods_1
+	</select>
+	
+	<select id="getCategory2" resultType="com.marketdongnae.domain.category.Category_Goods_2">
+		select * from category_goods_2
+	</select>
+	
+	
+	
+	
+</mapper>    

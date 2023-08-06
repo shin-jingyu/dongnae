@@ -29,9 +29,9 @@ public class GoodsControllerTests {
 	
 	@Test
 	public void getList() {
-		List<GoodsDTO> list = service.getList();
+		List<GoodsDTO> list = service.getGoodsList();
 		list.forEach(x->log.info(x));
-		assertNotNull(service.getList());
+		assertNotNull(service.getGoodsList());
 	}
 	
 	@Test
@@ -49,7 +49,6 @@ public class GoodsControllerTests {
 	@Test
 	public void updateTest() {
 		GoodsDTO dto = new GoodsDTO();
-		
 		dto.setG_id(1);
 		dto.setG_name("updateName22");
 		service.updateGoods(dto);

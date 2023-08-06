@@ -30,109 +30,82 @@ public class GoodsServiceImpl implements GoodsService {
 		return str.replace("-", File.separator);
 	}
 	
+	private String[] processUpload(MultipartFile[] uploadFile, File uploadPath) {
+	    String[] picFileNames = new String[3];
+	    for (int i = 0; i < uploadFile.length; i++) {
+	        MultipartFile picFile = uploadFile[i];
+	        if (picFile != null && !picFile.isEmpty()) {
+	            picFileNames[i] = picFile.getOriginalFilename();
+	            UUID uuid = UUID.randomUUID();
+	            picFileNames[i] = uuid.toString() + "_" + picFileNames[i];
+	            log.info("only-file-name" + picFileNames[i]);
+	            File saveFile = new File(uploadPath, picFileNames[i]);
+	            try {
+	                uploadFile[i].transferTo(saveFile);
+	            } catch (IllegalStateException e) {
+	                e.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return picFileNames;
+	}
+	
 	
 	@Override
-	public List<GoodsDTO> getList() {
+	public List<GoodsDTO> getGoodsList() {
 		// TODO Auto-generated method stub
-		return goodsMapper.getList();
+		return goodsMapper.getGoodsList();
 	}
 	
 	@Override
 	public void processUploadAndInsertGoods(GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
-		// TODO Auto-generated method stub
-		//mac 기준 경로설정
-		String uploaderFolder = "/Users/nohbin/Desktop/upload";
-		
-		// upload date 별 file 생성
-		File uploadPath = new File(uploaderFolder, getFolder());
-		log.info("upload path : " + uploadPath);
-		String filePath = uploadPath.toString();
-		
-		if(uploadPath.exists() == false) {
-			uploadPath.mkdirs();
-		}
-		log.info("Upload FilePath  : " + filePath);
-		
-	    String[] picFileNames = new String[3];
+	    String uploaderFolder = "/Users/nohbin/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload";
+	    File uploadPath = new File(uploaderFolder, getFolder());
+	    log.info("upload path : " + uploadPath);
+	    String filePath = uploadPath.toString();
 
-	    // MultipartFile 필드들을 반복문으로 처리로 파일 저장 및 UUID설정으로 중복되는 파일명 처리
-	    for (int i = 0; i < uploadFile.length; i++) {
-	        MultipartFile picFile = uploadFile[i];
-	        if (picFile != null && !picFile.isEmpty()) {
-	            // 파일 업로드 처리 로직
-	            picFileNames[i] = picFile.getOriginalFilename();
-	            UUID uuid = UUID.randomUUID();
-	            picFileNames[i] = uuid.toString() + "_" + picFileNames[i];
-	            log.info("only-file-name" + picFileNames[i]);
-	            File saveFile = new File(uploadPath, picFileNames[i]);
-	            try {
-	            	uploadFile[i].transferTo(saveFile);
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        }
-	    } // FOR END
-		
-	    goodsDTO.setG_picpath(filePath);
+	    if (!uploadPath.exists()) {
+	        uploadPath.mkdirs();
+	    }
+	    log.info("Upload FilePath  : " + filePath);
+
+	    String[] picFileNames = processUpload(uploadFile, uploadPath);
+
+	    goodsDTO.setG_picpath(getFolder());
 	    goodsDTO.setG_pic01(picFileNames[0]);
 	    goodsDTO.setG_pic01(picFileNames[1]);
 	    goodsDTO.setG_pic01(picFileNames[2]);
-	    
+
 	    goodsMapper.insertGoods(goodsDTO);
+	    
+	    
 	}
 
 	@Override
 	public void processUploadAndUpdateGoods(GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
-		// TODO Auto-generated method stub
-		//mac 기준 경로설정
-		String uploaderFolder = "/Users/nohbin/Desktop/upload";
-		
-		// upload date 별 file 생성
-		File uploadPath = new File(uploaderFolder, getFolder());
-		log.info("upload path : " + uploadPath);
-		String filePath = uploadPath.toString();
-		
-		if(uploadPath.exists() == false) {
-			uploadPath.mkdirs();
-		}
-		log.info("Upload FilePath  : " + filePath);
-		
-	    String[] picFileNames = new String[3];
+	    String uploaderFolder = "/Users/nohbin/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload";
+	    File uploadPath = new File(uploaderFolder, getFolder());
+	    log.info("upload path : " + uploadPath);
+	    String filePath = uploadPath.toString();
 
-	    // MultipartFile 필드들을 반복문으로 처리로 파일 저장 및 UUID설정으로 중복되는 파일명 처리
-	    for (int i = 0; i < uploadFile.length; i++) {
-	        MultipartFile picFile = uploadFile[i];
-	        if (picFile != null && !picFile.isEmpty()) {
-	            // 파일 업로드 처리 로직
-	            picFileNames[i] = picFile.getOriginalFilename();
-	            UUID uuid = UUID.randomUUID();
-	            picFileNames[i] = uuid.toString() + "_" + picFileNames[i];
-	            log.info("only-file-name" + picFileNames[i]);
-	            File saveFile = new File(uploadPath, picFileNames[i]);
-	            try {
-	            	uploadFile[i].transferTo(saveFile);
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        }
-	    } // FOR END
-		
-	    goodsDTO.setG_picpath(filePath);
+	    if (!uploadPath.exists()) {
+	        uploadPath.mkdirs();
+	    }
+	    log.info("Upload FilePath  : " + filePath);
+
+	    String[] picFileNames = processUpload(uploadFile, uploadPath);
+
+	    goodsDTO.setG_picpath(getFolder());
 	    goodsDTO.setG_pic01(picFileNames[0]);
 	    goodsDTO.setG_pic01(picFileNames[1]);
 	    goodsDTO.setG_pic01(picFileNames[2]);
 
-		
-		goodsMapper.updateGoods(goodsDTO);
+	    goodsMapper.updateGoods(goodsDTO);
 	}
+
+	
 	
 	@Override
 	public void updateGoods(GoodsDTO goodsDTO) {
@@ -145,10 +118,5 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		goodsMapper.insertGoods(goodsDTO);
 	}
-	
-
-	
-	
-	
 
 }

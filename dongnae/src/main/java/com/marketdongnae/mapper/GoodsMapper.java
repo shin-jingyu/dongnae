@@ -8,7 +8,7 @@ import com.marketdongnae.domain.goods.GoodsDTO;
 @Mapper
 public interface GoodsMapper {
 
-	List<GoodsDTO> getList();
+	List<GoodsDTO> getGoodsList();
 
 	void insertGoods(GoodsDTO goodsDTO);
 

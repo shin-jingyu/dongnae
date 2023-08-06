@@ -1,4 +1,4 @@
-package com.marketdongnae.controller;
+package com.marketdongnae.controller.goods;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,9 +30,9 @@ public class GoodsController {
 	private final GoodsService goodsService;
 	
 	
-	@GetMapping(value = "getListgoods")
+	@GetMapping(value = "getList")
 	public List<GoodsDTO> goods_List_Get() {
-		return goodsService.getList();
+		return goodsService.getGoodsList();
 	}
 	
 	@PostMapping(value = "insertgoods")
@@ -41,7 +41,12 @@ public class GoodsController {
 	    return "/goods/getList";
 	}
 	
-	@PostMapping(value = "updategoods")
+	@GetMapping(value = "eidt")
+	public void goods_Update_Get() {
+		
+	}
+	
+	@PostMapping(value = "edit")
 	public String goods_Update_Post(@ModelAttribute GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
 		 goodsService.processUploadAndUpdateGoods(goodsDTO, uploadFile);
 	    return "/goods/getList";

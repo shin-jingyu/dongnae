@@ -61,7 +61,7 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Override
 	public void processUploadAndInsertGoods(GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
-	    String uploaderFolder = "/Users/nohbin/Desktop/upload";
+	    String uploaderFolder = "/Users/nohbin/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload";
 	    File uploadPath = new File(uploaderFolder, getFolder());
 	    log.info("upload path : " + uploadPath);
 	    String filePath = uploadPath.toString();
@@ -73,17 +73,19 @@ public class GoodsServiceImpl implements GoodsService {
 
 	    String[] picFileNames = processUpload(uploadFile, uploadPath);
 
-	    goodsDTO.setG_picpath(filePath);
+	    goodsDTO.setG_picpath(getFolder());
 	    goodsDTO.setG_pic01(picFileNames[0]);
 	    goodsDTO.setG_pic01(picFileNames[1]);
 	    goodsDTO.setG_pic01(picFileNames[2]);
 
 	    goodsMapper.insertGoods(goodsDTO);
+	    
+	    
 	}
 
 	@Override
 	public void processUploadAndUpdateGoods(GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
-	    String uploaderFolder = "/Users/nohbin/Desktop/upload";
+	    String uploaderFolder = "/Users/nohbin/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload";
 	    File uploadPath = new File(uploaderFolder, getFolder());
 	    log.info("upload path : " + uploadPath);
 	    String filePath = uploadPath.toString();
@@ -95,7 +97,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 	    String[] picFileNames = processUpload(uploadFile, uploadPath);
 
-	    goodsDTO.setG_picpath(filePath);
+	    goodsDTO.setG_picpath(getFolder());
 	    goodsDTO.setG_pic01(picFileNames[0]);
 	    goodsDTO.setG_pic01(picFileNames[1]);
 	    goodsDTO.setG_pic01(picFileNames[2]);

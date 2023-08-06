@@ -24,6 +24,4 @@ public class TestServiceImpl implements TestService {
 		list.add(mem);
 		return list;
 	}
-
-
 }

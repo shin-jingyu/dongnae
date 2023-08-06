@@ -1,10 +1,11 @@
 package com.marketdongnae.service.goods;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.marketdongnae.mapper.goods.CategoryMapper;
+import com.marketdongnae.mapper.CategoryMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -17,7 +18,12 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Map<String, Object> getCategoryData() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		Map<String, Object> categoryData = new HashMap<String, Object>();
+		categoryData.put("category_1", mapper.getCategory1());
+		categoryData.put("category_2", mapper.getCategory2());
+		
+		return categoryData;
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
+import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.service.Community.CommunityService;
 
@@ -67,11 +68,15 @@ public class CommunityController {
 		return "redirect:community";
 	}
 	
+	
 	@GetMapping("/deleteCommunity/{mu_id}")
-	public String deleteCommunity(@PathVariable String mu_id) {
+	public String deleteCommunity(@PathVariable("mu_id") int mu_id) {
 		System.out.println("글삭제");
+		System.out.println("community mu_id= "+mu_id);
 		communityService.deleteCommunity(mu_id);
-		return "redirect:community";
+		return "redirect:/community";
 	}
+	
+	
 	
 }

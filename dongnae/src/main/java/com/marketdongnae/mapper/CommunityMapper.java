@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
+import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 
 
@@ -23,5 +24,7 @@ public interface CommunityMapper {
 	//수정하기
 	public void updateCommunity(communityDetailDTO community);
 	//삭제하기
-	public void deleteCommunity(String mu_id);
+	public  void deleteCommunity(int mu_id);
+	
+
 }

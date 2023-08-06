@@ -53,14 +53,7 @@
 			</select>
 			</td>
 		</tr>
-		<tr>
-			<td>작성자</td>
-			<td>${community.mu_name }</td>
-		</tr>
-		<tr>
-			<td>작성시간</td>
-			<td>${community.mu_data }</td>
-		</tr>
+		
 		<tr>
 			<td colspan="2">글 내용</td>
 		</tr>	

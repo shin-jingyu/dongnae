@@ -17,13 +17,13 @@
 	<update id="updateCount" parameterType="string" >
 		update community 
 		set community.mu_c =  community.mu_c +1
-		where community.mu_id = #{communityall.mu_id};	
+		where community.mu_id = #{communityall.mu_id}	
 	</update>
 	
 	<!-- 글작성 -->
 	<insert id="insertCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
 		insert into community( mu_name, mu_detail, mu_i1, mu_i2, mu_i3, ca_id, m_number)
-		value(#{mu_name},#{mu_detail},#{mu_i1},#{mu_i2},#{mu_i3},#{ca_id},#{m_number});
+		value(#{mu_name},#{mu_detail},#{mu_i1},#{mu_i2},#{mu_i3},#{ca_id},#{m_number})
 	</insert>
 	
 	<update id="updateCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
@@ -34,13 +34,21 @@
 			mu_i2 =#{mu_i2},
 			mu_i3 =#{mu_i3},
 			ca_id =#{ca_id}
-		where community.mu_id = #{mu_id};
+		where community.mu_id = #{mu_id}
 	</update>
 	
 	<delete id="deleteCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
-		delete from community where community.mu_id = #{mu_id};
+		delete from community where community.mu_id = #{mu_id}
 	</delete>
 	
+	
+	
+	<select id="heart" parameterType="com.marketdongnae.domain.community.HeartDTO">
+		select count(*) from heart where  m_number = #{m_number} and mu_id =#{mu_id};
+	</select>
+	<delete id="deleteHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
+		delete from heart where m_number = #{m_number} and mu_id = #{mu_id};
+	</delete>
 	
 	
 	

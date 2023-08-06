@@ -11,32 +11,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
-<!-- 
-<script type="text/javascript">
-   /* ajax 시큐리티 테스트중 */
-	$(document).ready(function(){
-		$("form").submit(function(event){
-			event.preventDefault();
-			let formData = $("form").serialize(); 
-			$.ajax({
-				url: '/member/login' ,
-				type: 'POST',
-				data : formData,
-				success:function(response){
-					if(response.result == "success"){
-						alert("success")
-						window.location.href = '/' ;
-					} else {
-						alert("아이디와 패스워드를 확인하세요")
-					}
-				}, error:function(){
-					alert("오류가 발생했습니다. 관리자에게 문의하세요.");
-				}
-			}); 
-		});
-	})
-</script> 
--->
 <body>
 <div  class="container" >
 <form action="/login.do" method="post">

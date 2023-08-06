@@ -156,6 +156,97 @@ CREATE TABLE `Member` (
     `m_auth`	varchar(50)	NOT NULL	DEFAULT 'ROLE_MEMBER'
 );
 
+-- 시 도
+
+CREATE TABLE `Do_area` (
+	`do_id`	int	NOT NULL primary key ,
+	`do_area`	varchar(255)	NOT NULL
+);
+
+CREATE TABLE `Si_area` (
+	`si_id`	int	NOT NULL  primary key ,
+	`si_area`	varchar(255)	NOT NULL,
+	`do_id`	int	NOT NULL
+);
+
+
+select * from Do_area;
+select * from Si_area;
+
+
+insert into Do_area ( do_id, do_area ) values ('123', '서울' );
+insert into Do_area ( do_id, do_area ) values ('456', '경기' );
+insert into Do_area ( do_id, do_area ) values ('700', '인천' );
+
+insert into Si_area ( si_id , si_area, do_id ) values ('10', '강남구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('11', '강동구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('12', '강북구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('13', '강서구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('14', '관악구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('15', '광진구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('16', '구로구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('17', '금천구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('18', '노원구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('19', '도봉구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('20', '동대문구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('21', '동작구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('22', '마포구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('23', '서대문구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('24', '서초구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('25', '성동구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('26', '성북구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('27', '송파구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('28', '양천구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('29', '영등포구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('30', '용산구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('31', '은평구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('32', '종로구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('33', '중구', '123' );
+insert into Si_area ( si_id , si_area, do_id ) values ('34', '중랑구', '123' );
+
+insert into Si_area ( si_id , si_area, do_id ) values ('40', '수원', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('41', '성남', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('42', '용인', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('43', '안양', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('44', '안산', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('45', '과천', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('46', '광명', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('47', '광주', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('48', '군포', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('49', '부천', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('50', '시흥', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('51', '김포', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('52', '안성', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('53', '오산', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('54', '의왕', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('55', '이천', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('56', '평택', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('57', '하남', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('58', '화성', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('59', '여주', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('60', '양평', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('61', '고양', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('62', '구리', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('63', '남양주', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('64', '동두천', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('65', '양주', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('66', '의정부', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('67', '파주', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('68', '연천・포천', '456' );
+insert into Si_area ( si_id , si_area, do_id ) values ('69', '가평', '456' );
+
+insert into Si_area ( si_id , si_area, do_id ) values ('70', '인천', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('71', '중구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('72', '동구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('73', '미추홀구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('74', '연수구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('75', '남동구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('76', '부평구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('77', '계양구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('78', '서구', '700' );
+insert into Si_area ( si_id , si_area, do_id ) values ('79', '강화・웅진군', '700' );
+
+
 -- 거래 
  CREATE TABLE `deal` (
 	`d_id`		int	NOT NULL unique primary key  auto_increment,

@@ -14,8 +14,6 @@ public interface MemberService {
 	
 	CustomUserDetails loginID(String m_id);
 
-	MemberDTO getMember_DTO(String m_id, MemberDTO memberDTO);
-	
 	MemberDTO getMember(String m_id);
 
 	Integer updateMember(MemberDTO memberDTO);
@@ -30,7 +28,7 @@ public interface MemberService {
 	
 	Integer regist(MemberDTO memberDTO);
 
-	Integer changePassword(String m_id, PasswordDTO passwordDTO);
+	String changePassword(String m_id, PasswordDTO passwordDTO);
 
 	int getAvgScore(String m_id);
 	

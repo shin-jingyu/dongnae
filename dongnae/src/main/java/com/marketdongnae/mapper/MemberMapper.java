@@ -12,7 +12,6 @@ import com.marketdongnae.security.CustomUserDetails;
 public interface MemberMapper {
 	public CustomUserDetails loginID(String m_id);
 	
-	
 	public MemberDTO getMember(String m_id);
 
 	public Integer updateMember(MemberDTO memberDTO);
@@ -27,11 +26,10 @@ public interface MemberMapper {
 
 	public Integer regist(MemberDTO memberDTO);
 
-	public Integer changePassword(PasswordDTO passwordDTO);
+	public String changePassword(PasswordDTO passwordDTO);
 
 	public List<Wish_viewDTO> getWish_viewList(int m_number);
+	
 	public void deleteWish(int wish_id);
-
-
 
 }

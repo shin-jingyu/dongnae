@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.marketdongnae.domain.TestDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
@@ -39,18 +38,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getMember(m_id);
 	}
 	
-	// 이렇게 set이 아니라 통째로 넣으려고 하면 안됨 
-	// 그래서 일단은 dto를 받아서 set으로 했는데 개선필요!!@@
-	@Override
-	public MemberDTO getMember_DTO(String m_id, MemberDTO memberDTO) {
-		MemberDTO md = memberMapper.getMember(m_id);
-		memberDTO.setM_id(md.getM_id());
-		memberDTO.setM_name(md.getM_name());
-		memberDTO.setM_pwd(md.getM_pwd());
-		memberDTO.setM_email(md.getM_email());
-		memberDTO.setM_phone(md.getM_phone());
-		return memberMapper.getMember(m_id);
-	}
 
 	@Override
 	public Integer updateMember(MemberDTO memberDTO) {
@@ -123,18 +110,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Integer changePassword(String m_id, PasswordDTO passwordDTO) {
+	public String changePassword(String m_id, PasswordDTO passwordDTO) {
 		MemberDTO member = memberMapper.getMember(m_id);
 		passwordDTO.setM_id(m_id);
 		
 		// 입력한 현재 비밀번호가 맞는지 확인
 		String rawPwd =  passwordDTO.getCurrent_password();
 		String encodedPwd = (String) member.getM_pwd();
-		System.out.println("####rawPwd:"+ passwordEncoder.encode(rawPwd) );
-		System.out.println("####encodedPwd:"+encodedPwd );
 		if( !passwordEncoder.matches(rawPwd , encodedPwd) ) {
 			passwordDTO.setMessage("wrongCurrent");
-			return null;
+			return "fail";
 		};
 
 		// 새 비밀번호와 확인이 일치하는지 확인
@@ -142,7 +127,7 @@ public class MemberServiceImpl implements MemberService {
 		String confirmPwd = passwordDTO.getNew_password_confirm();
 		if( !newPwd.equals(confirmPwd) ) {
 			passwordDTO.setMessage("WrongConfirm");
-			return null;
+			return "fail";
 			};
 			
 		// 새 비밀번호로 변경
@@ -150,8 +135,8 @@ public class MemberServiceImpl implements MemberService {
 		passwordDTO.setNew_password(newEncodePwd);  
 		passwordDTO.setMessage("success");
 			
-		Integer result = memberMapper.changePassword(passwordDTO);
-		return result ;
+		memberMapper.changePassword(passwordDTO);
+		return "success" ;
 	}
 
 	@Override

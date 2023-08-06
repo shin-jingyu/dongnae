@@ -20,41 +20,55 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	
 	<div class="container">
-	<h2>수정하기</h2>
+		<h2>수정하기</h2>
 		<div>
-			<form action="/updateCommunity" method="post">
+			<form method="post" action="/updateCommunity">
+			<input type="hidden" name="mu_id" value="${community.mu_id }">
+			
 				<table class="table table-borderd table table-hover">
-				<tr>
-					<td>글이름</td>
-					<td>${community.mu_name }</td>
-				</tr>
 				
-				<tr>
-					<td>지역</td>
-					<td>${community.si_area }</td>
-				</tr>
-				<tr>
-					<td>카테고리</td>
-					<td>${community.ca_l }</td>
-				</tr>
-				<tr>
-					<td>작성자</td>
-					<td>${community.mu_name }</td>
-				</tr>
-				<tr>
-					<td>작성시간</td>
-					<td>${community.mu_data }</td>
-				</tr>
-				<tr>
-					<td colspan="2">글 내용</td>
-				</tr>	
-				<tr>	
-					<td colspan="2">${community.mu_detail }</td>
-				</tr>
-				</table>	
+		
+		<tr>
+			<td>글제목</td>
+			<td>
+			<input type="text" name="mu_name" value="${community.mu_name }"> 
+			</td>
+		</tr>
+		
+		<tr>
+			<td>지역</td>
+			<td>${community.si_area }</td>
+		</tr>
+		<tr>
+			<td>카테고리</td>
+			<td>
+			<select name="ca_id"  >
+					<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
+					<option value="2" ${ (ca_id == "2")? "selected" : "" }>분실/실종</option>
+					<option value="3" ${ (ca_id == "3")? "selected" : "" }>일상</option>
+					<option value="4" ${ (ca_id == "4")? "selected" : "" }>맛집</option>
+					<option value="5" ${ (ca_id == "4")? "selected" : "" }>취미</option>
+					<option value="6" ${ (ca_id == "4")? "selected" : "" }>동네질문</option>
+			</select>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">글 내용</td>
+		</tr>	
+		<tr>	
+			<td colspan="2"><textarea rows="10" cols="150" name="mu_detail">${community.mu_detail }</textarea></td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="수정하기"></td>
+			
+		</tr>
+		</table>
+				
 			</form>
+			<button onclick="location.href='communityDetail?mu_id=${community.mu_id }'">이전으로</button>
+			<button onclick="location.href='community'">목록으로</button>
 		</div>
 	</div>
 </body>

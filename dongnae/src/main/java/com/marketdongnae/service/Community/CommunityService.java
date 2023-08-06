@@ -3,6 +3,7 @@ package com.marketdongnae.service.Community;
 import java.util.List;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
+import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 
 
@@ -17,4 +18,7 @@ public interface CommunityService {
 	public void insertCommunity(communityDetailDTO community);
 	//수정하기
 	public void updateCommunity(communityDetailDTO community);
+	// 삭제하기
+	public  void deleteCommunity(int mu_id);
+	
 }

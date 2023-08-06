@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
+import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.mapper.CommunityMapper;
 
@@ -42,6 +43,22 @@ public class CommunityServiceImpl implements CommunityService {
 	public void updateCommunity(communityDetailDTO community) {
 		communityMapper.updateCommunity(community);
 	}
+
+	@Override
+	public void deleteCommunity(int mu_id) {
+		System.out.println("service before");
+		communityMapper.deleteCommunity(mu_id);
+		System.out.println("service after");
+		
+	}
+
+	
+
+	
+
+	
+
+	
 	
 	
 	

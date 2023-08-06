@@ -15,4 +15,6 @@ public class communityDetailDTO {
 	private Timestamp mu_data ;
 	private int ca_id ; 
 	private int m_number ;
+	
+	
 }

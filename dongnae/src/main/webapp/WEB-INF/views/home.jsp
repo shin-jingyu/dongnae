@@ -24,7 +24,7 @@
 	<a class="btn btn-secondary" href="/member/review">내 거래 후기</a>
 	<a class="btn btn-secondary" href="/member/point">내 페이포인트</a>
 	<a class="btn btn-secondary" href="/member/wishlist">찜목록</a>
-	
+	<a class="btn btn-secondary" href="community">커뮤니티</a>
 	<c:choose>
 		<c:when test="${empty m_id}">  
 			<a class="btn btn-info" href="/member/login">로그인</a>

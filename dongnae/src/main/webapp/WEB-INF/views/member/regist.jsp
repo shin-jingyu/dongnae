@@ -18,18 +18,40 @@
 			type: 'POST',
 			dataType: "json",
 			success: function(data){
-				var options = "";
+				var options = "<option id='do_default' selected >도/광역시</option>";
 				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].do_id + "'>" + data[i].do_area + "</option>"
+					options+= "<option value='" + data[i].do_id + "'>" + data[i].do_area + " </option>"
 				}
 				$("#do_id").html(options);
 			},
 			error: function(){
-				alert("error load area");
+				alert("error load do area");
 			}
 		});
-	})
-	/*  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>경기</option> */
+	});
+		
+	function do_select(){
+		let doData = $("#do_id option:selected").val();
+		$.ajax({
+			url: '/member/regist/si_area',
+			type:'POST',
+			data: doData, 
+			contentType: 'application/json',  /* 이거 넣으니까 오류 해결: 여기는 보내는 do_id */ 
+			dataType: "json",	 	/* 여기는 받는 si_area List */ 
+			success:function(data){		
+				var options = "";
+				for(var i= 0 ; i< data.length; i++){
+					options+= "<option value='" + data[i].si_id + "'>" + data[i].si_area + "</option>"
+				}
+				$("#si_id").html(options);
+				$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
+			},
+			error:function(){
+				alert("error load si area");
+			}
+		})
+	}
+	
 </script>
 
 <body>
@@ -57,18 +79,10 @@
 	  </div>
 	  <div class="mb-3">
 	    <label class="form-label">지역</label>
-	    <select id="do_id" name="do_id"></select>
-		<%-- 
-		<select style="display: none;" name="si_default" id="si_default"  name = "si_default">
-		  <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>시/구</option>
-		</select>
-		 --%>
-	   <select  name="si_id" id="si_id"  name = "si_id">
-	   		<option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>시/구</option>
-		  <%-- <option selected value="1" ${ (member.si_id == "1")? "selected" : "" }>수원</option>
-		  <option value="2" ${ (member.si_id == "2")? "selected" : "" }>화성</option>
-		  <option value="3" ${ (member.si_id == "3")? "selected" : "" }>오산</option>
-		  <option value="4" ${ (member.si_id == "4")? "selected" : "" }>평택</option> --%>
+	    <select onchange="do_select()" id="do_id" name="do_id" ">
+	    </select>
+	   <select id="si_id"  name = "si_id">
+	   		<option  selected >시/군/구</option>
 		</select> 
 	  </div>
 	  <button class="btn btn-primary" id="login">Submit</button>

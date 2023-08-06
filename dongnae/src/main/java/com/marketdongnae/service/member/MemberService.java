@@ -8,6 +8,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
 
@@ -16,6 +17,8 @@ public interface MemberService {
 	CustomUserDetails loginID(String m_id);
 	
 	List<Do_areaDTO> getDoList();
+	
+	List<Si_areaDTO> getSiList(int do_id);
 
 	MemberDTO getMember(String m_id);
 
@@ -41,7 +44,4 @@ public interface MemberService {
 
 	void deleteWish(int wish_id);
 
-	
-
-	
 }

@@ -13,6 +13,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.mapper.GoodsMapper;
 import com.marketdongnae.mapper.MemberMapper;
@@ -38,6 +39,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Do_areaDTO> getDoList() {
 		return memberMapper.getDoList();
+	}
+	
+
+	@Override
+	public List<Si_areaDTO> getSiList(int do_id) {
+		return  memberMapper.getSiList( do_id);
 	}
 
 	
@@ -161,5 +168,4 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-	
 }

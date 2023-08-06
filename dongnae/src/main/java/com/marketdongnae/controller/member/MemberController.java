@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
@@ -105,7 +107,7 @@ public class MemberController {
 	
 	@GetMapping("regist")
 	public String regist() {
-		return"member/regist";
+		return "member/regist";
 	}
 	
 	@PostMapping("regist")
@@ -114,11 +116,35 @@ public class MemberController {
 		return "member/login";		
 	}
 	
+//	@GetMapping("regist/do_area")
+//	public String regist_do_area_get() {
+//		return"member/regist";
+//	}
+	
 	@PostMapping("regist/do_area")
 	@ResponseBody
-	public List<Do_areaDTO> regist_do_area_post() {
+	public List<Do_areaDTO> regist_do_area() {
 		 List<Do_areaDTO> doList =  memberService.getDoList();
 		return doList;		
+	}
+	
+	@GetMapping("regist/si_area")
+	public String regist_si_area_get() {
+		return"member/regist";
+	}
+	
+	@PostMapping("regist/si_area")
+	@ResponseBody
+	public List<Si_areaDTO> regist_si_area(@RequestBody int do_id) {
+		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+//		 if( (Integer)do_id == null ) {
+//			 List<Si_areaDTO> sl = new ArrayList<Si_areaDTO>();
+//			 Si_areaDTO s = new Si_areaDTO();
+//		 	 s.setSi_area("시/군/구");
+//			 sl.add(s);
+//			 return sl;
+//			 }
+		return siList;		
 	}
 
 	@GetMapping("soldList")

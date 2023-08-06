@@ -11,6 +11,60 @@
  <link href="https://webfontworld.github.io/TheJamsil/TheJamsil.css" rel="stylesheet">    
 <title>Insert title here</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+	var token = $("meta[name='_csrf']").attr('content');
+	var header = $("meta[name='_csrf_header']").attr('content');
+	$(function(){
+	    if(token && header) {
+	        $(document).ajaxSend(function(event, xhr, options) {
+	            xhr.setRequestHeader(header, token);
+	        });
+	    }
+		fetchCategories();
+	
+	})
+			 
+	function fetchCategories() {
+    $.ajax({
+        url: '/api/getCategories',
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var categorySelect_c1 = $('.c1');
+            categorySelect_c1.empty();
+            categorySelect_c1.append($('<option value="0" selected>대분류</option>'));
+            var categoryList_c1 = data.category_1;
+
+            var categorySelect_c2 = $('.c2');
+            categorySelect_c2.empty();
+            categorySelect_c2.append($('<option value="0" selected>중분류</option>'));
+            var categoryList_c2 = data.category_2;
+
+            categoryList_c1.forEach(function (category1) {
+                categorySelect_c1.append($('<option value="' + category1.c1_id + '">' + category1.c1_category + '</option>'));
+            });
+
+            categorySelect_c1.on('change', function () {
+                var selectedC1Id = parseInt($(this).val());
+                categorySelect_c2.empty();
+                categorySelect_c2.append($('<option value="0" selected>중분류</option>'));
+
+                categoryList_c2.forEach(function (category2) {
+                    if (category2.c1_id === selectedC1Id) {
+                        categorySelect_c2.append($('<option value="' + category2.c2_id + '">' + category2.c2_category + '</option>'));
+                    }
+                });
+            });
+        },
+        error: function (xhr, status, error) {
+            // 에러 처리
+            alert("데이터 안불러와지는중");
+        }
+    });
+}
+</script>
 <body>
 
 	<jsp:include page="../Header.jsp"/>
@@ -41,12 +95,12 @@
                    		카테고리
                     </div>
                     <div class="form-floating col-12 col-md-3 my-3 align-self-center">
-                        <select class="form-select recipeKind" id="floatingSelect c1" name="" >
+                        <select class="form-select c1" id="floatingSelect" name="" >
                             <!-- DB 에서 받아온 값 AJAX 처리 -->
                         </select>
                     </div>
                     <div class="form-floating col-12 col-md-3 my-3 align-self-center">
-                        <select class="form-select recipeHow" id="floatingSelect c2" name = "c2_id">
+                        <select class="form-select c2" id="floatingSelect" name = "">
                              <!-- DB 에서 받아온 값 AJAX 처리 -->
                         </select>
                     </div>
@@ -59,8 +113,8 @@
                     </div>
                     
                      <div class="col-12 mt-3 mb-5">
-	                    <button type="submit" class="btn btn-warning btn_add_ingredient">등록하기</button>
-	                    <button type="reset" class="btn btn-danger btn_add_ingredient">취소하기</button>
+	                    <button type="submit" class="btn btn-primary ">등록하기</button>
+	                    <button type="reset" class="btn btn-danger ">취소하기</button>
                 	</div> 
 				</div>
 			</form>

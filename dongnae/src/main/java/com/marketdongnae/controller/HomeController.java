@@ -42,7 +42,7 @@ public class HomeController {
 		String m_id =  (String) session.getAttribute("m_id");
 		model.addAttribute("m_id", m_id);
 		
-		return "Card";
+		return "Main";
 	}
 	
 }

@@ -35,7 +35,12 @@ public class GoodsController {
 		return goodsService.getGoodsList();
 	}
 	
-	@PostMapping(value = "insertgoods")
+	@GetMapping(value = "goods_insert")
+	public void goods_Insert_Get() {
+		
+	}
+	
+	@PostMapping(value = "goods_insert")
 	public String goods_Add_Post(@ModelAttribute GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
 	    goodsService.processUploadAndInsertGoods(goodsDTO, uploadFile);
 	    return "/goods/getList";

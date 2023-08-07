@@ -22,9 +22,12 @@
 <body>
 	<div class="container">
 		<h2>글쓰기</h2>
+		<P> 반갑습니다. ${m_id} 님! </P>
 		<div>
 			<form method="post" action="/insertCommunity">
+			<input type="hidden" name="m_number" value="${member.m_number }">
 				<table class="table table-borderd table table-hover">
+				
 					<tr>
 						<label class="form-label">카테고리</label>
 						<select name="ca_id"  >
@@ -47,13 +50,11 @@
 						<td colspan="2"><textarea rows="10" cols="150"
 								name="mu_detail"></textarea></td>
 					</tr>
-					<tr>
-						<td>(임시 회원 번호 1또는2입력하세요) <input type="text" name="m_number">
-						</td>
-					</tr>
+					
 					<tr>
 						<td><input type="submit" value="등록"></td>
 					</tr>
+					
 				</table>
 			</form>
 			<button onclick="location.href='community'">목록으로</button>

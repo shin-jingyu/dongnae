@@ -15,6 +15,7 @@
 <body>
 <h1>welcome 커뮤니티 사이트</h1>
 <P> 반갑습니다. ${m_id} 님! </P>
+
 	<div class="container">
 	<table class="table table-boardered table table-hover">
 		<thead>
@@ -46,7 +47,7 @@
 			
 		</tbody>
 	</table>
-		<button onclick="location.href='insertCommunity'">글쓰기</button>
+		<button  onclick="location.href='insertCommunity?m_id=${m_id}'">글쓰기</button>
 	</div>
 	
 </body>

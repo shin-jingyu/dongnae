@@ -12,7 +12,7 @@
   </head>
 
 <body>
-<jsp:include page="Header.jsp"/>
+<jsp:include page="header.jsp"/>
 <jsp:include page="Card.jsp"/>
 
 

@@ -67,12 +67,12 @@
 </script>
 <body>
 
-	<jsp:include page="../Header.jsp"/>
+	<jsp:include page="../header.jsp"/>
 	
 	<div class="container border my-3 rounded-5 text-center">
 		<div class="container mx-auto" style="width: 80%;">
 			<form action="goods_insert" method="post" enctype="multipart/form-data">
-				<input type="file" value="" name="uploadFile">
+				<input type="file" value="" name="uploadFile" multiple="multiple">
 				<div class="row my-3">
 					<div class="col-12 col-md-4 align-self-center my-3" style="font-size: 1.5rem;">
                    		상품명

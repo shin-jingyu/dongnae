@@ -40,7 +40,6 @@ public class GoodsController {
 		return str.replace("-", File.separator);
 	}
 	
-	
 	@GetMapping(value = "getList")
 	public List<GoodsDTO> goods_List_Get() {
 		return goodsService.getGoodsList();

@@ -5,7 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
 </head>
+
 <body>
 
 <jsp:include page="header.jsp"></jsp:include>
@@ -18,30 +20,30 @@
             <div class="row">
                 <div class="categories__slider owl-carousel">
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-1.jpg">
-                            <h5><a href="#">Fresh Fruit</a></h5>
+                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/phone.png">
+                            <h5><a href="#">핸드폰</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-2.jpg">
-                            <h5><a href="#">Dried Fruit</a></h5>
+                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/laptop.png">
+                            <h5><a href="#">노트북</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-3.jpg">
-                            <h5><a href="#">Vegetables</a></h5>
+                            <h5><a href="#">샤넬</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-4.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
+                            <h5><a href="#">태블릿PC</a></h5>
                         </div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-5.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
+<!--                     <div class="col-lg-3"> -->
+<!--                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-5.jpg"> -->
+<!--                             <h5><a href="#">drink fruits</a></h5> -->
+<!--                         </div> -->
+<!--                     </div> -->
                 </div>
             </div>
         </div>

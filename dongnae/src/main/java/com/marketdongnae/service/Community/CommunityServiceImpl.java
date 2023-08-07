@@ -38,6 +38,7 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.insertCommunity(community);
 		
 	}
+	
 
 	@Override
 	public void updateCommunity(communityDetailDTO community) {
@@ -51,6 +52,8 @@ public class CommunityServiceImpl implements CommunityService {
 		System.out.println("service after");
 		
 	}
+
+	
 
 	
 

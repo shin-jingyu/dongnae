@@ -4,6 +4,9 @@ package com.marketdongnae.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,19 +21,26 @@ import org.springframework.web.servlet.ModelAndView;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
+import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.service.Community.CommunityService;
+import com.marketdongnae.service.member.MemberService;
 
 @Controller
 public class CommunityController {
 	@Autowired
 	CommunityService communityService;
-
+	@Autowired
+	MemberService memberService ;
+	
+	
+	
 	@GetMapping("/community")
 	public String getCommunity(Model model) {
 		List<CommunityAllDTO> list = communityService.communityAll();
 		model.addAttribute("list", list);
 		return "community/community";
 	}
+	
 	
 	
 	@GetMapping("/communityDetail")
@@ -44,11 +54,13 @@ public class CommunityController {
 	
 	
 	@GetMapping("/insertCommunity")
-	public String insertCommunity() {
-		return "community/insertCommunity";
+	public ModelAndView insertCommunity(@RequestParam String m_id) {
+		MemberDTO memberDTO= memberService.getMember(m_id);
+		System.out.println(m_id);
+		return new ModelAndView("community/insertCommunity","member",memberDTO);
 	}
 	@PostMapping("/insertCommunity")
-	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
+	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO ) {
 		System.out.println("글등록");
 		communityService.insertCommunity(communityDetailDTO);
 		return "redirect:community";
@@ -77,6 +89,6 @@ public class CommunityController {
 		return "redirect:/community";
 	}
 	
-	
+
 	
 }

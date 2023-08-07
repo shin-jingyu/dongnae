@@ -25,6 +25,8 @@
 		insert into community( mu_name, mu_detail, mu_i1, mu_i2, mu_i3, ca_id, m_number)
 		value(#{mu_name},#{mu_detail},#{mu_i1},#{mu_i2},#{mu_i3},#{ca_id},#{m_number})
 	</insert>
+		
+	
 	
 	<update id="updateCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
 		update community

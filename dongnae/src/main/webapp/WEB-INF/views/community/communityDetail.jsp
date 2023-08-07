@@ -25,7 +25,7 @@
  
 <body>
 	<h2>상세보기</h2>
-	
+	<P> 반갑습니다. ${m_id} 님! </P>
 	<div class="container">
 	 <table class="table table-borderd table table-hover">
 		<tr>

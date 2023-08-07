@@ -22,9 +22,11 @@
 <body>
 	<div class="container">
 		<h2>수정하기</h2>
+		<P> 반갑습니다. ${m_id} 님! </P>
 		<div>
 			<form method="post" action="/updateCommunity">
 			<input type="hidden" name="mu_id" value="${community.mu_id }">
+			
 			
 				<table class="table table-borderd table table-hover">
 				

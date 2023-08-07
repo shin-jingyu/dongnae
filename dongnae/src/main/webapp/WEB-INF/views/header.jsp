@@ -22,6 +22,42 @@
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+	var token = $("meta[name='_csrf']").attr('content');
+	var header = $("meta[name='_csrf_header']").attr('content');
+	$(function(){
+	    if(token && header) {
+	        $(document).ajaxSend(function(event, xhr, options) {
+	            xhr.setRequestHeader(header, token);
+	        });
+	    }
+		fetchCategories();
+	
+	})
+			 
+	function fetchCategories() {
+    $.ajax({
+        url: '/api/getCategories',
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var categorySelect_c1 = $('.categoryList');
+            categorySelect_c1.empty();
+            var categoryList_c1 = data.category_1;
+            categoryList_c1.forEach(function (category1) {
+            	categorySelect_c1.append($('<li value="' + category1.c1_id + '">' + category1.c1_category + '</li>'));
+            });
+        },
+        error: function (xhr, status, error) {
+            // 에러 처리
+            alert("데이터 안불러와지는중");
+        }
+    });
+}
+</script>
+
 <body>
     <!-- Page Preloder -->
     <div id="preloder">
@@ -95,8 +131,8 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                                <li></li>
+                                <li></li>
                             </ul>
                         </div>
                     </div>
@@ -175,20 +211,10 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>All departments</span>
+                            <span>카테고리</span>
                         </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
+                        <ul class="categoryList">
+                           
                         </ul>
                     </div>
                 </div>
@@ -203,15 +229,6 @@
                                 <input type="text" placeholder="What do yo u need?">
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
                         </div>
                     </div>
                     <div class="hero__item set-bg" data-setbg="/resources/img/hero/banner.jpg">
@@ -232,15 +249,7 @@
 
    
 
-    <!-- Js Plugins -->
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
-    <script src="/resources/js/bootstrap.min.js"></script>
-    <script src="/resources/js/jquery.nice-select.min.js"></script>
-    <script src="/resources/js/jquery-ui.min.js"></script>
-    <script src="/resources/js/jquery.slicknav.js"></script>
-    <script src="/resources/js/mixitup.min.js"></script>
-    <script src="/resources/js/owl.carousel.min.js"></script>
-    <script src="/resources/js/main.js"></script>
+   
 
 
 

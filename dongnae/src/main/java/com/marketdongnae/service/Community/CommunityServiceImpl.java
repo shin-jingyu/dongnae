@@ -1,6 +1,8 @@
 package com.marketdongnae.service.Community;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,15 @@ public class CommunityServiceImpl implements CommunityService {
 		System.out.println("service after");
 		
 	}
+	//좋아요 체크 
+
+	@Override
+	public HeartDTO heart(int m_number, int mu_id) {
+		HeartDTO heartDTO = communityMapper.heart(m_number,mu_id );
+		return heartDTO;
+		
+	}
+	
 
 	
 

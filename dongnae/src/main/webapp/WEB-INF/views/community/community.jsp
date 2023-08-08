@@ -12,6 +12,7 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
+
 <body>
 <h1>welcome 커뮤니티 사이트</h1>
 <P> 반갑습니다. ${m_id} 님! </P>
@@ -35,7 +36,7 @@
 			<c:forEach var="communityAll" items="${list}"  >
 				<tr>				
 					<td>${communityAll.si_area}</td>
-					<td><a href="communityDetail?mu_id=${communityAll.mu_id }">${communityAll.mu_name}</a></td>
+					<td><a href="/communityDetail?mu_id=${communityAll.mu_id}&&m_id=${m_id}" >${communityAll.mu_name}</a></td>
 					<td>${communityAll.m_id}</td>
 					<td>${communityAll.mu_data}</td>
 					<td>${communityAll.mu_c}</td>

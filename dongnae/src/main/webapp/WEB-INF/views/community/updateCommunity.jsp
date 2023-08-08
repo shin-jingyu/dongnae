@@ -69,7 +69,7 @@
 		</table>
 				
 			</form>
-			<button onclick="location.href='communityDetail?mu_id=${community.mu_id }'">이전으로</button>
+			<button onclick="location.href='communityDetail? mu_id=${community.mu_id }&& m_id=${m_id}'">이전으로</button>
 			<button onclick="location.href='community'">목록으로</button>
 		</div>
 	</div>

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,17 +47,21 @@ public class CommunityController {
 	
 	
 	@GetMapping("/communityDetail")
-	public ModelAndView view(@RequestParam String mu_id,String m_id){
-		// view 처리
+	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id,@RequestParam("m_id") String m_id){
+		
 		ModelAndView view = new ModelAndView();
-		//member 정보처리
-		MemberDTO memberDTO = memberService.getMember(m_id);
-		// 상세정보
+		
+		CommunityAllDTO communityDetail = communityService.communityDetail(mu_id);
+		System.out.println(communityDetail);
 		communityService.updateCount(mu_id);
-		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
-		view.addObject("community", detailDTO);
-		view.addObject("member", memberDTO);	
+		
+		HeartDTO heartview = communityService.heartview(m_id, mu_id);
+		System.out.println(heartview);
+		
+		view.addObject("communityDetail", communityDetail);
+		view.addObject("heartview", heartview);
 		view.setViewName("community/communityDetail");
+		
 		return view;
 	}
 	
@@ -73,7 +77,7 @@ public class CommunityController {
 	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO ) {
 		System.out.println("글등록");
 		communityService.insertCommunity(communityDetailDTO);
-		return "redirect:community";
+		return "redirect:/community";
 	}
 	
 	
@@ -87,7 +91,7 @@ public class CommunityController {
 	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
 		System.out.println("글 수정하기 ");
 		communityService.updateCommunity(communityDetailDTO);
-		return "redirect:community";
+		return "redirect:/community";
 	}
 	
 	
@@ -98,11 +102,9 @@ public class CommunityController {
 		communityService.deleteCommunity(mu_id);
 		return "redirect:/community";
 	}
-	@ResponseBody
-	@PostMapping("/heart")
-	public String heart(HeartDTO heartDTO) {
-		return null;
-	}
-
 	
+	/*
+	 * @PostMapping("/heart") public int heart(@ModelAttribute HeartDTO heartview) {
+	 * return ; }
+	 */
 }

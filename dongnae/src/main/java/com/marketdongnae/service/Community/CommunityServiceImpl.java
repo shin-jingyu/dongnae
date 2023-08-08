@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
+import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.mapper.CommunityMapper;
 
 @Service("CommunityService")
@@ -25,8 +26,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public CommunityAllDTO communityDetail(String mu_id) {
-		CommunityAllDTO communityDetail = communityMapper.communityDetail(mu_id);
-		return communityDetail;
+	
+		return communityMapper.communityDetail(mu_id);
 	}
 
 	@Override
@@ -54,14 +55,16 @@ public class CommunityServiceImpl implements CommunityService {
 		System.out.println("service after");
 		
 	}
-	//좋아요 체크 
 
 	@Override
-	public HeartDTO heart(int m_number, int mu_id) {
-		HeartDTO heartDTO = communityMapper.heart(m_number,mu_id );
-		return heartDTO;
+	public HeartDTO heartview(String m_id, String mu_id) {
 		
+		return communityMapper.heartview(m_id, mu_id);
 	}
+	
+
+	
+	
 	
 
 	

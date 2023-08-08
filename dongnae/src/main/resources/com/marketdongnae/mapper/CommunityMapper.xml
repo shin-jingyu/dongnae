@@ -11,13 +11,14 @@
 	
 	<!-- 게시판 상세보기 -->
 	<select id="communityDetail" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
-		SELECT * FROM dongnae.communityall where mu_id = #{communityall.mu_id}
+		SELECT * FROM dongnae.communityall where mu_id = #{mu_id}
 	</select>
+	
 	<!-- 조회수 증가 -->
 	<update id="updateCount" parameterType="string" >
 		update community 
 		set community.mu_c =  community.mu_c +1
-		where community.mu_id = #{communityall.mu_id}	
+		where community.mu_id = #{mu_id}	
 	</update>
 	
 	<!-- 글작성 -->
@@ -45,14 +46,17 @@
 	
 	
 	
-	<select id="heart" resultType="com.marketdongnae.domain.community.HeartDTO">
-		select*from heart where  m_number = #{m_number} and mu_id =#{mu_id};
+	<select id="heartview" resultType="com.marketdongnae.domain.community.HeartDTO">
+		select * from heartView where m_id = #{m_id} and mu_id = #{mu_id}
 	</select>
 	
+	<insert id="insertHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
+		insert into heart(mu_id,m_number,h_num)
+			values(#{mu_id},#{m_number},1)
+	</insert>
+	
 	<delete id="deleteHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
-		delete from heart where m_number = #{m_number} and mu_id = #{mu_id};
+		delete from heart where m_number = #{m_number} and mu_id = #{mu_id}
 	</delete>
-	
-	
 	
 </mapper>

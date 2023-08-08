@@ -4,18 +4,18 @@ package com.marketdongnae.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marketdongnae.domain.community.CommunityAllDTO;
@@ -35,20 +35,30 @@ public class CommunityController {
 	
 	
 	@GetMapping("/community")
-	public String getCommunity(Model model) {
+	public ModelAndView getCommunity() {
+		ModelAndView view = new ModelAndView();
 		List<CommunityAllDTO> list = communityService.communityAll();
-		model.addAttribute("list", list);
-		return "community/community";
+		view.addObject("list",list);
+		view.setViewName("community/community");
+		
+		return view;
 	}
 	
 	
 	
 	@GetMapping("/communityDetail")
-	public ModelAndView view(@RequestParam String mu_id){
+	public ModelAndView view(@RequestParam String mu_id,String m_id){
+		// view 처리
+		ModelAndView view = new ModelAndView();
+		//member 정보처리
+		MemberDTO memberDTO = memberService.getMember(m_id);
+		// 상세정보
 		communityService.updateCount(mu_id);
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
-		
-		return new ModelAndView("community/communityDetail","community",detailDTO);
+		view.addObject("community", detailDTO);
+		view.addObject("member", memberDTO);	
+		view.setViewName("community/communityDetail");
+		return view;
 	}
 	
 	
@@ -88,7 +98,11 @@ public class CommunityController {
 		communityService.deleteCommunity(mu_id);
 		return "redirect:/community";
 	}
-	
+	@ResponseBody
+	@PostMapping("/heart")
+	public String heart(HeartDTO heartDTO) {
+		return null;
+	}
 
 	
 }

@@ -62,6 +62,16 @@
 	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
-	
-	
+	<select id="putPoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
+		update member
+			set m_point = #{m_point}
+		where m_id = #{m_id} ;
+	</select>
+	<!-- 
+	 <select id="putPoint" parameterType="com.marketdongnae.domain.member.Point_viewDTO" > 
+		insert into point
+			set m_point = #{m_point}
+		where m_id = #{m_id} ;
+	</select>
+	 -->
 </mapper> 

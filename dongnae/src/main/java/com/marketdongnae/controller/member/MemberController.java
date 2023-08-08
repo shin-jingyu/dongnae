@@ -116,34 +116,17 @@ public class MemberController {
 		return "member/login";		
 	}
 	
-//	@GetMapping("regist/do_area")
-//	public String regist_do_area_get() {
-//		return"member/regist";
-//	}
-	
 	@PostMapping("regist/do_area")
 	@ResponseBody
 	public List<Do_areaDTO> regist_do_area() {
 		 List<Do_areaDTO> doList =  memberService.getDoList();
 		return doList;		
 	}
-	
-	@GetMapping("regist/si_area")
-	public String regist_si_area_get() {
-		return"member/regist";
-	}
-	
+
 	@PostMapping("regist/si_area")
 	@ResponseBody
 	public List<Si_areaDTO> regist_si_area(@RequestBody int do_id) {
 		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
-//		 if( (Integer)do_id == null ) {
-//			 List<Si_areaDTO> sl = new ArrayList<Si_areaDTO>();
-//			 Si_areaDTO s = new Si_areaDTO();
-//		 	 s.setSi_area("시/군/구");
-//			 sl.add(s);
-//			 return sl;
-//			 }
 		return siList;		
 	}
 
@@ -177,11 +160,19 @@ public class MemberController {
 	}
 	
 	@GetMapping("point")
-	public String review( Model model, HttpServletRequest request) {
+	public String point( Model model, HttpServletRequest request) {
 		String m_id =  getSessionM_Id(request);
 		model.addAttribute("dealList", memberService.getDealList(m_id));
 		model.addAttribute("m_point", memberService.getPoint(m_id));
+		model.addAttribute("m_id", m_id);
 		return "member/point";		
+	}
+	
+	@GetMapping("pointSuccess")
+	public String point_post(@RequestParam int m_point, HttpServletRequest request) {
+		String m_id =  getSessionM_Id(request);
+		memberService.putPoint(m_id, m_point) ; 
+		return "redirect:/member/point";		
 	}
 	
 	@GetMapping("wishlist")

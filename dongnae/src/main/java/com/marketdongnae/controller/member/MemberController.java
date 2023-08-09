@@ -62,6 +62,20 @@ public class MemberController {
 		return "member/detail" ;		
 	}
 	
+	@PostMapping("detail/do_area")
+	@ResponseBody
+	public List<Do_areaDTO> detailt_do_area() {
+		 List<Do_areaDTO> doList =  memberService.getDoList();
+		return doList;		
+	}
+
+	@PostMapping("detail/si_area")
+	@ResponseBody
+	public List<Si_areaDTO> detailt_si_area(@RequestBody int do_id) {
+		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+		return siList;		
+	}
+	
 	@PostMapping("update")
 	public String modify(@ModelAttribute MemberDTO memberDTO) {		
 		memberService.updateMember(memberDTO);

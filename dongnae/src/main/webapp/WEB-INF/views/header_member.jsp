@@ -7,6 +7,11 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Ogani | Template</title>
 
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
@@ -21,6 +26,8 @@
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+
 
 <script>
 	var token = $("meta[name='_csrf']").attr('content');

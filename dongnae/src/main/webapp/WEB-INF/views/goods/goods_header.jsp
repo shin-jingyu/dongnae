@@ -28,41 +28,7 @@
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script>
-	var token = $("meta[name='_csrf']").attr('content');
-	var header = $("meta[name='_csrf_header']").attr('content');
-	$(function(){
-	    if(token && header) {
-	        $(document).ajaxSend(function(event, xhr, options) {
-	            xhr.setRequestHeader(header, token);
-	        });
-	    }
-		fetchCategories();
-	
-	})
-			 
-	function fetchCategories() {
-    $.ajax({
-        url: '/api/getCategories',
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-            var categorySelect_main_1 = $('.categoryList');
-            categorySelect_main_1.empty();
-            var category_Main_List_1 = data.category_1;
-            category_Main_List_1.forEach(function (category_Main_1) {
-            	categorySelect_main_1.append($('<li value="' + category_Main_1.c1_id + '">' + category_Main_1.c1_category + '</li>'));
-            });
-        },
-        error: function (xhr, status, error) {
-            // 에러 처리
-            alert("데이터 안불러와지는중");
-        }
-    });
-}
-</script>
+
 
 <body>
     <!-- Page Preloder -->
@@ -218,47 +184,6 @@
     </header>
     <!-- Header Section End -->
     
-    <!-- Hero Section Begin -->
-    <section class="hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>카테고리</span>
-                        </div>
-                        <ul class="categoryList">
-                           
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="hero__item set-bg" data-setbg="/resources/img/hero/banner.jpg">
-                        <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
 </body>
 
 </html>

@@ -14,9 +14,5 @@ public interface GoodsService {
 
 	void updateGoods(GoodsDTO goodsDTO);
 
-	void processUploadAndInsertGoods(GoodsDTO goodsDTO, MultipartFile[] uploadFile);
-
-	void processUploadAndUpdateGoods(GoodsDTO goodsDTO, MultipartFile[] uploadFile);
-
 
 }

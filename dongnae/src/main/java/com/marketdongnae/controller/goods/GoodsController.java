@@ -40,9 +40,10 @@ public class GoodsController {
 		return str.replace("-", File.separator);
 	}
 	
-	@GetMapping(value = "getList")
+	@GetMapping(value = "goods_list")
 	public List<GoodsDTO> goods_List_Get() {
-		return goodsService.getGoodsList();
+//		return goodsService.getGoodsList();
+		return null;
 	}
 	
 	@GetMapping(value = "goods_insert")
@@ -52,6 +53,7 @@ public class GoodsController {
 	
 	@PostMapping(value = "goods_insert")
 	public String goods_Add_Post(@ModelAttribute GoodsDTO goodsDTO, @RequestParam("uploadFile") MultipartFile [] uploadFile) {
+		System.out.println("상품 등록 Post 받기");
 		String uploaderFolder = "/Users/nohbin/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload";
 		File uploadPath = new File(uploaderFolder, getFolder());
 	    log.info("upload path : " + uploadPath);
@@ -85,12 +87,12 @@ public class GoodsController {
 				}
 	        }
 	    }
-//		goodsDTO.setG_pic01(uploadFile[0]);
-//		goodsDTO.setG_pic01(uploadFile[1]);
-//		goodsDTO.setG_pic01(uploadFile[2]);
+		goodsDTO.setG_pic01(picFileNames[0]);
+		goodsDTO.setG_pic01(picFileNames[1]);
+		goodsDTO.setG_pic01(picFileNames[2]);
 		 
 		 
-	    goodsService.processUploadAndInsertGoods(goodsDTO, uploadFile);
+	    goodsService.insertGoods(goodsDTO);
 	    return "/goods/getList";
 	}
 	
@@ -101,7 +103,7 @@ public class GoodsController {
 	
 	@PostMapping(value = "edit")
 	public String goods_Update_Post(@ModelAttribute GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
-		 goodsService.processUploadAndUpdateGoods(goodsDTO, uploadFile);
+		 goodsService.updateGoods(goodsDTO);
 	    return "/goods/getList";
 	}
 	

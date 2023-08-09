@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
 </head>
 
 <body>
@@ -20,22 +19,22 @@
             <div class="row">
                 <div class="categories__slider owl-carousel">
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/phone.png">
+                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/phone.jpeg">
                             <h5><a href="#">핸드폰</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/laptop.png">
+                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/laptop.jpeg">
                             <h5><a href="#">노트북</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-3.jpg">
+                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/chanel.jpg">
                             <h5><a href="#">샤넬</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-4.jpg">
+                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/ipad.jpeg">
                             <h5><a href="#">태블릿PC</a></h5>
                         </div>
                     </div>
@@ -53,22 +52,6 @@
     <!-- Featured Section Begin -->
     <section class="featured spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>Featured Product</h2>
-                    </div>
-                    <div class="featured__controls">
-                        <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
-                            <li data-filter=".fresh-meat">Fresh Meat</li>
-                            <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="row featured__filter">
                 <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                     <div class="featured__item">
@@ -80,7 +63,7 @@
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h6><a href="#">Orange</a></h6>
                             <h5>$30.00</h5>
                         </div>
                     </div>

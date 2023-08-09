@@ -40,9 +40,10 @@ public class GoodsController {
 		return str.replace("-", File.separator);
 	}
 	
-	@GetMapping(value = "getList")
+	@GetMapping(value = "goods_list")
 	public List<GoodsDTO> goods_List_Get() {
-		return goodsService.getGoodsList();
+//		return goodsService.getGoodsList();
+		return null;
 	}
 	
 	@GetMapping(value = "goods_insert")

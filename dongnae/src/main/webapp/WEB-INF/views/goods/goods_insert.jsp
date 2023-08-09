@@ -111,7 +111,6 @@
                         <input type="text" class="form-control" id="floatingInput" placeholder="floatingName" name = "g_price">
                         <label for="floatingInput">&nbsp;&nbsp; 상품 가격</label>
                     </div>
-                    
                      <div class="col-12 mt-3 mb-5">
 	                    <button type="submit" class="btn btn-primary ">등록하기</button>
 	                    <button type="reset" class="btn btn-danger ">취소하기</button>
@@ -120,5 +119,7 @@
 			</form>
 		</div>
 	</div>
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

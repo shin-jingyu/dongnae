@@ -28,6 +28,7 @@
 		아이디와 비밀번호를 확인해주세요.
 	</div>
 	<input class="btn btn btn-lg btn-success btn-block" type="submit" value="로그인">
+	<a class="btn btn btn-lg btn-success btn-block" href="/member/regist">회원가입</a>
 </form>
 </div>
 </body>

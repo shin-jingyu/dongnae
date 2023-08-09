@@ -92,9 +92,13 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
+	            <div class="header__top__right__auth">
+	                <a href="#"><i class="fa fa-user"></i> Login</a>
+	            </div>
+	            <sec:authorize access="isAuthenticated()">
+					<a href="/customLogout">로그아웃</a>
+				</sec:authorize>
+          
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
@@ -158,8 +162,12 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
+                            <sec:authentication property="principal" var="member"/>
                             <div class="header__top__right__auth">
                                 <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+                                 <sec:authorize access="isAuthenticated()">
+                                 <a href="/member/logout">Logout</a>
+                                 </sec:authorize>
                             </div>
                         </div>
                     </div>

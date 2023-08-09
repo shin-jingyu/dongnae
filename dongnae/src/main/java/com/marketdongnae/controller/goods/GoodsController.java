@@ -53,16 +53,12 @@ public class GoodsController {
 	
 	@PostMapping(value = "goods_insert")
 	public String goods_Add_Post(@ModelAttribute GoodsDTO goodsDTO, @RequestParam("uploadFile") MultipartFile [] uploadFile) {
-		System.out.println("상품 등록 Post 받기");
-		String uploaderFolder = "/Users/nohbin/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload";
+		String uploaderFolder = "/Users/nohbin/git/Spring_dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
 		File uploadPath = new File(uploaderFolder, getFolder());
-	    log.info("upload path : " + uploadPath);
-	    String filePath = uploadPath.toString();
 
 	    if (!uploadPath.exists()) {
 	        uploadPath.mkdirs();
 	    }
-	    log.info("Upload FilePath  : " + filePath);
 	    
 	    // MultipartFile 필드들을 반복문으로 처리
 	    String[] picFileNames = new String[uploadFile.length];
@@ -75,7 +71,7 @@ public class GoodsController {
 	            picFileNames[i] = uuid.toString() + "_" + picFileNames[i];
 	            log.info("only-file-name" + picFileNames[i]);
 	            File saveFile = new File(uploadPath, picFileNames[i]);
-	            
+	            System.out.println("파일명 확인 !!!: " + picFileNames[i]);
 	            try {
 	            	uploadFile[i].transferTo(saveFile);
 				} catch (IllegalStateException e) {
@@ -87,13 +83,13 @@ public class GoodsController {
 				}
 	        }
 	    }
+	    goodsDTO.setG_picpath(getFolder());
 		goodsDTO.setG_pic01(picFileNames[0]);
-		goodsDTO.setG_pic01(picFileNames[1]);
-		goodsDTO.setG_pic01(picFileNames[2]);
-		 
+		goodsDTO.setG_pic02(picFileNames[1]);
+		goodsDTO.setG_pic03(picFileNames[2]);
 		 
 	    goodsService.insertGoods(goodsDTO);
-	    return "/goods/getList";
+	    return "redirect:/";
 	}
 	
 	@GetMapping(value = "eidt")

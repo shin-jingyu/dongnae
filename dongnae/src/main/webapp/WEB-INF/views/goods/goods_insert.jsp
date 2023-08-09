@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,13 +67,14 @@
 }
 </script>
 <body>
+	 <sec:authentication property="principal" var="member"/>
 
-	<jsp:include page="../header.jsp"/>
-	
+	<jsp:include page="goods_header.jsp"/>
 	<div class="container border my-3 rounded-5 text-center">
 		<div class="container mx-auto" style="width: 80%;">
-			<form action="goods_insert" method="post" enctype="multipart/form-data">
-				<input type="file" value="" name="uploadFile" multiple="multiple">
+			<form action="goods_insert" method="POST" enctype="multipart/form-data">
+				<input type="hidden" value="${member.m_number }">
+				<input type="file" name="uploadFile" multiple="multiple">
 				<div class="row my-3">
 					<div class="col-12 col-md-4 align-self-center my-3" style="font-size: 1.5rem;">
                    		상품명
@@ -100,7 +102,7 @@
                         </select>
                     </div>
                     <div class="form-floating col-12 col-md-3 my-3 align-self-center">
-                        <select class="form-select c2" id="floatingSelect" name = "">
+                        <select class="form-select c2" id="floatingSelect" name = "c2_id">
                              <!-- DB 에서 받아온 값 AJAX 처리 -->
                         </select>
                     </div>

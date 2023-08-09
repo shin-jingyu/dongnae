@@ -11,6 +11,7 @@ public class GoodsDTO {
 	private int c2_id;
 	private int m_number;
 	private String g_name;
+	private String g_text;
 	private int g_price;
 	private String g_pic01;
 	private String g_pic02;

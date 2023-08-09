@@ -11,8 +11,8 @@
 	
 	
 	<insert id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
-		insert into goods (g_name, g_price, g_pic01, g_pic02, g_pic03) 
-		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03})
+		insert into goods (g_name, g_price, g_pic01, g_pic02, g_pic03, c2_id , m_number) 
+		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id}, #{m_number})
 	</insert>
 	
 	<update id="updateGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">

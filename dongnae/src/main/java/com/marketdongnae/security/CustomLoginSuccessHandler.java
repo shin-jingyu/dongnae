@@ -37,9 +37,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			return;
 		}
 		if (roleNames.contains("ROLE_MEMBER")) {
-			HttpSession session = request.getSession();
-			// getName이 사실 m_id 가져오는 거라 m_name가져오게 바꿔야함
-			session.setAttribute("m_id", authentication.getName());
+//			HttpSession session = request.getSession();
+//			// getName이 사실 m_id 가져오는 거라 m_name가져오게 바꿔야함
+//			session.setAttribute("m_id", authentication.getName());
 			response.sendRedirect("/"); // test 용
 			return;
 		}

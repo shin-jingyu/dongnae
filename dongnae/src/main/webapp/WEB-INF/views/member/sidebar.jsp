@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	  <div class="sidebar__item">
+	  <div class="sidebar__item ">
            <h4>My Page</h4>
            <ul>
                <li><a href="/member/detail">내 프로필</a></li>

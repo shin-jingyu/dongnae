@@ -90,3 +90,17 @@
 
 </body>
 </html>
+
+<div class="col-12 col-sm-2 align-self-center " >
+  이메일            		
+</div>
+<div class="col-12 col-sm-3 align-self-center">
+	<input readonly name="m_email"  type="text" value="${member.m_email}" class="form-control">
+</div>	
+
+<div class="col-12 col-sm-2 align-self-center " >
+    핸드폰          		
+</div>
+<div class="col-12 col-sm-3 align-self-center">
+	<input readonly name="m_phone"  type="text" value="${member.m_phone}" class="form-control">
+</div>	

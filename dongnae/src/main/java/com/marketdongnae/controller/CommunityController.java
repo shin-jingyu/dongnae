@@ -2,13 +2,23 @@ package com.marketdongnae.controller;
 
 
 
+import java.nio.file.attribute.UserPrincipal;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.core.convert.Property;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +32,7 @@ import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.Community.CommunityService;
 import com.marketdongnae.service.member.MemberService;
 
@@ -47,17 +58,21 @@ public class CommunityController {
 	
 	
 	@GetMapping("/communityDetail")
-	public ModelAndView view(@RequestParam String mu_id,String m_id){
-		// view 처리
+	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id,@RequestParam("m_number") String m_number ){
 		ModelAndView view = new ModelAndView();
-		//member 정보처리
-		MemberDTO memberDTO = memberService.getMember(m_id);
-		// 상세정보
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mu_id", mu_id);
+		map.put("m_number", m_number);	
+		
+		CommunityAllDTO communityDetail = communityService.communityDetail(mu_id);
 		communityService.updateCount(mu_id);
-		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
-		view.addObject("community", detailDTO);
-		view.addObject("member", memberDTO);	
+		
+		HeartDTO heartview = communityService.heartview(m_number, mu_id); 
+		
+		view.addObject("communityDetail", communityDetail);
+		view.addObject("heartview", heartview); 
 		view.setViewName("community/communityDetail");
+		
 		return view;
 	}
 	
@@ -73,7 +88,7 @@ public class CommunityController {
 	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO ) {
 		System.out.println("글등록");
 		communityService.insertCommunity(communityDetailDTO);
-		return "redirect:community";
+		return "redirect:/community";
 	}
 	
 	
@@ -87,7 +102,7 @@ public class CommunityController {
 	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
 		System.out.println("글 수정하기 ");
 		communityService.updateCommunity(communityDetailDTO);
-		return "redirect:community";
+		return "redirect:/community";
 	}
 	
 	
@@ -98,11 +113,17 @@ public class CommunityController {
 		communityService.deleteCommunity(mu_id);
 		return "redirect:/community";
 	}
-	@ResponseBody
-	@PostMapping("/heart")
-	public String heart(HeartDTO heartDTO) {
-		return null;
-	}
-
 	
+	
+	
+	
+	 @PostMapping("/heart") 
+	 public  @ResponseBody  int heart(@ModelAttribute HeartDTO heart) { 
+		  
+		  int result = communityService.insertHeart(heart);
+		  System.out.println(result);
+		 return result;
+	 }
+	
+	 
 }

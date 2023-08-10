@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
+import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.mapper.CommunityMapper;
 
 @Service("CommunityService")
@@ -25,8 +26,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public CommunityAllDTO communityDetail(String mu_id) {
-		CommunityAllDTO communityDetail = communityMapper.communityDetail(mu_id);
-		return communityDetail;
+	
+		return communityMapper.communityDetail(mu_id);
 	}
 
 	@Override
@@ -49,32 +50,51 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void deleteCommunity(int mu_id) {
-		System.out.println("service before");
 		communityMapper.deleteCommunity(mu_id);
-		System.out.println("service after");
-		
 	}
-	//좋아요 체크 
 
 	@Override
-	public HeartDTO heart(int m_number, int mu_id) {
-		HeartDTO heartDTO = communityMapper.heart(m_number,mu_id );
-		return heartDTO;
+	public HeartDTO heartview(String m_number,String mu_id) {
 		
+		return communityMapper.heartview(m_number,mu_id);
 	}
+
+	
+	  @Override public int insertHeart(HeartDTO heart) { 
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 int result =0;
+		 
+		 int m_numberInt = heart.getM_number();
+		 int mu_idInt = heart.getMu_id();
+		 String m_number = String.valueOf(m_numberInt);
+		 String mu_id = String.valueOf(mu_idInt);
+		 
+		 HeartDTO find = communityMapper.heartview(m_number,mu_id);
+		 
+		 
+		 if (find == null ) { 
+			result = communityMapper.insertHeart(heart);
+			
+		 }else if(find.getH_num()==0){ 
+			 result=communityMapper.updateHearts(heart);
+			
+		 }else {
+			 communityMapper.updateHeart(heart); 
+		}
+		
+		 return result; 
+		 
+	  }
+	 
+
+	
+	
+	
 	
 
 	
-
 	
 
-	
-
-	
-
-	
-	
-	
 	
 
 	

@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,9 +98,14 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
+             <div class="header__top__right__auth">
+	                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+	            </div>
+	            <sec:authorize access="isAuthenticated()">
+					<a href="/customLogout">로그아웃</a>
+					<a href="/member/detail">${member.m_id}님 마이페이지</a>
+				</sec:authorize>
+				
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
@@ -159,8 +169,14 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
+                             <sec:authentication property="principal" var="member"/>
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+                                 <sec:authorize access="isAuthenticated()">
+                                 <a href="/goods/goods_insert">상품등록</a>
+                                 <a href="/member/logout">Logout</a>
+                                 <a href="/member/detail">${member.m_id}님 마이페이지</a>
+                                 </sec:authorize>
                             </div>
                         </div>
                     </div>

@@ -28,30 +28,6 @@
 			}
 		});
 		
-
-		$.ajax({
-			let doData = ${member.do_id};
-			$.ajax({
-				url: '/member/detail/si_area_default',
-				type:'POST',
-				data: doData, 
-				contentType: 'application/json',  
-				dataType: "json",	 	 
-				success:function(data){		
-					var options = "";
-					for(var i= 0 ; i< data.length; i++){
-						options+= "<option value='" + data[i].si_id + "' ${ (member.si_id == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
-					}
-					$("#si_id").html(options);
-					$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
-				},
-				error:function(){
-					alert("error load si area");
-				}
-			})
-		});
-		
-		
 	});
 		
 	function do_select(){
@@ -76,6 +52,50 @@
 		})
 	}
 	
+	function do_click(){
+		let doData = $("#do_id option:selected").val();
+		$.ajax({
+			url: '/member/detail/si_area',
+			type:'POST',
+			data: doData, 
+			contentType: 'application/json',  /* 이거 넣으니까 오류 해결: 여기는 보내는 do_id */ 
+			dataType: "json",	 	/* 여기는 받는 si_area List */ 
+			success:function(data){		
+				var options = "";
+				for(var i= 0 ; i< data.length; i++){
+					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
+				}
+				$("#si_id").html(options);
+				$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
+			},
+			error:function(){
+				alert("error load si area");
+			}
+		})
+	}
+/* 	
+	// 여기
+	function si_click(){
+		let doData = $("#do_id option:selected").val();
+		$.ajax({
+			url: '/member/detail/si_area',
+			type:'POST',
+			data: doData, 
+			contentType: 'application/json',   
+			dataType: "json",	 	 
+			success:function(data){		
+				var options = "";
+				for(var i= 0 ; i< data.length; i++){
+					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
+				}
+				$("#si_id").html(options);
+			},
+			error:function(){
+				alert("error load si area");
+			}
+		})
+	}
+	 */
 </script>
 </head>
 
@@ -154,24 +174,15 @@
 										<div class="form-group row">
 											<label class="col-sm-4">내 동네</label>
 											<div class="col-12 col-sm-3 align-self-center">
-												 <select onchange="do_select()" id="do_id" name="do_id" class="form-select">
+												 <select onchange="do_select()" onclick="do_click()" id="do_id" name="do_id" class="form-select">
 										    	</select>
 											</div>	
 											<div class="col-12 col-sm-5 align-self-center">
-										  		 <select id="si_id"  name = "si_id" class="form-select">
-											   		<option  selected >시/군/구</option>
+										  		 <select  id="si_id"  name = "si_id" class="form-select">
+											   		<option selected>시/군/구</option>
 												</select> 
 											</div>
 										</div>	
-										 <%-- 
-										  <select  class="form-control">
-										    	
-										 			<option value="1" ${ (member.si_id == "1")? "selected" : "" }>수원</option>
-												  <option value="2" ${ (member.si_id == "2")? "selected" : "" }>화성</option>
-												  <option value="3" ${ (member.si_id == "3")? "selected" : "" }>오산</option>
-												  <option value="4" ${ (member.si_id == "4")? "selected" : "" }>평택</option>
-												  
-										 --%>
 										
 										<div class="form-group  row">
 										<div class="col-12  mt-3">
@@ -189,6 +200,7 @@
     <!-- Product Section End -->
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
+
 
 </body>
 </html>

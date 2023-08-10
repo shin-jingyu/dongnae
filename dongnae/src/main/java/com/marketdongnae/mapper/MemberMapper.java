@@ -40,7 +40,9 @@ public interface MemberMapper {
 	public void deleteWish(int wish_id);
 
 	public void putPoint(MemberDTO memberDTO);
-	
+
+	public Si_areaDTO getSi_area(int si_id);
+
 //	public void plusPoint(Point_viewDTO point_viewDTO);
 
 	

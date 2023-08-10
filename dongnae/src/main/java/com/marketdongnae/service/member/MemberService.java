@@ -19,6 +19,7 @@ public interface MemberService {
 	List<Do_areaDTO> getDoList();
 	
 	List<Si_areaDTO> getSiList(int do_id);
+	
 
 	MemberDTO getMember(String m_id);
 
@@ -45,6 +46,10 @@ public interface MemberService {
 	List<Wish_viewDTO> getWish_viewList(String m_id);
 
 	void deleteWish(int wish_id);
+
+	String getSi_area(String m_id);
+
+	
 
 
 }

@@ -186,4 +186,15 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+	@Override
+	public String getSi_area(String m_id) {
+		MemberDTO memberDTO = memberMapper.getMember(m_id);
+		int si_id = memberDTO.getSi_id();
+		Si_areaDTO si_areaDTO  = memberMapper.getSi_area(si_id);
+		String si_area = si_areaDTO.getSi_area();
+		return si_area;
+	}
+
+
+
 }

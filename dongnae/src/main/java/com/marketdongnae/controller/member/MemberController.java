@@ -62,13 +62,15 @@ public class MemberController {
 		return doList;		
 	}
 	
-	@PostMapping("detail/si_area_default")
-	@ResponseBody
-	public List<Si_areaDTO> detail_si_area_default(Model model, @RequestBody int do_id) {
-		List<Si_areaDTO> siList =  memberService.getSiList(do_id);
-//		model.addAttribute("do_id", memberService.getDoId())
-		return siList;		
-	}
+//	@PostMapping("detail/si_area_default")
+//	@ResponseBody
+//	public List<Si_areaDTO> detail_si_area_default(Principal principal, Model model) {
+//		m= memberService.getMember(principal.getName());
+//		int do_id = memberService.getDoId(memberDTO.getSi_id());
+//		List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+//		model.addAttribute("do_id", do_id);
+//		return siList;		
+//	}
 
 	@PostMapping("detail/si_area")
 	@ResponseBody

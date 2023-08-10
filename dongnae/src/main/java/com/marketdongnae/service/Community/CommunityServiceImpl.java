@@ -50,34 +50,51 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void deleteCommunity(int mu_id) {
-		System.out.println("service before");
 		communityMapper.deleteCommunity(mu_id);
-		System.out.println("service after");
-		
 	}
 
 	@Override
-	public HeartDTO heartview(String m_id, String mu_id) {
+	public HeartDTO heartview(String m_number,String mu_id) {
 		
-		return communityMapper.heartview(m_id, mu_id);
+		return communityMapper.heartview(m_number,mu_id);
 	}
+
 	
+	  @Override public int insertHeart(HeartDTO heart) { 
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 int result =0;
+		 
+		 int m_numberInt = heart.getM_number();
+		 int mu_idInt = heart.getMu_id();
+		 String m_number = String.valueOf(m_numberInt);
+		 String mu_id = String.valueOf(mu_idInt);
+		 
+		 HeartDTO find = communityMapper.heartview(m_number,mu_id);
+		 
+		 
+		 if (find == null ) { 
+			result = communityMapper.insertHeart(heart);
+			
+		 }else if(find.getH_num()==0){ 
+			 result=communityMapper.updateHearts(heart);
+			
+		 }else {
+			 communityMapper.updateHeart(heart); 
+		}
+		
+		 return result; 
+		 
+	  }
+	 
 
 	
 	
 	
-
-	
-
-	
-
-	
-
 	
 
 	
 	
-	
+
 	
 
 	

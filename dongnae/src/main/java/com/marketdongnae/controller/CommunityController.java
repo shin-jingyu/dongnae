@@ -2,11 +2,21 @@ package com.marketdongnae.controller;
 
 
 
+import java.nio.file.attribute.UserPrincipal;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.Property;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +32,7 @@ import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.Community.CommunityService;
 import com.marketdongnae.service.member.MemberService;
 
@@ -47,19 +58,19 @@ public class CommunityController {
 	
 	
 	@GetMapping("/communityDetail")
-	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id,@RequestParam("m_id") String m_id){
-		
+	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id,@RequestParam("m_number") String m_number ){
 		ModelAndView view = new ModelAndView();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mu_id", mu_id);
+		map.put("m_number", m_number);	
 		
 		CommunityAllDTO communityDetail = communityService.communityDetail(mu_id);
-		System.out.println(communityDetail);
 		communityService.updateCount(mu_id);
 		
-		HeartDTO heartview = communityService.heartview(m_id, mu_id);
-		System.out.println(heartview);
+		HeartDTO heartview = communityService.heartview(m_number, mu_id); 
 		
 		view.addObject("communityDetail", communityDetail);
-		view.addObject("heartview", heartview);
+		view.addObject("heartview", heartview); 
 		view.setViewName("community/communityDetail");
 		
 		return view;
@@ -103,8 +114,16 @@ public class CommunityController {
 		return "redirect:/community";
 	}
 	
-	/*
-	 * @PostMapping("/heart") public int heart(@ModelAttribute HeartDTO heartview) {
-	 * return ; }
-	 */
+	
+	
+	
+	 @PostMapping("/heart") 
+	 public  @ResponseBody  int heart(@ModelAttribute HeartDTO heart) { 
+		  
+		  int result = communityService.insertHeart(heart);
+		  System.out.println(result);
+		 return result;
+	 }
+	
+	 
 }

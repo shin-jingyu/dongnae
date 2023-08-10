@@ -26,7 +26,13 @@ public interface CommunityMapper {
 	public void updateCommunity(communityDetailDTO community);
 	//삭제하기
 	public  void deleteCommunity(int mu_id);
-	//좋아요
-	public HeartDTO heartview(@Param("m_id") String m_id,@Param("mu_id") String mu_id);
-
+	
+	//좋아요 조회
+	public HeartDTO heartview(@Param("m_number") String m_number,@Param("mu_id") String mu_id);
+	
+	//좋아요 생성
+	public int insertHeart(HeartDTO heart );
+	//좋아요 변경
+	public int updateHeart(HeartDTO heart);
+	public int updateHearts(HeartDTO heart);
 }

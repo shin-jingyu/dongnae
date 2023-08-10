@@ -24,7 +24,8 @@ public interface CommunityService {
 	// 삭제하기
 	public  void deleteCommunity(int mu_id);
 	//좋아요
-	public HeartDTO heartview(String m_id,String mu_id);
-
+	public HeartDTO heartview(@Param("m_number") String m_number,@Param("mu_id") String mu_id);
+	
+	public int insertHeart(HeartDTO heart);
 	
 }

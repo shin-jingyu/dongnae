@@ -47,7 +47,7 @@
 	
 	
 	<select id="heartview" resultType="com.marketdongnae.domain.community.HeartDTO">
-		select * from heartView where m_id = #{m_id} and mu_id = #{mu_id}
+		select * from heart where m_number = #{m_number} and mu_id = #{mu_id}
 	</select>
 	
 	<insert id="insertHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
@@ -55,8 +55,12 @@
 			values(#{mu_id},#{m_number},1)
 	</insert>
 	
-	<delete id="deleteHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
-		delete from heart where m_number = #{m_number} and mu_id = #{mu_id}
-	</delete>
+	<update id="updateHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
+		update heart set h_num = 0 where m_number = #{m_number} and mu_id = #{mu_id}
+	</update>
+	
+	<update id="updateHearts" parameterType="com.marketdongnae.domain.community.HeartDTO">
+		update heart set h_num = 1 where m_number = #{m_number} and mu_id = #{mu_id}
+	</update>
 	
 </mapper>

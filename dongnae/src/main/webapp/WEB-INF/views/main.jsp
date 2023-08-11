@@ -23,29 +23,20 @@
                 <div class="categories__slider owl-carousel">
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/phone.jpeg">
-                            <h5><a href="#">핸드폰</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/laptop.jpeg">
-                            <h5><a href="#">노트북</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/chanel.jpg">
-                            <h5><a href="#">샤넬</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/ipad.jpeg">
-                            <h5><a href="#">태블릿PC</a></h5>
                         </div>
                     </div>
-<!--                     <div class="col-lg-3"> -->
-<!--                         <div class="categories__item set-bg" data-setbg="/resources/img/categories/cat-5.jpg"> -->
-<!--                             <h5><a href="#">drink fruits</a></h5> -->
-<!--                         </div> -->
-<!--                     </div> -->
                 </div>
             </div>
         </div>
@@ -53,17 +44,16 @@
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin 상품 목록-->
-    <c:forEach items="${goodsList }" var="goods" >
     <section class="featured spad">
 		<div class="container">
             <div class="row featured__filter">
+    <c:forEach items="${goodsList }" var="goods" >
                 <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="/resources/upload/goods/${goods.g_picpath}/${goods.g_pic01 }">
                             <ul class="featured__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i></a></li>
                             </ul>
                         </div>
                         <div class="featured__item__text">
@@ -72,10 +62,10 @@
                         </div>
                     </div>
                 </div>
+    </c:forEach>
             </div>
 		</div>
     </section>
-    </c:forEach>
     <!-- Featured Section End -->
 
     <!-- Banner Begin -->

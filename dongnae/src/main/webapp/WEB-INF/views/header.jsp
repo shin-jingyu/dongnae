@@ -65,6 +65,8 @@
 </script>
 
 <body>
+
+	<sec:authentication property="principal" var="member"/>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -148,29 +150,19 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                            </div>
                             <div class="header__top__right__language">
-                                <img src="/resources/img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Spanis</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
+                               ${member.m_id } 님 환영합니다!
                             </div>
-                            <sec:authentication property="principal" var="member"/>
+                            
                             <div class="header__top__right__auth">
                                 <a href="/member/login"><i class="fa fa-user"></i> Login</a>
-                                 <sec:authorize access="isAuthenticated()">
-                                 <a href="/goods/goods_insert">상품등록</a>
-                                 <a href="/member/logout">Logout</a>
-                                 </sec:authorize>
                             </div>
+                            <sec:authorize access="isAuthenticated()">
+                           	<div class="header__top__right__auth">
+   	                         	<a href="/goods/goods_insert">상품등록</a>
+       	                     	<a href="/member/logout">Logout</a>
+                   			</div>
+                            </sec:authorize>
                         </div>
                     </div>
                 </div>

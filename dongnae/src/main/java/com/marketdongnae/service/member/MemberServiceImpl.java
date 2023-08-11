@@ -13,6 +13,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Point_viewDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.mapper.GoodsMapper;
@@ -112,7 +113,22 @@ public class MemberServiceImpl implements MemberService {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		return member.getM_point();
 	}
+	
 
+	@Override
+	public void putPoint(String m_id, int m_point) {
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setM_id(m_id);
+		memberDTO.setM_point(m_point);
+		memberMapper.putPoint(memberDTO);
+//		MemberDTO member =  memberMapper.getMember(m_id);
+//		int m_number =  member.getM_number();
+//		Point_viewDTO point_viewDTO = new Point_viewDTO() ;
+//			point_viewDTO.setM_number( m_number);
+//			point_viewDTO.setD_type("put");
+//			point_viewDTO.setG_price(m_point);
+//		memberMapper.plusPoint(point_viewDTO);
+	}
 
 	@Override
 	public Integer regist(MemberDTO memberDTO) {
@@ -167,5 +183,18 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteWish( wish_id);
 		
 	}
+
+
+
+	@Override
+	public String getSi_area(String m_id) {
+		MemberDTO memberDTO = memberMapper.getMember(m_id);
+		int si_id = memberDTO.getSi_id();
+		Si_areaDTO si_areaDTO  = memberMapper.getSi_area(si_id);
+		String si_area = si_areaDTO.getSi_area();
+		return si_area;
+	}
+
+
 
 }

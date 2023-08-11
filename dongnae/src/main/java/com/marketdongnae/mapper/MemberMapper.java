@@ -7,6 +7,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.Point_viewDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
@@ -37,6 +38,12 @@ public interface MemberMapper {
 	public List<Wish_viewDTO> getWish_viewList(int m_number);
 	
 	public void deleteWish(int wish_id);
+
+	public void putPoint(MemberDTO memberDTO);
+
+	public Si_areaDTO getSi_area(int si_id);
+
+//	public void plusPoint(Point_viewDTO point_viewDTO);
 
 	
 

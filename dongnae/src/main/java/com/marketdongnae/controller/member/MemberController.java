@@ -1,5 +1,6 @@
 package com.marketdongnae.controller.member;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,17 +50,33 @@ public class MemberController {
 	private final CustomAuthenticationProvider customAuthenticationProvider;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
-	private final String getSessionM_Id(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String m_id =  (String) session.getAttribute("m_id");
-		return m_id;
-	}
 	
 	@GetMapping("detail")
-	public String detail(Model model, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("member",  memberService.getMember(m_id));
-		return "member/detail" ;		
+	public void detail() {
+	}
+	
+	@PostMapping("detail/do_area")
+	@ResponseBody
+	public List<Do_areaDTO> detail_do_area() {
+		 List<Do_areaDTO> doList =  memberService.getDoList();
+		return doList;		
+	}
+	
+//	@PostMapping("detail/si_area_default")
+//	@ResponseBody
+//	public List<Si_areaDTO> detail_si_area_default(Principal principal, Model model) {
+//		m= memberService.getMember(principal.getName());
+//		int do_id = memberService.getDoId(memberDTO.getSi_id());
+//		List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+//		model.addAttribute("do_id", do_id);
+//		return siList;		
+//	}
+
+	@PostMapping("detail/si_area")
+	@ResponseBody
+	public List<Si_areaDTO> detail_si_area(@RequestBody int do_id) {
+		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+		return siList;		
 	}
 	
 	@PostMapping("update")
@@ -69,17 +86,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("changePassword")
-	public String changePassword(@ModelAttribute ("password") PasswordDTO passwordDTO, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		passwordDTO.setM_id(m_id);
-		return "member/changePassword" ;
+	public void changePassword(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO ) {
+		passwordDTO.setM_id(principal.getName());
+		memberService.getSoldList(principal.getName());
 	}
 	
 	
 	@PostMapping("changePassword")
-	public String changePassword_post(@ModelAttribute ("password") PasswordDTO passwordDTO , HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		String result = memberService.changePassword(m_id, passwordDTO);
+	public String changePassword_post(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO  ) {
+		String result = memberService.changePassword(principal.getName(), passwordDTO);
 		if ( result == "fail") 
 			return "member/changePassword";
 		else 
@@ -87,8 +102,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public String login() {
-		return "member/login";
+	public void login() {
 	}
 	
 	@GetMapping("loginFail")
@@ -99,15 +113,14 @@ public class MemberController {
 	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
 	
 	@GetMapping("logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request ) {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
 	}
 	
 	@GetMapping("regist")
-	public String regist() {
-		return "member/regist";
+	public void regist() {
 	}
 	
 	@PostMapping("regist")
@@ -116,83 +129,60 @@ public class MemberController {
 		return "member/login";		
 	}
 	
-//	@GetMapping("regist/do_area")
-//	public String regist_do_area_get() {
-//		return"member/regist";
-//	}
-	
 	@PostMapping("regist/do_area")
 	@ResponseBody
 	public List<Do_areaDTO> regist_do_area() {
 		 List<Do_areaDTO> doList =  memberService.getDoList();
 		return doList;		
 	}
-	
-	@GetMapping("regist/si_area")
-	public String regist_si_area_get() {
-		return"member/regist";
-	}
-	
+
 	@PostMapping("regist/si_area")
 	@ResponseBody
 	public List<Si_areaDTO> regist_si_area(@RequestBody int do_id) {
 		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
-//		 if( (Integer)do_id == null ) {
-//			 List<Si_areaDTO> sl = new ArrayList<Si_areaDTO>();
-//			 Si_areaDTO s = new Si_areaDTO();
-//		 	 s.setSi_area("시/군/구");
-//			 sl.add(s);
-//			 return sl;
-//			 }
 		return siList;		
 	}
 
 	@GetMapping("soldList")
-	public String soldList(Model model,HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("soldList", memberService.getSoldList(m_id));
-		return "member/soldList";		
+	public void soldList(Principal principal,  Model model) {
+		model.addAttribute("soldList", memberService.getSoldList(principal.getName()));
 	}
 	
 	@GetMapping("buyList")
-	public String buyList(Model model, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("buyList", memberService.getBuyList(m_id));
-		return "member/buyList";		
+	public void buyList(Model model, Principal principal ) {
+		model.addAttribute("buyList", memberService.getBuyList(principal.getName()));
 	}
 	
 	@GetMapping("onSaleList")
-	public String onSaleList(Model model, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("onSaleList", memberService.getOnSaleList(m_id));
-		return "member/onSaleList";		
+	public void onSaleList(Model model, Principal principal ) {
+		model.addAttribute("onSaleList", memberService.getOnSaleList(principal.getName()));
 	}
 
 	@GetMapping("review")
-	public String getReviewList( Model model, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("soldList", memberService.getSoldList(m_id));
-		model.addAttribute("avgScore", memberService.getAvgScore(m_id));
-		return "member/review";		
+	public void getReviewList( Model model, Principal principal ) {
+		model.addAttribute("soldList", memberService.getSoldList(principal.getName()));
+		model.addAttribute("avgScore", memberService.getAvgScore(principal.getName()));
 	}
 	
 	@GetMapping("point")
-	public String review( Model model, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("dealList", memberService.getDealList(m_id));
-		model.addAttribute("m_point", memberService.getPoint(m_id));
-		return "member/point";		
+	public void point( Model model, Principal principal ) {
+		model.addAttribute("dealList", memberService.getDealList(principal.getName()));
+		model.addAttribute("m_point", memberService.getPoint(principal.getName()));
+	}
+	
+	@GetMapping("pointSuccess")
+	public String point_post(@RequestParam int m_point, Principal principal ) {
+		memberService.putPoint(principal.getName(), m_point) ; 
+		return "redirect:/member/point";		
 	}
 	
 	@GetMapping("wishlist")
-	public String wishlist(Model model, HttpServletRequest request) {
-		String m_id =  getSessionM_Id(request);
-		model.addAttribute("wish_viewList", memberService.getWish_viewList(m_id));
-		return "member/wishlist";		
+	public void wishlist(Model model , Principal principal) {
+		model.addAttribute("wish_viewList", memberService.getWish_viewList(principal.getName()));
 	}
 	
 	@GetMapping("cancelWish")
-	public String cancelWish(HttpServletRequest request) {
+	public String cancelWish( HttpServletRequest request ) {
 		int wish_id = Integer.parseInt(request.getParameter("wish_id"));
 		memberService.deleteWish(wish_id);
 		return "redirect:/member/wishlist";

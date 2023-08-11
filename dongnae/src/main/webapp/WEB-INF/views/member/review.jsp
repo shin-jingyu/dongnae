@@ -2,32 +2,122 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>내 거래 후기</title>
 </head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 
 <body>
-<div class="container">
-	<h1>내 거래 점수 : ${avgScore} 점</h1>
-	<h1>내 거래 후기</h1>
-		<c:forEach var="s" items="${soldList}">
-			<div class="card">
-				<img class="card-img-top"  style="width: 20%;" src="https://cdn.pixabay.com/photo/2021/03/08/09/56/assessment-6078645_1280.png"  />
-				<div class="card-body">
-					<div>구매자번호 : ${s.d_m_number}</div>
-					<div>거래후기 : ${s.d_review}</div>
-					<div>거래일 : ${s.d_regdate}</div>
-					<div>받은 거래점수 : ${s.d_score}점</div>
-				</div>
-			</div>
-	</c:forEach>
-</div>
+<sec:authentication property="principal" var="member"/>
+
+<jsp:include page="../header_member.jsp"></jsp:include>
+
+ <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>My Page</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Breadcrumb Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+             <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="sidebar">
+                    	<jsp:include page="./sidebar.jsp"></jsp:include>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                <div class="row">
+                	<div class="container border my-3 rounded-5">
+                		<div class="row">
+	                            <div class="col-lg-5 col-md-6  col-sm-11 col-11  my-4 text-center" >
+	                           		<h2>내 거래 점수</h2>
+	                           	</div>
+	                            <div class="col-lg-6 col-md-5 col-sm-11 col-11  my-4  text-center" >
+	                           		<h2>${avgScore} 점</h2>
+	                           	</div>
+	                        </div>
+	                     </div>
+	            </div>
+	            
+                <div class="row">
+	                <div class="container border my-3 rounded-5">
+	                <!-- <div class="container mx-auto" style="width: 80%;"> -->
+	                            <div class="row mt-5  text-center" >
+	                           		<h2>받은 거래 후기</h2>
+	                           	</div>
+	                           	<div class="row my-3">
+		                        	<div class="col-12 col-md-11 my-3 mx-auto">
+		                        		<c:forEach var="s" items="${soldList}">
+		                        		<div class="row col-12 col-md-11 container border my-3 rounded-5" style="float: none; margin: 0 auto;">
+		                        			<div class ="col-6 col-md-3 m-auto">
+		                        				<img src="https://image.istarbucks.co.kr/upload/store/skuimg/2021/08/[11123351]_20210803101044084.jpg" style="width: 100%" />
+		                        			</div>
+		                        			
+		                        			<div class ="col-12 col-md-9 my-auto">
+			                        			<div class="row my-3">
+			                        				<div class="col-lg-3 col-md-6  col-sm-12 col-12 font-weight-bold" >
+			                        				구매자번호
+			                        				</div>
+			                        				<div class="col-lg-8 col-md-6  col-sm-12 col-12 ">
+			                        				${s.d_m_number}
+			                        				</div>
+			                        			</div>	
+			                        			<div class="row my-3">
+			                        				<div class="col-lg-3 col-md-6 col-sm-12 col-12 font-weight-bold " >
+			                        				거래후기
+			                        				</div>
+			                        				<div class=" col-lg-8 col-md-6 col-sm-12 col-12 ">
+			                        				 ${s.d_review}
+			                        				</div>
+			                        			</div>	
+			                        			<div class="row my-3">
+			                        				<div class="col-lg-3 col-md-6 col-sm-12 col-12 font-weight-bold " >
+			                        				거래일
+			                        				</div>
+			                        				<div class=" col-lg-8 col-md-6 col-sm-12 col-12 ">
+			                        				 ${s.d_regdate}
+			                        				</div>
+			                        			</div>	
+			                        			<div class="row my-3">
+			                        				<div class="col-lg-3 col-md-6 col-sm-12 col-12 font-weight-bold " >
+			                        				받은 거래점수
+			                        				</div>
+			                        				<div class=" col-lg-8 col-md-6 col-sm-12 col-12 ">
+			                        				 ${s.d_score}점
+			                        				</div>
+			                        			</div>	
+		                        			</div>
+		                        			
+		                        		</div>
+		                        		</c:forEach>
+		                            </div>
+	                            </div>
+	                        </div>
+	                    <!-- </div> -->
+	                   </div>
+	                   
+	            </div>
+                </div>
+                </div>
+    </section>
+    <!-- Product Section End -->
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
+
 </body>
 </html>

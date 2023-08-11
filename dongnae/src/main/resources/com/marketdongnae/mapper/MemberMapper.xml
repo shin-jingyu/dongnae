@@ -19,6 +19,10 @@
 	<select id="getSiList" resultType="com.marketdongnae.domain.member.Si_areaDTO">	 
 		select * from Si_area where do_id = #{do_id};
 	</select>
+	
+	<select id="getSi_area" resultType="com.marketdongnae.domain.member.Si_areaDTO">	 
+		select * from Si_area where si_id = #{si_id} ;
+	</select>
  	
 	<select id="getMember" resultType="com.marketdongnae.domain.member.MemberDTO">	 
 		select * from member where m_id = #{m_id}
@@ -62,6 +66,16 @@
 	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
-	
-	
+	<select id="putPoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
+		update member
+			set m_point = #{m_point}
+		where m_id = #{m_id} ;
+	</select>
+	<!-- 
+	 <select id="putPoint" parameterType="com.marketdongnae.domain.member.Point_viewDTO" > 
+		insert into point
+			set m_point = #{m_point}
+		where m_id = #{m_id} ;
+	</select>
+	 -->
 </mapper> 

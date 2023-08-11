@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Ogani | Template</title>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -28,7 +32,8 @@
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+
 <script>
 	var token = $("meta[name='_csrf']").attr('content');
 	var header = $("meta[name='_csrf_header']").attr('content');
@@ -49,11 +54,11 @@
         dataType: 'json',
         success: function (data) {
             console.log(data);
-            var categorySelect_main_1 = $('.categoryList');
-            categorySelect_main_1.empty();
-            var category_Main_List_1 = data.category_1;
-            category_Main_List_1.forEach(function (category_Main_1) {
-            	categorySelect_main_1.append($('<li value="' + category_Main_1.c1_id + '">' + category_Main_1.c1_category + '</li>'));
+            var categorySelect_c1 = $('.categoryList');
+            categorySelect_c1.empty();
+            var categoryList_c1 = data.category_1;
+            categoryList_c1.forEach(function (category1) {
+            	categorySelect_c1.append($('<li value="' + category1.c1_id + '">' + category1.c1_category + '</li>'));
             });
         },
         error: function (xhr, status, error) {
@@ -65,8 +70,6 @@
 </script>
 
 <body>
-
-	<sec:authentication property="principal" var="member"/>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -95,18 +98,18 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div>
-	            <div class="header__top__right__auth">
+             <div class="header__top__right__auth">
 	                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
 	            </div>
 	            <sec:authorize access="isAuthenticated()">
 					<a href="/customLogout">로그아웃</a>
 					<a href="/member/detail">${member.m_id}님 마이페이지</a>
 				</sec:authorize>
-          
+				
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="main">">Home</a></li>
+                <li class="active"><a href="./index.html">Home</a></li>
                 <li><a href="./shop-grid.html">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
@@ -151,10 +154,22 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
-                            <div class="header__top__right__language">
-                               ${member.m_id } 님 환영합니다!
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
-                            
+                            <div class="header__top__right__language">
+                                <img src="/resources/img/language.png" alt="">
+                                <div>English</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="#">Spanis</a></li>
+                                    <li><a href="#">English</a></li>
+                                </ul>
+                            </div>
+                             <sec:authentication property="principal" var="member"/>
                             <div class="header__top__right__auth">
                                 <a href="/member/login"><i class="fa fa-user"></i> Login</a>
                                  <sec:authorize access="isAuthenticated()">
@@ -172,14 +187,14 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="/"><img src="/resources/img/logo.png" alt=""></a>
+                        <a href="./index.html"><img src="/resources/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href='<c:url value="/"/>'>Home</a></li>
-                            <li><a href='<c:url value="/goods/goods_list"/>'>Shop</a></li>
+                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
@@ -210,47 +225,15 @@
     </header>
     <!-- Header Section End -->
     
-    <!-- Hero Section Begin -->
-    <section class="hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>카테고리</span>
-                        </div>
-                        <ul class="categoryList">
-                           
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="hero__item set-bg" data-setbg="/resources/img/hero/banner.jpg">
-                        <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
+
+    
+
+   
+
+   
+
+
+
 </body>
 
 </html>

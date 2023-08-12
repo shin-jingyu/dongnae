@@ -160,7 +160,7 @@
                                  <sec:authorize access="isAuthenticated()">
                                  <a href="/goods/goods_insert">상품등록</a>
                                  <a href="/member/logout">Logout</a>
-                                 <a href="/member/detail">${member.m_id}님 마이페이지</a>
+                                 <a href="/member/detail">마이페이지</a>
                                  </sec:authorize>
                             </div>
                         </div>

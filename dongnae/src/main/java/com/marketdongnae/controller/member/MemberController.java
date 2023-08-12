@@ -29,6 +29,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
@@ -124,7 +125,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("regist")
-	public String regist_post(@ModelAttribute("member") MemberDTO memberDTO) {
+	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
 		memberService.regist(memberDTO);
 		return "member/login";		
 	}
@@ -166,13 +167,13 @@ public class MemberController {
 	
 	@GetMapping("point")
 	public void point( Model model, Principal principal ) {
-		model.addAttribute("dealList", memberService.getDealList(principal.getName()));
+		model.addAttribute("pointList", memberService.getPointList(principal.getName()));
 		model.addAttribute("m_point", memberService.getPoint(principal.getName()));
 	}
 	
-	@GetMapping("pointSuccess")
-	public String point_post(@RequestParam int m_point, Principal principal ) {
-		memberService.putPoint(principal.getName(), m_point) ; 
+	@PostMapping("point")
+	public String point_post(@ModelAttribute PointDTO pointDTO ) {
+		memberService.putPoint(pointDTO) ;
 		return "redirect:/member/point";		
 	}
 	
@@ -186,6 +187,14 @@ public class MemberController {
 		int wish_id = Integer.parseInt(request.getParameter("wish_id"));
 		memberService.deleteWish(wish_id);
 		return "redirect:/member/wishlist";
+	}
+	
+	@PostMapping("checkId")
+	@ResponseBody
+	public String checkId(@RequestBody String checkId) {
+		System.out.println("###"+checkId);
+		String msg =  memberService.checkId(checkId);
+		return msg ; 
 	}
 	
 }

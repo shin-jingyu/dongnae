@@ -156,6 +156,26 @@ CREATE TABLE `Member` (
     `m_auth`	varchar(50)	NOT NULL	DEFAULT 'ROLE_MEMBER'
 );
 
+ALTER TABLE deal MODIFY COLUMN g_id int NOT NULL;
+
+
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'plus', '20000' );
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'minus', '3000' );
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'put', '3000' );
+
+ CREATE TABLE `point` (
+	`p_id`		int	NOT NULL unique primary key  auto_increment,
+	`m_id`	varchar(255)	NOT NULL,
+    `p_type`	varchar(255)	NULL	,
+	`p_price` int	NULL,
+	`p_regdate`	timestamp	NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'plus', '20000' );
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'minus', '3000' );
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'put', '3000' );
+
+
 -- 시 도
 
 CREATE TABLE `Do_area` (

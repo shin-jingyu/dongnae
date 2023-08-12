@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
@@ -48,6 +50,7 @@ public class CommunityController {
 	@GetMapping("/community")
 	public ModelAndView getCommunity() {
 		ModelAndView view = new ModelAndView();
+		
 		List<CommunityAllDTO> list = communityService.communityAll();
 		view.addObject("list",list);
 		view.setViewName("community/community");
@@ -58,7 +61,7 @@ public class CommunityController {
 	
 	
 	@GetMapping("/communityDetail")
-	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id,@RequestParam("m_number") String m_number ){
+	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id ,@RequestParam("m_number") String m_number ){
 		ModelAndView view = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mu_id", mu_id);
@@ -68,7 +71,11 @@ public class CommunityController {
 		communityService.updateCount(mu_id);
 		
 		HeartDTO heartview = communityService.heartview(m_number, mu_id); 
+		 
+	
 		
+		List<CommentDTO> lists  = communityService.selectComment(Integer.parseInt(mu_id));
+		view.addObject("comment",lists);
 		view.addObject("communityDetail", communityDetail);
 		view.addObject("heartview", heartview); 
 		view.setViewName("community/communityDetail");
@@ -125,5 +132,27 @@ public class CommunityController {
 		 return result;
 	 }
 	
+	 @PostMapping("/comment")
+	 public String comment(@ModelAttribute CommentDTO commentDTO) {
+		 communityService.insertComment(commentDTO);
+		 int m_ids = commentDTO.getMu_id();
+		 String mu_id = String.valueOf(m_ids);
+
+		 return "redirect:/communityDetail?mu_id="+mu_id+"&&m_number="+commentDTO.getM_number();
+	 }
+	 @ResponseBody
+	 @PostMapping("/updateComment")
+	 public String updateComment (@ModelAttribute CommentDTO CommentDTO ) {
+		 // String data= null;
+		 communityService.updateComment(CommentDTO);
+		 return "success";
+	 }
+	 
+	 @ResponseBody
+	 @PostMapping("/deleteComment")
+	 public String deleteComment (@ModelAttribute CommentDTO commentDTO) {
+		communityService.deleteComment(commentDTO);
+		 return "success";
+	 }
 	 
 }

@@ -124,11 +124,7 @@ public class MemberController {
 	public void regist() {
 	}
 	
-	@PostMapping("regist")
-	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
-		memberService.regist(memberDTO);
-		return "member/login";		
-	}
+
 	
 	@PostMapping("regist/do_area")
 	@ResponseBody
@@ -189,11 +185,25 @@ public class MemberController {
 		return "redirect:/member/wishlist";
 	}
 	
+	@PostMapping("regist")
+	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
+		memberService.regist(memberDTO);
+		return "member/login";		
+	}
+	
 	@PostMapping("checkId")
 	@ResponseBody
 	public String checkId(@RequestBody String checkId) {
+		String msg =  memberService.checkId(checkId.replace("=", ""));
 		System.out.println("###"+checkId);
-		String msg =  memberService.checkId(checkId);
+		return msg ; 
+	}
+	
+	@PostMapping("checkId_post")
+	@ResponseBody
+	public String checkId_post(@RequestBody String checkId) {
+		String msg =  memberService.checkId(checkId.replace("=", ""));
+		System.out.println("###"+checkId);
 		return msg ; 
 	}
 	

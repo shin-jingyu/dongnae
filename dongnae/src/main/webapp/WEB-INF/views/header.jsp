@@ -152,7 +152,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__language">
-                               ${member.m_id } 님 환영합니다!
+                               <%-- ${member.m_id } 님 환영합니다! --%>
                             </div>
                             
                             <div class="header__top__right__auth">

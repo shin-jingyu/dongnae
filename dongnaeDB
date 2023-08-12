@@ -156,13 +156,6 @@ CREATE TABLE `Member` (
     `m_auth`	varchar(50)	NOT NULL	DEFAULT 'ROLE_MEMBER'
 );
 
-ALTER TABLE deal MODIFY COLUMN g_id int NOT NULL;
-
-
-insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'plus', '20000' );
-insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'minus', '3000' );
-insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'put', '3000' );
-
  CREATE TABLE `point` (
 	`p_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_id`	varchar(255)	NOT NULL,
@@ -171,10 +164,10 @@ insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'put', '3000'
 	`p_regdate`	timestamp	NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- p_type: plus(송금받은 경우) , minus(송금한 경우), put(
-insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'plus', '20000' );
-insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'minus', '3000' );
-insert into point  (  m_id,  p_type ,  p_price  )  values ( 'www', 'put', '3000' );
+-- point 테이블 예시 p_type: plus(송금받은 경우) , minus(송금한 경우), put(
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'a', 'plus', '20000' );
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'a', 'minus', '3000' );
+insert into point  (  m_id,  p_type ,  p_price  )  values ( 'a', 'put', '3000' );
 
 
 -- 시 도

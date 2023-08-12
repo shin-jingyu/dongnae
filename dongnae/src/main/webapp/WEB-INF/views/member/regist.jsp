@@ -57,13 +57,33 @@
 			success:function(response){
 				var options = "";
 				if(response == 'duplicated'){
-					alert("아이디 중복!!");
+					alert("중복된 아이디입니다. 다른 아이디를 입력하세요");
 					$("#idAlert").css('display', 'block');
 				}
 				else{
 					alert("사용가능한 아이디입니다.");
 					options+= "<input type=text' value='ok'>"
-					$("#duplicateOk").html('options');
+				}
+			},
+			error:function(response){
+			}			
+		})
+	};
+	
+	function checkId_post(){
+		let checkId = $("#m_id").val();
+		$.ajax({
+			url: '/member/checkId_post',
+			type:'POST',
+			data: checkId,
+			success:function(response){
+				var options = "";
+				if(response == 'duplicated'){
+					alert("중복된 아이디입니다. 다른 아이디를 입력하세요");
+					$("#idAlert").css('display', 'block');
+				}
+				else{
+					$("#regist").submit();
 				}
 			},
 			error:function(response){
@@ -111,8 +131,7 @@
 	                           		<h2>회원가입</h2>
 	                           	</div>
 	                        	<div class="row  my-3">
-	                            	<form name="regist" action="regist" method="post" class="form-horizontal">
-	                            	<div hidden id="duplicateOk"><input type="text" value="duplicated"></div>
+	                            	<form id="regist" name="regist" action="regist" method="post" class="form-horizontal">
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		아이디
@@ -124,15 +143,15 @@
 						                   		<button type="button" class="btn btn-success" onclick="checkId()" >중복 확인</button>
 					                		</div> 
 										</div>
-										
+										<%-- 
 										<div id="wrongId" class="form-group row" style="display: none">
 											<div class="col-12 col-sm-9 align-self-center " ></div>
 											<div id="idAlert" ${ (password.message == "wrongCurrent")? '' : 'style="display: none;"' }   
-											class="alert alert-danger align-self-center mb-3" role="alert" >
+											class="alert alert-danger align-self-center mb-3" role="alert" > 
 											중복된 아이디입니다. 다른 아이디를 입력해주세요.
 											</div>
 										</div>
-										
+										 --%>
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		비밀번호
@@ -182,7 +201,7 @@
 										
 										<div class="form-group  row">
 										<div class="col-12  mt-3">
-						                    <input type="submit" class="btn btn-primary" value="회원가입 ">
+						                    <input type="button" class="btn btn-primary" onclick="checkId_post()" value="회원가입 ">
 					                	</div> 
 					                	</div>
 									</form>

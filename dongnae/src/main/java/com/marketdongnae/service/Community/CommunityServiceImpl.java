@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
@@ -73,18 +74,49 @@ public class CommunityServiceImpl implements CommunityService {
 		 
 		 
 		 if (find == null ) { 
-			result = communityMapper.insertHeart(heart);
-			
+			communityMapper.insertHeart(heart);
+			result = 1;
 		 }else if(find.getH_num()==0){ 
-			 result=communityMapper.updateHearts(heart);
-			
+			communityMapper.updateHearts(heart);
+			 result=1;
 		 }else {
-			 communityMapper.updateHeart(heart); 
+			  communityMapper.updateHeart(heart); 
+			  result=0;
 		}
 		
 		 return result; 
 		 
 	  }
+
+	@Override
+	public void insertComment(CommentDTO insertComment) {
+		communityMapper.insertComment(insertComment);
+		
+	}
+
+	@Override
+	public List<CommentDTO> selectComment(int mu_id) {
+		List<CommentDTO> list = communityMapper.selectComment(mu_id);
+		return list;
+	}
+
+	@Override
+	public void updateComment(CommentDTO updateComment) {
+		communityMapper.updateComment(updateComment);
+		
+	}
+
+	@Override
+	public void deleteComment(CommentDTO deleteComment) {
+		communityMapper.deleteComment(deleteComment);
+		
+	}
+
+	@Override
+	public void selectCommentOne(CommentDTO selectCommentOne) {
+		communityMapper.selectCommentOne(selectCommentOne);
+		
+	}
 	 
 
 	

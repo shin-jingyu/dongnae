@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
@@ -35,4 +36,11 @@ public interface CommunityMapper {
 	//좋아요 변경
 	public int updateHeart(HeartDTO heart);
 	public int updateHearts(HeartDTO heart);
+	
+	//댓글
+	public void insertComment (CommentDTO insertComment);
+	public List<CommentDTO> selectComment(int mu_id);
+	public void selectCommentOne(CommentDTO selectCommentOne);
+	public void updateComment (CommentDTO updateComment);
+	public void deleteComment(CommentDTO deleteComment);
 }

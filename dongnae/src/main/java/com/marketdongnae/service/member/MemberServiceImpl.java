@@ -13,7 +13,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
-import com.marketdongnae.domain.member.Point_viewDTO;
+import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.mapper.GoodsMapper;
@@ -92,13 +92,7 @@ public class MemberServiceImpl implements MemberService {
 		return avgScore;
 	}
 	
-	@Override
-	public List<Deal_viewDTO> getDealList(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		int m_number =  member.getM_number();
-		List<Deal_viewDTO> dealList =  memberMapper.getDealList(m_number);
-		return dealList;
-	}
+
 	
 	@Override
 	public List<Deal_viewDTO> getOnSaleList(String m_id) {
@@ -107,28 +101,7 @@ public class MemberServiceImpl implements MemberService {
 		List<Deal_viewDTO> onSaleList =  memberMapper.getOnSaleList(m_number);
 		return onSaleList;
 	}
-	
-	@Override
-	public int getPoint(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		return member.getM_point();
-	}
-	
 
-	@Override
-	public void putPoint(String m_id, int m_point) {
-		MemberDTO memberDTO = new MemberDTO();
-		memberDTO.setM_id(m_id);
-		memberDTO.setM_point(m_point);
-		memberMapper.putPoint(memberDTO);
-//		MemberDTO member =  memberMapper.getMember(m_id);
-//		int m_number =  member.getM_number();
-//		Point_viewDTO point_viewDTO = new Point_viewDTO() ;
-//			point_viewDTO.setM_number( m_number);
-//			point_viewDTO.setD_type("put");
-//			point_viewDTO.setG_price(m_point);
-//		memberMapper.plusPoint(point_viewDTO);
-	}
 
 	@Override
 	public Integer regist(MemberDTO memberDTO) {
@@ -184,8 +157,6 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-
-
 	@Override
 	public String getSi_area(String m_id) {
 		MemberDTO memberDTO = memberMapper.getMember(m_id);
@@ -194,7 +165,40 @@ public class MemberServiceImpl implements MemberService {
 		String si_area = si_areaDTO.getSi_area();
 		return si_area;
 	}
+	
+	
+	@Override
+	public int getPoint(String m_id) {
+		MemberDTO member =  memberMapper.getMember(m_id);
+		return member.getM_point();
+	}
+	
+	@Override
+	public List<PointDTO> getPointList(String m_id) {
+		List<PointDTO> pointlist =  memberMapper.getPointList(m_id);
+		return pointlist;
+	}
+	
+	@Override
+	public void putPoint(PointDTO pointDTO) {
+		String m_id = pointDTO.getM_id();
+		MemberDTO memberDTO = memberMapper.getMember(m_id);
+		memberDTO.setM_point(memberDTO.getM_point()+pointDTO.getP_price());
+		memberMapper.updatePoint(memberDTO);
+		memberMapper.insertPointList( pointDTO );
+	}
 
+
+	@Override
+	public String checkId(String checkId) {
+		String msg ; 
+		MemberDTO memberDTO = memberMapper.getMember(checkId);
+		if(memberDTO==null)
+			msg = "ok";
+		else 
+			msg = "duplicated";
+		return msg;
+	}
 
 
 }

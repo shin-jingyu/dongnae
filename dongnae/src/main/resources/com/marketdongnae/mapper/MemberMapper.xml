@@ -37,10 +37,6 @@
 		where m_id = #{m_id}
 	</select>
 	
-	<select id="getDealList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where  m_number = #{m_number} ;
-	</select>
-	
 	<select id="getSoldList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
 		select * from deal_view where m_number = #{m_number} and d_type = 'sold'; 
 	</select>
@@ -66,16 +62,19 @@
 	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
-	<select id="putPoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
+	
+	<select id="getPointList" resultType="com.marketdongnae.domain.member.PointDTO">	 
+		select * from point where  m_id = #{m_id} ;
+	</select>
+	
+	<select id="updatePoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set m_point = #{m_point}
 		where m_id = #{m_id} ;
 	</select>
-	<!-- 
-	 <select id="putPoint" parameterType="com.marketdongnae.domain.member.Point_viewDTO" > 
-		insert into point
-			set m_point = #{m_point}
-		where m_id = #{m_id} ;
+	
+	 <select id="insertPointList" parameterType="com.marketdongnae.domain.member.PointDTO">	 
+		insert into point  (  m_id,  p_type ,  p_price  )
+		 values (  #{m_id} ,  #{p_type} , #{p_price} ) ;
 	</select>
-	 -->
 </mapper> 

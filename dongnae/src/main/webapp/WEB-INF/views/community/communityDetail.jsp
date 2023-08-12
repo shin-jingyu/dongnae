@@ -191,9 +191,6 @@ $(".deleteComment").on('click',function(){
     });
 });
 
-
-
-
 //좋아요 구현
 $(document).ready(function (){
 	var heartval = '${heartview.h_num}';

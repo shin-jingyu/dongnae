@@ -156,6 +156,8 @@ CREATE TABLE `Member` (
     `m_auth`	varchar(50)	NOT NULL	DEFAULT 'ROLE_MEMBER'
 );
 
+ALTER TABLE member add COLUMN do_id int NULL;
+
  CREATE TABLE `point` (
 	`p_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_id`	varchar(255)	NOT NULL,

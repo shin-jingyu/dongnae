@@ -56,7 +56,7 @@
 						                   		현재 비밀번호
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input name="current_password" id="current_password" type="password" value="" class="form-control">
+												<input name="current_password" id="current_password" type="password" value="" class="form-control" required  maxlength="20">
 											</div>	
 										</div>
 										<div class="form-group row">
@@ -72,7 +72,7 @@
 						                   		새 비밀번호
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input name="new_password" id="new_password" type="password" value="" class="form-control">
+												<input name="new_password" id="new_password" type="password" value="" class="form-control" required  maxlength="20">
 											</div>		
 										</div>
 										
@@ -81,7 +81,7 @@
 											  새 비밀번호 확인           		
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input  name="new_password_confirm" id="new_password_confirm" type="password" value="" class="form-control">
+												<input  name="new_password_confirm" id="new_password_confirm" type="password" value="" class="form-control" required  maxlength="20">
 											</div>		
 										</div>
 										<div class="form-group row">

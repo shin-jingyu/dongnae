@@ -8,8 +8,8 @@
 	</select>
 	
  	<select id="regist" parameterType="com.marketdongnae.domain.member.MemberDTO">	 
-		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id )
-		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} ) ;
+		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id , do_id)
+		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}  ) ;
 	</select>
 	
 	<select id="getDoList" resultType="com.marketdongnae.domain.member.Do_areaDTO">	 
@@ -32,6 +32,7 @@
 		update member
 			set 
 				m_name = #{m_name}, 
+				m_email = #{m_email}, 
 				m_phone=#{m_phone}, 
 				si_id = #{si_id}
 		where m_id = #{m_id}

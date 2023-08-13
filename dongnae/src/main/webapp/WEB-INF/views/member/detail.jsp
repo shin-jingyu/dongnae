@@ -18,8 +18,8 @@
 			success: function(data){
 				var options = "";
 				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].do_id + "' ${ (member.do_id == '" + data[i].do_id + "')? 'selected' : '' }>" + data[i].do_area + " </option>"
-					// <option value="1" ${ (member.do_id == '" + data[i].do_id + "')? "selected" : "" }>수원</option>
+					options+= "<option value='" + data[i].do_id + "' ${ (member.do_id.toString() == '" 
+							+ data[i].do_id + "')? 'selected' : '' }>" + data[i].do_area + " </option>"
 				}
 				$("#do_id").html(options);
 			},
@@ -27,7 +27,6 @@
 				alert("error load do area");
 			}
 		});
-		
 	});
 		
 	function do_select(){
@@ -41,7 +40,7 @@
 			success:function(data){		
 				var options = "";
 				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
+					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id.toString() == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
 				}
 				$("#si_id").html(options);
 				$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
@@ -63,7 +62,7 @@
 			success:function(data){		
 				var options = "";
 				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
+					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id.toString() == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
 				}
 				$("#si_id").html(options);
 				$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
@@ -73,35 +72,12 @@
 			}
 		})
 	}
-/* 	
-	// 여기
-	function si_click(){
-		let doData = $("#do_id option:selected").val();
-		$.ajax({
-			url: '/member/detail/si_area',
-			type:'POST',
-			data: doData, 
-			contentType: 'application/json',   
-			dataType: "json",	 	 
-			success:function(data){		
-				var options = "";
-				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
-				}
-				$("#si_id").html(options);
-			},
-			error:function(){
-				alert("error load si area");
-			}
-		})
-	}
-	 */
 </script>
 </head>
 
 
 <body>
-<sec:authentication property="principal" var="member"/>
+<%-- <sec:authentication property="principal" var="member"/> --%>
 
 <jsp:include page="../header_member.jsp"></jsp:include>
 
@@ -135,13 +111,13 @@
 	                           		<h2>내 프로필</h2>
 	                           	</div>
 	                        	<div class="row  my-3">
-	                            	<form name="updateForm" action=update method="post" class="form-horizontal">
+	                            	<form name="updateForm" action="detail" method="post" class="form-horizontal">
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		아이디
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input readonly name="m_id"  type="text" value="${member.m_id}" class="form-control">
+												<input readonly name="m_id"  type="text" value="${member.m_id}" class="form-control" maxlength="20">
 											</div>	
 										</div>
 										
@@ -150,7 +126,7 @@
 						                   		이름
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input   name="m_name"  type="text" value="${member.m_name}" class="form-control">
+												<input   name="m_name"  type="text" value="${member.m_name}" class="form-control"  required maxlength="20">
 											</div>		
 										</div>
 										
@@ -159,7 +135,7 @@
 											  이메일            		
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input readonly name="m_email"  type="text" value="${member.m_email}" class="form-control">
+												<input name="m_email" type="email" value="${member.m_email}" class="form-control"  required  maxlength="30">
 											</div>		
 										</div>
 										<div class="form-group row">
@@ -167,19 +143,19 @@
 											    핸드폰          		
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input   name="m_phone"  type="text" value="${member.m_phone}" class="form-control">
+												<input   name="m_phone"  type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="${member.m_phone}" class="form-control"  required   maxlength="20" >
 											</div>	
 
 										</div>
 										<div class="form-group row">
 											<label class="col-sm-4">내 동네</label>
 											<div class="col-12 col-sm-3 align-self-center">
-												 <select onchange="do_select()" onclick="do_click()" id="do_id" name="do_id" class="form-select">
+												 <select onchange="do_select()" onclick="do_click()" id="do_id" name="do_id" class="form-select"  required>
 										    	</select>
 											</div>	
 											<div class="col-12 col-sm-5 align-self-center">
-										  		 <select  id="si_id"  name = "si_id" class="form-select">
-											   		<option selected>시/군/구</option>
+										  		 <select  id="si_id"  name = "si_id" class="form-select" required>
+											   		<option value="">시/군/구</option>
 												</select> 
 											</div>
 										</div>	

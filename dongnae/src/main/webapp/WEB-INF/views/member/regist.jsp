@@ -58,11 +58,9 @@
 				var options = "";
 				if(response == 'duplicated'){
 					alert("중복된 아이디입니다. 다른 아이디를 입력하세요");
-					$("#idAlert").css('display', 'block');
 				}
 				else{
 					alert("사용가능한 아이디입니다.");
-					options+= "<input type=text' value='ok'>"
 				}
 			},
 			error:function(response){
@@ -72,23 +70,24 @@
 	
 	function checkId_post(){
 		let checkId = $("#m_id").val();
-		$.ajax({
-			url: '/member/checkId_post',
-			type:'POST',
-			data: checkId,
-			success:function(response){
-				var options = "";
-				if(response == 'duplicated'){
-					alert("중복된 아이디입니다. 다른 아이디를 입력하세요");
-					$("#idAlert").css('display', 'block');
-				}
-				else{
-					$("#regist").submit();
-				}
-			},
-			error:function(response){
-			}			
-		})
+		 if($("#regist").checkValidity()) {
+			$.ajax({
+				url: '/member/checkId_post',
+				type:'POST',
+				data: checkId,
+				success:function(response){
+					var options = "";
+					if(response == 'duplicated'){
+						alert("중복된 아이디입니다. 다른 아이디를 입력하세요");
+					}
+					else{
+						$("#regist").submit();
+					}
+				},
+				error:function(response){
+				}			
+			}) 
+		 }
 	};
 	
 </script>
@@ -137,27 +136,18 @@
 						                   		아이디
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input id="m_id"  name="m_id"  type="text" class="form-control" required autofocus >
+												<input id="m_id"  name="m_id"  type="text" class="form-control" required autofocus  maxlength="20" >
 											</div>	
 											<div class="col-12 col-sm-3 align-self-center">
 						                   		<button type="button" class="btn btn-success" onclick="checkId()" >중복 확인</button>
 					                		</div> 
 										</div>
-										<%-- 
-										<div id="wrongId" class="form-group row" style="display: none">
-											<div class="col-12 col-sm-9 align-self-center " ></div>
-											<div id="idAlert" ${ (password.message == "wrongCurrent")? '' : 'style="display: none;"' }   
-											class="alert alert-danger align-self-center mb-3" role="alert" > 
-											중복된 아이디입니다. 다른 아이디를 입력해주세요.
-											</div>
-										</div>
-										 --%>
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		비밀번호
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input name="m_pwd"  type="password"  class="form-control" required >
+												<input name="m_pwd"  type="password"  class="form-control" required minlength="4" maxlength="20" >
 											</div>		
 										</div>
 										<div class="form-group row">
@@ -165,7 +155,7 @@
 						                   		이름
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input   name="m_name"  type="text"  class="form-control" required >
+												<input   name="m_name"  type="text"  class="form-control" required maxlength="20">
 											</div>		
 										</div>
 										
@@ -174,7 +164,7 @@
 											  이메일            		
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input name="m_email"  type="text"  class="form-control" required >
+												<input name="m_email"  type="email"  class="form-control" required  maxlength="30">
 											</div>		
 										</div>
 										<div class="form-group row">
@@ -182,7 +172,7 @@
 											    핸드폰          		
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<input   name="m_phone"  type="text"  class="form-control" required >
+												<input   name="m_phone"  type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"  class="form-control" required  maxlength="20" >
 											</div>	
 
 										</div>
@@ -201,7 +191,7 @@
 										
 										<div class="form-group  row">
 										<div class="col-12  mt-3">
-						                    <input type="button" class="btn btn-primary" onclick="checkId_post()" value="회원가입 ">
+						                    <input type="submit" class="btn btn-primary" onclick="checkId_post()" value="회원가입 ">
 					                	</div> 
 					                	</div>
 									</form>

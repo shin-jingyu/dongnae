@@ -20,6 +20,6 @@ public class MemberDTO {
 	private int si_id		;
 	private String m_auth		;
 
-	
+	private int do_id;
 
 }

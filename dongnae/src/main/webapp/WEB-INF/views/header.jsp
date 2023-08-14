@@ -43,25 +43,44 @@
 	})
 			 
 	function fetchCategories() {
-    $.ajax({
-        url: '/api/getCategories',
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-            var categorySelect_main_1 = $('.categoryList');
-            categorySelect_main_1.empty();
-            var category_Main_List_1 = data.category_1;
-            category_Main_List_1.forEach(function (category_Main_1) {
-            	categorySelect_main_1.append($('<li value="' + category_Main_1.c1_id + '">' + category_Main_1.c1_category + '</li>'));
-            });
-        },
-        error: function (xhr, status, error) {
-            // 에러 처리
-            alert("데이터 안불러와지는중");
-        }
-    });
-}
+	    $.ajax({
+	        url: '/api/getCategories',
+	        type: 'post',
+	        dataType: 'json',
+	        success: function (data) {
+	            console.log(data);
+	            var categorySelectMain = $('.category1Container');
+	            var category2Container = $('.category2Container');
+	
+	            categorySelectMain.empty();
+	            category2Container.empty();
+	
+	            var categoryMainList = data.category_1;
+	            categoryMainList.forEach(function (categoryMain) {
+	                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '">' + categoryMain.c1_category + '</li>');
+	                categoryMainItem.on('mouseover', function () {
+	                    displayCategory2(category2Container, data.category_2[categoryMain.c1_id]);
+	                });
+	                categorySelectMain.append(categoryMainItem);
+	            });
+	        },
+	        error: function (xhr, status, error) {
+	            // 에러 처리
+	            alert("데이터 안불러와지는중");
+	        }
+	    });
+	}
+
+	function displayCategory2(container, category2List) {
+	    container.empty();
+	    if (category2List && category2List.length > 0) {
+	        var ul = $('<ul class="category2List"></ul>');
+	        category2List.forEach(function (category2) {
+	            ul.append($('<li>' + category2.c2_category + '</li>'));
+	        });
+	        container.append(ul);
+	    }
+	}
 </script>
 
 <body>
@@ -220,9 +239,8 @@
                             <i class="fa fa-bars"></i>
                             <span>카테고리</span>
                         </div>
-                        <ul class="categoryList">
-                           
-                        </ul>
+                        <ul class="category1Container"></ul>
+						<div class="category2Container"></div>
                     </div>
                 </div>
                 <div class="col-lg-9">

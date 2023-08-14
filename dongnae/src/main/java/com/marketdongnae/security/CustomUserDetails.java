@@ -12,7 +12,7 @@ public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
-	private long m_number;
+	private int m_number;
 	private String m_id;
 	private String m_pwd;
 	private String m_name;
@@ -41,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
 		return si_id;
 	}
 
-	public long getM_number() {
+	public int getM_number() {
 		return m_number;
 	}
 
@@ -114,7 +114,7 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 	
-	public Long getMemberNumber() {
+	public int getMemberNumber() {
 		return m_number;
 	}
 	

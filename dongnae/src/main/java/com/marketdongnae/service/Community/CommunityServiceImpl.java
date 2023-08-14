@@ -7,12 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.mapper.CommunityMapper;
+
 
 @Service("CommunityService")
 public class CommunityServiceImpl implements CommunityService {
@@ -113,10 +115,27 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void selectCommentOne(CommentDTO selectCommentOne) {
-		communityMapper.selectCommentOne(selectCommentOne);
+	public int counts() {
+		return communityMapper.counts();
 		
 	}
+
+	@Override
+	public List<CommunityAllDTO> listPage(int displaypost, int postnum) {
+	
+		return communityMapper.listPage(displaypost, postnum);
+		
+	}
+
+
+	
+
+
+
+
+
+
+	
 	 
 
 	

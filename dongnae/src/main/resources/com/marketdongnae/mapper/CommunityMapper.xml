@@ -72,10 +72,6 @@
 	 	select * from comment where mu_id = #{mu_id};     
 	</select>
 	
-	<select id="selectCommentOne" resultType="com.marketdongnae.domain.community.CommentDTO">
-		select * from comment where mu_id = #{mu_id} and com_id=#{com_id}  
-	</select>
-	
 	<update id="updateComment" parameterType="com.marketdongnae.domain.community.CommentDTO">
 		 update comment set com_c = #{com_c},com_data=CURRENT_TIMESTAMP where com_id=#{com_id} 
 		   
@@ -84,4 +80,16 @@
 	<delete id="deleteComment" parameterType="com.marketdongnae.domain.community.CommentDTO">
 		delete from comment where com_id=#{com_id}   
 	</delete>
+	
+	
+	 <select id="counts" resultType="int"> 
+		select count(*) from dongnae.communityall
+	</select>
+	
+	<select id="listPage" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
+		SELECT * FROM dongnae.communityall
+		order by mu_data desc
+		limit #{displayPost}, #{postNum} 
+	</select> 
+	
 </mapper>

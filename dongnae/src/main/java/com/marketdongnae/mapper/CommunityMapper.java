@@ -40,7 +40,12 @@ public interface CommunityMapper {
 	//댓글
 	public void insertComment (CommentDTO insertComment);
 	public List<CommentDTO> selectComment(int mu_id);
-	public void selectCommentOne(CommentDTO selectCommentOne);
 	public void updateComment (CommentDTO updateComment);
 	public void deleteComment(CommentDTO deleteComment);
+	
+	
+	public int counts() ;
+	public List<CommunityAllDTO> listPage(@Param("displayPost") int displayPost,@Param("postNum")int postNum);
+	
+	
 }

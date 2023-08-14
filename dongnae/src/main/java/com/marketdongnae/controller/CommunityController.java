@@ -11,8 +11,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.Property;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,9 +31,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
+import com.marketdongnae.domain.community.PageDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.security.CustomUserDetails;
@@ -45,14 +49,23 @@ public class CommunityController {
 	@Autowired
 	MemberService memberService ;
 	
-	
+	 
 	
 	@GetMapping("/community")
-	public ModelAndView getCommunity() {
+	public ModelAndView getCommunity(@RequestParam(value = "num", defaultValue = "1") int num) {
 		ModelAndView view = new ModelAndView();
+		PageDTO page =new PageDTO();
 		
-		List<CommunityAllDTO> list = communityService.communityAll();
+		page.setNum(num);
+		page.setCount(communityService.counts());
+		
+		List<CommunityAllDTO> list = null;
+	
+		list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
+		
 		view.addObject("list",list);
+		view.addObject("page", page);
+		view.addObject("select", num);
 		view.setViewName("community/community");
 		
 		return view;
@@ -61,7 +74,9 @@ public class CommunityController {
 	
 	
 	@GetMapping("/communityDetail")
-	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id ,@RequestParam("m_number") String m_number ){
+	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id ,
+										@RequestParam("m_number") String m_number,
+										@RequestParam(value = "num", defaultValue = "1") int num){
 		ModelAndView view = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mu_id", mu_id);
@@ -72,9 +87,11 @@ public class CommunityController {
 		
 		HeartDTO heartview = communityService.heartview(m_number, mu_id); 
 		 
-	
+		PageDTO page =new PageDTO();
+		page.setNum(num);
 		
 		List<CommentDTO> lists  = communityService.selectComment(Integer.parseInt(mu_id));
+		view.addObject("page", page);
 		view.addObject("comment",lists);
 		view.addObject("communityDetail", communityDetail);
 		view.addObject("heartview", heartview); 
@@ -101,24 +118,36 @@ public class CommunityController {
 	
 	
 	@GetMapping("/updateCommunity")
-	public ModelAndView update(@RequestParam String mu_id) {
+	public ModelAndView update(@RequestParam String mu_id,
+							   @RequestParam(value = "num", defaultValue = "1") int num) {
+		ModelAndView view = new ModelAndView();
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
-		return new ModelAndView("community/updateCommunity","community",detailDTO);
+		
+		PageDTO page =new PageDTO();
+		page.setNum(num);
+		view.addObject("page", page);
+		
+		view.addObject("community",detailDTO);
+		view.setViewName("community/updateCommunity");
+		return view;
 	}
 	@PostMapping("/updateCommunity")
-	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
+	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,
+			 						  @RequestParam(value = "num", defaultValue = "1") int num) {
 		System.out.println("글 수정하기 ");
 		communityService.updateCommunity(communityDetailDTO);
-		return "redirect:/community";
+		return "redirect:/communityDetail?mu_id="+communityDetailDTO.getMu_id()+
+									   "&&m_number="+communityDetailDTO.getM_number()+	
+									   "&&num="+num;
 	}
 	
-	
-	@GetMapping("/deleteCommunity/{mu_id}")
-	public String deleteCommunity(@PathVariable("mu_id") int mu_id) {
+	@ResponseBody
+	@GetMapping("/deleteCommunity")
+	public String deleteCommunity(@RequestParam("mu_id") int mu_id) {
 		System.out.println("글삭제");
 		System.out.println("community mu_id= "+mu_id);
 		communityService.deleteCommunity(mu_id);
-		return "redirect:/community";
+		return "success";
 	}
 	
 	
@@ -155,4 +184,5 @@ public class CommunityController {
 		 return "success";
 	 }
 	 
+	
 }

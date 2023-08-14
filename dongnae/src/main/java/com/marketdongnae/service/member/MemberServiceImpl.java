@@ -1,5 +1,6 @@
 package com.marketdongnae.service.member;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
@@ -61,29 +63,28 @@ public class MemberServiceImpl implements MemberService {
 		return result ;
 	}
 
-
 	@Override
 	public List<Deal_viewDTO> getSoldList(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		int m_number =  member.getM_number();
-		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_number);
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_id);
 		return soldlist;
 	}
 	
-	
-	@Override
-	public List<Deal_viewDTO> getBuyList(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		int m_number =  member.getM_number();
-		List<Deal_viewDTO> buylist =  memberMapper.getBuyList(m_number);
-		return buylist;
-	}
+//	@Override
+//	public List<Deal_viewDTO> getBuyList(String m_id) {
+//		List<Deal_viewDTO> buylist =  memberMapper.getBuyList(m_id);
+//		return buylist;
+//	}
+//	@Override
+//	public List<Deal_viewDTO> getOnSaleList(String m_id ) {
+//		 List<Deal_viewDTO> onSaleList =  memberMapper.getOnSaleList(m_id);
+//		
+//		return onSaleList;
+//	}
+
 
 	@Override
 	public int getAvgScore(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		int m_number =  member.getM_number();
-		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_number);
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( m_id);
 		int sum = 0 ;
 		for (Deal_viewDTO sold : soldlist) {
 			sum += (int) sold.getD_score();
@@ -94,13 +95,6 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	
-	@Override
-	public List<Deal_viewDTO> getOnSaleList(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		int m_number =  member.getM_number();
-		List<Deal_viewDTO> onSaleList =  memberMapper.getOnSaleList(m_number);
-		return onSaleList;
-	}
 
 
 	@Override
@@ -143,12 +137,24 @@ public class MemberServiceImpl implements MemberService {
 		return "success" ;
 	}
 
+//	@Override
+//	public List<Wish_viewDTO> getWish_viewList(String m_id) {
+//		List<Wish_viewDTO> wish_viewList =  memberMapper.getWish_viewList(m_id);
+//		return wish_viewList;
+//	}
+//	
 	@Override
-	public List<Wish_viewDTO> getWish_viewList(String m_id) {
-		MemberDTO member =  memberMapper.getMember(m_id);
-		int m_number =  member.getM_number();
-		List<Wish_viewDTO> wish_viewList =  memberMapper.getWish_viewList(m_number);
-		return wish_viewList;
+	public PageDTO getWishPageDTO(int nowpage , Principal principal) {
+		PageDTO pageDTO = new PageDTO();
+			pageDTO.setNowpage(nowpage);
+			pageDTO.setCount(memberMapper.getWishCnt(principal.getName()));
+			pageDTO.setM_id(principal.getName());
+		return pageDTO;
+	}
+
+	@Override
+	public List<Wish_viewDTO> getWishPageList(PageDTO pageDTO) {
+		return memberMapper.getWishPageList(pageDTO);
 	}
 
 	@Override
@@ -172,12 +178,28 @@ public class MemberServiceImpl implements MemberService {
 		MemberDTO member =  memberMapper.getMember(m_id);
 		return member.getM_point();
 	}
+//	
+//	@Override
+//	public List<PointDTO> getPointList(String m_id) {
+//		List<PointDTO> pointlist =  memberMapper.getPointList(m_id);
+//		return pointlist;
+//	}
 	
 	@Override
-	public List<PointDTO> getPointList(String m_id) {
-		List<PointDTO> pointlist =  memberMapper.getPointList(m_id);
-		return pointlist;
+	public PageDTO getPointPageDTO(int nowpage , Principal principal) {
+		PageDTO pageDTO = new PageDTO();
+			pageDTO.setNowpage(nowpage);
+			pageDTO.setCount(memberMapper.getPointCnt(principal.getName()));
+			pageDTO.setM_id(principal.getName());
+		return pageDTO;
 	}
+
+	@Override
+	public List<PointDTO> getPointPageList(PageDTO pageDTO) {
+		return memberMapper.getPointPageList(pageDTO);
+	}
+	
+	
 	
 	@Override
 	public void putPoint(PointDTO pointDTO) {
@@ -199,6 +221,32 @@ public class MemberServiceImpl implements MemberService {
 			msg = "duplicated";
 		return msg;
 	}
+
+
+//	@Override
+//	public int getOnSaleCnt(String m_id) {
+//		return memberMapper.getOnSaleCnt(m_id);
+//	}
+	
+	@Override
+	public PageDTO getDealPageDTO(int nowpage , Principal principal, String d_type) {
+		Deal_viewDTO deal_viewDTO= new Deal_viewDTO();
+			deal_viewDTO.setM_id(principal.getName());
+			deal_viewDTO.setD_type(d_type);
+		
+		PageDTO pageDTO = new PageDTO();
+			pageDTO.setNowpage(nowpage);
+			pageDTO.setCount(memberMapper.getDealCnt(deal_viewDTO));
+			pageDTO.setM_id(principal.getName());
+			pageDTO.setD_type(d_type);
+		return pageDTO;
+	}
+
+	@Override
+	public List<Deal_viewDTO> getDealPageList(PageDTO pageDTO) {
+		return memberMapper.getDealPageList(pageDTO);
+	}
+	
 
 
 }

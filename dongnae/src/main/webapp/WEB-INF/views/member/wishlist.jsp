@@ -43,12 +43,14 @@
                 <div class="col-lg-9 col-md-9">
 	                <div class="container border my-3 rounded-5">
 	                <!-- <div class="container mx-auto" style="width: 80%;"> -->
+	                
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>찜 목록</h2>
 	                           	</div>
+	                
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
-		                        		<c:forEach var="w" items="${wish_viewList}">
+		                        		<c:forEach var="w" items="${wishList}">
 		                        		<c:set var="wish_id" value="${w.wish_id}" />
 		                        		<div class="row col-12 col-md-11 container border my-3 rounded-5" style="float: none; margin: 0 auto;">
 		                        			<div class ="col-6 col-md-3 m-auto">
@@ -81,6 +83,44 @@
 		                        		</c:forEach>
 		                            </div>
 	                            </div>
+	                            
+	                             
+	                            <div class="row my-3">
+	                            <div class="col-12 col-md-11 my-3 mx-auto">
+	                            	<nav aria-label="Page navigation example  ">
+									  <ul class="pagination justify-content-center">
+									   
+									   <c:set var="p" value="${page}" /> 
+									   
+									   <c:choose>
+										   <c:when test="${p.prev > 0}" >
+										    	<li class="page-item"><a class="page-link" href="/member/wishList?p=${p.prev}">Previous</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									   
+									    <c:forEach var="pageNum" begin="${p.startPageNum}" end="${p.endPageNum}">
+									    	<li class="page-item ${ (p.nowpage == pageNum )?  'active' : '' } " >
+									    		<a class="page-link" href="/member/wishList?p=${pageNum}">${pageNum}</a>
+									    	</li>
+									    </c:forEach>
+									    
+									 	<c:choose>
+										   <c:when test="${p.next <= p.realEndPageNum}" >
+										    	<li class="page-item"><a class="page-link" href="/member/wishList?p=${p.next}">Next</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Next</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									  </ul>
+									</nav>
+	                            </div>
+	                        </div>
+	                        
+	                            
 	                        </div>
 	                    <!-- </div> -->
 	                    </div>

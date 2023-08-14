@@ -10,29 +10,29 @@
 <head>
 <meta charset="UTF-8">
 <title>내 페이포인트</title>
-</head>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <script type="text/javascript">
 function kakaopay(){
-	 const userCode = "imp18070471";
-	let point = Number(${m_point}) + Number($('#pointInput').val() );
-	IMP.init(userCode);
+	IMP.init('imp18070471');
 	IMP.request_pay({		
 		pg : 'kakaopay',
 		name : '동네마켓 포인트 충전' ,         // 결제창에 뜨는 이름
-		amount : $('#pointInput').val() ,  //가격 
+		amount : $('#p_price').val()  	 	//가격 
 	},function(rsp){
+		var options = "";
 		if(rsp.success){
 			alert( "결제 완료") ;
-			document.location.href="/member/pointSuccess?m_point="+point;
+			$("#putPoint").submit();
         }else{
         	alert( "결제 실패") ; 
         	document.location.href="/member/point";
         }
-		
-	});
-}
+	})
+};
 </script>
+		
+</head>
 
 <body>
 <sec:authentication property="principal" var="member"/>
@@ -93,31 +93,29 @@ function kakaopay(){
 												<th>구분</th>
 												<th>금액</th>
 											</tr>
-												<c:forEach var="d" items="${dealList}">
+												<c:forEach var="p" items="${pointList}">
 												<c:choose>
-													<c:when test="${d.d_type == 'buy'}">  
+													<c:when test="${p.p_type == 'minus'}">  
 													<tr>
-														<td>${d.d_regdate}</td>
+														<td>${p.p_regdate}</td>
 														<td>출금</td>
-														<td>-<fmt:formatNumber value="${d.g_price}"/> p</td>
+														<td>-<fmt:formatNumber value="${p.p_price}"/> p</td>
 													</tr>
 													</c:when>
-													<c:when test="${d.d_type == 'sold'}">  
+													<c:when test="${p.p_type == 'plus'}">  
 													<tr>
-														<td>${d.d_regdate}</td>
+														<td>${p.p_regdate}</td>
 														<td>입금</td>
-														<td>+<fmt:formatNumber value="${d.g_price}"/> p</td>
+														<td>+<fmt:formatNumber value="${p.p_price}"/> p</td>
 													</tr>
 													</c:when>
-													<%-- 
-													<c:when test="${d.d_type == 'point'}">  
+													<c:when test="${p.p_type == 'put'}">  
 													<tr>
-														<td>${d.d_regdate}</td>
+														<td>${p.p_regdate}</td>
 														<td>충전</td>
-														<td>+<fmt:formatNumber value="${d.g_price}"/> p</td>
+														<td>+<fmt:formatNumber value="${p.p_price}"/> p</td>
 													</tr>
 													</c:when>
-													 --%>
 												</c:choose>
 											</c:forEach>
 										</table>
@@ -132,28 +130,33 @@ function kakaopay(){
                 </div>
     </section>
     <!-- Product Section End -->
-	
-	<jsp:include page="../footer.jsp"></jsp:include>
 
 	<!-- Modal -->
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
+		    <form id="putPoint" action="point" method="post">
+       			<input hidden name="m_id" value="${member.m_id}">
+       			<input hidden name="p_type" value="put">
 			      <div class="modal-header">
 					  <h5 class="modal-title">충전하기</h5>
 			      </div>
 			      
-			      <div class="modal-body">
-					 <input type="text" id="pointInput" name="pointInput" style="width: 100%;"> 포인트
+			      <div class="modal-body" id="p_priced" >
+					 <input type="text" id="p_price" name="p_price" style="width: 100%;"> 포인트
 			      </div>
 			      
 			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-warning" onclick="kakaopay()">카카오페이 결제</button>
+			        <button type="button" class="btn btn-warning" onclick="kakaopay()">카카오페이 결제</button>
 			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 			      </div>
+		    </form>
 		    </div>
 		  </div>
 		</div>
+		
+		<jsp:include page="../footer.jsp"></jsp:include>
+		
 	
 </body>
 </html>

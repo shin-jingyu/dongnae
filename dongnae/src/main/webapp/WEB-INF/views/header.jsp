@@ -9,8 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Ogani | Template</title>
 
@@ -67,11 +66,11 @@
 
 <body>
 
-	
+	<sec:authentication property="principal" var="member"/>
     <!-- Page Preloder -->
-<!--     <div id="preloder"> -->
-<!--         <div class="loader"></div> -->
-<!--     </div> -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
@@ -150,15 +149,18 @@
                             </ul>
                         </div>
                     </div>
-                    <sec:authentication property="principal" var="member"/>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
+                            <div class="header__top__right__language">
+                               <%-- ${member.m_id } 님 환영합니다! --%>
+                            </div>
+                            
                             <div class="header__top__right__auth">
                                 <a href="/member/login"><i class="fa fa-user"></i> Login</a>
                                  <sec:authorize access="isAuthenticated()">
                                  <a href="/goods/goods_insert">상품등록</a>
                                  <a href="/member/logout">Logout</a>
-                                 <a href="/member/detail">${member.m_id}님 마이페이지</a>
+                                 <a href="/member/detail">마이페이지</a>
                                  </sec:authorize>
                             </div>
                         </div>
@@ -218,7 +220,8 @@
                             <i class="fa fa-bars"></i>
                             <span>카테고리</span>
                         </div>
-                        <ul class="categoryList" style="display: none">
+                        <ul class="categoryList">
+                           
                         </ul>
                     </div>
                 </div>
@@ -235,8 +238,19 @@
                             </form>
                         </div>
                     </div>
+                    <div class="hero__item set-bg" data-setbg="/resources/img/hero/banner.jpg">
+                        <div class="hero__text">
+                            <span>FRUIT FRESH</span>
+                            <h2>Vegetable <br />100% Organic</h2>
+                            <p>Free Pickup and Delivery Available</p>
+                            <a href="#" class="primary-btn">SHOP NOW</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Hero Section End -->
+</body>
+
+</html>

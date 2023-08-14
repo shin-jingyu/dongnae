@@ -8,8 +8,8 @@
 	</select>
 	
  	<select id="regist" parameterType="com.marketdongnae.domain.member.MemberDTO">	 
-		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id )
-		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} ) ;
+		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id , do_id)
+		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}  ) ;
 	</select>
 	
 	<select id="getDoList" resultType="com.marketdongnae.domain.member.Do_areaDTO">	 
@@ -32,13 +32,10 @@
 		update member
 			set 
 				m_name = #{m_name}, 
+				m_email = #{m_email}, 
 				m_phone=#{m_phone}, 
 				si_id = #{si_id}
 		where m_id = #{m_id}
-	</select>
-	
-	<select id="getDealList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where  m_number = #{m_number} ;
 	</select>
 	
 	<select id="getSoldList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
@@ -66,16 +63,19 @@
 	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
-	<select id="putPoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
+	
+	<select id="getPointList" resultType="com.marketdongnae.domain.member.PointDTO">	 
+		select * from point where  m_id = #{m_id} ;
+	</select>
+	
+	<select id="updatePoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set m_point = #{m_point}
 		where m_id = #{m_id} ;
 	</select>
-	<!-- 
-	 <select id="putPoint" parameterType="com.marketdongnae.domain.member.Point_viewDTO" > 
-		insert into point
-			set m_point = #{m_point}
-		where m_id = #{m_id} ;
+	
+	 <select id="insertPointList" parameterType="com.marketdongnae.domain.member.PointDTO">	 
+		insert into point  (  m_id,  p_type ,  p_price  )
+		 values (  #{m_id} ,  #{p_type} , #{p_price} ) ;
 	</select>
-	 -->
 </mapper> 

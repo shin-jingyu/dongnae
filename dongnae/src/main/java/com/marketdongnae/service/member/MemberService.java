@@ -8,6 +8,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
@@ -20,7 +21,6 @@ public interface MemberService {
 	
 	List<Si_areaDTO> getSiList(int do_id);
 	
-
 	MemberDTO getMember(String m_id);
 
 	Integer updateMember(MemberDTO memberDTO);
@@ -29,7 +29,6 @@ public interface MemberService {
 
 	List<Deal_viewDTO> getBuyList(String m_id) ;
 	
-	List<Deal_viewDTO> getDealList(String m_id);
 	
 	List<Deal_viewDTO> getOnSaleList(String m_id);
 	
@@ -38,16 +37,20 @@ public interface MemberService {
 	String changePassword(String m_id, PasswordDTO passwordDTO);
 
 	int getAvgScore(String m_id);
-	
-	int getPoint(String m_id);
-	
-	void putPoint(String m_id, int m_point);
 
 	List<Wish_viewDTO> getWish_viewList(String m_id);
 
 	void deleteWish(int wish_id);
 
 	String getSi_area(String m_id);
+	
+	List<PointDTO> getPointList(String m_id);
+	
+	int getPoint(String m_id);
+	
+	void putPoint(PointDTO pointDTO);
+
+	String checkId(String checkId);
 
 	
 

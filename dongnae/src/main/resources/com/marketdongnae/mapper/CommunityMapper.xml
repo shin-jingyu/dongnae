@@ -63,4 +63,25 @@
 		update heart set h_num = 1 where m_number = #{m_number} and mu_id = #{mu_id}
 	</update>
 	
+	<insert id="insertComment" parameterType="com.marketdongnae.domain.community.CommentDTO" >
+		insert into comment(com_c,m_number,mu_id)
+			values(#{com_c},#{m_number},#{mu_id});
+	</insert>
+	
+	<select id="selectComment" resultType="com.marketdongnae.domain.community.CommentDTO">
+	 	select * from comment where mu_id = #{mu_id};     
+	</select>
+	
+	<select id="selectCommentOne" resultType="com.marketdongnae.domain.community.CommentDTO">
+		select * from comment where mu_id = #{mu_id} and com_id=#{com_id}  
+	</select>
+	
+	<update id="updateComment" parameterType="com.marketdongnae.domain.community.CommentDTO">
+		 update comment set com_c = #{com_c},com_data=CURRENT_TIMESTAMP where com_id=#{com_id} 
+		   
+	</update>
+	
+	<delete id="deleteComment" parameterType="com.marketdongnae.domain.community.CommentDTO">
+		delete from comment where com_id=#{com_id}   
+	</delete>
 </mapper>

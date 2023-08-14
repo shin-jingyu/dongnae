@@ -29,6 +29,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
+import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
@@ -49,57 +50,6 @@ public class MemberController {
 	private final MemberService memberService;
 	private final CustomAuthenticationProvider customAuthenticationProvider;
 	private final BCryptPasswordEncoder passwordEncoder;
-	
-	
-	@GetMapping("detail")
-	public void detail() {
-	}
-	
-	@PostMapping("detail/do_area")
-	@ResponseBody
-	public List<Do_areaDTO> detail_do_area() {
-		 List<Do_areaDTO> doList =  memberService.getDoList();
-		return doList;		
-	}
-	
-//	@PostMapping("detail/si_area_default")
-//	@ResponseBody
-//	public List<Si_areaDTO> detail_si_area_default(Principal principal, Model model) {
-//		m= memberService.getMember(principal.getName());
-//		int do_id = memberService.getDoId(memberDTO.getSi_id());
-//		List<Si_areaDTO> siList =  memberService.getSiList(do_id);
-//		model.addAttribute("do_id", do_id);
-//		return siList;		
-//	}
-
-	@PostMapping("detail/si_area")
-	@ResponseBody
-	public List<Si_areaDTO> detail_si_area(@RequestBody int do_id) {
-		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
-		return siList;		
-	}
-	
-	@PostMapping("update")
-	public String modify(@ModelAttribute MemberDTO memberDTO) {		
-		memberService.updateMember(memberDTO);
-		return "redirect:/"	;
-	}
-	
-	@GetMapping("changePassword")
-	public void changePassword(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO ) {
-		passwordDTO.setM_id(principal.getName());
-		memberService.getSoldList(principal.getName());
-	}
-	
-	
-	@PostMapping("changePassword")
-	public String changePassword_post(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO  ) {
-		String result = memberService.changePassword(principal.getName(), passwordDTO);
-		if ( result == "fail") 
-			return "member/changePassword";
-		else 
-			return "redirect:/";
-	}
 	
 	@GetMapping("login")
 	public void login() {
@@ -124,9 +74,23 @@ public class MemberController {
 	}
 	
 	@PostMapping("regist")
-	public String regist_post(@ModelAttribute("member") MemberDTO memberDTO) {
+	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
 		memberService.regist(memberDTO);
 		return "member/login";		
+	}
+	
+	@PostMapping("checkId")
+	@ResponseBody
+	public String checkId(@RequestBody String checkId) {
+		String msg =  memberService.checkId(checkId.replace("=", ""));
+		return msg ; 
+	}
+	
+	@PostMapping("checkId_post")
+	@ResponseBody
+	public String checkId_post(@RequestBody String checkId) {
+		String msg =  memberService.checkId(checkId.replace("=", ""));
+		return msg ; 
 	}
 	
 	@PostMapping("regist/do_area")
@@ -142,6 +106,48 @@ public class MemberController {
 		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
 		return siList;		
 	}
+	
+	@GetMapping("detail")
+	public void detail(Principal principal, Model model) {
+		MemberDTO memberDTO =  memberService.getMember(principal.getName());
+		model.addAttribute("member", memberDTO);
+	}
+	
+	@PostMapping("detail/do_area")
+	@ResponseBody
+	public List<Do_areaDTO> detail_do_area( ) {
+		 List<Do_areaDTO> doList =  memberService.getDoList();
+		return doList;		
+	}
+	
+	@PostMapping("detail/si_area")
+	@ResponseBody
+	public List<Si_areaDTO> detail_si_area(@RequestBody int do_id ) {
+		List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+		return siList;		
+	}
+	
+	@PostMapping("detail")
+	public String modify(@ModelAttribute MemberDTO memberDTO) {		
+		memberService.updateMember(memberDTO);
+		return "redirect:/member/detail"	;
+	}
+	
+	@GetMapping("changePassword")
+	public void changePassword(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO ) {
+		passwordDTO.setM_id(principal.getName());
+		memberService.getSoldList(principal.getName());
+	}
+	
+	@PostMapping("changePassword")
+	public String changePassword_post(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO  ) {
+		String result = memberService.changePassword(principal.getName(), passwordDTO);
+		if ( result == "fail") 
+			return "member/changePassword";
+		else 
+			return "redirect:/";
+	}
+
 
 	@GetMapping("soldList")
 	public void soldList(Principal principal,  Model model) {
@@ -166,13 +172,13 @@ public class MemberController {
 	
 	@GetMapping("point")
 	public void point( Model model, Principal principal ) {
-		model.addAttribute("dealList", memberService.getDealList(principal.getName()));
+		model.addAttribute("pointList", memberService.getPointList(principal.getName()));
 		model.addAttribute("m_point", memberService.getPoint(principal.getName()));
 	}
 	
-	@GetMapping("pointSuccess")
-	public String point_post(@RequestParam int m_point, Principal principal ) {
-		memberService.putPoint(principal.getName(), m_point) ; 
+	@PostMapping("point")
+	public String point_post(@ModelAttribute PointDTO pointDTO ) {
+		memberService.putPoint(pointDTO) ;
 		return "redirect:/member/point";		
 	}
 	
@@ -187,5 +193,26 @@ public class MemberController {
 		memberService.deleteWish(wish_id);
 		return "redirect:/member/wishlist";
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

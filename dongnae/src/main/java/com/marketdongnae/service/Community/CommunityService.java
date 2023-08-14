@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
@@ -28,4 +29,10 @@ public interface CommunityService {
 	
 	public int insertHeart(HeartDTO heart);
 	
+	public void insertComment (CommentDTO insertComment);
+	
+	public List<CommentDTO> selectComment(int mu_id);
+	public void selectCommentOne(CommentDTO selectCommentOne);
+	public void updateComment (CommentDTO updateComment);
+	public void deleteComment(CommentDTO deleteComment);
 }

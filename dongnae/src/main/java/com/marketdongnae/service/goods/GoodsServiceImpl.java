@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
+import com.marketdongnae.domain.goods.SearchDTO;
 import com.marketdongnae.mapper.GoodsMapper;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +44,12 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
+	public List<GoodsDTO> getSearchGoods(SearchDTO search) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getSearchGoods(search);
+	}
+	
+	@Override
 	public void updateGoods(GoodsDTO goodsDTO) {
 		// TODO Auto-generated method stub
 		goodsMapper.updateGoods(goodsDTO);
@@ -59,6 +66,8 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		return goodsMapper.getGoodsDetail(g_id);
 	}
+
+	
 
 
 	

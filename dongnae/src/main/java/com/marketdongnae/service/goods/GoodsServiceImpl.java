@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +34,15 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
+	public Map<String, Object> getGoodsList(int m_number) {
+		// TODO Auto-generated method stub
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("memberGoods", goodsMapper.getGoodsListByMemberNumber(m_number));
+		
+		return maps;
+	}
+	
+	@Override
 	public void updateGoods(GoodsDTO goodsDTO) {
 		// TODO Auto-generated method stub
 		goodsMapper.updateGoods(goodsDTO);
@@ -42,5 +53,16 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		goodsMapper.insertGoods(goodsDTO);
 	}
+
+	@Override
+	public GoodsDTO getGoodsDetail(int g_id) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getGoodsDetail(g_id);
+	}
+
+
+	
+	
+	
 
 }

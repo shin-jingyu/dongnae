@@ -28,6 +28,7 @@ import com.marketdongnae.controller.goods.GoodsController;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
@@ -130,6 +131,7 @@ public class MemberController {
 	@PostMapping("detail")
 	public String modify(@ModelAttribute MemberDTO memberDTO) {		
 		memberService.updateMember(memberDTO);
+		System.out.println("###"+memberDTO.getDo_id());
 		return "redirect:/member/detail"	;
 	}
 	
@@ -150,29 +152,42 @@ public class MemberController {
 
 
 	@GetMapping("soldList")
-	public void soldList(Principal principal,  Model model) {
-		model.addAttribute("soldList", memberService.getSoldList(principal.getName()));
+	public void soldList(@RequestParam(value = "p", defaultValue = "1" ) int nowpage ,  Model model, Principal principal) {
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, principal, "sold");
+		List<Deal_viewDTO> soldList = memberService.getDealPageList(pageDTO);
+		model.addAttribute("soldList", soldList);
+		model.addAttribute("page", pageDTO);
 	}
 	
 	@GetMapping("buyList")
-	public void buyList(Model model, Principal principal ) {
-		model.addAttribute("buyList", memberService.getBuyList(principal.getName()));
+	public void buyList(@RequestParam(value = "p", defaultValue = "1" ) int nowpage ,  Model model, Principal principal) {
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, principal, "buy");
+		List<Deal_viewDTO> buyList = memberService.getDealPageList(pageDTO);
+		model.addAttribute("buyList", buyList);
+		model.addAttribute("page", pageDTO);
 	}
 	
 	@GetMapping("onSaleList")
-	public void onSaleList(Model model, Principal principal ) {
-		model.addAttribute("onSaleList", memberService.getOnSaleList(principal.getName()));
+	public void onSaleList( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model, Principal principal ) {
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, principal, "onSale");
+		List<Deal_viewDTO> onSaleList = memberService.getDealPageList(pageDTO);
+		model.addAttribute("onSaleList", onSaleList);
+		model.addAttribute("page", pageDTO);
 	}
 
 	@GetMapping("review")
-	public void getReviewList( Model model, Principal principal ) {
-		model.addAttribute("soldList", memberService.getSoldList(principal.getName()));
+	public void getReviewList( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model, Principal principal ) {
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, principal, "sold");
+		List<Deal_viewDTO> soldList = memberService.getDealPageList(pageDTO);
+		model.addAttribute("soldList", soldList);
+		model.addAttribute("page", pageDTO);
 		model.addAttribute("avgScore", memberService.getAvgScore(principal.getName()));
 	}
 	
 	@GetMapping("point")
-	public void point( Model model, Principal principal ) {
-		model.addAttribute("pointList", memberService.getPointList(principal.getName()));
+	public void point( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model, Principal principal ) {
+		PageDTO pageDTO = memberService.getPointPageDTO(nowpage, principal);
+		model.addAttribute("pointList", memberService.getPointPageList(pageDTO));
 		model.addAttribute("m_point", memberService.getPoint(principal.getName()));
 	}
 	
@@ -183,8 +198,10 @@ public class MemberController {
 	}
 	
 	@GetMapping("wishlist")
-	public void wishlist(Model model , Principal principal) {
-		model.addAttribute("wish_viewList", memberService.getWish_viewList(principal.getName()));
+	public void wishlist( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model, Principal principal) {
+//		model.addAttribute("wishList", memberService.getWish_viewList(principal.getName()));
+		PageDTO pageDTO = memberService.getPointPageDTO(nowpage, principal);
+		model.addAttribute("wishList", memberService.getWishPageList(pageDTO));
 	}
 	
 	@GetMapping("cancelWish")

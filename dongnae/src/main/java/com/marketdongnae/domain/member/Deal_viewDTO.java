@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class Deal_viewDTO  {
 	private int d_id	;	
-	private int	 m_number 	;
+	private String	 m_id 	;
 	private String d_type ;
-	private int	 d_m_number ;
+	private String	 d_m_id ;
 	private Timestamp d_regdate  ;
 	private int g_id ;
 	private int g_price ;

@@ -20,6 +20,7 @@ public class CustomUserDetails implements UserDetails {
 	private String m_email;
 	private Timestamp m_regdate; 
 	private int si_id;
+	private int do_id;
 	private String m_auth;
 	private boolean ENABLED;
 	
@@ -34,6 +35,9 @@ public class CustomUserDetails implements UserDetails {
 	
 
 	public int getSi_id() {
+		return si_id;
+	}
+	public int getDo_id() {
 		return si_id;
 	}
 

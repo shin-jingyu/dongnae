@@ -57,9 +57,11 @@
                 <div class="row">
 	                <div class="container border my-3 rounded-5">
 	                <!-- <div class="container mx-auto" style="width: 80%;"> -->
+	                
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>받은 거래 후기</h2>
 	                           	</div>
+	                           	
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<c:forEach var="s" items="${soldList}">
@@ -74,7 +76,7 @@
 			                        				구매자번호
 			                        				</div>
 			                        				<div class="col-lg-8 col-md-6  col-sm-12 col-12 ">
-			                        				${s.d_m_number}
+			                        				${s.d_m_id}
 			                        				</div>
 			                        			</div>	
 			                        			<div class="row my-3">
@@ -107,6 +109,44 @@
 		                        		</c:forEach>
 		                            </div>
 	                            </div>
+	                            
+	                             
+	                            <div class="row my-3">
+	                            <div class="col-12 col-md-11 my-3 mx-auto">
+	                            	<nav aria-label="Page navigation example  ">
+									  <ul class="pagination justify-content-center">
+									   
+									   <c:set var="p" value="${page}" /> 
+									   
+									   <c:choose>
+										   <c:when test="${p.prev > 0}" >
+										    	<li class="page-item"><a class="page-link" href="/member/review?p=${p.prev}">Previous</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									   
+									    <c:forEach var="pageNum" begin="${p.startPageNum}" end="${p.endPageNum}">
+									    	<li class="page-item ${ (p.nowpage == pageNum )?  'active' : '' } " >
+									    		<a class="page-link" href="/member/review?p=${pageNum}">${pageNum}</a>
+									    	</li>
+									    </c:forEach>
+									    
+									 	<c:choose>
+										   <c:when test="${p.next <= p.realEndPageNum}" >
+										    	<li class="page-item"><a class="page-link" href="/member/review?p=${p.next}">Next</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Next</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									  </ul>
+									</nav>
+	                            </div>
+	                        </div>
+	                        
+	                            
 	                        </div>
 	                    <!-- </div> -->
 	                   </div>

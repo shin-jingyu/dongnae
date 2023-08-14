@@ -34,20 +34,36 @@
 				m_name = #{m_name}, 
 				m_email = #{m_email}, 
 				m_phone=#{m_phone}, 
-				si_id = #{si_id}
+				si_id = #{si_id},
+				do_id = #{do_id}
 		where m_id = #{m_id}
 	</select>
 	
+	
 	<select id="getSoldList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where m_number = #{m_number} and d_type = 'sold'; 
+		select * from deal_view where m_id = #{m_id} and d_type = 'sold'; 
 	</select>
 	
+	<!-- 
 	<select id="getBuyList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where m_number = #{m_number} and d_type = 'buy'; 
+		select * from deal_view where m_id = #{m_id} and d_type = 'buy'; 
 	</select>
 	
 	<select id="getOnSaleList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where m_number = #{m_number} and d_type = 'onSale'; 
+		select * from deal_view where m_id = #{m_id} and d_type = 'onSale' order by 'd_regdate' desc; 
+	</select> 
+	-->
+	
+	<select id="getDealPageList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
+		select * from deal_view 
+		where m_id = #{m_id} and d_type = #{d_type}
+		order by 'd_id' 
+		limit #{displayStart} ,  3 ;  
+	</select>
+	
+	<select id="getDealCnt" resultType="int">	 
+		select count(d_id) from deal_view 
+		where m_id =  #{m_id}  and d_type = #{d_type} ;
 	</select>
 	
 	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 
@@ -56,16 +72,42 @@
 		where m_id = #{m_id}
 	</select>
 	
+	<!-- 
 	<select id="getWish_viewList" resultType="com.marketdongnae.domain.member.Wish_viewDTO">	 
-		select * from wish_view where m_number = #{m_number} ;
+		select * from wish_view where m_id = #{m_id} ;
+	</select>
+	 -->
+		
+	<select id="getWishPageList" resultType="com.marketdongnae.domain.member.Wish_viewDTO">	 
+		select * from wish_view
+		where m_id = #{m_id}
+		limit #{displayStart} ,  3 ;  
+	</select>
+	
+	<select id="getWishCnt" resultType="int">	 
+		select count(w_id) from wish_view
+		where m_id =  #{m_id}  ;
 	</select>
 	
 	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
 	
-	<select id="getPointList" resultType="com.marketdongnae.domain.member.PointDTO">	 
+	<!--
+ 	<select id="getPointList" resultType="com.marketdongnae.domain.member.PointDTO">	 
 		select * from point where  m_id = #{m_id} ;
+	</select> 
+	-->
+	
+	<select id="getPointPageList" resultType="com.marketdongnae.domain.member.PointDTO">	 
+		select * from point
+		where m_id = #{m_id}
+		limit #{displayStart} ,  3 ;  
+	</select>
+	
+	<select id="getPointCnt" resultType="int">	 
+		select count(p_id) from point
+		where m_id =  #{m_id}  ;
 	</select>
 	
 	<select id="updatePoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 

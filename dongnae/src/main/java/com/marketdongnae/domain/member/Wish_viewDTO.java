@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Wish_viewDTO  {
 	private int wish_id	;	
-	private int	 m_number 	;
+	private String	 m_id 	;
 	private int g_id ;
 	private String	 g_name ;
 	private int g_price ;

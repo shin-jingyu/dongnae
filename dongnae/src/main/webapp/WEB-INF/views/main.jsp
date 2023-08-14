@@ -13,9 +13,6 @@
 <body>
 
 <jsp:include page="header.jsp"></jsp:include>
-
-
-
     <!-- Categories Section Begin -->
     <section class="categories">
         <div class="container">
@@ -47,22 +44,23 @@
     <section class="featured spad">
 		<div class="container">
             <div class="row featured__filter">
-    <c:forEach items="${goodsList }" var="goods" >
-                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+    			<c:forEach items="${goodsList }" var="goods" >
+                <div class="col-lg-3 col-md-4 col-sm-6 mix">
                     <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="/resources/upload/goods/${goods.g_picpath}/${goods.g_pic01 }">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">${goods.g_name }</a></h6>
-                            <h5><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/></h5>
-                        </div>
-                    </div>
-                </div>
-    </c:forEach>
+                  		<div class="featured__item__pic set-bg" data-setbg="/resources/upload/goods/${goods.g_picpath}/${goods.g_pic01 }">
+                        <ul class="featured__item__pic__hover">
+                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                        </ul>
+                    	</div>
+	                    	<div class="featured__item__text">
+                	    <a class="move" href="<c:out value="goods/goods_detail/${goods.g_id }" />">
+	                        <h6><c:out value="${goods.g_name }"/></h6>
+	                    </a>
+    	                    <h5><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/>원</h5>
+        	            </div>
+               		</div>
+            	</div>			
+    			</c:forEach>
             </div>
 		</div>
     </section>
@@ -351,7 +349,26 @@
         </div>
     </section>
     <!-- Blog Section End -->
-
+	
+	<form action="" id="actionForm" method="get">
+		
+	</form>
+	
+	<script type="text/javascript">
+// 		$(document).ready(function() {
+//			var actionForm = $("#actionForm");
+			
+// 			$(".move").on("click",function(e){
+// 				e.preventDefault();
+// 				actionForm.append("<input type='hidden' name='g_id' value='" +$(this).attr("href")+"'>");
+// 				actionForm.attr("action","/goods/goods_detail");
+// 				actionForm.submit();
+// 			});
+// 		})
+	</script>
+	
+	
+	
 
 <jsp:include page="./footer.jsp"></jsp:include>
 

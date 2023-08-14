@@ -14,8 +14,9 @@
 
 <script type="text/javascript">
 function kakaopay(){
+	 const userCode = "imp18070471";
 	let point = Number(${m_point}) + Number($('#pointInput').val() );
-	IMP.init('imp18070471');
+	IMP.init(userCode);
 	IMP.request_pay({		
 		pg : 'kakaopay',
 		name : '동네마켓 포인트 충전' ,         // 결제창에 뜨는 이름

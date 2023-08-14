@@ -6,7 +6,17 @@
 <mapper namespace="com.marketdongnae.mapper.GoodsMapper">
 	
 	<select id="getGoodsList" resultType="com.marketdongnae.domain.goods.GoodsDTO">
-		select * from goods
+		<![CDATA[
+			select * from goods where g_id > 0
+		]]>
+	</select>	
+	
+	<select id="getGoodsListByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		select * from goods where m_number = #{m_number}
+	</select>
+	
+	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		select * from goods where g_id = #{g_id}
 	</select>
 	
 	

@@ -6,49 +6,74 @@
 <mapper namespace="com.marketdongnae.mapper.GoodsMapper">
 
 	<sql id="available">
-	    AND g_status = '판매중'
+		AND g_status = '판매중'
 	</sql>
 
-	
-	<select id="getGoodsList" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+
+	<select id="getGoodsList"
+		resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		<![CDATA[
 			select * from goods where g_id > 0
 		]]>
 		<include refid="available"></include>
-	</select>	
-	
-	<select id="getGoodsListByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+	</select>
+
+	<select id="getGoodsListByMemberNumber"
+		resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		select * from goods where m_number = #{m_number} limit 3;
 		<include refid="available"></include>
 	</select>
-	
-	<select id="getSearchGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+
+	<select id="getSearchGoods"
+		resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		<![CDATA[
 			select * from goods where g_name like '%'||#{keyword}||'%'
 		]]>
 		<include refid="available"></include>
 	</select>
-	
-	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+
+	<select id="getGoodsDetail"
+		resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		select * from goods where g_id = #{g_id}
 	</select>
-	
-	
-	<insert id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
-		insert into goods (g_name, g_price, g_pic01, g_pic02, g_pic03, c2_id , m_number , g_picpath , g_text) 
-		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id}, #{m_number} , #{g_picpath}, #{g_text})
+
+
+	<insert id="insertGoods"
+		parameterType="com.marketdongnae.domain.goods.GoodsDTO">
+		insert into goods (g_name, g_price, g_pic01, g_pic02,
+		g_pic03, c2_id , m_number , g_picpath , g_text)
+		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id},
+		#{m_number} , #{g_picpath}, #{g_text})
 	</insert>
-	
-	<update id="updateGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
+
+	<update id="updateGoods"
+		parameterType="com.marketdongnae.domain.goods.GoodsDTO">
 		update goods
-			set 
-				g_name = #{g_name}, 
-				g_price = #{g_price}, 
-				g_pic01 = #{g_pic01}, 
-				g_pic02 = #{g_pic02}, 
-				g_pic03 = #{g_pic03}, 
-				g_picpath = #{g_picpath}
+		set
+		g_name = #{g_name},
+		g_price = #{g_price},
+		g_pic01 = #{g_pic01},
+		g_pic02 = #{g_pic02},
+		g_pic03 = #{g_pic03},
+		g_picpath = #{g_picpath}
 		where g_id = #{g_id}
 	</update>
+
+	<insert id="wishGoods">
+		insert into wishlist (m_number , g_id)
+		values (#{m_number}, #{g_id})
+	</insert>
 	
+	<delete id="deleteWishGoods">
+		delete from wishlist where m_number = #{m_number} and g_id = #{g_id}
+	</delete>
+	
+	<select id="checkWishGoods" resultType="int">
+		select count(*) from wishlist where m_number = #{m_number} and g_id = #{g_id}
+	</select>
+	
+	<select id="countWishGoodsByG_id" resultType="int">
+		select count(*) from wishlist where g_id = #{g_id}
+	</select>
+
 </mapper>    

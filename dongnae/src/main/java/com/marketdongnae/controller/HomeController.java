@@ -32,7 +32,7 @@ public class HomeController {
 		List<GoodsDTO> goodsList =  goodsService.getGoodsList();
 		
 		model.addAttribute("goodsList", goodsList);
-		return "main";
+		return "common/main";
 	}
 	
 }

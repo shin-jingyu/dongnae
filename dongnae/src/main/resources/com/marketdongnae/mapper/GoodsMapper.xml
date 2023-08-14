@@ -4,15 +4,29 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.marketdongnae.mapper.GoodsMapper">
+
+	<sql id="available">
+	    AND g_status = '판매중'
+	</sql>
+
 	
 	<select id="getGoodsList" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		<![CDATA[
 			select * from goods where g_id > 0
 		]]>
+		<include refid="available"></include>
 	</select>	
 	
 	<select id="getGoodsListByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		select * from goods where m_number = #{m_number} limit 3;
+		<include refid="available"></include>
+	</select>
+	
+	<select id="getSearchGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		<![CDATA[
+			select * from goods where g_name like '%'||#{keyword}||'%'
+		]]>
+		<include refid="available"></include>
 	</select>
 	
 	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">

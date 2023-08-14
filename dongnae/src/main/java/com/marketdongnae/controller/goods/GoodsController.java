@@ -2,7 +2,6 @@ package com.marketdongnae.controller.goods;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,10 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
+import com.marketdongnae.domain.goods.SearchDTO;
 import com.marketdongnae.service.goods.GoodsService;
 
 import lombok.AllArgsConstructor;
@@ -54,6 +50,10 @@ public class GoodsController {
 	public List<GoodsDTO> goods_List_Get() {
 //		return goodsService.getGoodsList();
 		return null;
+	}
+	@GetMapping(value = "search/{keyword}")
+	public List<GoodsDTO> searchGoods(SearchDTO search , Model model){
+		return goodsService.getSearchGoods(search);
 	}
 	
 	@GetMapping(value = "/goods_detail/{g_id}")
@@ -117,6 +117,7 @@ public class GoodsController {
 	@PostMapping(value = "edit")
 	public String goods_Update_Post(@ModelAttribute GoodsDTO goodsDTO, MultipartFile[] uploadFile) {
 		 goodsService.updateGoods(goodsDTO);
+		 
 	    return "/goods/getList";
 	}
 	
@@ -129,5 +130,7 @@ public class GoodsController {
 		
 		return maps;
 	}
+	
+	
 	
 }

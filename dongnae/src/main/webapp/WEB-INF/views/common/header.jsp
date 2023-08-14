@@ -57,7 +57,7 @@
 	
 	            var categoryMainList = data.category_1;
 	            categoryMainList.forEach(function (categoryMain) {
-	                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '">' + categoryMain.c1_category + '</li>');
+	                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '"> ' + categoryMain.c1_category + '</li>');
 	                categoryMainItem.on('mouseover', function () {
 	                    displayCategory2(category2Container, data.category_2[categoryMain.c1_id]);
 	                });

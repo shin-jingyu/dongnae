@@ -12,7 +12,7 @@
 	</select>	
 	
 	<select id="getGoodsListByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
-		select * from goods where m_number = #{m_number}
+		select * from goods where m_number = #{m_number} limit 3;
 	</select>
 	
 	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">

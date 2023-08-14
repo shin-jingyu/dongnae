@@ -28,6 +28,9 @@
 		<property name="dataSource" ref="dataSource"/>
 <!-- 		<property name="mapperLocations" value="classpath*:/com/marketdongnae/mapper/*.xml"/> -->
 	</bean>
+
+
+	
 	
 	<!-- 파일업로드 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">

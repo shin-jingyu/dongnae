@@ -23,19 +23,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 </head>
 
-<script>
- 
-	function deleteCommunity(mu_id) {
-		var del= confirm("삭제하시겠습니까?");
-		if(del){
-			location.href="deleteCommunity/${communityDetail.mu_id }";
-				
-		}
-	};
-	
-	
-	
-</script>
+
 <body>
 	<h2>상세보기</h2>
 	<P>반갑습니다. ${m_id} 님!</P>
@@ -77,12 +65,13 @@
 
 
 
-					<button onclick="location.href='community'">목록으로</button>
+					<button onclick="location.href='community?num=${page.num}'">목록으로</button>
 					
 					<!--작성자만 보이는 버튼   -->
 					<c:if test = '${sessionScope.m_id == communityDetail.m_id}'>
-					<button onclick="location.href='updateCommunity?mu_id=${communityDetail.mu_id }'">수정하기</button>
-					<button onclick="deleteCommunity(${communityDetail.mu_id })">삭제하기</button>
+					<button onclick="location.href='updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
+					<button id="deleteCommunity" type="button">삭제하기</button>
+					
 					</c:if>
 				</td>
 			</tr>
@@ -141,6 +130,29 @@
 </body>
 
 <script type="text/javascript">
+//글삭제
+
+$("#deleteCommunity").on('click',function(){
+	var del= confirm("삭제하시겠습니까?");
+	if (del) {
+		$.ajax({
+			url: "/deleteCommunity",
+			method:"GET",
+			data:{"mu_id":${communityDetail.mu_id}},
+			success:function(response){
+				 alert("삭제완료");
+				 location.href='community?num=${page.num}';
+			}
+		
+		});
+	}
+  });
+	
+
+
+
+
+
 //댓글 수정 버특 클릭시 
 $(".updateComment").on('click',function(){
 	//댓글 수정 활성화

@@ -25,9 +25,9 @@
 		<P> 반갑습니다. ${m_id} 님! </P>
 		<div>
 			<form method="post" action="/updateCommunity">
-			<input type="hidden" name="mu_id" value="${community.mu_id }">
-			
-			
+				<input type="hidden" name="mu_id" value="${community.mu_id }">
+				<input type="hidden" name="num" value="${page.num }">
+				<input type="hidden" name="m_number" value="${community.m_number }">
 				<table class="table table-borderd table table-hover">
 				
 		
@@ -68,9 +68,9 @@
 		</tr>
 		</table>
 				
-			</form>
-			<button onclick="location.href='communityDetail? mu_id=${community.mu_id }&& m_number=<sec:authentication property="principal.m_number"/>'">이전으로</button>
-			<button onclick="location.href='community'">목록으로</button>
+	</form>
+			<button onclick="location.href='communityDetail?mu_id=${community.mu_id }&&m_number=${community.m_number }&&num=${page.num }'"> 이전으로</button>
+			<button onclick="location.href='community?num=${page.num}'">목록으로</button>
 		</div>
 	</div>
 </body>

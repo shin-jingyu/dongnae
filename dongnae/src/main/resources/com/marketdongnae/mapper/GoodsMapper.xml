@@ -20,8 +20,9 @@
 
 	<select id="getGoodsListByMemberNumber"
 		resultType="com.marketdongnae.domain.goods.GoodsDTO">
-		select * from goods where m_number = #{m_number} limit 3;
+		select * from goods where m_number = #{m_number} 
 		<include refid="available"></include>
+		limit 6
 	</select>
 
 	<select id="getSearchGoods"

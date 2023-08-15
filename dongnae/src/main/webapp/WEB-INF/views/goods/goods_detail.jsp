@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-	<jsp:include page="../header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 <style>
     .img-thumbnail {
        width: 100px;
@@ -152,7 +152,7 @@
 
 	</script>
 	
-	<jsp:include page="../footer.jsp"></jsp:include>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 
 
 </body>

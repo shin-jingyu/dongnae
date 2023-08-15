@@ -14,7 +14,7 @@
 
 <jsp:include page="header.jsp"></jsp:include>
     <!-- Categories Section Begin -->
-    <section class="categories">
+    <%-- <section class="categories">
         <div class="container">
             <div class="row">
                 <div class="categories__slider owl-carousel">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --%>
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin 상품 목록-->

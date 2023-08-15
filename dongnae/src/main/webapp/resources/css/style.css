@@ -172,7 +172,152 @@ ol {
 	padding: 0;
 	margin: 0;
 }
+li:hover {
+	color: #6098F2;
+	webkit-transition: all, 0.3s;
+	transition: all, 0.3s;
+}
 
+/* .category1 {
+	display: none;
+	background: #eee;
+	box-shadow: 0px 10px 8px 0px rgba(0, 0, 0, 0.3);
+	padding: 10px;
+
+} */
+
+/* .Dropdown:hover .category1 {
+	display: block;
+	
+} */
+
+#menu {
+
+    height: 50px;
+
+    background: #6098F2;
+    border-radius: 10%;
+}
+
+
+
+.main1 {
+
+    width: 100px;
+
+    height: 100%;
+
+    margin: 0 auto;
+
+}
+
+
+
+.main1>li {
+
+    float: left;
+
+    width: 100px;
+
+    line-height: 50px;
+
+    text-align: center;
+
+    position: relative;
+
+}
+
+
+
+.main1>li:hover .main2 {
+
+    left: 0;
+
+}
+
+
+
+.main1>li a {
+
+    display: block;
+
+}
+
+
+
+.main1>li a:hover {
+	font-color: #000000;
+	font-family: 'TheJamsil';
+}
+
+
+
+.main2 {
+
+    position: absolute;
+
+    top: 50px;
+
+    left: -9999px;
+	
+
+    width: 120%;
+
+}
+
+
+
+.main2>li {
+	font-color: #000000;
+    position: relative;
+
+}
+
+
+
+.main2>li:hover .main3 {
+	
+    left: 100%;
+
+}
+
+
+
+.main2>li a, .main3>li a {
+
+    border-radius: 10px;
+
+    margin: 10px;
+
+}
+
+
+
+.main3 {
+
+    position: absolute;
+
+    top: 0px;
+
+    width: 90%;
+
+    left: -9999px;
+
+    /*left: 100%;*/
+
+    /*display: none;*/
+
+}
+
+
+
+.main3>li a:hover {
+
+    
+
+    color: #6098F2;
+
+}
 /*---------------------
   Helper CSS
 -----------------------*/
@@ -704,6 +849,7 @@ ol {
 .hero__search {
 	overflow: hidden;
 	margin-bottom: 30px;
+	
 }
 
 .hero__search__form {

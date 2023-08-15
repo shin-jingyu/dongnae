@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,18 +22,20 @@ public class RestGoodsController {
 	private final GoodsService goodsService;
 	
 	@RequestMapping(value = "goodsWish")
-	public Map<String, Object> goodsWish(@AuthenticationPrincipal CustomUserDetails user , WishGoodsDTO wish) {
+	public Map<String, Object> goodsWish(WishGoodsDTO wish) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		wish.setM_number(user.getM_number());
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal (); 
+		wish.setM_number(customUserDetails.getM_number());
 		goodsService.goodsWish(wish);
 		map.put("result", "succes");
 		return map;
 	}
 	
 	@RequestMapping(value = "checkWishGoods")
-	public Map<String, Object> checkWishGoods(@AuthenticationPrincipal CustomUserDetails user , WishGoodsDTO wish){
+	public Map<String, Object> checkWishGoods(WishGoodsDTO wish){
 		Map<String, Object> map = new HashMap<String, Object>();
-		wish.setM_number(user.getM_number());
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
+		wish.setM_number(customUserDetails.getM_number());
 		map.put("checkWishGoods", goodsService.checkWishGoods(wish));
 		map.put("result", "succes");
 		return map;
@@ -44,5 +47,7 @@ public class RestGoodsController {
 		map.put("count"	, goodsService.getCountWishGoods(g_id));
 		return map;
 	}
+	
+	
 	
 }

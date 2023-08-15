@@ -71,6 +71,29 @@ public class CommunityController {
 		return view;
 	}
 	
+	@ResponseBody
+	@GetMapping("/communitySearch")
+	public ModelAndView communitySearch(@RequestParam(value = "num", defaultValue = "1") int num,
+										@RequestParam(value = "keyword") String keyword,
+										@RequestParam(value = "searchType") String searchType) {
+		ModelAndView view = new ModelAndView();
+		PageDTO page =new PageDTO();
+		
+		page.setNum(num);
+		page.setCount(communityService.listPageSearchCount(searchType, keyword));
+		
+		page.setSearchType(searchType);
+		page.setKeyword(keyword);
+		List<CommunityAllDTO> list = null;
+		list = communityService.listPageSearch(page.getDisplayPost(), page.getPostNum(), searchType, keyword);
+		
+		view.addObject("list",list);
+		view.addObject("page", page);
+		view.addObject("select", num);
+		view.setViewName("community/communitySearch");
+		
+		return view;
+	}
 	
 	
 	@GetMapping("/communityDetail")

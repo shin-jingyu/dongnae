@@ -46,6 +46,9 @@ public interface CommunityMapper {
 	
 	public int counts() ;
 	public List<CommunityAllDTO> listPage(@Param("displayPost") int displayPost,@Param("postNum")int postNum);
+	public List<CommunityAllDTO> listPageSearch(@Param("displayPost") int displayPost,@Param("postNum")int postNum
+											   ,@Param("searchType") String searchType,@Param("keyword") String keyword);
 	
+	public int listPageSearchCount(@Param("searchType") String searchType, @Param("keyword") String keyword);
 	
 }

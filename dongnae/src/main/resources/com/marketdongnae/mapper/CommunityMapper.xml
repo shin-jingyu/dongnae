@@ -92,4 +92,44 @@
 		limit #{displayPost}, #{postNum} 
 	</select> 
 	
+	<select id="listPageSearch" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
+		SELECT * FROM dongnae.communityall
+		
+		<if test='searchType.equals("mu_name")'>
+			where mu_name like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_detail")'>
+			where mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_name_mu_detail")'>
+			where mu_name like concat('%',#{keyword},'%')
+			or mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("m_id")'>
+			where m_id like concat('%',#{keyword},'%')
+		</if>
+		
+		
+		order by mu_data desc
+		limit #{displayPost}, #{postNum} 
+	</select> 
+	
+	<select id="listPageSearchCount" resultType="int">
+		SELECT  count(*) FROM dongnae.communityall
+		
+		<if test='searchType.equals("mu_name")'>
+			where mu_name like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_detail")'>
+			where mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_name_mu_detail")'>
+			where mu_name like concat('%',#{keyword},'%')
+			or mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("m_id")'>
+			where m_id like concat('%',#{keyword},'%')
+		</if>
+		
+	</select> 
 </mapper>

@@ -1,20 +1,12 @@
 package com.marketdongnae.controller.member;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,22 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marketdongnae.controller.goods.GoodsController;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
-import com.marketdongnae.domain.member.MemberAllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
-import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
 
 import lombok.AllArgsConstructor;
@@ -147,13 +133,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("changePassword")
-	public String changePassword_post(@ModelAttribute ("password") PasswordDTO passwordDTO  ) {
+	public String changePassword_post(@ModelAttribute ("password") PasswordDTO passwordDTO , HttpSession session ) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String result = memberService.changePassword(customUserDetails, passwordDTO);
 		if ( result == "fail") 
 			return "member/changePassword";
 		else 
-			return "redirect:/";
+			session.invalidate();
+			return "redirect:/member/login";
 	}
 
 
@@ -225,25 +212,4 @@ public class MemberController {
 		return "redirect:/member/wishlist";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

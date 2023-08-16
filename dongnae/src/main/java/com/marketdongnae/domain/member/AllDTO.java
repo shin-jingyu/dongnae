@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class MemberAllDTO {
+public class AllDTO {
 	private int	 m_number 	;
 	
 	// PointDTO

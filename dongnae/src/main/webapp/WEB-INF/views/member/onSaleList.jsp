@@ -46,6 +46,11 @@
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>판매 중 상품</h2>
 	                           	</div>
+	                           	
+	                           	<div  ${ (onSaleList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>판매 중인 상품이 존재하지 않습니다.</div>
+	                           	</div>
+	                           	
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<c:forEach var="o" items="${onSaleList}">

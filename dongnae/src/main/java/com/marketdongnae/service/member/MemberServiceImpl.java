@@ -1,29 +1,20 @@
 package com.marketdongnae.service.member;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
-import com.marketdongnae.domain.member.MemberAllDTO;
+import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.domain.member.Wish_viewDTO;
-import com.marketdongnae.mapper.GoodsMapper;
 import com.marketdongnae.mapper.MemberMapper;
 import com.marketdongnae.security.CustomUserDetails;
-import com.marketdongnae.service.goods.GoodsServiceImpl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -64,26 +55,17 @@ public class MemberServiceImpl implements MemberService {
 		Integer result = memberMapper.updateMember(memberDTO);
 		return result ;
 	}
-
-	@Override
-	public List<Deal_viewDTO> getSoldList(CustomUserDetails customUserDetails) {
-		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( (int) customUserDetails.getM_number());
-		return soldlist;
-	}
-
-
-	@Override
-	public int getAvgScore(CustomUserDetails customUserDetails) {
-		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( (int) customUserDetails.getM_number());
-		int sum = 0 ;
-		for (Deal_viewDTO sold : soldlist) {
-			sum += (int) sold.getD_score();
-		}
-		int avgScore = (int) Math.ceil(sum/ soldlist.size()) ;
-		return avgScore;
-	}
 	
+	@Override
+	public String getSi_area(CustomUserDetails customUserDetails) {
+		MemberDTO memberDTO = memberMapper.getMember((int) customUserDetails.getM_number());
+		int si_id = memberDTO.getSi_id();
+		Si_areaDTO si_areaDTO  = memberMapper.getSi_area(si_id);
+		String si_area = si_areaDTO.getSi_area();
+		return si_area;
+	}
 
+	
 
 	@Override
 	public Integer regist(MemberDTO memberDTO) {
@@ -92,6 +74,19 @@ public class MemberServiceImpl implements MemberService {
 		memberDTO.setM_pwd(pwd2);
 		Integer result = memberMapper.regist(memberDTO);
 		return result ;
+	}
+	
+
+	
+	@Override
+	public String checkId(String checkId) {
+		String msg ; 
+		MemberDTO memberDTO = memberMapper.checkId(checkId);
+		if(memberDTO==null)
+			msg = "ok";
+		else 
+			msg = "duplicated";
+		return msg;
 	}
 
 	@Override
@@ -125,49 +120,27 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
+
+	
 	@Override
-	public void deleteWish(int wish_id) {
-		memberMapper.deleteWish( wish_id);
+	public PageDTO getPageDTO( String table, String table_id ,int nowpage , CustomUserDetails customUserDetails) {
+		int m_number = (int) customUserDetails.getM_number() ;
+		int ListCnt = memberMapper.getListCnt( m_number , table_id, table );
 		
+		PageDTO pageDTO = new PageDTO();
+			pageDTO.setNowpage(nowpage);
+			pageDTO.setCount(ListCnt);
+		return pageDTO;
 	}
 
 	@Override
-	public String getSi_area(CustomUserDetails customUserDetails) {
-		MemberDTO memberDTO = memberMapper.getMember((int) customUserDetails.getM_number());
-		int si_id = memberDTO.getSi_id();
-		Si_areaDTO si_areaDTO  = memberMapper.getSi_area(si_id);
-		String si_area = si_areaDTO.getSi_area();
-		return si_area;
+	public List<AllDTO> getPageList(String table, PageDTO pageDTO, CustomUserDetails customUserDetails) {
+		int m_number = (int) customUserDetails.getM_number() ;
+		int displayStart = pageDTO.getDisplayStart();
+		return memberMapper.getPageList(m_number, table, displayStart);
 	}
 	
-	
-	@Override
-	public int getPoint(CustomUserDetails customUserDetails) {
-		MemberDTO member =  memberMapper.getMember((int) customUserDetails.getM_number());
-		return member.getM_point();
-	}
-	
-	
-	@Override
-	public void putPoint(PointDTO pointDTO) {
-		int m_number = pointDTO.getM_number();
-		MemberDTO memberDTO = memberMapper.getMember(m_number);
-		memberDTO.setM_point(memberDTO.getM_point()+pointDTO.getP_price());
-		memberMapper.updatePoint(memberDTO);
-		memberMapper.insertPointList( pointDTO );
-	}
-
-
-	@Override
-	public String checkId(String checkId) {
-		String msg ; 
-		MemberDTO memberDTO = memberMapper.checkId(checkId);
-		if(memberDTO==null)
-			msg = "ok";
-		else 
-			msg = "duplicated";
-		return msg;
-	}
 
 
 	@Override
@@ -188,24 +161,55 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+	
+	
 	@Override
-	public PageDTO getPageDTO( String table, String table_id ,int nowpage , CustomUserDetails customUserDetails) {
-		int m_number = (int) customUserDetails.getM_number() ;
-		int ListCnt = memberMapper.getListCnt( m_number , table_id, table );
-		
-		PageDTO pageDTO = new PageDTO();
-			pageDTO.setNowpage(nowpage);
-			pageDTO.setCount(ListCnt);
-		return pageDTO;
+	public List<Deal_viewDTO> getSoldList(CustomUserDetails customUserDetails) {
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( (int) customUserDetails.getM_number());
+		return soldlist;
 	}
 
+
 	@Override
-	public List<MemberAllDTO> getPageList(String table, PageDTO pageDTO, CustomUserDetails customUserDetails) {
-		int m_number = (int) customUserDetails.getM_number() ;
-		int displayStart = pageDTO.getDisplayStart();
-		return memberMapper.getPageList(m_number, table, displayStart);
+	public int getAvgScore(CustomUserDetails customUserDetails) {
+		List<Deal_viewDTO> soldlist =  memberMapper.getSoldList( (int) customUserDetails.getM_number());
+		int sum = 0 ;
+		int avgScore = 0 ;
+		for (Deal_viewDTO sold : soldlist) {
+			sum += (int) sold.getD_score();
+		}
+		if(!soldlist.isEmpty())
+			avgScore = (int) Math.ceil(sum/ soldlist.size()) ;
+		else
+			avgScore = 0 ;
+		
+		return avgScore;
+	}
+	
+	
+	
+
+	@Override
+	public int getPoint(CustomUserDetails customUserDetails) {
+		MemberDTO member =  memberMapper.getMember((int) customUserDetails.getM_number());
+		return member.getM_point();
+	}
+	
+	
+	@Override
+	public void putPoint(PointDTO pointDTO) {
+		int m_number = pointDTO.getM_number();
+		MemberDTO memberDTO = memberMapper.getMember(m_number);
+		memberDTO.setM_point(memberDTO.getM_point()+pointDTO.getP_price());
+		memberMapper.updatePoint(memberDTO);
+		memberMapper.insertPointList( pointDTO );
 	}
 	
 
+	@Override
+	public void deleteWish(int wish_id) {
+		memberMapper.deleteWish( wish_id);
+		
+	}
 
 }

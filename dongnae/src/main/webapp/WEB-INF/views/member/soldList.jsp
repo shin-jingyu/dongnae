@@ -48,6 +48,10 @@
 	                           		<h2>판매내역</h2>
 	                           	</div>
 	                           	
+	                           	<div  ${ (soldList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>판매 내역이 존재하지 않습니다.</div>
+	                           	</div>
+	                           	
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<c:forEach var="s" items="${soldList}">

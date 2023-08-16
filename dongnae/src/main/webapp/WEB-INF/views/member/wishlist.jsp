@@ -47,6 +47,10 @@
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>찜 목록</h2>
 	                           	</div>
+	                           	
+	                           	<div  ${ (wishList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>찜한 상품이 존재하지 않습니다.</div>
+	                           	</div>
 	                
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">

@@ -69,7 +69,7 @@
 	</select> 
 	
 	
-	<select id="getPageList" resultType="com.marketdongnae.domain.member.MemberAllDTO">	 
+	<select id="getPageList" resultType="com.marketdongnae.domain.member.AllDTO">	 
 		select * from ${table}
 		where m_number = #{m_number} 
 		limit #{displayStart} ,  3 ;  

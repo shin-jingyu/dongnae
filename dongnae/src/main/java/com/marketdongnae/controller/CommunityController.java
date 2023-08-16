@@ -20,6 +20,7 @@ import org.springframework.core.convert.Property;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,7 @@ import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.PageDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.Community.CommunityService;
 import com.marketdongnae.service.member.MemberService;
@@ -50,13 +52,11 @@ import com.marketdongnae.service.member.MemberService;
 public class CommunityController {
 	@Autowired
 	CommunityService communityService;
-	@Autowired
-	MemberService memberService ;
 	
-	 
 	
 	@GetMapping("/community")
 	public ModelAndView getCommunity(@RequestParam(value = "num", defaultValue = "1") int num) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ModelAndView view = new ModelAndView();
 		PageDTO page =new PageDTO();
 		
@@ -67,6 +67,7 @@ public class CommunityController {
 		list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
 		List<CategoryDTO> categorys = communityService.category();
 		
+		view.addObject("member", customUserDetails);
 		view.addObject("categorys", categorys);
 		view.addObject("list",list);
 		view.addObject("page", page);
@@ -79,7 +80,7 @@ public class CommunityController {
 	@GetMapping("/pageCategory")
 	public String getpageCategory(Model model,@RequestParam(value = "num", defaultValue = "1") int num,
 											  @RequestParam(value = "ca_l") String ca_l) {
-	
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PageDTO page =new PageDTO();
 		page.setNum(num);
 		page.setCount(communityService.pageCategoryCount(ca_l));
@@ -90,7 +91,7 @@ public class CommunityController {
 		List<CategoryDTO> category = communityService.category();
 		
 		model.addAttribute("category", category);
-		
+		model.addAttribute("member",customUserDetails);
 		model.addAttribute("list",list);
 		model.addAttribute("page", page);
 		model.addAttribute("select", num);
@@ -105,6 +106,7 @@ public class CommunityController {
 										@RequestParam(value = "searchType") String searchType) {
 		ModelAndView view = new ModelAndView();
 		PageDTO page =new PageDTO();
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		page.setNum(num);
 		page.setCount(communityService.listPageSearchCount(searchType, keyword));
@@ -112,7 +114,7 @@ public class CommunityController {
 		page.setKeyword(keyword);
 		List<CommunityAllDTO> list = null;
 		list = communityService.listPageSearch(page.getDisplayPost(), page.getPostNum(), searchType, keyword);
-		
+		view.addObject("member",customUserDetails);
 		view.addObject("list",list);
 		view.addObject("page", page);
 		view.addObject("select", num);
@@ -126,6 +128,7 @@ public class CommunityController {
 	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id ,
 										@RequestParam("m_number") String m_number,
 										@RequestParam(value = "num", defaultValue = "1") int num){
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ModelAndView view = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mu_id", mu_id);
@@ -140,6 +143,7 @@ public class CommunityController {
 		page.setNum(num);
 		
 		List<CommentDTO> lists  = communityService.selectComment(Integer.parseInt(mu_id));
+		view.addObject("member",customUserDetails);
 		view.addObject("page", page);
 		view.addObject("comment",lists);
 		view.addObject("communityDetail", communityDetail);
@@ -152,11 +156,13 @@ public class CommunityController {
 	
 	
 	@GetMapping("/insertCommunity")
-	public ModelAndView insertCommunity(@RequestParam String m_id) {
-		MemberDTO memberDTO= memberService.getMember(m_id);
+	public ModelAndView insertCommunity() {
 		
-		return new ModelAndView("community/insertCommunity","member",memberDTO);
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		return new ModelAndView("community/insertCommunity","member",customUserDetails);
 	}
+	
 	@PostMapping("/insertCommunity")
 	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO ) {
 		System.out.println("글등록");
@@ -170,6 +176,8 @@ public class CommunityController {
 	public ModelAndView update(@RequestParam String mu_id,
 							   @RequestParam(value = "num", defaultValue = "1") int num) {
 		ModelAndView view = new ModelAndView();
+		
+		
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
 		
 		PageDTO page =new PageDTO();

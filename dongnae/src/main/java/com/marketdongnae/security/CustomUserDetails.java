@@ -17,6 +17,7 @@ public class CustomUserDetails implements UserDetails {
 	private String m_pwd;
 	private String m_name;
 	private String m_phone;
+	private int m_point;
 	private String m_email;
 	private Timestamp m_regdate; 
 	private int si_id;
@@ -33,12 +34,15 @@ public class CustomUserDetails implements UserDetails {
 		return auth;
 	}
 	
-
+	public int getM_point() {
+		return m_point;
+	}
+	
 	public int getSi_id() {
 		return si_id;
 	}
 	public int getDo_id() {
-		return si_id;
+		return do_id;
 	}
 
 	public int getM_number() {

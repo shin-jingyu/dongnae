@@ -12,6 +12,13 @@
 		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}  ) ;
 	</select>
 	
+	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 
+		update member
+			set m_pwd = #{new_password}
+		where m_number = #{m_number}
+	</select>
+	
+	
 	<select id="getDoList" resultType="com.marketdongnae.domain.member.Do_areaDTO">	 
 		select * from Do_area;
 	</select>
@@ -25,8 +32,13 @@
 	</select>
  	
 	<select id="getMember" resultType="com.marketdongnae.domain.member.MemberDTO">	 
+		select * from member where m_number = #{m_number}
+	</select>
+	
+	<select id="checkId" resultType="com.marketdongnae.domain.member.MemberDTO">	 
 		select * from member where m_id = #{m_id}
 	</select>
+	
 	
 	<select id="updateMember" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
@@ -36,88 +48,51 @@
 				m_phone=#{m_phone}, 
 				si_id = #{si_id},
 				do_id = #{do_id}
-		where m_id = #{m_id}
+		where m_number = #{m_number}
 	</select>
 	
 	
 	<select id="getSoldList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where m_id = #{m_id} and d_type = 'sold'; 
+		select * from deal_view where m_number = #{m_number} and d_type = 'sold'; 
 	</select>
-	
-	<!-- 
-	<select id="getBuyList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where m_id = #{m_id} and d_type = 'buy'; 
-	</select>
-	
-	<select id="getOnSaleList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
-		select * from deal_view where m_id = #{m_id} and d_type = 'onSale' order by 'd_regdate' desc; 
-	</select> 
-	-->
 	
 	<select id="getDealPageList" resultType="com.marketdongnae.domain.member.Deal_viewDTO">	 
 		select * from deal_view 
-		where m_id = #{m_id} and d_type = #{d_type}
+		where m_number = #{m_number} and d_type = #{d_type}
 		order by 'd_id' 
 		limit #{displayStart} ,  3 ;  
 	</select>
 	
 	<select id="getDealCnt" resultType="int">	 
 		select count(d_id) from deal_view 
-		where m_id =  #{m_id}  and d_type = #{d_type} ;
-	</select>
+		where m_number =  #{m_number}  and d_type = #{d_type} ;
+	</select> 
 	
-	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 
-		update member
-			set m_pwd = #{new_password}
-		where m_id = #{m_id}
-	</select>
 	
-	<!-- 
-	<select id="getWish_viewList" resultType="com.marketdongnae.domain.member.Wish_viewDTO">	 
-		select * from wish_view where m_id = #{m_id} ;
-	</select>
-	 -->
-		
-	<select id="getWishPageList" resultType="com.marketdongnae.domain.member.Wish_viewDTO">	 
-		select * from wish_view
-		where m_id = #{m_id}
+	<select id="getPageList" resultType="com.marketdongnae.domain.member.MemberAllDTO">	 
+		select * from ${table}
+		where m_number = #{m_number} 
 		limit #{displayStart} ,  3 ;  
 	</select>
 	
-	<select id="getWishCnt" resultType="int">	 
-		select count(w_id) from wish_view
-		where m_id =  #{m_id}  ;
+	<select id="getListCnt" resultType="int">	 
+		select count(${table_id}) from ${table}
+		where m_number =  #{m_number} ;
 	</select>
-	
+
 	<select id="deleteWish" parameterType="com.marketdongnae.domain.member.Wish_viewDTO" > 
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
 	
-	<!--
- 	<select id="getPointList" resultType="com.marketdongnae.domain.member.PointDTO">	 
-		select * from point where  m_id = #{m_id} ;
-	</select> 
-	-->
-	
-	<select id="getPointPageList" resultType="com.marketdongnae.domain.member.PointDTO">	 
-		select * from point
-		where m_id = #{m_id}
-		limit #{displayStart} ,  3 ;  
-	</select>
-	
-	<select id="getPointCnt" resultType="int">	 
-		select count(p_id) from point
-		where m_id =  #{m_id}  ;
-	</select>
 	
 	<select id="updatePoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set m_point = #{m_point}
-		where m_id = #{m_id} ;
+		where m_number = #{m_number} ;
 	</select>
 	
 	 <select id="insertPointList" parameterType="com.marketdongnae.domain.member.PointDTO">	 
-		insert into point  (  m_id,  p_type ,  p_price  )
-		 values (  #{m_id} ,  #{p_type} , #{p_price} ) ;
+		insert into point  (  m_number,  p_type ,  p_price  )
+		 values (  #{m_number} ,  #{p_type} , #{p_price} ) ;
 	</select>
 </mapper> 

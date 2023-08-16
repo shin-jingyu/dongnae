@@ -94,7 +94,7 @@
 									   
 									   <c:choose>
 										   <c:when test="${p.prev > 0}" >
-										    	<li class="page-item"><a class="page-link" href="/member/wishList?p=${p.prev}">Previous</a></li>
+										    	<li class="page-item"><a class="page-link" href="/member/wishlist?p=${p.prev}">Previous</a></li>
 										   </c:when>
 										   <c:otherwise>
 										    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
@@ -103,13 +103,13 @@
 									   
 									    <c:forEach var="pageNum" begin="${p.startPageNum}" end="${p.endPageNum}">
 									    	<li class="page-item ${ (p.nowpage == pageNum )?  'active' : '' } " >
-									    		<a class="page-link" href="/member/wishList?p=${pageNum}">${pageNum}</a>
+									    		<a class="page-link" href="/member/wishlist?p=${pageNum}">${pageNum}</a>
 									    	</li>
 									    </c:forEach>
 									    
 									 	<c:choose>
 										   <c:when test="${p.next <= p.realEndPageNum}" >
-										    	<li class="page-item"><a class="page-link" href="/member/wishList?p=${p.next}">Next</a></li>
+										    	<li class="page-item"><a class="page-link" href="/member/wishlist?p=${p.next}">Next</a></li>
 										   </c:when>
 										   <c:otherwise>
 										    	<li class="page-item disabled"><a class="page-link">Next</a></li>

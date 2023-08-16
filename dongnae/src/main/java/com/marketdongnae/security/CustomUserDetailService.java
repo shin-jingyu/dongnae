@@ -26,6 +26,6 @@ public class CustomUserDetailService implements UserDetailsService{
 		}
 		log.warn("3. queried by member mapper : " + m_id);
 		
-		return member;
+		return member ;
 	}
 }

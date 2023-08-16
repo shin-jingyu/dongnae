@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PageDTO {
-	private String m_id;
+	private int m_number;
 	private String d_type;
 	
 	// 현재 페이지 번호  

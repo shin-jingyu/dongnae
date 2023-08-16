@@ -3,6 +3,9 @@ package com.marketdongnae.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.marketdongnae.domain.member.MemberAllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
@@ -20,42 +23,38 @@ public interface MemberMapper {
 	
 	public List<Si_areaDTO> getSiList(int do_id);
 	
-	public MemberDTO getMember(String m_id);
+	public MemberDTO getMember(int m_number);
+	
+	public MemberDTO checkId(String m_id);
 
 	public Integer updateMember(MemberDTO memberDTO);
 
-	public List<Deal_viewDTO> getSoldList(String m_id);
-
-//	public List<Deal_viewDTO> getBuyList(String m_id);
-//	
-//	public List<Deal_viewDTO> getOnSaleList(String m_id);
+	public List<Deal_viewDTO> getSoldList(int m_number);
 
 	public Integer regist(MemberDTO memberDTO);
 
 	public String changePassword(PasswordDTO passwordDTO);
 
-//	public List<Wish_viewDTO> getWish_viewList(String m_id);
-
-	public List<Wish_viewDTO> getWishPageList(PageDTO pageDTO);
-	
-	public int getWishCnt(String m_id);
-	
 	public void deleteWish(int wish_id);
 
 	public Si_areaDTO getSi_area(int si_id);
 
-	public List<PointDTO> getPointPageList(PageDTO pageDTO);
-	
-	public int getPointCnt(String m_id);
-	
 	public void updatePoint(MemberDTO memberDTO);
 
 	public void insertPointList(PointDTO pointDTO);
 
-	public int getDealCnt(Deal_viewDTO deal_viewDTO);
+	public List<Deal_viewDTO> getDealPageList(@Param ("m_number") int m_number
+											, @Param ("d_type") String d_type
+											,@Param ("displayStart") int displayStart );
+	
+	public int getDealCnt(@Param ("m_number") int m_number, @Param ("d_type") String d_type);
+	
+	
+	public List<MemberAllDTO> getPageList(@Param ("m_number") int m_number
+										, @Param ("table") String table
+										,@Param ("displayStart") int displayStart);
 
-	public List<Deal_viewDTO> getDealPageList(PageDTO pageDTO);
-
+	public int getListCnt(@Param ("m_number") int m_number, @Param ("table_id") String table_id, @Param ("table") String table);
 	
 
 

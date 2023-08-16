@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>로그인</h2>
+                        <h2>My Page</h2>
                     </div>
                 </div>
             </div>
@@ -37,12 +37,12 @@
     <section class="product spad">
     <div class="container">
              <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <%-- <div class="col-lg-3 col-md-3">
                     <div class="sidebar">
                     	<jsp:include page="./sidebar.jsp"></jsp:include>
                     </div>
-                </div>
-                <div class="col-lg-9 col-md-7">
+                </div> --%>
+                <div class="col-lg-12 col-md-12">
 	                <div class="container border my-3 rounded-5">
 	                <div class="container mx-auto" style="width: 80%;">
 	                			<div class="row my-5  text-center" >

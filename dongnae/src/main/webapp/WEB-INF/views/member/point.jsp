@@ -87,7 +87,11 @@ function kakaopay(){
 	                           		<h2>페이포인트 사용내역</h2>
 	                           	</div>
 	                           	
-	                           	<div class="row my-3">
+	                           	<div  ${ (pointList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>포인트 사용 내역이 존재하지 않습니다.</div>
+	                           	</div>
+	                           	
+	                           	<div  ${ (pointList == "[]" )? 'style="display: none;"'  : ''}  class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<table class="table table-hover">
 											<tr>
@@ -125,7 +129,7 @@ function kakaopay(){
 	                            </div>
 	                            
 	                             
-	                            <div class="row my-3">
+	                            <div class="row mt-5 mb-3">
 	                            <div class="col-12 col-md-11 my-3 mx-auto">
 	                            	<nav aria-label="Page navigation example  ">
 									  <ul class="pagination justify-content-center">

@@ -1,21 +1,14 @@
 package com.marketdongnae.service.member;
-import java.security.Principal;
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
-import com.marketdongnae.domain.member.MemberAllDTO;
+import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberService {
@@ -43,7 +36,7 @@ public interface MemberService {
 	
 	PageDTO getPageDTO( String table, String table_id ,int nowpage , CustomUserDetails customUserDetails);
 
-	List<MemberAllDTO> getPageList(String table, PageDTO pageDTO, CustomUserDetails customUserDetails);
+	List<AllDTO> getPageList(String table, PageDTO pageDTO, CustomUserDetails customUserDetails);
 
 
 	PageDTO getDealPageDTO(int nowpage, CustomUserDetails customUserDetails , String d_type);

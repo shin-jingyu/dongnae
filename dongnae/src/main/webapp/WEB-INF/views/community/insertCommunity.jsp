@@ -26,7 +26,7 @@
 		<h2>글쓰기</h2>
 		<P> 반갑습니다. ${member.m_id}님! </P>
 		<div>
-			<form method="post" action="/insertCommunity">
+			<form method="post" action="/insertCommunity" enctype="multipart/form-data">
 			<input type="hidden" name="m_number" value="${member.m_number }">
 				<table class="table table-borderd table table-hover">
 				
@@ -58,7 +58,7 @@
                     				<label>상품 이미지</label>
                     			</div>
                     			<div class="form_section_content">
-									<input type="file" id ="fileItem" name='uploadFile' style="height: 30px;" multiple>
+									<input type="file" name="upload" multiple="multiple">
                     			</div>
                     		</div>  
                     	</td>	

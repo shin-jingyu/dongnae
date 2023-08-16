@@ -1,15 +1,18 @@
-package com.marketdongnae.controller;
+package com.marketdongnae.controller.community;
 
 
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marketdongnae.domain.community.CategoryDTO;
@@ -53,6 +57,15 @@ public class CommunityController {
 	@Autowired
 	CommunityService communityService;
 	
+	private String getFolder() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date = new Date();
+		
+		String str = simpleDateFormat.format(date);
+		
+		return str.replace("-", File.separator);
+	}
 	
 	@GetMapping("/community")
 	public ModelAndView getCommunity(@RequestParam(value = "num", defaultValue = "1") int num) {
@@ -160,18 +173,60 @@ public class CommunityController {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
+		
+		
 		return new ModelAndView("community/insertCommunity","member",customUserDetails);
 	}
 	
 	@PostMapping("/insertCommunity")
-	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO ) {
-		System.out.println("글등록");
+	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,@RequestParam("upload") MultipartFile[]  upload) {
+		String uploaderFolder = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community";
+		File uploadPath = new File(uploaderFolder, getFolder());
+		
+		if (!uploadPath.exists()) {
+	        uploadPath.mkdirs();
+	    }
+		
+		String[] uploadName = new String[upload.length];
+		for (int i = 0; i < upload.length; i++) {
+			MultipartFile muFile = upload[i];
+			if (muFile!=null && !muFile.isEmpty()) {
+				uploadName[i] = muFile.getOriginalFilename();
+				// 파일명 중복방지
+				UUID uuid = UUID.randomUUID(); 
+				uploadName[i] = uuid.toString() +"_"+uploadName[i];
+				File seveFile = new File(uploadPath,uploadName[i]);
+				System.out.println("파일명 확인 !!!: " + uploadName[i]);
+				try {
+					upload[i].transferTo(seveFile);
+				}catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (upload.length == 1) {
+			communityDetailDTO.setMu_i1(uploadName[0]);
+		}else if (upload.length == 2) {
+			communityDetailDTO.setMu_i1(uploadName[0]);
+			communityDetailDTO.setMu_i2(uploadName[1]);
+		}else if (upload.length == 3) {
+			communityDetailDTO.setMu_i1(uploadName[0]);
+			communityDetailDTO.setMu_i2(uploadName[1]);
+			communityDetailDTO.setMu_i3(uploadName[2]);
+		}
+		
+		
+		
 		communityService.insertCommunity(communityDetailDTO);
 		return "redirect:/community";
 	}
 	
-	
-	
+   
+           
+            
+
 	@GetMapping("/updateCommunity")
 	public ModelAndView update(@RequestParam String mu_id,
 							   @RequestParam(value = "num", defaultValue = "1") int num) {

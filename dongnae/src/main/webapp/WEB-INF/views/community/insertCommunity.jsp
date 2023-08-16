@@ -24,7 +24,7 @@
 <body>
 	<div class="container">
 		<h2>글쓰기</h2>
-		<P> 반갑습니다. ${m_id} 님! </P>
+		<P> 반갑습니다. ${member.m_id}님! </P>
 		<div>
 			<form method="post" action="/insertCommunity">
 			<input type="hidden" name="m_number" value="${member.m_number }">

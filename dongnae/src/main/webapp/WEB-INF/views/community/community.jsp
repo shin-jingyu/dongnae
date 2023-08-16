@@ -17,7 +17,7 @@
 </head>
 <body>
 <h1>welcome 커뮤니티 사이트</h1>
-<P> 반갑습니다. ${m_id} 님! </P>
+<P> 반갑습니다. ${member.m_id} 님! </P>
 <button onclick="location.href='/member/login'" >로그인</button>
 	<div class="container">
 				
@@ -46,7 +46,7 @@
 				<tr>				
 					<td>${list.si_area}</td>
 					<td>
-						<a href="/communityDetail?mu_id=${list.mu_id}&&m_number=<sec:authentication property="principal.m_number"/>&&num=${page.num}" >${list.mu_name}</a>
+						<a href="/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}" }>${list.mu_name}</a>
 					</td>
 					<td>${list.m_id}</td>
 					<td>
@@ -81,7 +81,7 @@
 				 <span>[ <a href="/community?num=${page.endPageNum + 1}">다음</a> ]</span>
 				</c:if>
 	</table>
-	<button  onclick="location.href='insertCommunity?m_id=${m_id}'">글쓰기</button>
+	<button  onclick="location.href='insertCommunity'">글쓰기</button>
 </div>
  <div>
 	<select name="searchType" id="searchType" >

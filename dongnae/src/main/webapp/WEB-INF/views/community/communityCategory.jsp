@@ -17,7 +17,7 @@
 </head>
 <body>
 <h1>welcome 커뮤니티 사이트</h1>
-<P> 반갑습니다. ${m_id} 님! </P>
+<P> 반갑습니다. ${member.m_id} 님! </P>
 <button onclick="location.href='/member/login'" >로그인</button>
 	<div class="container">
 				

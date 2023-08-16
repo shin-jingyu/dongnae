@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.marketdongnae.domain.community.CategoryDTO;
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
@@ -51,4 +52,11 @@ public interface CommunityMapper {
 	
 	public int listPageSearchCount(@Param("searchType") String searchType, @Param("keyword") String keyword);
 	
+	public List<CommunityAllDTO> pageCategory(@Param("displayPost") int displayPost,
+											  @Param("postNum")int postNum,
+											  @Param("ca_l") String ca_l);
+	
+	public int pageCategoryCount (String ca_l);
+	
+	public List<CategoryDTO> category();
 }

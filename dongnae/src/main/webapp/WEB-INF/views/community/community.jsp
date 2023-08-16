@@ -20,6 +20,11 @@
 <P> 반갑습니다. ${m_id} 님! </P>
 <button onclick="location.href='/member/login'" >로그인</button>
 	<div class="container">
+				
+	<c:forEach var="categorys" items="${categorys}"  >
+		<a href="/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a>
+	</c:forEach>
+	
 	<table class="table table-boardered table table-hover">
 		<thead>
 			<tr>
@@ -33,6 +38,7 @@
 				
 			</tr>
 		</thead>
+		
 		<tbody>
 			
 				
@@ -55,7 +61,7 @@
 				
 			
 		</tbody>
-		<c:if test="${page.prev}">
+				<c:if test="${page.prev}">
 					<span>[ <a href="/community?num=${page.startPageNum - 1}">이전</a> ]</span>
 				</c:if>
 			
@@ -121,5 +127,12 @@
 	
   });
 	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 </script>
 </html>

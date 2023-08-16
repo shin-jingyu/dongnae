@@ -15,6 +15,12 @@
 	<bean id="customUserDetailService" class="com.marketdongnae.security.CustomUserDetailService"></bean>
 	<bean id="customAuthenticationProvider" class="com.marketdongnae.security.CustomAuthenticationProvider"></bean>
 	
+	<!-- url 더블 슬래시 차단 해제 -->
+	<bean id="egovStrictHttpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+		<property name="allowUrlEncodedDoubleSlash" value="true"/>
+	</bean>
+	
+	
 	<security:http>
 
 		<security:csrf disabled="true"/>

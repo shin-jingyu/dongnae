@@ -27,10 +27,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}
 		
 		if(!user.isEnabled()) {
-			System.out.println("1-2) 계정 비활성화 상태면 더 진행 안함");
 			throw new BadCredentialsException("계정활성화 안되어있음");
 		}
-		return new UsernamePasswordAuthenticationToken(username, password,user.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
 	}
 
 	@Override

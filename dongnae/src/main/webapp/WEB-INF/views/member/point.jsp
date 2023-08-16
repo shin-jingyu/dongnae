@@ -176,7 +176,7 @@ function kakaopay(){
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		    <form id="putPoint" action="point" method="post">
-       			<input hidden name="m_id" value="${member.m_id}">
+       			<input hidden name="m_number" value="${member.m_number}">
        			<input hidden name="p_type" value="put">
 			      <div class="modal-header">
 					  <h5 class="modal-title">충전하기</h5>

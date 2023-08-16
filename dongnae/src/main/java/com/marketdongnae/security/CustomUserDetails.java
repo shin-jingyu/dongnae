@@ -12,11 +12,12 @@ public class CustomUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
-	private long m_number;
+	private int m_number;
 	private String m_id;
 	private String m_pwd;
 	private String m_name;
 	private String m_phone;
+	private int m_point;
 	private String m_email;
 	private Timestamp m_regdate; 
 	private int si_id;
@@ -33,15 +34,18 @@ public class CustomUserDetails implements UserDetails {
 		return auth;
 	}
 	
-
+	public int getM_point() {
+		return m_point;
+	}
+	
 	public int getSi_id() {
 		return si_id;
 	}
 	public int getDo_id() {
-		return si_id;
+		return do_id;
 	}
 
-	public long getM_number() {
+	public int getM_number() {
 		return m_number;
 	}
 
@@ -114,7 +118,7 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 	
-	public Long getMemberNumber() {
+	public int getMemberNumber() {
 		return m_number;
 	}
 	

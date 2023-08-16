@@ -132,4 +132,24 @@
 		</if>
 		
 	</select> 
+	
+	<select id="pageCategoryCount" resultType="int">
+		SELECT count(*) FROM dongnae.communityall
+		where ca_l =#{ca_l}
+	</select> 
+	
+	<select id="pageCategory" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
+		SELECT * FROM dongnae.communityall
+		where ca_l =#{ca_l}
+		order by mu_data desc
+		limit #{displayPost}, #{postNum} 
+	</select> 
+	
+	
+	
+	<select id="category" resultType="com.marketdongnae.domain.community.CategoryDTO">
+		SELECT * FROM dongnae.category;
+	</select> 
+	
+	
 </mapper>

@@ -2,8 +2,11 @@ package com.marketdongnae.controller;
 
 
 
+import java.io.File;
 import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +32,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.SessionScope;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.marketdongnae.domain.community.CategoryDTO;
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
@@ -60,15 +64,38 @@ public class CommunityController {
 		page.setCount(communityService.counts());
 		
 		List<CommunityAllDTO> list = null;
-	
 		list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
+		List<CategoryDTO> categorys = communityService.category();
 		
+		view.addObject("categorys", categorys);
 		view.addObject("list",list);
 		view.addObject("page", page);
 		view.addObject("select", num);
 		view.setViewName("community/community");
 		
 		return view;
+	}
+
+	@GetMapping("/pageCategory")
+	public String getpageCategory(Model model,@RequestParam(value = "num", defaultValue = "1") int num,
+											  @RequestParam(value = "ca_l") String ca_l) {
+	
+		PageDTO page =new PageDTO();
+		page.setNum(num);
+		page.setCount(communityService.pageCategoryCount(ca_l));
+		page.setCa_l(ca_l);
+		
+		List<CommunityAllDTO> list = null;
+		list = communityService.pageCategory(page.getDisplayPost(), page.getPostNum(), ca_l);
+		List<CategoryDTO> category = communityService.category();
+		
+		model.addAttribute("category", category);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("page", page);
+		model.addAttribute("select", num);
+		
+		return "community/communityCategory";
 	}
 	
 	@ResponseBody
@@ -81,7 +108,6 @@ public class CommunityController {
 		
 		page.setNum(num);
 		page.setCount(communityService.listPageSearchCount(searchType, keyword));
-		
 		page.setSearchType(searchType);
 		page.setKeyword(keyword);
 		List<CommunityAllDTO> list = null;
@@ -128,7 +154,7 @@ public class CommunityController {
 	@GetMapping("/insertCommunity")
 	public ModelAndView insertCommunity(@RequestParam String m_id) {
 		MemberDTO memberDTO= memberService.getMember(m_id);
-		System.out.println(m_id);
+		
 		return new ModelAndView("community/insertCommunity","member",memberDTO);
 	}
 	@PostMapping("/insertCommunity")

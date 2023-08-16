@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.marketdongnae.domain.community.CategoryDTO;
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
@@ -138,8 +138,25 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		return communityMapper.listPageSearchCount(searchType, keyword);
 	}
-	
 
+	@Override
+	public List<CommunityAllDTO> pageCategory(int displayPost, int postNum, String ca_l) {
+		
+		return communityMapper.pageCategory(displayPost, postNum, ca_l);
+	}
+	
+	@Override
+	public int pageCategoryCount(String ca_l) {
+		
+		return communityMapper.pageCategoryCount(ca_l);
+	}
+
+	@Override
+	public List<CategoryDTO> category() {
+		return communityMapper.category();
+	}
+	
+	
 
 	
 

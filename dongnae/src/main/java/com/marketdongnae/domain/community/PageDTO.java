@@ -30,7 +30,16 @@ public class PageDTO {
 	// 다음/이전 표시 여부
 	private boolean prev;
 	private boolean next;
+	private String ca_l;
+	
+	public String getCa_l() {
+		return ca_l;
+	}
 
+	public void setCa_l(String ca_l) {
+		this.ca_l = ca_l;
+	}
+	
 	public int getNum() {
 		return num;
 	}
@@ -163,5 +172,5 @@ public class PageDTO {
 			return "&searchType=" + searchType + "&keyword=" + keyword;
 		}
 	}
-
+	
 }

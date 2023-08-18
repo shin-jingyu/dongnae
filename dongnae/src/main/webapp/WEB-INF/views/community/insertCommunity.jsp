@@ -14,14 +14,89 @@
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 
 </head>
+<script>
+
+$(document).ready(function() {
+
+	var toolbar = [
+		    // 글꼴 설정
+		    ['fontname', ['fontname']],
+		    // 글자 크기 설정
+		    ['fontsize', ['fontsize']],
+		    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+		    // 글자색
+		    ['color', ['forecolor','color']],
+		    // 표만들기
+		    ['table', ['table']],
+		    // 글머리 기호, 번호매기기, 문단정렬
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    // 줄간격
+		    ['height', ['height']],
+		    // 그림첨부, 링크만들기, 동영상첨부
+		    ['insert',['picture','link','video']],
+		    // 코드보기, 확대해서보기, 도움말
+		    ['view', ['codeview','fullscreen', 'help']]
+		  ];
+
+	var setting = {
+            height : 300,
+            minHeight : null,
+            maxHeight : null,
+            focus : true,
+            lang : 'ko-KR',
+            toolbar : toolbar,
+            //콜백 함수
+            callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+            // 파일 업로드(다중업로드를 위해 반복문 사용)
+            	for (var i = files.length - 1; i >= 0; i--) {
+            		uploadSummernoteImageFile(files[i],this);
+            
+            		}
+            	}
+            }
+         };
+
+        $('#mu_detail').summernote(setting);
+        });
+
+
+function uploadSummernoteImageFile(file, el) {
+	data = new FormData();
+	data.append("file", file);
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "/upload",
+		contentType : false,
+		enctype : 'multipart/form-data',
+		dataType:"json",
+		processData : false,
+		success : function(data) {
+		
+			$(el).summernote('editor.insertImage', data.url);
+			
+			
+
+		}
+	});
+}	
+	
+	
+
+</script>
 <body>
+
 	<div class="container">
 		<h2>글쓰기</h2>
 		<P> 반갑습니다. ${member.m_id}님! </P>
@@ -49,22 +124,11 @@
 						<td>글내용</td>
 					</tr>
 					<tr>
-						<td colspan="2"><textarea  class="form-control" rows="20" name="mu_detail" id="mu_detail"></textarea></td>
+						<td colspan="2"><textarea  class="summernote"  name="mu_detail" id="mu_detail"></textarea></td>
 					</tr>
+					
 					<tr>
-						<td colspan="2">
-							<div class="form_section">
-                    			<div class="form_section_title">
-                    				<label>상품 이미지</label>
-                    			</div>
-                    			<div class="form_section_content">
-									<input type="file" name="upload" multiple="multiple">
-                    			</div>
-                    		</div>  
-                    	</td>	
-					</tr>
-					<tr>
-						<td><input type="submit" value="등록"></td>
+						<td><input type="submit" value="등록" ></td>
 					</tr>
 					
 				</table>

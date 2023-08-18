@@ -4,9 +4,12 @@ package com.marketdongnae.controller.community;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,10 +20,12 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.Property;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +45,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonObject;
 import com.marketdongnae.domain.community.CategoryDTO;
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
@@ -57,15 +63,6 @@ public class CommunityController {
 	@Autowired
 	CommunityService communityService;
 	
-	private String getFolder() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
-		Date date = new Date();
-		
-		String str = simpleDateFormat.format(date);
-		
-		return str.replace("-", File.separator);
-	}
 	
 	@GetMapping("/community")
 	public ModelAndView getCommunity(@RequestParam(value = "num", defaultValue = "1") int num) {
@@ -173,59 +170,68 @@ public class CommunityController {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		
-		
 		return new ModelAndView("community/insertCommunity","member",customUserDetails);
 	}
 	
 	@PostMapping("/insertCommunity")
-	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,@RequestParam("upload") MultipartFile[]  upload) {
-		String uploaderFolder = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community";
-		File uploadPath = new File(uploaderFolder, getFolder());
-		
-		if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
-		
-		String[] uploadName = new String[upload.length];
-		for (int i = 0; i < upload.length; i++) {
-			MultipartFile muFile = upload[i];
-			if (muFile!=null && !muFile.isEmpty()) {
-				uploadName[i] = muFile.getOriginalFilename();
-				// 파일명 중복방지
-				UUID uuid = UUID.randomUUID(); 
-				uploadName[i] = uuid.toString() +"_"+uploadName[i];
-				File seveFile = new File(uploadPath,uploadName[i]);
-				System.out.println("파일명 확인 !!!: " + uploadName[i]);
-				try {
-					upload[i].transferTo(seveFile);
-				}catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,HttpSession session) {
+		if (communityDetailDTO.getMu_name() !=null && communityDetailDTO.getMu_detail() !=null) {
+			
+			 List<String> savedFileNames = (List<String>) session.getAttribute("savedFileNames");
+		        if (savedFileNames != null) {
+		            int numImages = savedFileNames.size();
+		            if (numImages >= 1) {
+		                communityDetailDTO.setMu_i1(savedFileNames.get(0));
+		            }
+		            if (numImages >= 2) {
+		                communityDetailDTO.setMu_i2(savedFileNames.get(1));
+		            }
+		            if (numImages >= 3) {
+		                communityDetailDTO.setMu_i3(savedFileNames.get(2));
+		            }
+		        }
+			communityService.insertCommunity(communityDetailDTO);
 		}
-		if (upload.length == 1) {
-			communityDetailDTO.setMu_i1(uploadName[0]);
-		}else if (upload.length == 2) {
-			communityDetailDTO.setMu_i1(uploadName[0]);
-			communityDetailDTO.setMu_i2(uploadName[1]);
-		}else if (upload.length == 3) {
-			communityDetailDTO.setMu_i1(uploadName[0]);
-			communityDetailDTO.setMu_i2(uploadName[1]);
-			communityDetailDTO.setMu_i3(uploadName[2]);
-		}
-		
-		
-		
-		communityService.insertCommunity(communityDetailDTO);
+		session.removeAttribute("savedFileNames");
 		return "redirect:/community";
 	}
 	
-   
-           
-            
+	
+	@ResponseBody
+	@PostMapping("/upload")
+	public String upload( @RequestParam("file") MultipartFile[] upload,HttpSession session) {
+		JsonObject jsonObject = new JsonObject();
+		String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\";
+		List<String> savedFileNames = new ArrayList<>();
+		
+		for (MultipartFile multipartFile : upload) {
+	        String originalFileName = multipartFile.getOriginalFilename(); // 오리지날 파일명
+	        String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일 확장자
+	        String savedFileName = UUID.randomUUID() + extension; // 저장될 파일 명
+	        savedFileNames.add(savedFileName); 
+	        File targetFile = new File(fileRoot + savedFileName);
+	        
+	        try {
+	            InputStream fileStream = multipartFile.getInputStream();
+	            FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
+	          
+	            jsonObject.addProperty("url", "/resources/upload/community/" + savedFileName); 
+	            jsonObject.addProperty("responseCode", "success");
+
+	        } catch (IOException e) {
+	            FileUtils.deleteQuietly(targetFile); // 저장된 파일 삭제
+	            jsonObject.addProperty("responseCode", "error");
+	            e.printStackTrace();
+	        }
+	        
+	        
+		}
+		 session.setAttribute("savedFileNames", savedFileNames);
+		 String a = jsonObject.toString();
+	
+		 return a;
+		
+	}
 
 	@GetMapping("/updateCommunity")
 	public ModelAndView update(@RequestParam String mu_id,

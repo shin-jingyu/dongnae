@@ -15,6 +15,17 @@ public class communityDetailDTO {
 	private Timestamp mu_data ;
 	private int ca_id ; 
 	private int m_number ;
+	 
+	public void setField(String fieldName, String uploadName) {
+	        if ("mu_i1".equals(fieldName)) {
+	            this.mu_i1 = uploadName;
+	        } else if ("mu_i2".equals(fieldName)) {
+	            this.mu_i2 = uploadName;
+	        } else if ("mu_i3".equals(fieldName)) {
+	            this.mu_i3 = uploadName;
+	        }
+	        // Handle other cases if needed
+	    }
 	
 	
 }

@@ -186,9 +186,10 @@ public class MemberController {
 	public void point( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PageDTO pageDTO = memberService.getPageDTO("point","p_id",  nowpage, customUserDetails);
-		model.addAttribute("m_point", memberService.getPoint(customUserDetails));
 		model.addAttribute("pointList", memberService.getPageList("point", pageDTO, customUserDetails ));
 		model.addAttribute("page", pageDTO);
+		
+		model.addAttribute("m_point", memberService.getPoint(customUserDetails));
 	}
 	
 	@PostMapping("point")

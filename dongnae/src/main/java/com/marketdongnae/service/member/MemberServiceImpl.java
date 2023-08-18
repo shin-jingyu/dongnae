@@ -142,7 +142,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 
-
 	@Override
 	public PageDTO getDealPageDTO(int nowpage ,CustomUserDetails customUserDetails, String d_type) {
 		int m_number = (int) customUserDetails.getM_number() ; 
@@ -187,8 +186,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	
-	
-
 	@Override
 	public int getPoint(CustomUserDetails customUserDetails) {
 		MemberDTO member =  memberMapper.getMember((int) customUserDetails.getM_number());

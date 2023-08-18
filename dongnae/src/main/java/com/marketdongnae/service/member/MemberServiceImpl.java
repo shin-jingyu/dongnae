@@ -186,8 +186,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	
-	
-
 	@Override
 	public int getPoint(CustomUserDetails customUserDetails) {
 		MemberDTO member =  memberMapper.getMember((int) customUserDetails.getM_number());

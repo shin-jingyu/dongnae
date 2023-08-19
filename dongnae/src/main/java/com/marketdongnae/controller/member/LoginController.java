@@ -16,17 +16,15 @@ import lombok.extern.log4j.Log4j;
 public class LoginController {
 	
 	@GetMapping("login")
-	public String login(Model model) {
+	public String login() {
 		return "member/login";
 	}
 	
 	@GetMapping("loginFail")
 	public String loginFail(Model model) { 
-		model.addAttribute("login", "fail");
-		System.out.println("E####fail");
+		model.addAttribute("message", "아이디와 비밀번호를 확인해주세요.");
 		return "member/login";
 	}
-	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
 	
 	@GetMapping("logout")
 	public String logout( ) {

@@ -28,7 +28,8 @@ public interface MemberMapper {
 	public Integer updateMember(MemberDTO memberDTO);
 	
 	
-	public String changePassword(PasswordDTO passwordDTO);
+	public String changePassword(@Param ("m_number") int m_number
+								,@Param ("newEncodePwd") String newEncodePwd);
 	
 	
 	public Integer regist(MemberDTO memberDTO);

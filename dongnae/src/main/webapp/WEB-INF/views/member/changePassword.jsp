@@ -12,24 +12,31 @@
 <title>changePassword</title>
 
 <script type="text/javascript">
-/* 
 function check(){
-	 if($("#changePassword").checkValidity()) {
-		alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
-	 	$("#changePassword").submit();
-		}  
+	$('#changePassword').submit(false);
+	var formdata =  $('#changePassword').serialize() ; 
+	 if($("#changePassword")[0].checkValidity()) {
+		$.ajax({
+			url: '/member/checkpsw',
+			type:'POST',
+			data: formdata,
+			success:function(response){
+				if(response == 'wrongCurrent'){
+					alert("현재 비밀번호가 일치하지 않습니다.");
+				}
+				else if(response == 'WrongConfirm'){
+					alert("새 비밀번호 확인이 일치하지 않습니다.");
+				}
+				else{
+					alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+					$("#changePassword")[0].submit();
+				}
+			},
+			error:function(response){
+			}			
+		}) 
+	 }
 };
- */
- function check() {
-	    console.log("check 함수 내부"); // 디버깅용 로그
-	    if ($("#changePassword").checkValidity()) {
-	        console.log("유효성 검사 통과"); // 디버깅용 로그
-	        alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
-	        // $("#changePassword").submit();
-	    } else {
-	        console.log("유효성 검사 실패"); // 디버깅용 로그
-	    }
-	}
 </script>
 <body>
 </head>
@@ -69,8 +76,7 @@ function check(){
 	                           		<h2>비밀번호 변경</h2>
 	                           	</div>
 	                        	<div class="row  my-3">
-	                        	<form name="changePassword" id="changePassword" action=changePassword method="post" class="form-horizontal">
-	                        		<input hidden name="m_id"  type="text" value="${m_id}">  
+	                        	<form name="changePassword" id="changePassword" action="changePassword" method="post" class="form-horizontal">
 	                        			<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		현재 비밀번호

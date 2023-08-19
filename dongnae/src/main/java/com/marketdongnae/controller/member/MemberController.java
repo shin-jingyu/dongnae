@@ -1,6 +1,7 @@
 package com.marketdongnae.controller.member;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,24 +43,30 @@ public class MemberController {
 	private final CustomAuthenticationProvider customAuthenticationProvider;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
-	@GetMapping("login")
-	public void login(Model model) {
-		model.addAttribute("login", "notyet");	// 임시로
+	@GetMapping("test")
+	public void test(Model model) {
+		model.addAttribute("test", "test");	// 임시로
 	}
 	
-	@GetMapping("loginFail")
-	public String loginFail(Model model) { 
-		model.addAttribute("login", "fail");
-		System.out.println("E####fail");
-		return "member/login";
-	}
-	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
-	
-	@GetMapping("logout")
-	public String logout(HttpServletRequest request ) {
-		return "redirect:/";
-	}
-	
+//	
+//	@GetMapping("login")
+//	public void login(Model model) {
+//		model.addAttribute("login", "notyet");	// 임시로
+//	}
+//	
+//	@GetMapping("loginFail")
+//	public String loginFail(Model model) { 
+//		model.addAttribute("login", "fail");
+//		System.out.println("E####fail");
+//		return "login";
+//	}
+//	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
+//	
+//	@GetMapping("logout")
+//	public String logout(HttpServletRequest request ) {
+//		return "redirect:/";
+//	}
+//	
 	@GetMapping("regist")
 	public void regist() {
 	}
@@ -67,7 +74,7 @@ public class MemberController {
 	@PostMapping("regist")
 	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
 		memberService.regist(memberDTO);
-		return "member/login";		
+		return "login";		
 	}
 	
 	@PostMapping("checkId")
@@ -126,23 +133,23 @@ public class MemberController {
 	}
 	
 	@GetMapping("changePassword")
-	public void changePassword(@ModelAttribute ("password") PasswordDTO passwordDTO , Model model) {
+	public void changePassword() {
+	}
+
+	@PostMapping("checkpsw")
+	@ResponseBody
+	public String checkpsw(@RequestParam Map<String, Object> passwordDTO) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		passwordDTO.setM_number((int) customUserDetails.getM_number());
-		memberService.getSoldList(customUserDetails);
+		String result = memberService.checkPassword(customUserDetails, passwordDTO);
+		return result ; 
 	}
 	
 	@PostMapping("changePassword")
-	public String changePassword_post(@ModelAttribute ("password") PasswordDTO passwordDTO , HttpSession session ) {
+	public String changePassword_post(@ModelAttribute PasswordDTO passwordDTO) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String result = memberService.changePassword(customUserDetails, passwordDTO);
-		if ( result == "fail") 
-			return "member/changePassword";
-		else 
-			session.invalidate();
-			return "redirect:/member/login";
+		memberService.changePassword(customUserDetails,passwordDTO.getNew_password());
+		return "redirect:/logout" ;
 	}
-
 
 	@GetMapping("soldList")
 	public void soldList(@RequestParam(value = "p", defaultValue = "1" ) int nowpage ,  Model model) {

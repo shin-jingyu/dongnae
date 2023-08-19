@@ -111,10 +111,10 @@
                             </div>
                             
                             <div class="header__top__right__auth">
-                                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+                                <a href="/login"><i class="fa fa-user"></i> Login</a>
                                  <sec:authorize access="isAuthenticated()">
                                  <a href="/goods/goods_insert">상품등록</a>
-                                 <a href="/member/logout">Logout</a>
+                                 <a href="/logout">Logout</a>
                                  <a href="/member/detail">마이페이지</a>
                                  </sec:authorize>
                             </div>

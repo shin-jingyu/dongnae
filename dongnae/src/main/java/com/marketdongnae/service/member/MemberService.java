@@ -1,5 +1,6 @@
 package com.marketdongnae.service.member;
 import java.util.List;
+import java.util.Map;
 
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
@@ -31,7 +32,9 @@ public interface MemberService {
 	
 	String checkId(String checkId);
 	
-	String changePassword(CustomUserDetails customUserDetails, PasswordDTO passwordDTO);
+	String checkPassword(CustomUserDetails customUserDetails, Map<String, Object>  passwordDTO);
+	void changePassword(CustomUserDetails customUserDetails, String new_password);
+//	String changePassword(CustomUserDetails customUserDetails, PasswordDTO passwordDTO);
 
 	
 	PageDTO getPageDTO( String table, String table_id ,int nowpage , CustomUserDetails customUserDetails);

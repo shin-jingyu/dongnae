@@ -24,13 +24,13 @@
 	<security:http>
 
 		<security:csrf disabled="true"/>
- 		<security:intercept-url pattern="/member/**" access="permitAll"/>  
+ 		<!-- <security:intercept-url pattern="/member/login" access="permitAll"/>   -->
+ 		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>  
  		
  		<!-- 
  		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/> 
  		<security:intercept-url pattern="/member/**" access="permitAll"/> 
  		
- 		<security:intercept-url pattern="/member/login" access="permitAll"/>  
  		<security:intercept-url pattern="/login.do" access="permitAll"/>  
  		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>  
  		
@@ -39,12 +39,20 @@
 		<security:access-denied-handler ref="customAccessDenied" />
 		
 		<security:form-login 
+		login-page="/login" 
+		login-processing-url="/login.do"
+		authentication-success-handler-ref="customLoginSuccess"
+		authentication-failure-url="/loginFail"
+		/>
+		<!-- 		
+		<security:form-login 
 		login-page="/member/login" 
 		login-processing-url="/login.do"
 		authentication-success-handler-ref="customLoginSuccess"
 		authentication-failure-url="/member/loginFail"
-		/>
-		<security:logout logout-url="/member/logout" invalidate-session="true"/>
+		/> 
+		-->
+		<security:logout logout-url="/logout" invalidate-session="true"/>
 	</security:http>
 	
 	<security:authentication-manager>

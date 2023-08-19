@@ -14,7 +14,7 @@
 	
 	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 
 		update member
-			set m_pwd = #{new_password}
+			set m_pwd = #{newEncodePwd}
 		where m_number = #{m_number}
 	</select>
 	

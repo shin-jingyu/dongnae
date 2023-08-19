@@ -43,20 +43,20 @@ public class MemberController {
 	private final BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("login")
-	public void login() {
+	public void login(Model model) {
+		model.addAttribute("login", "notyet");	// 임시로
 	}
 	
 	@GetMapping("loginFail")
 	public String loginFail(Model model) { 
 		model.addAttribute("login", "fail");
+		System.out.println("E####fail");
 		return "member/login";
 	}
 	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
 	
 	@GetMapping("logout")
 	public String logout(HttpServletRequest request ) {
-		HttpSession session = request.getSession();
-		session.invalidate();
 		return "redirect:/";
 	}
 	
@@ -126,7 +126,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("changePassword")
-	public void changePassword(@ModelAttribute ("password") PasswordDTO passwordDTO ) {
+	public void changePassword(@ModelAttribute ("password") PasswordDTO passwordDTO , Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		passwordDTO.setM_number((int) customUserDetails.getM_number());
 		memberService.getSoldList(customUserDetails);

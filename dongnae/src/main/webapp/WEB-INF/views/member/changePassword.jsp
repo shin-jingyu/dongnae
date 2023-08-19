@@ -10,17 +10,29 @@
 
 <meta charset="UTF-8">
 <title>changePassword</title>
-</head>
 
 <script type="text/javascript">
-function alert(){
+/* 
+function check(){
 	 if($("#changePassword").checkValidity()) {
 		alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
 	 	$("#changePassword").submit();
-	 }
+		}  
 };
+ */
+ function check() {
+	    console.log("check 함수 내부"); // 디버깅용 로그
+	    if ($("#changePassword").checkValidity()) {
+	        console.log("유효성 검사 통과"); // 디버깅용 로그
+	        alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+	        // $("#changePassword").submit();
+	    } else {
+	        console.log("유효성 검사 실패"); // 디버깅용 로그
+	    }
+	}
 </script>
 <body>
+</head>
 
 <sec:authentication property="principal" var="member"/>
 
@@ -100,7 +112,7 @@ function alert(){
 										
 	                        			<div class="form-group  row">
 											<div class="col-12  mt-3">
-							                    <input type="submit" class="btn btn-primary" onclick="alert()"  value="변경하기 " >
+							                    <input type="submit" class="btn btn-primary" onclick="check()"  value="변경하기 " >
 						                	</div> 
 					                	</div>
 	                        	

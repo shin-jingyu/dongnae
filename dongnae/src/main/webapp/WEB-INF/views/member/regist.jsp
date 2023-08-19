@@ -69,8 +69,10 @@
 	};
 	
 	function checkId_post(){
+		// alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
 		let checkId = $("#m_id").val();
 		 if($("#regist").checkValidity()) {
+			 alert("checkValidity 끝나고 바로넘어가는지test");
 			$.ajax({
 				url: '/member/checkId_post',
 				type:'POST',

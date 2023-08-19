@@ -25,7 +25,16 @@
 
 		<security:csrf disabled="true"/>
  		<security:intercept-url pattern="/member/**" access="permitAll"/>  
- 		<!-- <security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>   -->
+ 		
+ 		<!-- 
+ 		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/> 
+ 		<security:intercept-url pattern="/member/**" access="permitAll"/> 
+ 		
+ 		<security:intercept-url pattern="/member/login" access="permitAll"/>  
+ 		<security:intercept-url pattern="/login.do" access="permitAll"/>  
+ 		<security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>  
+ 		
+ 		-->
 		
 		<security:access-denied-handler ref="customAccessDenied" />
 		

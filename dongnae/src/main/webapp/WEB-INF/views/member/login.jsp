@@ -7,6 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>login</title>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+
+
+ <script type="text/javascript">
+$(document).ready(function(){
+	if( ${login} == "fail"){
+		alert('아이디와 비밀번호를 확인해주세요.')
+	}
+});
+</script> 
+ 
+
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

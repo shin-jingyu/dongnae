@@ -68,7 +68,7 @@
 					<button onclick="location.href='community?num=${page.num}'">목록으로</button>
 					
 					<!--작성자만 보이는 버튼   -->
-					<c:if test = '${sessionScope.m_id == communityDetail.m_id}'>
+					<c:if test = '${member.m_id == communityDetail.m_id}'>
 					<button onclick="location.href='updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
 					<button id="deleteCommunity" type="button">삭제하기</button>
 					
@@ -80,12 +80,12 @@
 		
 		</table>
 		<!-- 로그인 한사람만 댓글 작성가능  -->
-			<c:if test='${sessionScope.m_id != null}'>	
+			<c:if test='${member.m_id != null}'>	
 			<form method="post" action="/comment">
 
 				<p>
 					<input type="hidden" name="m_number"
-						value="<sec:authentication property="principal.m_number"/>">
+						value="member.m_number">
 					<input type="hidden" name="mu_id" value="${communityDetail.mu_id }">
 				</p>
 				<p>
@@ -114,7 +114,7 @@
 					</div>	
 					
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
-					<c:if test = '${sessionScope.m_id != null}'>
+					<c:if test = '${member.m_number == comment.m_number}'>
 					<button type="button" class="updateComment" >댓글 수정</button>
 					<button type="button" id="deleteComments" class="deleteComment" data-com_id="${comment.com_id }">댓글 삭제</button>
 					</c:if>
@@ -222,7 +222,7 @@ $(document).ready(function (){
 	        type :'POST',
 	        data : {
 	        	'mu_id':${communityDetail.mu_id},
-	        	'm_number': <sec:authentication property="principal.m_number"/>
+	        	'm_number': ${member.m_number}
 	        },
 	    	success : function(data){
 	    		that.prop('name',data);

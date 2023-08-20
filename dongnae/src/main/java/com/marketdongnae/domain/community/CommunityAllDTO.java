@@ -18,6 +18,7 @@ public class CommunityAllDTO {
 	private int mu_c ; 
 	private int heart ; 
 	private int comment ;
-
+	private String previewImageUrl; 
+	 
 	
 }

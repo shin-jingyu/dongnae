@@ -23,8 +23,8 @@
 	
 	<!-- 글작성 -->
 	<insert id="insertCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
-		insert into community( mu_name, mu_detail, mu_i1, mu_i2, mu_i3, ca_id, m_number)
-		value(#{mu_name},#{mu_detail},#{mu_i1},#{mu_i2},#{mu_i3},#{ca_id},#{m_number})
+		insert into community( mu_name, mu_detail, ca_id, m_number)
+		value(#{mu_name},#{mu_detail},#{ca_id},#{m_number})
 	</insert>
 		
 	
@@ -33,9 +33,6 @@
 		update community
 		set mu_name = #{mu_name},
 			mu_detail = #{mu_detail},
-			mu_i1 =#{mu_i1},
-			mu_i2 =#{mu_i2},
-			mu_i3 =#{mu_i3},
 			ca_id =#{ca_id}
 		where community.mu_id = #{mu_id}
 	</update>

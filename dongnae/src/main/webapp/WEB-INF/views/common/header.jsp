@@ -81,6 +81,26 @@
 	        container.append(ul);
 	    }
 	}
+	
+	const menu=document.querySelector(".one");
+	const subBar=document.querySelector(".one>.two");
+
+	let subToggle=true,i=0;
+
+	function slide_menu(){
+	  if(subToggle){
+	    subBar.style.display="block";
+	    subBar.classList.remove("up");
+	    subBar.classList.add("down");
+	    subToggle=!subToggle;
+	  }else{
+	    subBar.classList.remove("down");
+	    subBar.classList.add("up");
+	    subToggle=!subToggle;
+	  }
+	  console.log(subBar.classList);
+	}
+	menu.addEventListener("click",slide_menu);
 </script>
 
 <body>
@@ -92,6 +112,7 @@
     </div>
 
     <!-- Header Section Begin -->
+
     <header class="header">
         <div class="header__top">
             <div class="container">
@@ -163,50 +184,7 @@
             </div>
         </div>
     </header>
-    <!-- Header Section End -->
-    
-    <!-- Hero Section Begin -->
-    <section class="hero">
-        <div class="container">
-            <div class="row">
-                <div id="menu">
-				<div class="col-lg-3"></div>
-				    <ul class="main1" style="list-style: none;">
-				        <li><a href="#">카테고리</a>
-				            <ul class="main2">
-				                <li style="list-style: none;"><a href="#">수입명품</a>
-				                    <ul class="main3" style="list-style: none;">
-				                        <li><a href="#">여성신발</a></li>
-				                        <li><a href="#">남성신발</a></li>
-				                        <li><a href="#">가방/핸드백</a></li>
-				                        <li><a href="#">지갑/벨트</a></li>
-				                        <li><a href="#">여성의류</a></li>
-				                        <li><a href="#">남성의류</a></li>
-				                        <li><a href="#">패션잡화</a></li>
-				                        <li><a href="#">시계/쥬얼리</a></li>
-				                        <li><a href="#">유아</a></li>
-				                        <li><a href="#">기타</a></li>
-				                    </ul>
-				                </li>
-				            </ul>
-				        </li>
-				    </ul>
-				</div>
-                <!-- 검색 -->
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
+
 </body>
 
 </html>

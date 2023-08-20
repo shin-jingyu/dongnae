@@ -95,10 +95,10 @@
                 </ul>
             </div>
              <div class="header__top__right__auth">
-	                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+	                <a href="/login"><i class="fa fa-user"></i> Login</a>
 	            </div>
 	            <sec:authorize access="isAuthenticated()">
-					<a href="/customLogout">로그아웃</a>
+					<a href="/logout">로그아웃</a>
 					<a href="/member/detail">${member.m_id}님 마이페이지</a>
 				</sec:authorize>
 				
@@ -167,10 +167,10 @@
                             </div>
                              <sec:authentication property="principal" var="member"/>
                             <div class="header__top__right__auth">
-                                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+                                <a href="/login"><i class="fa fa-user"></i> Login</a>
                                  <sec:authorize access="isAuthenticated()">
                                  <a href="/goods/goods_insert">상품등록</a>
-                                 <a href="/member/logout">Logout</a>
+                                 <a href="/logout">Logout</a>
                                  <a href="/member/detail">${member.m_id}님 마이페이지</a>
                                  </sec:authorize>
                             </div>

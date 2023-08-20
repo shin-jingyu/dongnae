@@ -1,6 +1,7 @@
 package com.marketdongnae.service.member;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -88,35 +89,42 @@ public class MemberServiceImpl implements MemberService {
 			msg = "duplicated";
 		return msg;
 	}
+	
 
 	@Override
-	public String changePassword(CustomUserDetails customUserDetails, PasswordDTO passwordDTO) {
-		MemberDTO member = memberMapper.getMember((int) customUserDetails.getM_number());
-		passwordDTO.setM_number((int) customUserDetails.getM_number());
+	public String checkPassword(CustomUserDetails customUserDetails, Map<String, Object> passwordDTO) {
+		int m_number  = customUserDetails.getM_number();
+		String msg = "";
 		
 		// 입력한 현재 비밀번호가 맞는지 확인
-		String rawPwd =  passwordDTO.getCurrent_password();
-		String encodedPwd = (String) member.getM_pwd();
+		String rawPwd = (String) passwordDTO.get("current_password");
+		String encodedPwd = customUserDetails.getPassword();
+		//		String encodedPwd = (String) member.getM_pwd();
 		if( !passwordEncoder.matches(rawPwd , encodedPwd) ) {
-			passwordDTO.setMessage("wrongCurrent");
-			return "fail";
+			// passwordDTO.setMessage("wrongCurrent");
+			msg = "wrongCurrent";
 		};
 
 		// 새 비밀번호와 확인이 일치하는지 확인
-		String newPwd = passwordDTO.getNew_password();
-		String confirmPwd = passwordDTO.getNew_password_confirm();
+		String newPwd = (String) passwordDTO.get("new_password");
+		String confirmPwd =  (String)  passwordDTO.get("new_password_confirm");
 		if( !newPwd.equals(confirmPwd) ) {
-			passwordDTO.setMessage("WrongConfirm");
-			return "fail";
+			// passwordDTO.setMessage("WrongConfirm");
+			msg ="WrongConfirm";
 			};
 			
+		return msg ; 
+	}
+
+	@Override
+	public void changePassword(CustomUserDetails customUserDetails, String new_password) {
+		int m_number  = customUserDetails.getM_number();
 		// 새 비밀번호로 변경
-		String newEncodePwd = passwordEncoder.encode(newPwd);
-		passwordDTO.setNew_password(newEncodePwd);  
-		passwordDTO.setMessage("success");
+		String newEncodePwd = passwordEncoder.encode(new_password);
+		// passwordDTO.setNew_password(newEncodePwd);  
+		// passwordDTO.setMessage("success");
 			
-		memberMapper.changePassword(passwordDTO);
-		return "success" ;
+		memberMapper.changePassword(m_number,newEncodePwd);
 	}
 
 
@@ -208,5 +216,9 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteWish( wish_id);
 		
 	}
+
+
+
+
 
 }

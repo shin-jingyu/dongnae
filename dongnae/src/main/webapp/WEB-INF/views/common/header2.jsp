@@ -43,44 +43,51 @@
 	})
 			 
 	function fetchCategories() {
-	    $.ajax({
-	        url: '/api/getCategories',
-	        type: 'post',
-	        dataType: 'json',
-	        success: function (data) {
-	            console.log(data);
-	            var categorySelectMain = $('.category1Container');
-	            var category2Container = $('.category2Container');
-	
-	            categorySelectMain.empty();
-	            category2Container.empty();
-	
-	            var categoryMainList = data.category_1;
-	            categoryMainList.forEach(function (categoryMain) {
-	                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '"> ' + categoryMain.c1_category + '</li>');
-	                categoryMainItem.on('mouseover', function () {
-	                    displayCategory2(category2Container, data.category_2[categoryMain.c1_id]);
-	                });
-	                categorySelectMain.append(categoryMainItem);
-	            });
-	        },
-	        error: function (xhr, status, error) {
-	            // 에러 처리
-	            alert("데이터 안불러와지는중");
-	        }
-	    });
-	}
+        $.ajax({
+            url: '/api/getCategories',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var main1Container = $('.main2');
+                main1Container.empty();
 
-	function displayCategory2(container, category2List) {
-	    container.empty();
-	    if (category2List && category2List.length > 0) {
-	        var ul = $('<ul class="category2List"></ul>');
-	        category2List.forEach(function (category2) {
-	            ul.append($('<li>' + category2.c2_category + '</li>'));
-	        });
-	        container.append(ul);
-	    }
-	}
+                var categoryMainList = data.category_1;
+                categoryMainList.forEach(function (categoryMain) {
+                    var category1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
+                    var category2List = data.category_2.filter(function(category2) {
+                        return category2.c1_id === categoryMain.c1_id;
+                    });
+
+                    var main2Container = $('<ul class="main3" style="list-style: none;"></ul>');
+                    category1Item.append(main2Container);
+
+                    // 마우스 오버 이벤트 추가
+                    category1Item.on('mouseover', function () {
+                        main2Container.empty();
+                        if (category2List.length > 0) {
+                            var main3Container = $('<ul class="main3" style="list-style: none;"></ul>');
+                            category2List.forEach(function (category2) {
+                                var category2Item = $('<li><a href="#">' + category2.c2_category + '</a></li>');
+                                main3Container.append(category2Item);
+                            });
+                            main2Container.append(main3Container);
+                        }
+                    });
+
+                    // 마우스 아웃 이벤트 추가
+                    category1Item.on('mouseout', function () {
+                        main2Container.empty();
+                    });
+
+                    main1Container.append(category1Item);
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("데이터 안불러와지는중");
+            }
+        });
+    }
 </script>
 
 <body>
@@ -172,23 +179,8 @@
                 <div id="menu">
 				<div class="col-lg-3"></div>
 				    <ul class="main1" style="list-style: none;">
-				        <li>카테고리
-				            <ul class="main2">
-				                <li style="list-style: none;"><a href="#">수입명품</a>
-				                    <ul class="main3" style="list-style: none;">
-				                        <li><a href="#">여성신발</a></li>
-				                        <li><a href="#">남성신발</a></li>
-				                        <li><a href="#">가방/핸드백</a></li>
-				                        <li><a href="#">지갑/벨트</a></li>
-				                        <li><a href="#">여성의류</a></li>
-				                        <li><a href="#">남성의류</a></li>
-				                        <li><a href="#">패션잡화</a></li>
-				                        <li><a href="#">시계/쥬얼리</a></li>
-				                        <li><a href="#">유아</a></li>
-				                        <li><a href="#">기타</a></li>
-				                    </ul>
-				                </li>
-				            </ul>
+				        <li><a href="#">카테고리</a>
+				            <ul class="main2"></ul>
 				        </li>
 				    </ul>
 				</div>

@@ -48,12 +48,14 @@ public class GoodsController {
 	
 	@GetMapping(value = "goods_list")
 	public List<GoodsDTO> goods_List_Get() {
-//		return goodsService.getGoodsList();
-		return null;
+		return goodsService.getGoodsList();
 	}
-	@GetMapping(value = "search/{keyword}")
-	public List<GoodsDTO> searchGoods(SearchDTO search , Model model){
-		return goodsService.getSearchGoods(search);
+	@GetMapping(value = "search/{search}")
+	public String searchGoods(@PathVariable("search") String search , Model model){
+		SearchDTO searchDTO = new SearchDTO();
+		searchDTO.setKeyword(search);
+		model.addAttribute(goodsService.getSearchGoods(searchDTO));
+		return "goods/goods_list";
 	}
 	
 	@GetMapping(value = "/goods_detail/{g_id}")

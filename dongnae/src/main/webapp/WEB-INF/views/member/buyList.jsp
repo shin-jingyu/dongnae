@@ -46,6 +46,11 @@
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>구매내역</h2>
 	                           	</div>
+	                           	
+	                           	<div  ${ (buyList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>구매 내역이 존재하지 않습니다.</div>
+	                           	</div>
+	                           	
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<c:forEach var="b" items="${buyList}">
@@ -80,11 +85,46 @@
 			                        				</div>
 			                        			</div>	
 		                        			</div>
-		                        			
 		                        		</div>
 		                        		</c:forEach>
 		                            </div>
 	                            </div>
+	                            
+	                            <div class="row my-3">
+	                            <div class="col-12 col-md-11 my-3 mx-auto">
+	                            	<nav aria-label="Page navigation example  ">
+									  <ul class="pagination justify-content-center">
+									   
+									   <c:set var="p" value="${page}" /> 
+									   
+									   <c:choose>
+										   <c:when test="${p.prev > 0}" >
+										    	<li class="page-item"><a class="page-link" href="/member/buyList?p=${p.prev}">Previous</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									   
+									    <c:forEach var="pageNum" begin="${p.startPageNum}" end="${p.endPageNum}">
+									    	<li class="page-item ${ (p.nowpage == pageNum )?  'active' : '' } " >
+									    		<a class="page-link" href="/member/buyList?p=${pageNum}">${pageNum}</a>
+									    	</li>
+									    </c:forEach>
+									    
+									 	<c:choose>
+										   <c:when test="${p.next <= p.realEndPageNum}" >
+										    	<li class="page-item"><a class="page-link" href="/member/buyList?p=${p.next}">Next</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Next</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									  </ul>
+									</nav>
+	                            </div>
+	                        </div>
+	                            
 	                        </div>
 	                    <!-- </div> -->
 	                    </div>

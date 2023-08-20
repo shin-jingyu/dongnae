@@ -1,18 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
     
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>changePassword</title>
-</head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
 
+<meta charset="UTF-8">
+<title>changePassword</title>
+
+<script type="text/javascript">
+function check(){
+	$('#changePassword').submit(false);
+	var formdata =  $('#changePassword').serialize() ; 
+	 if($("#changePassword")[0].checkValidity()) {
+		$.ajax({
+			url: '/member/checkpsw',
+			type:'POST',
+			data: formdata,
+			success:function(response){
+				if(response == 'wrongCurrent'){
+					alert("현재 비밀번호가 일치하지 않습니다.");
+				}
+				else if(response == 'WrongConfirm'){
+					alert("새 비밀번호 확인이 일치하지 않습니다.");
+				}
+				else{
+					alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+					$("#changePassword")[0].submit();
+				}
+			},
+			error:function(response){
+			}			
+		}) 
+	 }
+};
+</script>
 <body>
+</head>
 
 <sec:authentication property="principal" var="member"/>
 
@@ -49,8 +76,7 @@
 	                           		<h2>비밀번호 변경</h2>
 	                           	</div>
 	                        	<div class="row  my-3">
-	                        	<form name="changePassword" action=changePassword method="post" class="form-horizontal">
-	                        		<input hidden name="m_id"  type="text" value="${m_id}">  
+	                        	<form name="changePassword" id="changePassword" action="changePassword" method="post" class="form-horizontal">
 	                        			<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		현재 비밀번호
@@ -92,7 +118,7 @@
 										
 	                        			<div class="form-group  row">
 											<div class="col-12  mt-3">
-							                    <input type="submit" class="btn btn-primary" value="변경하기 ">
+							                    <input type="submit" class="btn btn-primary" onclick="check()"  value="변경하기 " >
 						                	</div> 
 					                	</div>
 	                        	

@@ -7,12 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.marketdongnae.domain.community.CategoryDTO;
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.mapper.CommunityMapper;
+
 
 @Service("CommunityService")
 public class CommunityServiceImpl implements CommunityService {
@@ -113,10 +115,57 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void selectCommentOne(CommentDTO selectCommentOne) {
-		communityMapper.selectCommentOne(selectCommentOne);
+	public int counts() {
+		return communityMapper.counts();
 		
 	}
+
+	@Override
+	public List<CommunityAllDTO> listPage(int displaypost, int postnum) {
+	
+		return communityMapper.listPage(displaypost, postnum);
+		
+	}
+
+	@Override
+	public List<CommunityAllDTO> listPageSearch(int displayPost, int postNum, String searchType, String keyword) {
+		
+		return communityMapper.listPageSearch(displayPost, postNum, searchType, keyword);
+	}
+
+	@Override
+	public int listPageSearchCount(String searchType, String keyword) {
+		
+		return communityMapper.listPageSearchCount(searchType, keyword);
+	}
+
+	@Override
+	public List<CommunityAllDTO> pageCategory(int displayPost, int postNum, String ca_l) {
+		
+		return communityMapper.pageCategory(displayPost, postNum, ca_l);
+	}
+	
+	@Override
+	public int pageCategoryCount(String ca_l) {
+		
+		return communityMapper.pageCategoryCount(ca_l);
+	}
+
+	@Override
+	public List<CategoryDTO> category() {
+		return communityMapper.category();
+	}
+	
+	
+
+	
+
+
+
+
+
+
+	
 	 
 
 	

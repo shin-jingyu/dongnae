@@ -16,10 +16,18 @@
 			type: 'POST',
 			dataType: "json",
 			success: function(data){
+				const m_do_id = ${member.do_id};
 				var options = "";
 				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].do_id + "' ${ (member.do_id.toString() == '" 
-							+ data[i].do_id + "')? 'selected' : '' }>" + data[i].do_area + " </option>"
+					let list_do_id = data[i].do_id;
+					let list_do_area = data[i].do_area ;
+					// options+= "<option value='" + data[i].do_id + "' " + doid + " == '" 
+					//		+ data[i].do_id + "')? 'selected' : '' }>" + data[i].do_area + " </option>"
+					if(m_do_id == list_do_id ){
+						options += "<option value='" +  list_do_id + "' selected>"+ list_do_area +"</option>";
+					} else{
+						options += "<option value='" +  list_do_id + "'>"+ list_do_area +"</option>";
+					}
 				}
 				$("#do_id").html(options);
 			},

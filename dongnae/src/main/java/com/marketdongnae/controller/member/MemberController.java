@@ -1,17 +1,13 @@
 package com.marketdongnae.controller.member;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,20 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marketdongnae.controller.goods.GoodsController;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
-import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
 
 import lombok.AllArgsConstructor;
@@ -51,24 +43,30 @@ public class MemberController {
 	private final CustomAuthenticationProvider customAuthenticationProvider;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
-	@GetMapping("login")
-	public void login() {
+	@GetMapping("test")
+	public void test(Model model) {
+		model.addAttribute("test", "test");	// 임시로
 	}
 	
-	@GetMapping("loginFail")
-	public String loginFail(Model model) { 
-		model.addAttribute("login", "fail");
-		return "member/login";
-	}
-	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
-	
-	@GetMapping("logout")
-	public String logout(HttpServletRequest request ) {
-		HttpSession session = request.getSession();
-		session.invalidate();
-		return "redirect:/";
-	}
-	
+//	
+//	@GetMapping("login")
+//	public void login(Model model) {
+//		model.addAttribute("login", "notyet");	// 임시로
+//	}
+//	
+//	@GetMapping("loginFail")
+//	public String loginFail(Model model) { 
+//		model.addAttribute("login", "fail");
+//		System.out.println("E####fail");
+//		return "login";
+//	}
+//	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
+//	
+//	@GetMapping("logout")
+//	public String logout(HttpServletRequest request ) {
+//		return "redirect:/";
+//	}
+//	
 	@GetMapping("regist")
 	public void regist() {
 	}
@@ -76,7 +74,7 @@ public class MemberController {
 	@PostMapping("regist")
 	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
 		memberService.regist(memberDTO);
-		return "member/login";		
+		return "login";		
 	}
 	
 	@PostMapping("checkId")
@@ -108,10 +106,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("detail")
-	public void detail(Principal principal, Model model) {
-		MemberDTO memberDTO =  memberService.getMember(principal.getName());
-		model.addAttribute("member", memberDTO);
+	public void detail(Model model) {
+		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("member", customUserDetails);
 	}
+
 	
 	@PostMapping("detail/do_area")
 	@ResponseBody
@@ -134,46 +133,70 @@ public class MemberController {
 	}
 	
 	@GetMapping("changePassword")
-	public void changePassword(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO ) {
-		passwordDTO.setM_id(principal.getName());
-		memberService.getSoldList(principal.getName());
+	public void changePassword() {
+	}
+
+	@PostMapping("checkpsw")
+	@ResponseBody
+	public String checkpsw(@RequestParam Map<String, Object> passwordDTO) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String result = memberService.checkPassword(customUserDetails, passwordDTO);
+		return result ; 
 	}
 	
 	@PostMapping("changePassword")
-	public String changePassword_post(Principal principal, @ModelAttribute ("password") PasswordDTO passwordDTO  ) {
-		String result = memberService.changePassword(principal.getName(), passwordDTO);
-		if ( result == "fail") 
-			return "member/changePassword";
-		else 
-			return "redirect:/";
+	public String changePassword_post(@ModelAttribute PasswordDTO passwordDTO) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		memberService.changePassword(customUserDetails,passwordDTO.getNew_password());
+		return "redirect:/logout" ;
 	}
 
-
 	@GetMapping("soldList")
-	public void soldList(Principal principal,  Model model) {
-		model.addAttribute("soldList", memberService.getSoldList(principal.getName()));
+	public void soldList(@RequestParam(value = "p", defaultValue = "1" ) int nowpage ,  Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "sold");
+		List<Deal_viewDTO> soldList = memberService.getDealPageList(customUserDetails,  "sold", pageDTO);
+		model.addAttribute("soldList", soldList);
+		model.addAttribute("page", pageDTO);
 	}
 	
 	@GetMapping("buyList")
-	public void buyList(Model model, Principal principal ) {
-		model.addAttribute("buyList", memberService.getBuyList(principal.getName()));
+	public void buyList(@RequestParam(value = "p", defaultValue = "1" ) int nowpage,  Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "buy");
+		List<Deal_viewDTO> buyList = memberService.getDealPageList(customUserDetails, "buy", pageDTO);
+		model.addAttribute("buyList", buyList);
+		model.addAttribute("page", pageDTO);
 	}
-	
+
+
 	@GetMapping("onSaleList")
-	public void onSaleList(Model model, Principal principal ) {
-		model.addAttribute("onSaleList", memberService.getOnSaleList(principal.getName()));
+	public void onSaleList( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model ) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "onSale");
+		List<Deal_viewDTO> onSaleList = memberService.getDealPageList( customUserDetails, "onSale", pageDTO);
+		model.addAttribute("onSaleList", onSaleList);
+		model.addAttribute("page", pageDTO);
 	}
 
 	@GetMapping("review")
-	public void getReviewList( Model model, Principal principal ) {
-		model.addAttribute("soldList", memberService.getSoldList(principal.getName()));
-		model.addAttribute("avgScore", memberService.getAvgScore(principal.getName()));
+	public void getReviewList( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "sold");
+		List<Deal_viewDTO> soldList = memberService.getDealPageList(customUserDetails,  "sold", pageDTO);
+		model.addAttribute("soldList", soldList);
+		model.addAttribute("page", pageDTO);
+		model.addAttribute("avgScore", memberService.getAvgScore(customUserDetails));
 	}
 	
 	@GetMapping("point")
-	public void point( Model model, Principal principal ) {
-		model.addAttribute("pointList", memberService.getPointList(principal.getName()));
-		model.addAttribute("m_point", memberService.getPoint(principal.getName()));
+	public void point( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PageDTO pageDTO = memberService.getPageDTO("point","p_id",  nowpage, customUserDetails);
+		model.addAttribute("pointList", memberService.getPageList("point", pageDTO, customUserDetails ));
+		model.addAttribute("page", pageDTO);
+		
+		model.addAttribute("m_point", memberService.getPoint(customUserDetails));
 	}
 	
 	@PostMapping("point")
@@ -181,10 +204,13 @@ public class MemberController {
 		memberService.putPoint(pointDTO) ;
 		return "redirect:/member/point";		
 	}
-	
+
 	@GetMapping("wishlist")
-	public void wishlist(Model model , Principal principal) {
-		model.addAttribute("wish_viewList", memberService.getWish_viewList(principal.getName()));
+	public void wishlist( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PageDTO pageDTO = memberService.getPageDTO("wish_view","wish_id",  nowpage, customUserDetails);
+		model.addAttribute("wishList", memberService.getPageList("wish_view", pageDTO, customUserDetails ));
+		model.addAttribute("page", pageDTO);
 	}
 	
 	@GetMapping("cancelWish")
@@ -194,25 +220,4 @@ public class MemberController {
 		return "redirect:/member/wishlist";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.goods.SearchDTO;
+import com.marketdongnae.domain.goods.WishGoodsDTO;
 import com.marketdongnae.mapper.GoodsMapper;
 
 import lombok.AllArgsConstructor;
@@ -66,6 +67,30 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		return goodsMapper.getGoodsDetail(g_id);
 	}
+
+	@Override
+	public void goodsWish(WishGoodsDTO wish) {
+		// TODO Auto-generated method stub
+		if(goodsMapper.checkWishGoods(wish) > 0) {
+			goodsMapper.deleteWishGoods(wish);
+		}else {
+			goodsMapper.wishGoods(wish);
+		}
+	}
+
+	@Override
+	public boolean checkWishGoods(WishGoodsDTO wish) {
+		// TODO Auto-generated method stub
+		return goodsMapper.checkWishGoods(wish) > 0;
+	}
+
+	@Override
+	public int getCountWishGoods(int g_id) {
+		// TODO Auto-generated method stub
+		return goodsMapper.countWishGoodsByG_id(g_id);
+	}
+	
+	
 
 	
 

@@ -151,16 +151,21 @@ menu.addEventListener("click",slide_menu);
                             <ul>
                                 <li><a href="">여성의류</a></li>
                                 <li><a href="">남성의류</a></li>
-                                <li><a href="">js</a></li>
+                                <li><a href="">교복/단체복</a></li>
                             </ul>
                         </li>
                         <li><a href="">패션잡화</a>
                             <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
+                                <li><a href="">운동화</a></li>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
+                                <li><a href="">가방/핸드백</a></li>
+                                <li><a href="">지갑/벨트</a></li>
+                                <li><a href="">악세서리/귀금속</a></li>
+                                <li><a href="">시계</a></li>
+                                <li><a href="">선글라스/안경</a></li>
+                                <li><a href="">모자</a></li>
+                                <li><a href="">기타/잡화</a></li>
                             </ul>
                         </li>
                         <li><a href="">뷰티</a>
@@ -174,11 +179,19 @@ menu.addEventListener("click",slide_menu);
                         </li>
                         <li><a href="">모바일/테블릿</a>
                             <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
+                                <li><a href="">스마트폰_삼성</a></li>
+                                <li><a href="">스마트폰_애플</a></li>
+                                <li><a href="">스마트폰_엘지</a></li>
+                                <li><a href="">스마트폰_기타</a></li>
+                                <li><a href="">테블릿PC_삼성</a></li>
+                                <li><a href="">운동화</a></li>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
+                                <li><a href="">가방/핸드백</a></li>
+                                <li><a href="">지갑/벨트</a></li>
+                                <li><a href="">운동화</a></li>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
                             </ul>
                         </li>
                         <li><a href="">가전제품</a>

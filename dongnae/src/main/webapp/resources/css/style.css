@@ -291,6 +291,8 @@ header .navbar ul li ul{
     width: 200px;
     background: #ffffff;
     display: none;
+    border-style: solid;
+    border-color: #6098F2;
 }
 
 header .navbar ul li ul li{

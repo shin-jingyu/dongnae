@@ -14,8 +14,6 @@
 
 <jsp:include page="header.jsp"></jsp:include>
     <!-- Categories Section Begin -->
-<jsp:include page="Category.jsp"></jsp:include>
-    <!-- Categories Section End -->
 
     <!-- Featured Section Begin 상품 목록-->
     <section  class="featured spad">

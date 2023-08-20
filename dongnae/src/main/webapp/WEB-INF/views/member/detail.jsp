@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.ajax({
-			url:"/member/detail/do_area", 
+			url:"/member/detail/my_area", 
 			type: 'POST',
 			dataType: "json",
 			success: function(data){

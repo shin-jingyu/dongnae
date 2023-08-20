@@ -24,9 +24,6 @@ public interface MemberService {
 	
 	List<AllDTO> getSiList(int do_id);
 	
-	String getSi_area(CustomUserDetails customUserDetails);
-	
-	
 	MemberDTO getMember(CustomUserDetails customUserDetails);
 
 	Integer updateMember(MemberDTO memberDTO);

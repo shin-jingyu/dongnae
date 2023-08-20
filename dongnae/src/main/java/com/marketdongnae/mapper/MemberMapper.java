@@ -6,9 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
-import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
-import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.security.CustomUserDetails;
@@ -19,13 +17,6 @@ public interface MemberMapper {
 	public List<AllDTO> getDoList();
 	
 	public List<AllDTO> getSiList(int do_id);
-	
-
-//	public List<Do_areaDTO> getDoList();
-//	
-//	public List<Si_areaDTO> getSiList(int do_id);
-	
-	public Si_areaDTO getSi_area(int si_id);
 	
 	public MemberDTO getMember(int m_number);
 	

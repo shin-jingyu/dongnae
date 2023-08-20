@@ -31,20 +31,6 @@ public class MemberServiceImpl implements MemberService {
 	public CustomUserDetails loginID(String m_id) {
 		return memberMapper.loginID(m_id);
 	}
-	
-
-//	@Override
-//	public List<Do_areaDTO> getDoList() {
-//		return memberMapper.getDoList();
-//	}
-//	
-//
-//	@Override
-//	public List<Si_areaDTO> getSiList(int do_id) {
-//		return  memberMapper.getSiList( do_id);
-//	}
-
-	
 	@Override
 	public List<AllDTO> getDoList() {
 		return memberMapper.getDoList();
@@ -70,17 +56,6 @@ public class MemberServiceImpl implements MemberService {
 		Integer result = memberMapper.updateMember(memberDTO);
 		return result ;
 	}
-	
-	@Override
-	public String getSi_area(CustomUserDetails customUserDetails) {
-		MemberDTO memberDTO = memberMapper.getMember((int) customUserDetails.getM_number());
-		int si_id = memberDTO.getSi_id();
-		Si_areaDTO si_areaDTO  = memberMapper.getSi_area(si_id);
-		String si_area = si_areaDTO.getSi_area();
-		return si_area;
-	}
-
-	
 
 	@Override
 	public Integer regist(MemberDTO memberDTO) {
@@ -90,8 +65,6 @@ public class MemberServiceImpl implements MemberService {
 		Integer result = memberMapper.regist(memberDTO);
 		return result ;
 	}
-	
-
 	
 	@Override
 	public String checkId(String checkId) {

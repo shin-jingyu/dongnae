@@ -50,25 +50,6 @@ public class MemberController {
 		model.addAttribute("test", "test");	// 임시로
 	}
 	
-//	
-//	@GetMapping("login")
-//	public void login(Model model) {
-//		model.addAttribute("login", "notyet");	// 임시로
-//	}
-//	
-//	@GetMapping("loginFail")
-//	public String loginFail(Model model) { 
-//		model.addAttribute("login", "fail");
-//		System.out.println("E####fail");
-//		return "login";
-//	}
-//	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
-//	
-//	@GetMapping("logout")
-//	public String logout(HttpServletRequest request ) {
-//		return "redirect:/";
-//	}
-//	
 	@GetMapping("regist")
 	public void regist() {
 	}
@@ -112,16 +93,8 @@ public class MemberController {
 		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("member", customUserDetails);
 	}
-
-//	
-//	@PostMapping("detail/do_area")
-//	@ResponseBody
-//	public List<Do_areaDTO> detail_do_area( ) {
-//		 List<Do_areaDTO> doList =  memberService.getDoList();
-//		return doList;		
-//	}
 	
-	@PostMapping("detail/do_area")
+	@PostMapping("detail/my_area")
 	@ResponseBody
 	public Map<String, List<AllDTO>> detail_do_area( ) {
 		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

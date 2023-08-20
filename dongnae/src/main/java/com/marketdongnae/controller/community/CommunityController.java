@@ -4,9 +4,15 @@ package com.marketdongnae.controller.community;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,10 +23,16 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.Property;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,7 +44,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.SessionScope;
@@ -40,6 +52,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonObject;
 import com.marketdongnae.domain.community.CategoryDTO;
 import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
@@ -57,14 +70,18 @@ public class CommunityController {
 	@Autowired
 	CommunityService communityService;
 	
-	private String getFolder() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
-		Date date = new Date();
-		
-		String str = simpleDateFormat.format(date);
-		
-		return str.replace("-", File.separator);
+	private String extractImageUrlFromContent(String content) {
+		  Document doc = Jsoup.parse(content);
+		    Elements imgTags = doc.select("img"); // img 태그들을 선택
+
+		    for (Element imgTag : imgTags) {
+		        String imageUrl = imgTag.attr("src"); // img 태그의 src 속성 추출
+		        if (!imageUrl.isEmpty()) {
+		            return imageUrl; // 이미지 URL이 비어있지 않다면 반환
+		        }
+		    }
+
+	    return ""; // 이미지가 없을 경우 빈 문자열 반환
 	}
 	
 	@GetMapping("/community")
@@ -76,9 +93,15 @@ public class CommunityController {
 		page.setNum(num);
 		page.setCount(communityService.counts());
 		
-		List<CommunityAllDTO> list = null;
-		list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
+		List<CommunityAllDTO> list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
 		List<CategoryDTO> categorys = communityService.category();
+		
+		 for (CommunityAllDTO dto : list) {
+		        String content = dto.getMu_detail();
+		        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+		        dto.setPreviewImageUrl(imageUrl);
+		    }
+
 		
 		view.addObject("member", customUserDetails);
 		view.addObject("categorys", categorys);
@@ -169,85 +192,94 @@ public class CommunityController {
 	
 	
 	@GetMapping("/insertCommunity")
-	public ModelAndView insertCommunity() {
+	public String insertCommunity(Model model) {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		
-		
-		return new ModelAndView("community/insertCommunity","member",customUserDetails);
+		model.addAttribute("member",customUserDetails);
+		return "community/insertCommunity";
 	}
 	
 	@PostMapping("/insertCommunity")
-	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,@RequestParam("upload") MultipartFile[]  upload) {
-		String uploaderFolder = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community";
-		File uploadPath = new File(uploaderFolder, getFolder());
-		
-		if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
-		
-		String[] uploadName = new String[upload.length];
-		for (int i = 0; i < upload.length; i++) {
-			MultipartFile muFile = upload[i];
-			if (muFile!=null && !muFile.isEmpty()) {
-				uploadName[i] = muFile.getOriginalFilename();
-				// 파일명 중복방지
-				UUID uuid = UUID.randomUUID(); 
-				uploadName[i] = uuid.toString() +"_"+uploadName[i];
-				File seveFile = new File(uploadPath,uploadName[i]);
-				System.out.println("파일명 확인 !!!: " + uploadName[i]);
-				try {
-					upload[i].transferTo(seveFile);
-				}catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		if (upload.length == 1) {
-			communityDetailDTO.setMu_i1(uploadName[0]);
-		}else if (upload.length == 2) {
-			communityDetailDTO.setMu_i1(uploadName[0]);
-			communityDetailDTO.setMu_i2(uploadName[1]);
-		}else if (upload.length == 3) {
-			communityDetailDTO.setMu_i1(uploadName[0]);
-			communityDetailDTO.setMu_i2(uploadName[1]);
-			communityDetailDTO.setMu_i3(uploadName[2]);
+	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
+		if (communityDetailDTO.getMu_name() !=null && communityDetailDTO.getMu_detail() !=null) {  
+			communityService.insertCommunity(communityDetailDTO);
 		}
 		
-		
-		
-		communityService.insertCommunity(communityDetailDTO);
 		return "redirect:/community";
 	}
 	
-   
-           
-            
+	
+	@ResponseBody
+	@PostMapping("/upload")
+	public String upload( @RequestParam("file") MultipartFile[] upload,HttpSession session) {
+		JsonObject jsonObject = new JsonObject();
+		String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\"; 
+		for (MultipartFile multipartFile : upload) {
+	        String originalFileName = multipartFile.getOriginalFilename(); // 오리지날 파일명
+	        String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일 확장자
+	        String savedFileName = UUID.randomUUID() + extension; // 저장될 파일 명
+	        File targetFile = new File(fileRoot + savedFileName);
+	        
+	        try {
+	            InputStream fileStream = multipartFile.getInputStream();
+	            FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
+	            jsonObject.addProperty("url", "/resources/upload/community/" + savedFileName); 
+	            jsonObject.addProperty("responseCode", "success");
+
+	        } catch (IOException e) {
+	            FileUtils.deleteQuietly(targetFile); // 저장된 파일 삭제
+	            jsonObject.addProperty("responseCode", "error");
+	            e.printStackTrace();
+	        }
+	        
+		}
+		 String a = jsonObject.toString();
+	
+		 return a;
+		
+	}
+	@RequestMapping(value = "/deleteSummernoteImageFile", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void deleteSummernoteImageFile(@RequestParam("file") String fileName) {
+	    // 폴더 위치
+	    String filePath = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\";
+	    // 해당 파일 삭제
+	    Path path = Paths.get(filePath, fileName);
+	    try {
+	        Files.delete(path);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 
 	@GetMapping("/updateCommunity")
 	public ModelAndView update(@RequestParam String mu_id,
 							   @RequestParam(value = "num", defaultValue = "1") int num) {
 		ModelAndView view = new ModelAndView();
-		
-		
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
-		
 		PageDTO page =new PageDTO();
 		page.setNum(num);
 		view.addObject("page", page);
-		
 		view.addObject("community",detailDTO);
 		view.setViewName("community/updateCommunity");
 		return view;
 	}
 	@PostMapping("/updateCommunity")
 	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,
-			 						  @RequestParam(value = "num", defaultValue = "1") int num) {
-		System.out.println("글 수정하기 ");
+			 						  @RequestParam(value = "num", defaultValue = "1") int num,HttpSession session) {
+		
+		@SuppressWarnings("unchecked")
+	    List<String> deletedImageNames = (List<String>) session.getAttribute("deletedImageNames");
+		if (deletedImageNames != null && !deletedImageNames.isEmpty()) {
+			
+			
+			
+		}
+		
+		
 		communityService.updateCommunity(communityDetailDTO);
+		 session.removeAttribute("deletedImageNames");
 		return "redirect:/communityDetail?mu_id="+communityDetailDTO.getMu_id()+
 									   "&&m_number="+communityDetailDTO.getM_number()+	
 									   "&&num="+num;

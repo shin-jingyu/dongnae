@@ -8,6 +8,14 @@ import lombok.Data;
 public class AllDTO {
 	private int	 m_number 	;
 	
+	// Do_areaDTO
+	private int do_id	;	
+	private String do_area 	;
+	
+	// Si_areaDTO
+	private int si_id	;	
+	private String	si_area 	;
+	
 	// PointDTO
 	private int p_id	;	
 	private String p_type ;

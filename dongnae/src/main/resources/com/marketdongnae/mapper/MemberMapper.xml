@@ -19,11 +19,11 @@
 	</select>
 	
 	
-	<select id="getDoList" resultType="com.marketdongnae.domain.member.Do_areaDTO">	 
+	<select id="getDoList" resultType="com.marketdongnae.domain.member.AllDTO">	 
 		select * from Do_area;
 	</select>
 	
-	<select id="getSiList" resultType="com.marketdongnae.domain.member.Si_areaDTO">	 
+	<select id="getSiList" resultType="com.marketdongnae.domain.member.AllDTO">	 
 		select * from Si_area where do_id = #{do_id};
 	</select>
 	

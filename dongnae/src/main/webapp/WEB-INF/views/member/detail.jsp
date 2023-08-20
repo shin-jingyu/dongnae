@@ -17,19 +17,33 @@
 			dataType: "json",
 			success: function(data){
 				const m_do_id = ${member.do_id};
-				var options = "";
-				for(var i= 0 ; i< data.length; i++){
-					let list_do_id = data[i].do_id;
-					let list_do_area = data[i].do_area ;
-					// options+= "<option value='" + data[i].do_id + "' " + doid + " == '" 
-					//		+ data[i].do_id + "')? 'selected' : '' }>" + data[i].do_area + " </option>"
+				const m_si_id = ${member.si_id};
+				
+				var do_options = "";
+				var si_options = "";
+				
+				for(var i= 0 ; i< data.doList.length; i++){
+					let list_do_id = data.doList[i].do_id;
+					let list_do_area = data.doList[i].do_area ;
 					if(m_do_id == list_do_id ){
-						options += "<option value='" +  list_do_id + "' selected>"+ list_do_area +"</option>";
+						do_options += "<option value='" +  list_do_id + "' selected>"+ list_do_area +"</option>";
 					} else{
-						options += "<option value='" +  list_do_id + "'>"+ list_do_area +"</option>";
+						do_options += "<option value='" +  list_do_id + "'>"+ list_do_area +"</option>";
 					}
 				}
-				$("#do_id").html(options);
+				$("#do_id").html(do_options);
+				
+				for(var i= 0 ; i< data.siList.length; i++){
+					let list_si_id = data.siList[i].si_id;
+					let list_si_area = data.siList[i].si_area ;
+					if(m_si_id == list_si_id ){
+						si_options += "<option value='" +  list_si_id + "' selected>"+ list_si_area +"</option>";
+					} else{
+						si_options += "<option value='" +  list_si_id + "'>"+ list_si_area +"</option>";
+					}
+					
+				}
+				$("#si_id").html(si_options);
 			},
 			error: function(){
 				alert("error load do area");
@@ -51,29 +65,6 @@
 					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id.toString() == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
 				}
 				$("#si_id").html(options);
-				$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
-			},
-			error:function(){
-				alert("error load si area");
-			}
-		})
-	}
-	
-	function do_click(){
-		let doData = $("#do_id option:selected").val();
-		$.ajax({
-			url: '/member/detail/si_area',
-			type:'POST',
-			data: doData, 
-			contentType: 'application/json',  /* 이거 넣으니까 오류 해결: 여기는 보내는 do_id */ 
-			dataType: "json",	 	/* 여기는 받는 si_area List */ 
-			success:function(data){		
-				var options = "";
-				for(var i= 0 ; i< data.length; i++){
-					options+= "<option value='" + data[i].si_id + "' ${ (member.si_id.toString() == '" + data[i].si_id + "')? 'selected' : '' }>" + data[i].si_area + " </option>"
-				}
-				$("#si_id").html(options);
-				$("#do_default").remove();  // 여기서 도.광역시 애를 삭제하면 될 듯
 			},
 			error:function(){
 				alert("error load si area");
@@ -163,7 +154,6 @@
 											</div>	
 											<div class="col-12 col-sm-5 align-self-center">
 										  		 <select  id="si_id"  name = "si_id" class="form-select" required>
-											   		<option value="">시/군/구</option>
 												</select> 
 											</div>
 										</div>	

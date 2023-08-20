@@ -33,16 +33,30 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 
+//	@Override
+//	public List<Do_areaDTO> getDoList() {
+//		return memberMapper.getDoList();
+//	}
+//	
+//
+//	@Override
+//	public List<Si_areaDTO> getSiList(int do_id) {
+//		return  memberMapper.getSiList( do_id);
+//	}
+
+	
 	@Override
-	public List<Do_areaDTO> getDoList() {
+	public List<AllDTO> getDoList() {
 		return memberMapper.getDoList();
 	}
 	
-
+	
 	@Override
-	public List<Si_areaDTO> getSiList(int do_id) {
+	public List<AllDTO> getSiList(int do_id) {
 		return  memberMapper.getSiList( do_id);
 	}
+	
+	
 
 	
 	@Override

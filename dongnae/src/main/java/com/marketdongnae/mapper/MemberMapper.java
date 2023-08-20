@@ -16,10 +16,14 @@ import com.marketdongnae.security.CustomUserDetails;
 public interface MemberMapper {
 	public CustomUserDetails loginID(String m_id);
 	
-
-	public List<Do_areaDTO> getDoList();
+	public List<AllDTO> getDoList();
 	
-	public List<Si_areaDTO> getSiList(int do_id);
+	public List<AllDTO> getSiList(int do_id);
+	
+
+//	public List<Do_areaDTO> getDoList();
+//	
+//	public List<Si_areaDTO> getSiList(int do_id);
 	
 	public Si_areaDTO getSi_area(int si_id);
 	

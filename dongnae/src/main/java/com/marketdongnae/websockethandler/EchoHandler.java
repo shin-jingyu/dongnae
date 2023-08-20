@@ -53,22 +53,22 @@ public class EchoHandler extends TextWebSocketHandler {
 			
 			//세션값이 같을때, 알람보낼 것이 있을 때만 전송 -> 로그인 한 사용자가 처음으로 알람 받는 순간임
 			//해당 sendMsg에 DB정보 넣어서 체크 안된 알람 전부 전송하기
-			if(single.getAttributes().get("user_id").equals(principal.getUsername())) {        
-				//체크 안된 알림들만 담아서 View
-				List<AlarmDto> dto = new ArrayList<>();
-				dto = alarmDao.selectAlarm(hsid);
-				for(AlarmDto alarm : dto) {
-					int idx = alarm.getIdx();
-					String prefix = alarm.getPrefix();
-					String code = alarm.getCode();
-					if(code.equals("NewPost")) {
-						code = "답변이 등록되었습니다.";
-					}
-					
-					TextMessage sendMsg = new TextMessage("("+idx+")" + prefix + "에 " + code);
-		            single.sendMessage(sendMsg);
-				}
-			}
+//			if(single.getAttributes().get("user_id").equals(principal.getUsername())) {        
+//				//체크 안된 알림들만 담아서 View
+//				List<AlarmDto> dto = new ArrayList<>();
+//				dto = alarmDao.selectAlarm(hsid);
+//				for(AlarmDto alarm : dto) {
+//					int idx = alarm.getIdx();
+//					String prefix = alarm.getPrefix();
+//					String code = alarm.getCode();
+//					if(code.equals("NewPost")) {
+//						code = "답변이 등록되었습니다.";
+//					}
+//					
+//					TextMessage sendMsg = new TextMessage("("+idx+")" + prefix + "에 " + code);
+//		            single.sendMessage(sendMsg);
+//				}
+//			}
 		}
 	}
 	

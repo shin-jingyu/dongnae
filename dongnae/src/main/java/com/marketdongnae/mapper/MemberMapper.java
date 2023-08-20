@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
+import com.marketdongnae.domain.member.KeywordVO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
@@ -61,6 +62,15 @@ public interface MemberMapper {
 	public void updatePoint(MemberDTO memberDTO);
 
 	public void insertPointList(PointDTO pointDTO);
+
+
+	public int insertKeyword(KeywordVO keyword);
+
+
+	public List<KeywordVO> getListKeyword(int m_number);
+
+
+	public int deleteKeyword(int key_id);
 
 
 }

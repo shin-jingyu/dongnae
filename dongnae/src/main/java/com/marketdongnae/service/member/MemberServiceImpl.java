@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
+import com.marketdongnae.domain.member.KeywordDTO;
+import com.marketdongnae.domain.member.KeywordVO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
@@ -76,6 +78,8 @@ public class MemberServiceImpl implements MemberService {
 		Integer result = memberMapper.regist(memberDTO);
 		return result ;
 	}
+	
+	
 	
 
 	
@@ -217,6 +221,28 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+
+	@Override
+	public int registKeyword(KeywordVO keyword) {
+		// TODO Auto-generated method stub
+		return memberMapper.insertKeyword(keyword);
+	}
+
+
+	@Override
+	public KeywordDTO getListKeyword(int m_number) {
+		// TODO Auto-generated method stub
+		return new KeywordDTO(memberMapper.getListKeyword(m_number));
+	}
+
+
+	@Override
+	public int deleteKeyword(int key_id) {
+		// TODO Auto-generated method stub
+		return memberMapper.deleteKeyword(key_id);
+	}
+	
+	
 
 
 

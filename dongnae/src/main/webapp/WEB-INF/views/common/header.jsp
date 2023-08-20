@@ -30,187 +30,88 @@
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
-	var token = $("meta[name='_csrf']").attr('content');
-	var header = $("meta[name='_csrf_header']").attr('content');
-	$(function(){
-	    if(token && header) {
-	        $(document).ajaxSend(function(event, xhr, options) {
-	            xhr.setRequestHeader(header, token);
-	        });
-	    }
-		fetchCategories();
-	
-	})
-			 
-	function fetchCategories() {
-	    $.ajax({
-	        url: '/api/getCategories',
-	        type: 'post',
-	        dataType: 'json',
-	        success: function (data) {
-	            console.log(data);
-	            var categorySelectMain = $('.category1Container');
-	            var category2Container = $('.category2Container');
-	
-	            categorySelectMain.empty();
-	            category2Container.empty();
-	
-	            var categoryMainList = data.category_1;
-	            categoryMainList.forEach(function (categoryMain) {
-	                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '"> ' + categoryMain.c1_category + '</li>');
-	                categoryMainItem.on('mouseover', function () {
-	                    displayCategory2(category2Container, data.category_2[categoryMain.c1_id]);
-	                });
-	                categorySelectMain.append(categoryMainItem);
-	            });
-	        },
-	        error: function (xhr, status, error) {
-	            // 에러 처리
-	            alert("데이터 안불러와지는중");
-	        }
-	    });
-	}
+var token = $("meta[name='_csrf']").attr('content');
+var header = $("meta[name='_csrf_header']").attr('content');
+$(function(){
+    if(token && header) {
+        $(document).ajaxSend(function(event, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    }
+	fetchCategories();
 
-	function displayCategory2(container, category2List) {
-	    container.empty();
-	    if (category2List && category2List.length > 0) {
-	        var ul = $('<ul class="category2List"></ul>');
-	        category2List.forEach(function (category2) {
-	            ul.append($('<li>' + category2.c2_category + '</li>'));
-	        });
-	        container.append(ul);
-	    }
-	}
-	
-	const menu=document.querySelector(".one");
-	const subBar=document.querySelector(".one>.two");
+})
+		 
+function fetchCategories() {
+    $.ajax({
+        url: '/api/getCategories',
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            var categorySelectMain = $('.category1Container');
+            var category2Container = $('.category2Container');
 
-	let subToggle=true,i=0;
+            categorySelectMain.empty();
+            category2Container.empty();
 
-	function slide_menu(){
-	  if(subToggle){
-	    subBar.style.display="block";
-	    subBar.classList.remove("up");
-	    subBar.classList.add("down");
-	    subToggle=!subToggle;
-	  }else{
-	    subBar.classList.remove("down");
-	    subBar.classList.add("up");
-	    subToggle=!subToggle;
-	  }
-	  console.log(subBar.classList);
-	}
-	menu.addEventListener("click",slide_menu);
+            var categoryMainList = data.category_1;
+            categoryMainList.forEach(function (categoryMain) {
+                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '"> ' + categoryMain.c1_category + '</li>');
+                categoryMainItem.on('mouseover', function () {
+                    displayCategory2(category2Container, data.category_2[categoryMain.c1_id]);
+                });
+                categorySelectMain.append(categoryMainItem);
+            });
+        },
+        error: function (xhr, status, error) {
+            // 에러 처리
+            alert("데이터 안불러와지는중");
+        }
+    });
+}
+
+function displayCategory2(container, category2List) {
+    container.empty();
+    if (category2List && category2List.length > 0) {
+        var ul = $('<ul class="category2List"></ul>');
+        category2List.forEach(function (category2) {
+            ul.append($('<li>' + category2.c2_category + '</li>'));
+        });
+        container.append(ul);
+    }
+}
+
+const menu=document.querySelector(".one");
+const subBar=document.querySelector(".one>.two");
+
+let subToggle=true,i=0;
+
+function slide_menu(){
+  if(subToggle){
+    subBar.style.display="block";
+    subBar.classList.remove("up");
+    subBar.classList.add("down");
+    subToggle=!subToggle;
+  }else{
+    subBar.classList.remove("down");
+    subBar.classList.add("up");
+    subToggle=!subToggle;
+  }
+  console.log(subBar.classList);
+}
+menu.addEventListener("click",slide_menu);
 </script>
 
 <body>
+	<header>
 
-	<sec:authentication property="principal" var="member"/>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+        <a href="#" class="logo"><img src="/resources/img/logo.png" alt=""></a>
 
-    <!-- Header Section Begin -->
-
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__language">
-                               <%-- ${member.m_id } 님 환영합니다! --%>
-                            </div>
-                            
-                            <div class="header__top__right__auth">
-                                <a href="/login"><i class="fa fa-user"></i> Login</a>
-                                 <sec:authorize access="isAuthenticated()">
-                                 <a href="/goods/goods_insert">상품등록</a>
-                                 <a href="/logout">Logout</a>
-                                 <a href="/member/detail">마이페이지</a>
-                                 </sec:authorize>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <nav class="navbar">
+        <section class="hero">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="/"><img src="/resources/img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li><a href='<c:url value="/"/>'>Home</a></li>
-                            <li><a href='<c:url value="/goods/goods_list"/>'>Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <div class="row">
-                <div id="menu">
-				<div class="col-lg-3"></div>
-				    <ul class="main1" style="list-style: none;">
-				        <li>카테고리
-				            <ul class="main2">
-				                <li style="list-style: none;"><a href="#">수입명품</a>
-				                    <ul class="main3" style="list-style: none;">
-				                        <li><a href="#">여성신발</a></li>
-				                        <li><a href="#">남성신발</a></li>
-				                        <li><a href="#">가방/핸드백</a></li>
-				                        <li><a href="#">지갑/벨트</a></li>
-				                        <li><a href="#">여성의류</a></li>
-				                        <li><a href="#">남성의류</a></li>
-				                        <li><a href="#">패션잡화</a></li>
-				                        <li><a href="#">시계/쥬얼리</a></li>
-				                        <li><a href="#">유아</a></li>
-				                        <li><a href="#">기타</a></li>
-				                    </ul>
-				                </li>
-				            </ul>
-				        </li>
-				    </ul>
-				</div>
                 <!-- 검색 -->
                 <div class="col-lg-9">
                     <div class="hero__search">
@@ -225,8 +126,200 @@
             </div>
         </div>
     </section>
-    <!-- Hero Section End -->
-
+    <div style="z-index: 2;">
+            <ul>
+            
+                <li><a href="">메인화면</a></li>
+                <li><a href="#">about</a></li>
+                <li><a href="#">Pages +</a>
+                    <ul>
+                        <li><a href="">수입명품</a>
+                            <ul>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
+                                <li><a href="">가방/핸드백</a></li>
+                                <li><a href="">지갑/벨트</a></li>
+                                <li><a href="">여성의류</a></li>
+                                <li><a href="">남성의류</a></li>
+                                <li><a href="">패션잡화</a></li>
+                                <li><a href="">시계/쥬얼리</a></li>
+                                <li><a href="">육아</a></li>
+                                <li><a href="">기타</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">패션의류</a>
+                            <ul>
+                                <li><a href="">여성의류</a></li>
+                                <li><a href="">남성의류</a></li>
+                                <li><a href="">교복/단체복</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">패션잡화</a>
+                            <ul>
+                                <li><a href="">운동화</a></li>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
+                                <li><a href="">가방/핸드백</a></li>
+                                <li><a href="">지갑/벨트</a></li>
+                                <li><a href="">악세서리/귀금속</a></li>
+                                <li><a href="">시계</a></li>
+                                <li><a href="">선글라스/안경</a></li>
+                                <li><a href="">모자</a></li>
+                                <li><a href="">기타/잡화</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">뷰티</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">모바일/테블릿</a>
+                            <ul>
+                                <li><a href="">스마트폰_삼성</a></li>
+                                <li><a href="">스마트폰_애플</a></li>
+                                <li><a href="">스마트폰_엘지</a></li>
+                                <li><a href="">스마트폰_기타</a></li>
+                                <li><a href="">테블릿PC_삼성</a></li>
+                                <li><a href="">운동화</a></li>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
+                                <li><a href="">가방/핸드백</a></li>
+                                <li><a href="">지갑/벨트</a></li>
+                                <li><a href="">운동화</a></li>
+                                <li><a href="">여성신발</a></li>
+                                <li><a href="">남성신발</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">가전제품</a>
+                            <ul>
+                                <li><a href=""></a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">노트북/PC</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">카메라/캠코더</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">가구/인테리어</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">리빙/생활</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">게임</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">반려동물</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">도서/음반</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">스포츠</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">공구/산업용품</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">무료나눔</a>
+                            <ul>
+                                <li><a href="">html</a></li>
+                                <li><a href="">css</a></li>
+                                <li><a href="">js</a></li>
+                                <li><a href="">java</a></li>
+                                <li><a href="">jsp</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#">Review</a></li>
+                <li><a href="#">Gallery +</a>
+                    <ul>
+                        <li><a href="">grid gallery</a></li>
+                        <li><a href="">flex gallery</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="/member/login"><i class="fa fa-user"></i> Login</a></li>
+            </ul>
+    	</div>
+        </nav>
+    </header>
+				<div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        </ul>
+                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                    </div>
+                </div>
+           
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>	
 </body>
-
 </html>

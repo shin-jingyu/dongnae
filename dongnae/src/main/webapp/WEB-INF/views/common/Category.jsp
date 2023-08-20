@@ -196,7 +196,7 @@ menu.addEventListener("click",slide_menu);
                         </li>
                         <li><a href="">가전제품</a>
                             <ul>
-                                <li><a href="">html</a></li>
+                                <li><a href=""></a></li>
                                 <li><a href="">css</a></li>
                                 <li><a href="">js</a></li>
                                 <li><a href="">java</a></li>

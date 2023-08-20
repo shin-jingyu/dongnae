@@ -82,10 +82,16 @@ function kakaopay(){
                 <div class="row">
 	                <div class="container border my-3 rounded-5">
 	                <!-- <div class="container mx-auto" style="width: 80%;"> -->
+	                
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>페이포인트 사용내역</h2>
 	                           	</div>
-	                           	<div class="row my-3">
+	                           	
+	                           	<div  ${ (pointList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>포인트 사용 내역이 존재하지 않습니다.</div>
+	                           	</div>
+	                           	
+	                           	<div  ${ (pointList == "[]" )? 'style="display: none;"'  : ''}  class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<table class="table table-hover">
 											<tr>
@@ -121,6 +127,44 @@ function kakaopay(){
 										</table>
 		                            </div>
 	                            </div>
+	                            
+	                             
+	                            <div class="row mt-5 mb-3">
+	                            <div class="col-12 col-md-11 my-3 mx-auto">
+	                            	<nav aria-label="Page navigation example  ">
+									  <ul class="pagination justify-content-center">
+									   
+									   <c:set var="p" value="${page}" /> 
+									   
+									   <c:choose>
+										   <c:when test="${p.prev > 0}" >
+										    	<li class="page-item"><a class="page-link" href="/member/point?p=${p.prev}">Previous</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									   
+									    <c:forEach var="pageNum" begin="${p.startPageNum}" end="${p.endPageNum}">
+									    	<li class="page-item ${ (p.nowpage == pageNum )?  'active' : '' } " >
+									    		<a class="page-link" href="/member/point?p=${pageNum}">${pageNum}</a>
+									    	</li>
+									    </c:forEach>
+									    
+									 	<c:choose>
+										   <c:when test="${p.next <= p.realEndPageNum}" >
+										    	<li class="page-item"><a class="page-link" href="/member/point?p=${p.next}">Next</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Next</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									  </ul>
+									</nav>
+	                            </div>
+	                        </div>
+	                        
+	                            
 	                        </div>
 	                    <!-- </div> -->
 	                   </div>
@@ -136,7 +180,7 @@ function kakaopay(){
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		    <form id="putPoint" action="point" method="post">
-       			<input hidden name="m_id" value="${member.m_id}">
+       			<input hidden name="m_number" value="${member.m_number}">
        			<input hidden name="p_type" value="put">
 			      <div class="modal-header">
 					  <h5 class="modal-title">충전하기</h5>

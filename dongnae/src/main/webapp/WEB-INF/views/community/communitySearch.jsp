@@ -4,7 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,23 +14,18 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
 </head>
 <body>
 <h1>welcome 커뮤니티 사이트</h1>
-<P> 반갑습니다. ${member.m_id} 님! </P>
+<P> 반갑습니다. ${m_id} 님! </P>
 <button onclick="location.href='/member/login'" >로그인</button>
 	<div class="container">
-				
-	<c:forEach var="categorys" items="${categorys}"  >
-		<a href="/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a>
-	</c:forEach>
+	
 	
 	<table class="table table-boardered table table-hover">
 		<thead>
 			<tr>
 				<th>지역</th>
-				<th>내용</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성시간</th>
@@ -41,21 +35,14 @@
 				
 			</tr>
 		</thead>
-		
 		<tbody>
 			
 				
 			<c:forEach var="list" items="${list}"  >
 				<tr>				
 					<td>${list.si_area}</td>
-					
-			         <td>
-			            <img src="${list.previewImageUrl}" alt="Preview Image" style= "max-width: 100px; max-height: 100px;"> 
-			        </td>
-
-			       
 					<td>
-						<a href="/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}" }>${list.mu_name}</a>
+						<a href="/communityDetail?mu_id=${list.mu_id}&&m_number=<sec:authentication property="principal.m_number"/>&&num=${page.num}" >${list.mu_name}</a>
 					</td>
 					<td>${list.m_id}</td>
 					<td>
@@ -70,14 +57,14 @@
 				
 			
 		</tbody>
-				<c:if test="${page.prev}">
-					<span>[ <a href="/community?num=${page.startPageNum - 1}">이전</a> ]</span>
+		<c:if test="${page.prev}">
+					<span>[ <a href="/communitySearch?num=${page.startPageNum - 1}${page.searchTypeKeyword}">이전</a> ]</span>
 				</c:if>
 			
 				<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 			 	 <span>
 			 			<c:if test="${select != num}">
-			 			<a href="/community?num=${num}">${num}</a>
+			 			<a href="/communitySearch?num=${num}${page.searchTypeKeyword}">${num}</a>
 					</c:if>    
 			  
 					<c:if test="${select == num}">
@@ -87,30 +74,30 @@
 				 </span>
 				</c:forEach>
 				<c:if test="${page.next}">
-				 <span>[ <a href="/community?num=${page.endPageNum + 1}">다음</a> ]</span>
+				 <span>[ <a href="/communitySearch?num=${page.endPageNum + 1}${page.searchTypeKeyword}">다음</a> ]</span>
 				</c:if>
 	</table>
-	<button  onclick="location.href='insertCommunity'">글쓰기</button>
+	<button  onclick="location.href='insertCommunity?m_id=${m_id}'">글쓰기</button>
 </div>
  <div>
-	<select name="searchType" id="searchType" >
-	<option value="mu_name" >제목</option>
-	<option value="mu_detail" >내용</option>
-	<option value="mu_name_mu_detail" >제목+내용</option>
-	<option value="m_id" >작성자</option>
+	<select name="searchType"  >
+	<option value="mu_name" <c:if test="${page.searchType eq 'mu_name'}">selected</c:if> >제목</option>
+	<option value="mu_detail" <c:if test="${page.searchType eq 'mu_detail'}">selected</c:if> >내용</option>
+	<option value="mu_name_mu_detail" <c:if test="${page.searchType eq 'mu_name_mu_detail'}">selected</c:if> >제목+내용</option>
+	<option value="m_id" <c:if test="${page.searchType eq 'm_id'}">selected</c:if> >작성자</option>
 	</select>
-	<input type="text" id="keyword" name="keyword">
-	<button type="button" id="searchs">검색</button>
+	<input type="text" name="keyword" value="${page.keyword}">
+	<button type="button">검색</button>
  </div>					
 </body>
-
 <script type="text/javascript">
- $("#searchs").on('click',function(){
+$("#search").on('click',function(){
 	var keyword = $("#keyword").val();
 	var searchType = $("#searchType").val();
-	 
-	if (keyword == "") {
-		 alert("검색할 키워드를 입력하세요");
+	 console.log(searchType);
+	 console.log(keyword);
+	if (keyword == null) {
+		confirm("검색할 키워드를 입력하세요");
 		location.reload(); 
 	}else{
 	
@@ -121,14 +108,9 @@
 				"keyword":keyword,
 				"searchType":searchType
 			},
-			success:function(response){
-				
-			    console.log(response); 
-				
-				
-				 var newUrl = 'communitySearch?num=1&searchType=' + searchType + '&keyword=' + keyword;
-				 console.log(newUrl); // 새로운 URL 확인
-				 window.location.href = newUrl;
+			success:function(){
+				 console.log(searchType);
+				 location.href='communitySearch?num=1'+ "&searchType=" + searchType + "&keyword=" + keyword;
 			
 			}
 		});
@@ -136,12 +118,5 @@
 	
   });
 	
- 
- 
- 
- 
- 
- 
- 
 </script>
 </html>

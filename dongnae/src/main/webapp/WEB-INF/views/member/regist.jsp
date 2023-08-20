@@ -69,8 +69,9 @@
 	};
 	
 	function checkId_post(){
+		$('#regist').submit(false);
 		let checkId = $("#m_id").val();
-		 if($("#regist").checkValidity()) {
+		 if($("#regist")[0].checkValidity()) {
 			$.ajax({
 				url: '/member/checkId_post',
 				type:'POST',
@@ -118,12 +119,12 @@
     <section class="product spad">
         <div class="container">
              <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <%-- <div class="col-lg-3 col-md-3">
                     <div class="sidebar">
                     	<jsp:include page="./sidebar.jsp"></jsp:include>
                     </div>
-                </div>
-                <div class="col-lg-9 col-md-7">
+                </div> --%>
+                <div class="col-lg-12 col-md-12">
 	                <div class="container border my-3 rounded-5 text-center">
 	                <div class="container mx-auto" style="width: 80%;">
 	                            <div class="row my-5" >

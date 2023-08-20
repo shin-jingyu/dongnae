@@ -46,6 +46,11 @@
 	                            <div class="row mt-5  text-center" >
 	                           		<h2>판매 중 상품</h2>
 	                           	</div>
+	                           	
+	                           	<div  ${ (onSaleList == "[]" )? '' : 'style="display: none;"' }  class="row mt-5  text-center" >
+	                           		<div>판매 중인 상품이 존재하지 않습니다.</div>
+	                           	</div>
+	                           	
 	                           	<div class="row my-3">
 		                        	<div class="col-12 col-md-11 my-3 mx-auto">
 		                        		<c:forEach var="o" items="${onSaleList}">
@@ -72,6 +77,14 @@
 			                        				 <fmt:formatNumber value="${o.g_price}"/>원
 			                        				</div>
 			                        			</div>	
+			                        			<div class="row my-3">
+			                        				<div class="col-lg-3 col-md-6  col-sm-12 col-12 font-weight-bold" >
+			                        				등록 일시
+			                        				</div>
+			                        				<div class="col-lg-8 col-md-6  col-sm-12 col-12 ">
+			                        				${o.d_regdate}
+			                        				</div>
+			                        			</div>	
 			                        			<div class="row my-3 col-lg-3 col-md-6 col-sm-12  col-12">
 			                        				<a class="btn btn-success" href="/goods/edit?g_id=${g_id}">수정하기</a>
 			                        			</div>	
@@ -81,8 +94,42 @@
 		                        		</c:forEach>
 		                            </div>
 	                            </div>
+	                            
+	                            <div class="row my-3">
+	                            <div class="col-12 col-md-11 my-3 mx-auto">
+	                            	<nav aria-label="Page navigation example  ">
+									  <ul class="pagination justify-content-center">
+									   
+									   <c:set var="p" value="${page}" /> 
+									   
+									   <c:choose>
+										   <c:when test="${p.prev > 0}" >
+										    	<li class="page-item"><a class="page-link" href="/member/onSaleList?p=${p.prev}">Previous</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									   
+									    <c:forEach var="pageNum" begin="${p.startPageNum}" end="${p.endPageNum}">
+									    	<li class="page-item ${ (p.nowpage == pageNum )?  'active' : '' } " >
+									    		<a class="page-link" href="/member/onSaleList?p=${pageNum}">${pageNum}</a>
+									    	</li>
+									    </c:forEach>
+									    
+									 	<c:choose>
+										   <c:when test="${p.next <= p.realEndPageNum}" >
+										    	<li class="page-item"><a class="page-link" href="/member/onSaleList?p=${p.next}">Next</a></li>
+										   </c:when>
+										   <c:otherwise>
+										    	<li class="page-item disabled"><a class="page-link">Next</a></li>
+										   </c:otherwise>
+									   </c:choose>
+									  </ul>
+									</nav>
+	                            </div>
 	                        </div>
-	                    <!-- </div> -->
+	                        
 	                    </div>
                 </div>
                 </div>

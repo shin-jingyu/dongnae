@@ -2,15 +2,14 @@ package com.marketdongnae.service.member;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
+import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
+import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.domain.member.Wish_viewDTO;
 import com.marketdongnae.security.CustomUserDetails;
 
 public interface MemberService {
@@ -21,36 +20,55 @@ public interface MemberService {
 	
 	List<Si_areaDTO> getSiList(int do_id);
 	
-	MemberDTO getMember(String m_id);
+	String getSi_area(CustomUserDetails customUserDetails);
+	
+	
+	MemberDTO getMember(CustomUserDetails customUserDetails);
 
 	Integer updateMember(MemberDTO memberDTO);
-
-	List<Deal_viewDTO> getSoldList(String m_id);
-
-	List<Deal_viewDTO> getBuyList(String m_id) ;
 	
-	
-	List<Deal_viewDTO> getOnSaleList(String m_id);
 	
 	Integer regist(MemberDTO memberDTO);
+	
+	String checkId(String checkId);
+	
+	String checkPassword(CustomUserDetails customUserDetails, Map<String, Object>  passwordDTO);
+	void changePassword(CustomUserDetails customUserDetails, String new_password);
+//	String changePassword(CustomUserDetails customUserDetails, PasswordDTO passwordDTO);
 
-	String changePassword(String m_id, PasswordDTO passwordDTO);
+	
+	PageDTO getPageDTO( String table, String table_id ,int nowpage , CustomUserDetails customUserDetails);
 
-	int getAvgScore(String m_id);
+	List<AllDTO> getPageList(String table, PageDTO pageDTO, CustomUserDetails customUserDetails);
 
-	List<Wish_viewDTO> getWish_viewList(String m_id);
+
+	PageDTO getDealPageDTO(int nowpage, CustomUserDetails customUserDetails , String d_type);
+	
+	List<Deal_viewDTO> getDealPageList( CustomUserDetails customUserDetails, String d_type, PageDTO pageDTO);
+	
+	
+//	int getPoint(CustomUserDetails customUserDetails);
+//	void putPoint(PointDTO pointDTO);
+	
+	int getPoint(CustomUserDetails customUserDetails);
+
+	void putPoint(PointDTO pointDTO);
+	
+	List<Deal_viewDTO> getSoldList(CustomUserDetails customUserDetails);
+
+	int getAvgScore(CustomUserDetails customUserDetails);
 
 	void deleteWish(int wish_id);
 
-	String getSi_area(String m_id);
-	
-	List<PointDTO> getPointList(String m_id);
-	
-	int getPoint(String m_id);
-	
-	void putPoint(PointDTO pointDTO);
 
-	String checkId(String checkId);
+
+
+	
+
+
+	
+
+	
 
 	
 

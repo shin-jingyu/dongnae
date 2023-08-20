@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>login</title>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
+
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -24,7 +26,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>로그인</h2>
+                        <h2>My Page</h2>
                     </div>
                 </div>
             </div>
@@ -37,12 +39,12 @@
     <section class="product spad">
     <div class="container">
              <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <%-- <div class="col-lg-3 col-md-3">
                     <div class="sidebar">
                     	<jsp:include page="./sidebar.jsp"></jsp:include>
                     </div>
-                </div>
-                <div class="col-lg-9 col-md-7">
+                </div> --%>
+                <div class="col-lg-12 col-md-12">
 	                <div class="container border my-3 rounded-5">
 	                <div class="container mx-auto" style="width: 80%;">
 	                			<div class="row my-5  text-center" >

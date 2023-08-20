@@ -7,7 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- CSS only -->
+
+
+
+	
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -18,13 +21,97 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+
 </head>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	
+	var setting = {
+		
+					 height : 500,
+			            minHeight : null,
+			            maxHeight : null,
+			            focus : true,
+			            lang : 'ko-KR',
+			            toolbar: [
+			                ['style', ['style']],
+			                ['font', ['bold', 'underline', 'clear']],
+			                ['color', ['color']],
+			                ['para', ['ul', 'ol', 'paragraph']],
+			                ['table', ['table']],
+			                ['insert', ['link', 'picture', 'video']],
+			                ['view', ['fullscreen', 'codeview', 'help']]
+			              ],
+            //콜백 함수
+            callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+            // 파일 업로드(다중업로드를 위해 반복문 사용)
+            	for (var i = files.length - 1; i >= 0; i--) {
+            		uploadSummernoteImageFile(files[i],this);
+            		}
+            	},
+            	onMediaDelete: function ($target, editor, $editable) {
+                    if (confirm('이미지를 삭제 하시겠습니까?')) {
+                        var deletedImageUrl = $target
+                            .attr('src')
+                            .split('/')
+                            .pop()
+
+                        // ajax 함수 호출
+                        deleteSummernoteImageFile(deletedImageUrl)
+                    }
+                }
+			   }
+            };
+        
+	$('#mu_detail').val('${community.mu_detail }');
+    $('#mu_detail').summernote(setting);
+    
+    function deleteSummernoteImageFile(imageName) {
+        data = new FormData()
+        data.append('file', imageName)
+        $.ajax({
+            data: data,
+            type: 'POST',
+            url: 'deleteSummernoteImageFile',
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+        });	
+    };
+
+    function uploadSummernoteImageFile(file, el) {
+    	data = new FormData();
+    	data.append("file", file);
+    	$.ajax({
+    		data : data,
+    		type : "POST",
+    		url : "/upload",
+    		contentType : false,
+    		enctype : 'multipart/form-data',
+    		dataType:"json",
+    		processData : false,
+    		success : function(data) {
+    			$(el).summernote('editor.insertImage', data.url);
+    		}
+    	});
+    };	
+});
+</script>
 <body>
+
 	<div class="container">
 		<h2>글쓰기</h2>
-		<P> 반갑습니다. ${m_id} 님! </P>
+		<P> 반갑습니다. ${member.m_id}님! </P>
 		<div>
-			<form method="post" action="/insertCommunity">
+			<form method="post" action="/insertCommunity" enctype="multipart/form-data">
 			<input type="hidden" name="m_number" value="${member.m_number }">
 				<table class="table table-borderd table table-hover">
 				
@@ -47,12 +134,11 @@
 						<td>글내용</td>
 					</tr>
 					<tr>
-						<td colspan="2"><textarea rows="10" cols="150"
-								name="mu_detail"></textarea></td>
+						<td colspan="2"><textarea  class="summernote"  name="mu_detail" id="mu_detail"></textarea></td>
 					</tr>
 					
 					<tr>
-						<td><input type="submit" value="등록"></td>
+						<td><input type="submit" value="등록" ></td>
 					</tr>
 					
 				</table>
@@ -60,5 +146,7 @@
 			<button onclick="location.href='community'">목록으로</button>
 		</div>
 	</div>
+	
 </body>
+
 </html>

@@ -7,14 +7,17 @@ CREATE TABLE `Goods` (
 	`c2_id`	int	NOT NULL,
 	`m_number`	int	NOT NULL,
 	`g_name`	varchar(255)	NULL,
+	`g_text`	varchar(255)	NULL,
 	`g_price`	int	NOT NULL,
 	`g_pic01`	varchar(255)	NULL,
 	`g_pic02`	varchar(255)	NULL,
 	`g_pic03`	varchar(255)	NULL,
 	`g_picpath`	varchar(255)	NULL,
 	`g_like`	int	NULL,
-	`g_regdate`	DATETIME	NULL	DEFAULT CURRENT_TIMESTAMP
+	`g_regdate`	DATETIME	NULL	DEFAULT CURRENT_TIMESTAMP,
+	`g_status`	varchar(255)	NULL	DEFAULT '판매중'
 );
+
 
 ALTER TABLE `Goods` ADD CONSTRAINT `PK_GOODS` PRIMARY KEY (
 	`g_id`

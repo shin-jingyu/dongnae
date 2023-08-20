@@ -106,9 +106,11 @@ menu.addEventListener("click",slide_menu);
 <body>
 	<header>
 
-        <a href="#" class="logo"><img src="/resources/img/logo.png" alt=""></a>
+        <a href="" class="logo"><img src="/resources/img/logo.png" alt=""></a>
 
         <nav class="navbar">
+    
+        
         <section class="hero">
         <div class="container">
             <div class="row">
@@ -303,10 +305,13 @@ menu.addEventListener("click",slide_menu);
                     </ul>
                 </li>
                 
-                <li><a href="/member/login"><i class="fa fa-user"></i> Login</a></li>
+               
             </ul>
     	</div>
+        
         </nav>
+        <div class="login_set"><a href="/member/login"><i class="fa fa-user"></i> Login</a></div>
+        
     </header>
 				<div class="col-lg-3">
                     <div class="header__cart">

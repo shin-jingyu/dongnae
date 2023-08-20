@@ -226,7 +226,7 @@ li:hover {
     margin:0;
     padding: 0;
     box-sizing: border-box; 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'TheJamsil';
     text-transform: capitalize;
     text-decoration: none;
 
@@ -245,7 +245,11 @@ header{
     align-items: center;
     justify-content: space-between;
     z-index: 2;
+    font-family: 'TheJamsil';
+    text-decoration : none;
 }
+
+
 
 header .logo{
     width: 150px;
@@ -253,9 +257,14 @@ header .logo{
 
 }
 
+header .navbar {
+    position: absolute;
+    left: 120px;
+}
+
 header .navbar ul{
     list-style: none;
-
+	
 }
 
 header .navbar ul li{
@@ -300,7 +309,12 @@ header .navbar ul li:hover > ul{
 
 }
 
-
+header .login_set{
+	font-size: 20px;
+	text-decoration : none;
+	position: fixed;
+	right: 20px;
+}
 
 /*---------------------
   Helper CSS
@@ -888,7 +902,7 @@ transparent;
 	overflow: hidden;
 	margin-bottom: 30px;
 	position: absolute;
-	right: 15px
+	left: 600px
 }
 
 .hero__search__form {
@@ -2959,7 +2973,7 @@ transparent;
 }
 
 .footer__widget .footer__widget__social a:hover {
-	background: #7fad39;
+	background: #6098F2;
 	color: #ffffff;
 	border-color: #ffffff;
 }

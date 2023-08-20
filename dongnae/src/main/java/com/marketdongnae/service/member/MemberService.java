@@ -18,12 +18,13 @@ public interface MemberService {
 	
 	CustomUserDetails loginID(String m_id);
 	
-	List<Do_areaDTO> getDoList();
+//	List<Do_areaDTO> getDoList();
+//	
+//	List<Si_areaDTO> getSiList(int do_id);
 	
-	List<Si_areaDTO> getSiList(int do_id);
+	List<AllDTO> getDoList();
 	
-	String getSi_area(CustomUserDetails customUserDetails);
-	
+	List<AllDTO> getSiList(int do_id);
 	
 	MemberDTO getMember(CustomUserDetails customUserDetails);
 

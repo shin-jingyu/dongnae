@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>categorys</title>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
@@ -77,13 +77,13 @@
 			
 		</tbody>
 				<c:if test="${page.prev}">
-					<span>[ <a href="/community/main?num=${page.startPageNum - 1}">이전</a> ]</span>
+					<span>[ <a href="/community/categorySearch?num=${page.startPageNum - 1}&&ca_l=${page.ca_l}&&keyword=${page.keyword}&&searchType=${page.searchType}">이전</a> ]</span>
 				</c:if>
 			
 				<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 			 	 <span>
 			 			<c:if test="${select != num}">
-			 			<a href="/community/main?num=${page.num}">${num}</a>
+			 			<a href="/community/categorySearch?num=${num}&&ca_l=${page.ca_l}&&keyword=${page.keyword}&&searchType=${page.searchType}">${num}</a>
 					</c:if>    
 			  
 					<c:if test="${select == num}">
@@ -93,7 +93,7 @@
 				 </span>
 				</c:forEach>
 				<c:if test="${page.next}">
-				 <span>[ <a href="/community/main?num=${page.endPageNum + 1}">다음</a> ]</span>
+				 <span>[ <a href="/community/categorySearch?num=${page.endPageNum + 1}&&ca_l=${page.ca_l}&&keyword=${page.keyword}&&searchType=${page.searchType}">다음</a> ]</span>
 				</c:if>
 	</table>
 	<button  onclick="location.href='/community/insertCommunity'">글쓰기</button>
@@ -109,29 +109,36 @@
 	<button id="search" type="button">검색</button>
  </div>					
 </body>
+
 <script type="text/javascript">
 $("#search").on('click',function(){
 	var keyword = $("#keyword").val();
 	var searchType = $("#searchType").val();
-	if (keyword == null) {
-		confirm("검색할 키워드를 입력하세요");
-		location.reload(); 
-	}else{
+	var urlParams = new URLSearchParams(window.location.search);
+	var ca_l = urlParams.get('ca_l');
+	console.log(ca_l);
+	console.log(keyword);
+	console.log(searchType);
 	
-		$.ajax({
-			url: "/community/communitySearch",
+	if (keyword == "") {
+		confirm("검색할 키워드를 입력하세요");
+		return;
+	}
+	
+	$.ajax({
+			url: "/community/categorySearch",
 			method:"GET",
 			data:{
+				"ca_l":ca_l,
 				"keyword":keyword,
 				"searchType":searchType
 			},
 			success:function(){
-				
-				 location.href='/community/communitySearch?num=1'+ "&searchType=" + searchType + "&keyword=" + keyword;
+				window.location.href='/community/categorySearch?num=1'+"&ca_l="+ca_l+"&keyword="+keyword+"&searchType="+searchType;
 			
 			}
-		});
-	}	
+	});
+		
 	
   });
 	

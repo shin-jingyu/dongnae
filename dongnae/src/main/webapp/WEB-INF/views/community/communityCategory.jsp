@@ -22,13 +22,14 @@
 	<div class="container">
 				
 	<c:forEach var="category" items="${category}"  >
-		<a href="/pageCategory?ca_l=${category.ca_l}"> ${category.ca_l}</a>
+		<a href="/community/pageCategory?ca_l=${category.ca_l}" > ${category.ca_l}</a>
 	</c:forEach>
 	
 	<table class="table table-boardered table table-hover">
 		<thead>
 			<tr>
 				<th>지역</th>
+				<th>내용</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성시간</th>
@@ -38,15 +39,19 @@
 				
 			</tr>
 		</thead>
-		
 		<tbody>
 			
-				
-			<c:forEach var="list" items="${list}"  >
+				<c:forEach var="list" items="${list}"  >
 				<tr>				
 					<td>${list.si_area}</td>
+					
+			         <td>
+			            <img src="${list.previewImageUrl}" alt="Preview Image" style= "max-width: 100px; max-height: 100px;"> 
+			        </td>
+
+			       
 					<td>
-						<a href="/communityDetail?mu_id=${list.mu_id}&&m_number=<sec:authentication property="principal.m_number"/>&&num=${page.num}" >${list.mu_name}</a>
+						<a href="/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}" }>${list.mu_name}</a>
 					</td>
 					<td>${list.m_id}</td>
 					<td>
@@ -58,18 +63,19 @@
 				</tr>
 			</c:forEach>
 			
+			
 				
 			
 		</tbody>
 				<c:if test="${page.prev}">
-					<span>[ <a href="/pageCategory?ca_l=${page.ca_l}&num=${page.startPageNum - 1}">이전</a> ]</span>
+					<span>[ <a href="/community/pageCategory?ca_l=${page.ca_l}&num=${page.startPageNum - 1}">이전</a> ]</span>
 				</c:if>
 				
 				
 				<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 			 	 <span>
 			 			<c:if test="${select != num}">
-			 			<a href="/pageCategory?ca_l=${page.ca_l}&num=${num}">${num}</a>
+			 			<a href="/community/pageCategory?ca_l=${page.ca_l}&num=${num}">${num}</a>
 					</c:if>    
 			  
 					<c:if test="${select == num}">
@@ -79,7 +85,7 @@
 				 </span>
 				</c:forEach>
 				<c:if test="${page.next}">
-				 <span>[ <a href="/pageCategory?ca_l=${page.ca_l}&num=${page.endPageNum + 1}">다음</a> ]</span>
+				 <span>[ <a href="/community/pageCategory?ca_l=${page.ca_l}&num=${page.endPageNum + 1}">다음</a> ]</span>
 				</c:if>
 				
 	</table>
@@ -87,52 +93,48 @@
 </div>
  <div>
 	<select name="searchType" id="searchType" >
-	<option value="mu_name" >제목</option>
-	<option value="mu_detail" >내용</option>
-	<option value="mu_name_mu_detail" >제목+내용</option>
-	<option value="m_id" >작성자</option>
+	<option value="mu_name" <c:if test="${page.searchType eq 'mu_name'}">selected</c:if> >제목</option>
+	<option value="mu_detail" <c:if test="${page.searchType eq 'mu_detail'}">selected</c:if> >내용</option>
+	<option value="mu_name_mu_detail" <c:if test="${page.searchType eq 'mu_name_mu_detail'}">selected</c:if> >제목+내용</option>
+	<option value="m_id" <c:if test="${page.searchType eq 'm_id'}">selected</c:if> >작성자</option>
 	</select>
-	<input type="text" id="keyword" name="keyword">
-	<button type="button" id="searchs">검색</button>
+	<input type="text" id="keyword" name="keyword" value="${page.keyword}">
+	<button id="search" type="button">검색</button>
  </div>					
 </body>
-
 <script type="text/javascript">
- $("#searchs").on('click',function(){
+
+$("#search").on('click',function(){
 	var keyword = $("#keyword").val();
 	var searchType = $("#searchType").val();
-	 
-	if (keyword == "") {
-		 alert("검색할 키워드를 입력하세요");
-		location.reload(); 
-	}else{
+	var urlParams = new URLSearchParams(window.location.search);
+	var ca_l = urlParams.get('ca_l');
+	console.log(ca_l);
+	console.log(keyword);
+	console.log(searchType);
 	
-		$.ajax({
-			url: "/communitySearch",
+	if (keyword == "") {
+		confirm("검색할 키워드를 입력하세요");
+		return;
+	}
+	
+	$.ajax({
+			url: "/community/categorySearch",
 			method:"GET",
 			data:{
+				"ca_l":ca_l,
 				"keyword":keyword,
 				"searchType":searchType
 			},
-			success:function(response){
-				
-			    console.log(response); 
-				
-				
-				 var newUrl = 'communitySearch?num=1&searchType=' + searchType + '&keyword=' + keyword;
-				 console.log(newUrl); // 새로운 URL 확인
-				 window.location.href = newUrl;
+			success:function(){
+				window.location.href='/community/categorySearch?num=1'+"&ca_l="+ca_l+"&keyword="+keyword+"&searchType="+searchType;
 			
 			}
-		});
-	}	
+	});
+		
 	
   });
 	
-
- 
- 
- 
  
  
  

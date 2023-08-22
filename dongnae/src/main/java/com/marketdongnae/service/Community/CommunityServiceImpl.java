@@ -155,6 +155,18 @@ public class CommunityServiceImpl implements CommunityService {
 	public List<CategoryDTO> category() {
 		return communityMapper.category();
 	}
+
+	@Override
+	public List<CommunityAllDTO> listPageSearchs(int displayPost, int postNum, String ca_l, String keyword,
+			String searchType) {
+		return communityMapper.listPageSearchs(displayPost, postNum, ca_l, keyword, searchType);
+	}
+
+	@Override
+	public int listPageSearchsCount(String ca_l, String keyword, String searchType) {
+		return communityMapper.listPageSearchsCount(ca_l, keyword, searchType);
+	}
+
 	
 	
 

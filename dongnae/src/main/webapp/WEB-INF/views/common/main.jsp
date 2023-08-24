@@ -12,7 +12,8 @@
 
 <body>
 
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="Category.jsp"></jsp:include>
+<%-- <jsp:include page="header2.jsp"></jsp:include> --%>
     <!-- Categories Section Begin -->
 
     <!-- Featured Section Begin 상품 목록-->

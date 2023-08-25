@@ -24,10 +24,10 @@
 	</select>
 
 	<select id="getSearchGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
-		<![CDATA[
-			select * from goods where g_name like '%'||#{keyword}||'%'
-		]]>
-		<include refid="available"></include>
+	    <![CDATA[
+	        SELECT * FROM goods WHERE g_name LIKE CONCAT('%', #{keyword}, '%')
+	    ]]>
+	    <include refid="available"></include>
 	</select>
 
 	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">

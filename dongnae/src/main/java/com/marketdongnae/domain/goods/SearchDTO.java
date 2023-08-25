@@ -6,5 +6,6 @@ import lombok.Data;
 public class SearchDTO {
 
 	private String keyword;
+	private int category;
 
 }

@@ -50,6 +50,7 @@ function fetchCategories() {
             success: function (data) {
                 console.log(data);
                 var category1Container = $('.category1');
+                var listCategortContainer1 = $('.list_category');
                 var category1List = data.category_1;
                 
                 category1Container.empty();
@@ -57,6 +58,7 @@ function fetchCategories() {
                 // 카테고리1 li 생성
                 category1List.forEach(function (categoryMain) {
                     var category1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
+                    var listCategory1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
                     var category2Container = $('<ul class="category2 category2Container"></ul>');
                     
                     // filter 를 통해 category2 list 정리
@@ -74,16 +76,22 @@ function fetchCategories() {
                             category2List.forEach(function (category2) {
                                 var category2Item = $('<li><a href="#">' + category2.c2_category + '</a></li>');
                                 category2Container.append(category2Item);
-                               	console.log(category2Item);
                             });
                         }
                     });
+                    
+//                     listCategory1Item.onclick(function(){
+                    
+//                     })
 
 //                     category1Item.on('mouseout', function () {
 //                         category2Container.empty();
 //                     });
 
+                    //goods_list 테스트
+                    listCategortContainer1.append(listCategory1Item);
                     category1Container.append(category1Item);
+                    
                 });
             },
             error: function (xhr, status, error) {
@@ -104,10 +112,22 @@ function fetchCategories() {
 	                <div class="col-lg-9">
 	                    <div class="hero__search">
 	                        <div class="hero__search__form">
-	                            <form action="#">
-	                                <input type="text" placeholder="What do yo u need?">
-	                                <button type="submit" class="site-btn">SEARCH</button>
-	                            </form>
+	                           <form id="searchForm" action="#" method="get">
+								    <input type="text" placeholder="What do you need?" name="search">
+								    <button type="submit" class="site-btn">SEARCH</button>
+								</form>
+								
+								<script>
+								document.getElementById("searchForm").addEventListener("submit", function(event) {
+								    event.preventDefault();
+								    
+								    var searchInput = document.querySelector("input[name='search']").value;
+								    var encodedSearchInput = encodeURIComponent(searchInput);
+								    
+								    var newUrl = "/goods/search/" + encodedSearchInput;
+								    window.location.href = newUrl;
+								});
+								</script>
 	                        </div>
 	                    </div>
 	                </div>

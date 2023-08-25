@@ -22,11 +22,11 @@
 	            xhr.setRequestHeader(header, token);
 	        });
 	    }
-		fetchCategories();
+	    insertCategory();
 	
 	})
 			 
-	function fetchCategories() {
+	function insertCategory() {
     $.ajax({
         url: '/api/getCategories',
         type: 'post',

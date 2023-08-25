@@ -46,15 +46,17 @@ public class GoodsController {
 		return str.replace("-", File.separator);
 	}
 	
-	@GetMapping(value = "goods_list")
-	public List<GoodsDTO> goods_List_Get() {
-		return goodsService.getGoodsList();
-	}
+//	@GetMapping(value = "goods_list")
+//	public List<GoodsDTO> goods_List_Get() {
+//		return goodsService.getGoodsList();
+//	}
 	@GetMapping(value = "search/{search}")
-	public String searchGoods(@PathVariable("search") String search , Model model){
+	public String searchGoods(@PathVariable("search") String search,Model model) {
 		SearchDTO searchDTO = new SearchDTO();
 		searchDTO.setKeyword(search);
-		model.addAttribute(goodsService.getSearchGoods(searchDTO));
+		List<GoodsDTO> goodsList = goodsService.getSearchGoods(searchDTO);
+		model.addAttribute("goodsLists", goodsList);
+		model.addAttribute("search", search);
 		return "goods/goods_list";
 	}
 	

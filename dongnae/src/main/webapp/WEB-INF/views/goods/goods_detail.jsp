@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-	<jsp:include page="../common/header.jsp"></jsp:include>
+	<jsp:include page="../common/Category.jsp"></jsp:include>
 <style>
     .img-thumbnail {
        width: 100px;

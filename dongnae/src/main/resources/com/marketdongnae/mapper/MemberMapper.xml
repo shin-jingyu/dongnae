@@ -91,4 +91,19 @@
 		insert into point  (  m_number,  p_type ,  p_price  )
 		 values (  #{m_number} ,  #{p_type} , #{p_price} ) ;
 	</select>
+	
+	<insert id="insertKeyword">
+		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
+	</insert>
+	
+	<select id="getListKeyword">
+		<![CDATA[
+			select * from keyword where key_id > 0
+		]]>
+	</select>
+	
+	<delete id="deleteKeyword">
+		delete from keyword where key_id = #{key_id}
+	</delete>
+	
 </mapper> 

@@ -32,7 +32,8 @@ CHANGE COLUMN `g_id` `g_id` INT NOT NULL AUTO_INCREMENT ;
 CREATE TABLE `keyword` (
 	`key_id`	int	NOT NULL,
 	`m_number`	int	NOT NULL,
-	`keyword`	varchar(255)	NOT NULL
+	`keyword`	varchar(255)	NOT NULL,
+	`key_regdate`	datetime	NULL	DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE `keyword` ADD CONSTRAINT `PK_KEYWORD` PRIMARY KEY (

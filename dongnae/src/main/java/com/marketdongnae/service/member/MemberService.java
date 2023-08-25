@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
+import com.marketdongnae.domain.member.KeywordDTO;
+import com.marketdongnae.domain.member.KeywordVO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
@@ -60,6 +62,10 @@ public interface MemberService {
 	int getAvgScore(CustomUserDetails customUserDetails);
 
 	void deleteWish(int wish_id);
+	// 키워드 Service
+	int registKeyword(KeywordVO keyword);
+	KeywordDTO getListKeyword(int m_number);
+	int deleteKeyword(int key_id);
 
 
 

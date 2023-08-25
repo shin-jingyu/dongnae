@@ -23,8 +23,8 @@
 	
 	<!-- 글작성 -->
 	<insert id="insertCommunity" parameterType="com.marketdongnae.domain.community.communityDetailDTO">
-		insert into community( mu_name, mu_detail, mu_i1, mu_i2, mu_i3, ca_id, m_number)
-		value(#{mu_name},#{mu_detail},#{mu_i1},#{mu_i2},#{mu_i3},#{ca_id},#{m_number})
+		insert into community( mu_name, mu_detail, ca_id, m_number)
+		value(#{mu_name},#{mu_detail},#{ca_id},#{m_number})
 	</insert>
 		
 	
@@ -33,9 +33,6 @@
 		update community
 		set mu_name = #{mu_name},
 			mu_detail = #{mu_detail},
-			mu_i1 =#{mu_i1},
-			mu_i2 =#{mu_i2},
-			mu_i3 =#{mu_i3},
 			ca_id =#{ca_id}
 		where community.mu_id = #{mu_id}
 	</update>
@@ -93,7 +90,7 @@
 	</select> 
 	
 	<select id="listPageSearch" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
-		SELECT * FROM dongnae.communityall
+		SELECT * FROM dongnae.communityall 
 		
 		<if test='searchType.equals("mu_name")'>
 			where mu_name like concat('%',#{keyword},'%')
@@ -151,5 +148,43 @@
 		SELECT * FROM dongnae.category;
 	</select> 
 	
-	
+	<select id="listPageSearchs" resultType="com.marketdongnae.domain.community.CommunityAllDTO">
+		SELECT * FROM dongnae.communityall where ca_l = #{ca_l} and
+		
+		<if test='searchType.equals("mu_name")'>
+			 mu_name like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_detail")'>
+			 mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_name_mu_detail")'>
+			 mu_name like concat('%',#{keyword},'%')
+			or mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("m_id")'>
+			 m_id like concat('%',#{keyword},'%')
+		</if>
+		
+		order by mu_data desc
+		limit #{displayPost}, #{postNum} 
+	</select> 
+	<select id="listPageSearchsCount" resultType="int">
+		SELECT count(*) FROM dongnae.communityall where ca_l = #{ca_l} and
+		
+		<if test='searchType.equals("mu_name")'>
+			 mu_name like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_detail")'>
+			 mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("mu_name_mu_detail")'>
+			 mu_name like concat('%',#{keyword},'%')
+			or mu_detail like concat('%',#{keyword},'%')
+		</if>
+		<if test='searchType.equals("m_id")'>
+			 m_id like concat('%',#{keyword},'%')
+		</if>
+		
+		
+	</select> 
 </mapper>

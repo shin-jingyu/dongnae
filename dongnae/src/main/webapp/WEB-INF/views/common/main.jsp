@@ -12,36 +12,12 @@
 
 <body>
 
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="Category.jsp"></jsp:include>
+<%-- <jsp:include page="header2.jsp"></jsp:include> --%>
     <!-- Categories Section Begin -->
-    <%-- <section class="categories">
-        <div class="container">
-            <div class="row">
-                <div class="categories__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/phone.jpeg">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/laptop.jpeg">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/chanel.jpg">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="/resources/img/categories/ipad.jpeg">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --%>
-    <!-- Categories Section End -->
 
     <!-- Featured Section Begin 상품 목록-->
-    <section class="featured spad">
+    <section  class="featured spad">
 		<div class="container">
             <div class="row featured__filter">
     			<c:forEach items="${goodsList }" var="goods" >
@@ -67,7 +43,7 @@
     <!-- Featured Section End -->
 
     <!-- Banner Begin -->
-    <div class="banner">
+   <div class="banner" style="z-index: 2;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -82,7 +58,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
     <!-- Banner End -->
 
     <!-- Latest Product Section Begin -->

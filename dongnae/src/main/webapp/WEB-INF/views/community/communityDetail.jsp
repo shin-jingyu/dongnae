@@ -26,7 +26,7 @@
 
 <body>
 	<h2>상세보기</h2>
-	<P>반갑습니다. ${m_id} 님!</P>
+	<P>반갑습니다. ${member.m_id} 님!</P>
 	<div class="container">
 		<table class="table table-borderd table table-hover">
 			<tr>
@@ -60,18 +60,16 @@
 			<tr>
 				<td colspan="2" class="text-center"><a class="text-dark heart"
 					style="text-decoration-line: none;"> <img id="heart" width="30"
-						src="/resources/img/blog/icon/HeartF.png">좋아요
-				</a>
+						src="/resources/img/blog/icon/HeartF.png">좋아요</a>
 
-
-
-					<button onclick="location.href='community?num=${page.num}'">목록으로</button>
+					
+					<button id="goBack" type="button" >목록으로</button>
+					
 					
 					<!--작성자만 보이는 버튼   -->
-					<c:if test = '${sessionScope.m_id == communityDetail.m_id}'>
-					<button onclick="location.href='updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
+					<c:if test = '${member.m_id == communityDetail.m_id}'>
+					<button onclick="location.href='/community/updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
 					<button id="deleteCommunity" type="button">삭제하기</button>
-					
 					</c:if>
 				</td>
 			</tr>
@@ -80,21 +78,20 @@
 		
 		</table>
 		<!-- 로그인 한사람만 댓글 작성가능  -->
-			<c:if test='${sessionScope.m_id != null}'>	
-			<form method="post" action="/comment">
-
-				<p>
-					<input type="hidden" name="m_number"
-						value="<sec:authentication property="principal.m_number"/>">
-					<input type="hidden" name="mu_id" value="${communityDetail.mu_id }">
-				</p>
-				<p>
-					<textarea rows="5" cols="50" name="com_c"></textarea>
-				</p>
-				<p>
-					<button type="submit">댓글 작성</button>
-				</p>
-			</form>
+			<c:if test='${member.m_id != null}'>	
+				<form method="post" action="/comment">
+	
+					<p>
+						<input type="hidden" name="m_number"value="${member.m_number}">
+						<input type="hidden" name="mu_id" value="${communityDetail.mu_id }">
+					</p>
+					<p>
+						<textarea rows="5" cols="50" name="com_c"></textarea>
+					</p>
+					<p>
+						<button type="submit">댓글 작성</button>
+					</p>
+				</form>
 			</c:if>
 		
 			
@@ -114,7 +111,7 @@
 					</div>	
 					
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
-					<c:if test = '${sessionScope.m_id != null}'>
+					<c:if test = '${member.m_number == comment.m_number}'>
 					<button type="button" class="updateComment" >댓글 수정</button>
 					<button type="button" id="deleteComments" class="deleteComment" data-com_id="${comment.com_id }">댓글 삭제</button>
 					</c:if>
@@ -130,18 +127,26 @@
 </body>
 
 <script type="text/javascript">
+
+$("#goBack").on('click',function(){
+    window.history.back(); // 브라우저의 뒤로 가기 기능
+});
+
+
+
 //글삭제
 
 $("#deleteCommunity").on('click',function(){
 	var del= confirm("삭제하시겠습니까?");
 	if (del) {
 		$.ajax({
-			url: "/deleteCommunity",
+			url: "/community/deleteCommunity",
 			method:"GET",
 			data:{"mu_id":${communityDetail.mu_id}},
 			success:function(response){
-				 alert("삭제완료");
-				 location.href='community?num=${page.num}';
+				 alert("글삭제완료");
+				 location.href="/community/main";
+				 
 			}
 		
 		});
@@ -222,7 +227,7 @@ $(document).ready(function (){
 	        type :'POST',
 	        data : {
 	        	'mu_id':${communityDetail.mu_id},
-	        	'm_number': <sec:authentication property="principal.m_number"/>
+	        	'm_number': ${member.m_number}
 	        },
 	    	success : function(data){
 	    		that.prop('name',data);

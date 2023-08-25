@@ -59,4 +59,16 @@ public interface CommunityMapper {
 	public int pageCategoryCount (String ca_l);
 	
 	public List<CategoryDTO> category();
+	public List<CommunityAllDTO> listPageSearchs(@Param("displayPost") int displayPost,
+												 @Param("postNum")int postNum,
+												 @Param("ca_l") String ca_l,
+												 @Param("keyword") String keyword,
+												 @Param("searchType") String searchType);
+ 
+	public int listPageSearchsCount( @Param("ca_l") String ca_l,
+									 @Param("keyword") String keyword,
+									 @Param("searchType") String searchType);
+	
+	
+	
 }

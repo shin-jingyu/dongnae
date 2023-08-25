@@ -86,9 +86,7 @@ public class MemberServiceImpl implements MemberService {
 		// 입력한 현재 비밀번호가 맞는지 확인
 		String rawPwd = (String) passwordDTO.get("current_password");
 		String encodedPwd = customUserDetails.getPassword();
-		//		String encodedPwd = (String) member.getM_pwd();
 		if( !passwordEncoder.matches(rawPwd , encodedPwd) ) {
-			// passwordDTO.setMessage("wrongCurrent");
 			msg = "wrongCurrent";
 		};
 
@@ -96,7 +94,6 @@ public class MemberServiceImpl implements MemberService {
 		String newPwd = (String) passwordDTO.get("new_password");
 		String confirmPwd =  (String)  passwordDTO.get("new_password_confirm");
 		if( !newPwd.equals(confirmPwd) ) {
-			// passwordDTO.setMessage("WrongConfirm");
 			msg ="WrongConfirm";
 			};
 			

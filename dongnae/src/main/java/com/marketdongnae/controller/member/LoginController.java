@@ -1,5 +1,7 @@
 package com.marketdongnae.controller.member;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +18,12 @@ import lombok.extern.log4j.Log4j;
 public class LoginController {
 	
 	@GetMapping("login")
-	public String login() {
+	public String login(HttpServletRequest request) {
 		System.out.println(222);
+		String uri = request.getHeader("Referer");
+		if(uri != null && uri.contains("/login")) {
+			request.getSession().setAttribute("prevPage", uri);
+		}
 		return "member/login";
 	}
 	

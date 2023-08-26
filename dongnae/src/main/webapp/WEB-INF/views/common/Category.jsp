@@ -58,8 +58,29 @@ function fetchCategories() {
                 // 카테고리1 li 생성
                 category1List.forEach(function (categoryMain) {
                     var category1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
-                    var listCategory1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
                     var category2Container = $('<ul class="category2 category2Container"></ul>');
+                    
+                    var listCategory1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
+
+                    listCategory1Item.on('click', function() {
+                        var categoryId = categoryMain.c1_id; // 카테고리 ID 가져오기
+                        var searchValue = document.querySelector(".searchName").textContent.trim();; // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
+                        var encodedSearchInput = encodeURIComponent(searchValue);
+                        console.log(searchValue)
+                        var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+                        var query = "";
+                        
+                        if (searchValue != null) {
+                            query = encodedSearchInput +"?category=" + categoryId;
+                        } else {
+                            query = "?category=" + categoryId;
+                        }
+                        
+                        var newUrl = baseNewUrl + query;
+                        
+                        // 페이지 이동
+                        window.location.href = newUrl;
+                    });
                     
                     // filter 를 통해 category2 list 정리
                     var category2List = data.category_2.filter(function(category2) {
@@ -99,6 +120,8 @@ function fetchCategories() {
             }
         });
     }
+    
+    
 </script>
 
 <body>
@@ -116,7 +139,6 @@ function fetchCategories() {
 								    <input type="text" placeholder="What do you need?" name="search">
 								    <button type="submit" class="site-btn">SEARCH</button>
 								</form>
-								
 								<script>
 								document.getElementById("searchForm").addEventListener("submit", function(event) {
 								    event.preventDefault();

@@ -51,10 +51,16 @@ public class GoodsController {
 //		return goodsService.getGoodsList();
 //	}
 	@GetMapping(value = "search/{search}")
-	public String searchGoods(@PathVariable("search") String search,Model model) {
+	public String searchGoods(@PathVariable("search") String search,Model model,  
+			@RequestParam(name = "category", required = false) Integer category) {
 		SearchDTO searchDTO = new SearchDTO();
 		searchDTO.setKeyword(search);
+		if(category != null) {
+			searchDTO.setCategory(category);
+		}
+		System.out.println(searchDTO);
 		List<GoodsDTO> goodsList = goodsService.getSearchGoods(searchDTO);
+		System.out.println(goodsList);
 		model.addAttribute("goodsLists", goodsList);
 		model.addAttribute("search", search);
 		return "goods/goods_list";

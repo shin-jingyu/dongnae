@@ -36,12 +36,15 @@
 
 	<select id="getSearchGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 	    <![CDATA[
-	        SELECT * FROM goods WHERE g_name LIKE CONCAT('%', #{keyword}, '%')
+	        SELECT * FROM goods WHERE 1 = 1
 	    ]]>
-        <if test="category != 0">
-            AND c2_id = #{category}
-        </if>
-        AND g_status = '판매중'
+	    <if test="keyword != null">
+	        AND g_name LIKE CONCAT('%', #{keyword}, '%')
+	    </if>
+	    <if test="category != null and category != 0">
+	        AND c2_id = #{category}
+	    </if>
+	    AND g_status = '판매중'
 	</select>
 
 	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">

@@ -29,7 +29,7 @@
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <h4>필터</h4>
-                            <div>
+                            <div class="searchName">
 	                           	<c:out value="${search }"></c:out>
                             </div>
                             <hr>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <!-- 상품 리스트 -->
-                       <div class="row">
+                       <div class="row results">
 					    <c:choose>
 					        <c:when test="${not empty goodsLists}">
 					            <c:forEach items="${goodsLists}" var="goods">

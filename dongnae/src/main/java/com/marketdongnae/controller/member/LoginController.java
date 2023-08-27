@@ -19,7 +19,7 @@ public class LoginController {
 	public String login() {
 		System.out.println(222);
 		return "member/login";
-	}
+	}	
 	
 	@GetMapping("loginFail")
 	public String loginFail(Model model) { 

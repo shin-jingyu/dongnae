@@ -67,7 +67,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         	}
         }
         redirectStrategy.sendRedirect(request, response, uri);
-        
+        response.sendRedirect("/");
 
 //		log.warn("ROLE NAMES : " + roleNames);
 //

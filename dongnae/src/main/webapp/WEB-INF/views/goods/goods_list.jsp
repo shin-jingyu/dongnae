@@ -29,7 +29,7 @@
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <h4>필터</h4>
-                            <div class="searchName">
+                            <div>
 	                           	<c:out value="${search }"></c:out>
                             </div>
                             <hr>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <!-- 상품 리스트 -->
-                       <div class="row results">
+                       <div class="row">
 					    <c:choose>
 					        <c:when test="${not empty goodsLists}">
 					            <c:forEach items="${goodsLists}" var="goods">
@@ -76,11 +76,9 @@
 					                            </ul>
 					                        </div>
 					                        <div class="featured__item__text">
-					                            <h6>
-						                            <a class="move" href="<c:out value='${pageContext.request.contextPath }/goods/goods_detail/${goods.g_id}' />">
-						                                <c:out value="${goods.g_name }"/>
-						                            </a>
-					                            </h6>
+					                            <a class="move" href="<c:out value='goods/goods_detail/${goods.g_id}' />">
+					                                <h6><c:out value="${goods.g_name }"/></h6>
+					                            </a>
 					                            <h5><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/>원</h5>
 					                        </div>
 					                    </div>

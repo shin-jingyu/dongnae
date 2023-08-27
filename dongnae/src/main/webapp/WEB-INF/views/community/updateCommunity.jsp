@@ -7,28 +7,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- CSS only -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-	
-	
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+ 
+<jsp:include page="../common/Category.jsp"></jsp:include>
+<div style="display: flex;">		
+	
+	<div style=" width: 15%; float: left; box-sizing: border-box;">
+		<div >
+			<table class="table table-borderless">	
+			<thead>
+			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
+			</thead>
+			<tbody>		
+			<c:forEach var="categorys" items="${categorys}"  >
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			</c:forEach>
+			</tbody>
+			</table>
+		</div>	
+	</div>  	
+	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+
 	<div class="container">
-		<h2>수정하기</h2>
-		<P> 반갑습니다. ${member.m_id} 님! </P>
+		
 		<div>
 		<form method="post" action="/community/updateCommunity">
 				<input type="hidden" name="mu_id" value="${community.mu_id }">
@@ -38,9 +43,9 @@
 				
 		
 		<tr>
-			<td>글제목</td>
+			<td style="width: 100px;">글제목</td>
 			<td>
-			<input id="mu_name" type="text" name="mu_name" value="${community.mu_name }"> 
+			<input class="form-control" id="mu_name" type="text" name="mu_name" value="${community.mu_name }"> 
 			</td>
 		</tr>
 		
@@ -51,7 +56,7 @@
 		<tr>
 			<td>카테고리</td>
 			<td>
-			<select name="ca_id"  >
+			<select class="form-select"  name="ca_id"  >
 					<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
 					<option value="2" ${ (ca_id == "2")? "selected" : "" }>분실/실종</option>
 					<option value="3" ${ (ca_id == "3")? "selected" : "" }>일상</option>
@@ -69,16 +74,20 @@
 			<td colspan="2"><textarea name="mu_detail" id="mu_detail"  ></textarea></td>
 		</tr>
 		<tr>
-			<td><input id="submits" type="submit" value="수정하기"></td>
+			<td><input class="btn btn-outline-info" id="back" id="submits" type="submit" value="수정하기"></td>
 			
 		</tr>
 		</table>
 				
 	</form>
-			<button id="back"> 이전으로</button>
-			<button onclick="location.href='/community/main?num=${page.num}'">목록으로</button>
+			<button class="btn btn-outline-info" id="back" id="back"> 이전으로</button>
+			<button class="btn btn-outline-info" id="back" onclick="location.href='/community/main?num=${page.num}'">목록으로</button>
 		</div>
 	</div>
+	
+		</div>	
+	</div>  		
+	<jsp:include page="../common/footer.jsp"></jsp:include>	
 </body>
 
 <script type="text/javascript">

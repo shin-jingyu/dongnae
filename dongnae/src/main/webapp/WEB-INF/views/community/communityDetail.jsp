@@ -9,18 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- CSS only -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 </head>
 
 
@@ -104,34 +93,15 @@
 					<input type="hidden" name="m_number" value="${member.m_number}">
 					<input type="hidden" name="mu_id" value="${comment.mu_id }">
 					<input type="hidden" name="com_id" value="${comment.com_id }">
-<<<<<<< HEAD
-		
-=======
->>>>>>> branch 'main' of https://github.com/nohbin/Spring_dongnaeMarket.git
-					
-<<<<<<< HEAD
+
 					<div id="modifyComment" style="margin-top:10px;" >
 					<p> 
 					<span > ${member.m_id}</span> 
 					<span style="margin-left: 320px;"> <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </span>
 					</p>
-						<p> <textarea  class="form-control " maxlength="100" style="width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea>	
-=======
-					
-					
-					
-					
-					<div id="modifyComment" style="margin-top:10px;" >
-					<p>	작성자: ${member.m_id} 작성시간: <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </p>
-						<p> <textarea  class="form-control" style=" resize: none; text-align:center; word-break:normal; width:400px; height : 100px;" id="updateid"  type="text" readonly>${comment.com_c}</textarea>	
->>>>>>> branch 'main' of https://github.com/nohbin/Spring_dongnaeMarket.git
-							<button id ="buttony" hidden="true" data-com_id="${comment.com_id }" >완료</button>
-							<button id ="buttons" hidden="true" >취소</button>
-						</p>
-					</div>	
-					
-					
-					
+					<p> <textarea  class="form-control " maxlength="100" style="width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
+					</div>
+	
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
 					<c:if test = '${member.m_number == comment.m_number}'>
 					<button type="button" class="btn btn-outline-info" id="updateComment" >댓글 수정</button>
@@ -146,7 +116,7 @@
 		
 		
 	</div>	
-</div>
+
 <jsp:include page="../common/footer.jsp"></jsp:include>
 
 </body>

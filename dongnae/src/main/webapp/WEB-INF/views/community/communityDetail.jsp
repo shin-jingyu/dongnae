@@ -104,14 +104,27 @@
 					<input type="hidden" name="m_number" value="${member.m_number}">
 					<input type="hidden" name="mu_id" value="${comment.mu_id }">
 					<input type="hidden" name="com_id" value="${comment.com_id }">
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'main' of https://github.com/nohbin/Spring_dongnaeMarket.git
 					
+<<<<<<< HEAD
 					<div id="modifyComment" style="margin-top:10px;" >
 					<p> 
 					<span > ${member.m_id}</span> 
 					<span style="margin-left: 320px;"> <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </span>
 					</p>
 						<p> <textarea  class="form-control " maxlength="100" style="width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea>	
+=======
+					
+					
+					
+					
+					<div id="modifyComment" style="margin-top:10px;" >
+					<p>	작성자: ${member.m_id} 작성시간: <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </p>
+						<p> <textarea  class="form-control" style=" resize: none; text-align:center; word-break:normal; width:400px; height : 100px;" id="updateid"  type="text" readonly>${comment.com_c}</textarea>	
+>>>>>>> branch 'main' of https://github.com/nohbin/Spring_dongnaeMarket.git
 							<button id ="buttony" hidden="true" data-com_id="${comment.com_id }" >완료</button>
 							<button id ="buttons" hidden="true" >취소</button>
 						</p>

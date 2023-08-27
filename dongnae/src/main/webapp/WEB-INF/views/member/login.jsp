@@ -13,11 +13,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" ></script>
-
+<script type="text/javascript"> 
+	$(document).ready(function(){
+		if($("#message").val()!=""){
+		var message = $("#message").val();
+		alert(message);
+		}
+	});
+</script>
 <body>
 
 <sec:authentication property="principal" var="member"/>
-
 <jsp:include page='../common/header.jsp'></jsp:include>
 
  <!-- Breadcrumb Section Begin -->
@@ -34,16 +40,10 @@
     </section>
 <!-- Breadcrumb Section End -->
 
-
     <!-- Product Section Begin -->
     <section class="product spad">
     <div class="container">
              <div class="row">
-                <%-- <div class="col-lg-3 col-md-3">
-                    <div class="sidebar">
-                    	<jsp:include page="./sidebar.jsp"></jsp:include>
-                    </div>
-                </div> --%>
                 <div class="col-lg-12 col-md-12">
 	                <div class="container border my-3 rounded-5">
 	                <div class="container mx-auto" style="width: 80%;">
@@ -54,6 +54,7 @@
 	                        	<form action="/login.do" method="post" method="post" class="form-horizontal">
 	                        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 	                        			<div class="form-group row">
+	                        				<input hidden id="message" type="text" value="${message}"></input>
 											<label class="form-label col-12 col-sm-4  " >
 						                   		아이디
 											</label>
@@ -69,12 +70,13 @@
 												<input  type="password" class="form-control" name="password" required>
 											</div>	
 										</div>
+										<%-- 
 										<div class="form-group row">
 											<div ${ (login == "fail")? '' : 'style="display: none;"' }  class="alert alert-danger" role="alert"  class="mb-3">
 											  아이디와 비밀번호를 확인해주세요.
 											</div>
 										</div>
-										
+										 --%>
 	                        			<div class="form-group  row">
 						                	<div class="col-12 mt-3 mb-5  text-center">
 							                    <button type="submit" class="btn btn-success ">로그인</button>

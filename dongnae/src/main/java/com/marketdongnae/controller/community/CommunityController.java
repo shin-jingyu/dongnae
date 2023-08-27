@@ -13,6 +13,7 @@ import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -70,6 +72,10 @@ public class CommunityController {
 	@Autowired
 	CommunityService communityService;
 	
+	private String tempRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\mainImg\\";
+	private String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\"; 
+	
+	
 	private String extractImageUrlFromContent(String content) {
 		  Document doc = Jsoup.parse(content);
 		    Elements imgTags = doc.select("img"); // img 태그들을 선택
@@ -84,7 +90,7 @@ public class CommunityController {
 	    return ""; // 이미지가 없을 경우 빈 문자열 반환
 	}
 	
-	@GetMapping("/community")
+	@GetMapping("/community/main")
 	public ModelAndView getCommunity(@RequestParam(value = "num", defaultValue = "1") int num) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ModelAndView view = new ModelAndView();
@@ -113,7 +119,7 @@ public class CommunityController {
 		return view;
 	}
 
-	@GetMapping("/pageCategory")
+	@GetMapping("/community/pageCategory")
 	public String getpageCategory(Model model,@RequestParam(value = "num", defaultValue = "1") int num,
 											  @RequestParam(value = "ca_l") String ca_l) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -122,9 +128,15 @@ public class CommunityController {
 		page.setCount(communityService.pageCategoryCount(ca_l));
 		page.setCa_l(ca_l);
 		
-		List<CommunityAllDTO> list = null;
-		list = communityService.pageCategory(page.getDisplayPost(), page.getPostNum(), ca_l);
+		List<CommunityAllDTO> list = communityService.pageCategory(page.getDisplayPost(), page.getPostNum(), ca_l);
 		List<CategoryDTO> category = communityService.category();
+		
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	    }
+		
 		
 		model.addAttribute("category", category);
 		model.addAttribute("member",customUserDetails);
@@ -135,8 +147,48 @@ public class CommunityController {
 		return "community/communityCategory";
 	}
 	
+	
+	@GetMapping("/community/categorySearch")
+	public String categorySearch(Model model,
+								 @RequestParam(value = "num", defaultValue = "1") int num,
+								 @RequestParam(value = "keyword") String keyword,
+								 @RequestParam(value = "searchType") String searchType,							
+								 @RequestParam(value = "ca_l") String ca_l,
+								 @ModelAttribute PageDTO page) {
+		
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 
+		page.setNum(num);
+		page.setCount(communityService.listPageSearchsCount(ca_l,keyword,searchType));
+		page.setSearchType(searchType);
+		page.setKeyword(keyword);
+		
+		List<CommunityAllDTO> list = communityService.listPageSearchs(page.getDisplayPost(), page.getPostNum(), ca_l, page.getKeyword(),page.getSearchType());
+		
+		List<CategoryDTO> categorys = communityService.category();
+		
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	        System.out.println(imageUrl);
+	    }
+		System.out.println(customUserDetails);
+		System.out.println(categorys);
+		System.out.println(page);
+		System.out.println(list);
+		System.out.println(num);
+		model.addAttribute("member",customUserDetails);
+		model.addAttribute("categorys",categorys);
+		model.addAttribute("page", page);
+		model.addAttribute("list",list);
+		model.addAttribute("select", num);
+	
+		return "community/categorySearch";
+	}
+	
 	@ResponseBody
-	@GetMapping("/communitySearch")
+	@GetMapping("/community/communitySearch")
 	public ModelAndView communitySearch(@RequestParam(value = "num", defaultValue = "1") int num,
 										@RequestParam(value = "keyword") String keyword,
 										@RequestParam(value = "searchType") String searchType) {
@@ -148,8 +200,14 @@ public class CommunityController {
 		page.setCount(communityService.listPageSearchCount(searchType, keyword));
 		page.setSearchType(searchType);
 		page.setKeyword(keyword);
-		List<CommunityAllDTO> list = null;
-		list = communityService.listPageSearch(page.getDisplayPost(), page.getPostNum(), searchType, keyword);
+		List<CommunityAllDTO>list = communityService.listPageSearch(page.getDisplayPost(), page.getPostNum(), searchType, keyword);
+		List<CategoryDTO> categorys = communityService.category();
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	    }
+		view.addObject("categorys", categorys);
 		view.addObject("member",customUserDetails);
 		view.addObject("list",list);
 		view.addObject("page", page);
@@ -160,10 +218,10 @@ public class CommunityController {
 	}
 	
 	
-	@GetMapping("/communityDetail")
+	@GetMapping("/community/communityDetail")
 	public ModelAndView communityDetail(@RequestParam("mu_id") String mu_id ,
-										@RequestParam("m_number") String m_number,
-										@RequestParam(value = "num", defaultValue = "1") int num){
+										@RequestParam("m_number") String m_number
+										){
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ModelAndView view = new ModelAndView();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -175,12 +233,12 @@ public class CommunityController {
 		
 		HeartDTO heartview = communityService.heartview(m_number, mu_id); 
 		 
-		PageDTO page =new PageDTO();
-		page.setNum(num);
+		
+		
 		
 		List<CommentDTO> lists  = communityService.selectComment(Integer.parseInt(mu_id));
 		view.addObject("member",customUserDetails);
-		view.addObject("page", page);
+		
 		view.addObject("comment",lists);
 		view.addObject("communityDetail", communityDetail);
 		view.addObject("heartview", heartview); 
@@ -191,21 +249,20 @@ public class CommunityController {
 	
 	
 	
-	@GetMapping("/insertCommunity")
+	@GetMapping("/community/insertCommunity")
 	public String insertCommunity(Model model) {
-		
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("member",customUserDetails);
 		return "community/insertCommunity";
 	}
 	
-	@PostMapping("/insertCommunity")
+	@PostMapping("/community/insertCommunity")
 	public String insertCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO) {
-		if (communityDetailDTO.getMu_name() !=null && communityDetailDTO.getMu_detail() !=null) {  
-			communityService.insertCommunity(communityDetailDTO);
-		}
 		
-		return "redirect:/community";
+			communityService.insertCommunity(communityDetailDTO);
+		
+			 
+		return "redirect:/community/main";
 	}
 	
 	
@@ -213,7 +270,14 @@ public class CommunityController {
 	@PostMapping("/upload")
 	public String upload( @RequestParam("file") MultipartFile[] upload,HttpSession session) {
 		JsonObject jsonObject = new JsonObject();
-		String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\"; 
+		
+		@SuppressWarnings("unchecked")
+	    List<String> uploadedImageNames = (List<String>) session.getAttribute("uploadedImageNames");
+		
+		if (uploadedImageNames == null) {
+	        uploadedImageNames = new ArrayList<>();
+	    }
+		
 		for (MultipartFile multipartFile : upload) {
 	        String originalFileName = multipartFile.getOriginalFilename(); // 오리지날 파일명
 	        String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일 확장자
@@ -225,7 +289,9 @@ public class CommunityController {
 	            FileUtils.copyInputStreamToFile(fileStream, targetFile); // 파일 저장
 	            jsonObject.addProperty("url", "/resources/upload/community/" + savedFileName); 
 	            jsonObject.addProperty("responseCode", "success");
-
+	            uploadedImageNames.add(savedFileName);
+	           
+	            
 	        } catch (IOException e) {
 	            FileUtils.deleteQuietly(targetFile); // 저장된 파일 삭제
 	            jsonObject.addProperty("responseCode", "error");
@@ -233,63 +299,82 @@ public class CommunityController {
 	        }
 	        
 		}
+		System.out.println("ㅑㅔ"+uploadedImageNames);
+		 session.setAttribute("uploadedImageNames", uploadedImageNames);
+		  jsonObject.addProperty("uploadedImageNames", uploadedImageNames.toString());
+		 
 		 String a = jsonObject.toString();
-	
 		 return a;
 		
 	}
-	@RequestMapping(value = "/deleteSummernoteImageFile", produces = "application/json; charset=utf8")
+
+	
+	
+	@PostMapping("/deleteSummernoteImageFile")
 	@ResponseBody
-	public void deleteSummernoteImageFile(@RequestParam("file") String fileName) {
+	public void deleteSummernoteImageFile(@RequestParam("file") List<String> fileNames,HttpSession session) {
 	    // 폴더 위치
 	    String filePath = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\";
-	    // 해당 파일 삭제
-	    Path path = Paths.get(filePath, fileName);
-	    try {
-	        Files.delete(path);
-	    } catch (Exception e) {
-	        e.printStackTrace();
+	    System.out.println("파일삭제 접속@");
+	    
+	    
+	    for (String fileName : fileNames) {
+		    // 해당 파일 삭제
+		    Path path = Paths.get(filePath, fileName);
+		    try {
+		    	
+		        Files.delete(path);
+		        System.out.println("이미지삭제");
+		        System.out.println(path);
+		       
+		    } catch (Exception e) {
+		    	
+		        e.printStackTrace();
+		        System.out.println("파일삭제 에러발생 !");
+		        System.out.println(fileNames);
+		    }
 	    }
 	}
-	
+	@PostMapping("/deleteSession")
+	@ResponseBody
+	public void deleteSession(HttpSession session ) {
+		session.removeAttribute("uploadedImageNames");
+	}
 
-	@GetMapping("/updateCommunity")
+	@GetMapping("/community/updateCommunity")
 	public ModelAndView update(@RequestParam String mu_id,
 							   @RequestParam(value = "num", defaultValue = "1") int num) {
+		
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		ModelAndView view = new ModelAndView();
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
 		PageDTO page =new PageDTO();
 		page.setNum(num);
+		view.addObject("member",customUserDetails);
 		view.addObject("page", page);
 		view.addObject("community",detailDTO);
 		view.setViewName("community/updateCommunity");
 		return view;
 	}
-	@PostMapping("/updateCommunity")
+	@PostMapping("/community/updateCommunity")
 	public String updateCommunityPost(@ModelAttribute communityDetailDTO communityDetailDTO,
-			 						  @RequestParam(value = "num", defaultValue = "1") int num,HttpSession session) {
+			 						  @RequestParam(value = "num", defaultValue = "1") int num) {
 		
-		@SuppressWarnings("unchecked")
-	    List<String> deletedImageNames = (List<String>) session.getAttribute("deletedImageNames");
-		if (deletedImageNames != null && !deletedImageNames.isEmpty()) {
-			
-			
-			
-		}
-		
-		
+		System.out.println("getMu_name="+communityDetailDTO.getMu_name());
+		System.out.println("getMu_detail="+communityDetailDTO.getMu_detail());
 		communityService.updateCommunity(communityDetailDTO);
-		 session.removeAttribute("deletedImageNames");
-		return "redirect:/communityDetail?mu_id="+communityDetailDTO.getMu_id()+
-									   "&&m_number="+communityDetailDTO.getM_number()+	
-									   "&&num="+num;
+	
+		return "redirect:/community/communityDetail?mu_id="+communityDetailDTO.getMu_id()+
+										   "&&m_number="+communityDetailDTO.getM_number();
+	
+		
 	}
 	
 	@ResponseBody
-	@GetMapping("/deleteCommunity")
+	@GetMapping("/community/deleteCommunity")
 	public String deleteCommunity(@RequestParam("mu_id") int mu_id) {
-		System.out.println("글삭제");
-		System.out.println("community mu_id= "+mu_id);
+		
 		communityService.deleteCommunity(mu_id);
 		return "success";
 	}
@@ -311,7 +396,7 @@ public class CommunityController {
 		 int m_ids = commentDTO.getMu_id();
 		 String mu_id = String.valueOf(m_ids);
 
-		 return "redirect:/communityDetail?mu_id="+mu_id+"&&m_number="+commentDTO.getM_number();
+		 return "redirect:/community/communityDetail?mu_id="+mu_id+"&&m_number="+commentDTO.getM_number();
 	 }
 	 @ResponseBody
 	 @PostMapping("/updateComment")

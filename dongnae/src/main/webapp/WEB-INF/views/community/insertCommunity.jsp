@@ -63,28 +63,40 @@ $(document).ready(function() {
                             .attr('src')
                             .split('/')
                             .pop()
-
+						
+                            
                         // ajax 함수 호출
                         deleteSummernoteImageFile(deletedImageUrl)
+                       
                     }
                 }
 			   }
             };
         
-	$('#mu_detail').val('${community.mu_detail }');
+	
     $('#mu_detail').summernote(setting);
     
     function deleteSummernoteImageFile(imageName) {
-        data = new FormData()
-        data.append('file', imageName)
+    	
+        let data = new FormData();
+        
+       
+        data.append('file', imageName.toString()); 
+      
+        console.log(imageName);
         $.ajax({
             data: data,
             type: 'POST',
-            url: 'deleteSummernoteImageFile',
+            url: '/deleteSummernoteImageFile',
             contentType: false,
             enctype: 'multipart/form-data',
             processData: false,
+            success : function(data) {
+            	
+                console.log(data);
+            }
         });	
+        
     };
 
     function uploadSummernoteImageFile(file, el) {
@@ -100,10 +112,68 @@ $(document).ready(function() {
     		processData : false,
     		success : function(data) {
     			$(el).summernote('editor.insertImage', data.url);
+    			
     		}
     	});
+    	
     };	
+    
+   
+
+   
+
+    $("#back").on('click',function(){	
+    	 window.history.back();
+    	 
+    });
+    
+    var shouldDeleteImages = true;
+   
+    
+    $(window).on('beforeunload', function() {
+    	if (shouldDeleteImages) {
+            var imageName = [
+                <c:forEach var="imageName" items="${sessionScope.uploadedImageNames}">
+                    '${imageName}',
+                </c:forEach>
+            ];
+         deleteSummernoteImageFile(imageName);
+         
+        }
+    	
+    });
+	function deleteSession() {
+        $.ajax({
+            type: 'POST',
+            url: '/deleteSession'
+        });	
+    };
+
+    // 글 등록 버튼 클릭 시 이미지 삭제를 방지하기 위해 shouldDeleteImages를 false로 설정
+    $('#submits').on('click', function() {
+    	var muNameValue = $('#mu_name').val();
+    	
+    	if(muNameValue.trim() === ''){
+    		event.preventDefault(); // 폼 제출 기본 동작을 막음
+            alert("글 제목을 입력해주세요.");
+    	}else if (confirm("글을 등록하시겠습니까?")) {
+    		deleteSession()
+        	shouldDeleteImages = false;
+            $('form').submit(); // 폼 제출을 수행
+        }
+    	
+    });
+
+   
+    
+    
 });
+
+
+
+
+
+
 </script>
 <body>
 
@@ -111,7 +181,7 @@ $(document).ready(function() {
 		<h2>글쓰기</h2>
 		<P> 반갑습니다. ${member.m_id}님! </P>
 		<div>
-			<form method="post" action="/insertCommunity" enctype="multipart/form-data">
+			<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">
 			<input type="hidden" name="m_number" value="${member.m_number }">
 				<table class="table table-borderd table table-hover">
 				
@@ -127,7 +197,7 @@ $(document).ready(function() {
 						</select>
 					</tr>
 					<tr>
-						<td>글제목<input type="text" name="mu_name">
+						<td>글제목<input type="text" id="mu_name" name="mu_name">
 						</td>
 					</tr>
 					<tr>
@@ -138,12 +208,13 @@ $(document).ready(function() {
 					</tr>
 					
 					<tr>
-						<td><input type="submit" value="등록" ></td>
+					
+						<td><input id="submits" type="submit" value="등록" ></td>
 					</tr>
 					
 				</table>
 			</form>
-			<button onclick="location.href='community'">목록으로</button>
+			<button id="back" >목록으로</button>
 		</div>
 	</div>
 	

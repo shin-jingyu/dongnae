@@ -22,11 +22,11 @@
 	            xhr.setRequestHeader(header, token);
 	        });
 	    }
-		fetchCategories();
+	    insertCategory();
 	
 	})
 			 
-	function fetchCategories() {
+	function insertCategory() {
     $.ajax({
         url: '/api/getCategories',
         type: 'post',
@@ -69,7 +69,7 @@
 <body>
 	 <sec:authentication property="principal" var="member"/>
 
-	<jsp:include page="goods_header.jsp"/>
+	<jsp:include page="../common/Category.jsp"/>
 	<div class="container border my-3 rounded-5 text-center">
 		<div class="container mx-auto" style="width: 80%;">
 			<form action="goods_insert" method="POST" enctype="multipart/form-data">

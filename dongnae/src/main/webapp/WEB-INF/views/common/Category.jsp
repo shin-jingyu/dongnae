@@ -43,259 +43,125 @@ $(function(){
 })
 		 
 function fetchCategories() {
-    $.ajax({
-        url: '/api/getCategories',
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-            var categorySelectMain = $('.category1Container');
-            var category2Container = $('.category2Container');
+        $.ajax({
+            url: '/api/getCategories',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var category1Container = $('.category1');
+                var listCategortContainer1 = $('.list_category');
+                var category1List = data.category_1;
+                
+                category1Container.empty();
 
-            categorySelectMain.empty();
-            category2Container.empty();
+                // 카테고리1 li 생성
+                category1List.forEach(function (categoryMain) {
+                    var category1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
+                    var category2Container = $('<ul class="category2 category2Container"></ul>');
+                    
+                    var listCategory1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
 
-            var categoryMainList = data.category_1;
-            categoryMainList.forEach(function (categoryMain) {
-                var categoryMainItem = $('<li value="' + categoryMain.c1_id + '"> ' + categoryMain.c1_category + '</li>');
-                categoryMainItem.on('mouseover', function () {
-                    displayCategory2(category2Container, data.category_2[categoryMain.c1_id]);
+                    listCategory1Item.on('click', function() {
+                        var categoryId = categoryMain.c1_id; // 카테고리 ID 가져오기
+                        var searchValue = document.querySelector(".searchName").textContent.trim();; // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
+                        var encodedSearchInput = encodeURIComponent(searchValue);
+                        console.log(searchValue)
+                        var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+                        var query = "";
+                        
+                        if (searchValue != null) {
+                            query = encodedSearchInput +"?category=" + categoryId;
+                        } else {
+                            query = "?category=" + categoryId;
+                        }
+                        
+                        var newUrl = baseNewUrl + query;
+                        
+                        // 페이지 이동
+                        window.location.href = newUrl;
+                    });
+                    
+                    // filter 를 통해 category2 list 정리
+                    var category2List = data.category_2.filter(function(category2) {
+                        return category2.c1_id === categoryMain.c1_id;
+                    });
+
+                    category1Item.append(category2Container);
+
+                    category1Item.on('mouseover', function () {
+                    	// 기존의 category2Container 비우기
+                        category2Container.empty(); 
+                        
+                        if (category2List.length > 0) {
+                            category2List.forEach(function (category2) {
+                                var category2Item = $('<li><a href="#">' + category2.c2_category + '</a></li>');
+                                category2Container.append(category2Item);
+                            });
+                        }
+                    });
+                    
+//                     listCategory1Item.onclick(function(){
+                    
+//                     })
+
+//                     category1Item.on('mouseout', function () {
+//                         category2Container.empty();
+//                     });
+
+                    //goods_list 테스트
+                    listCategortContainer1.append(listCategory1Item);
+                    category1Container.append(category1Item);
+                    
                 });
-                categorySelectMain.append(categoryMainItem);
-            });
-        },
-        error: function (xhr, status, error) {
-            // 에러 처리
-            alert("데이터 안불러와지는중");
-        }
-    });
-}
-
-function displayCategory2(container, category2List) {
-    container.empty();
-    if (category2List && category2List.length > 0) {
-        var ul = $('<ul class="category2List"></ul>');
-        category2List.forEach(function (category2) {
-            ul.append($('<li>' + category2.c2_category + '</li>'));
+            },
+            error: function (xhr, status, error) {
+                alert("데이터 안불러와지는중");
+            }
         });
-        container.append(ul);
     }
-}
-
-const menu=document.querySelector(".one");
-const subBar=document.querySelector(".one>.two");
-
-let subToggle=true,i=0;
-
-function slide_menu(){
-  if(subToggle){
-    subBar.style.display="block";
-    subBar.classList.remove("up");
-    subBar.classList.add("down");
-    subToggle=!subToggle;
-  }else{
-    subBar.classList.remove("down");
-    subBar.classList.add("up");
-    subToggle=!subToggle;
-  }
-  console.log(subBar.classList);
-}
-menu.addEventListener("click",slide_menu);
+    
+    
 </script>
 
 <body>
 	<header>
-
-        <a href="" class="logo"><img src="/resources/img/logo.png" alt=""></a>
-
+        <a href="/" class="logo"><img src="/resources/img/logo.png" alt=""></a>
         <nav class="navbar">
-    
-        
         <section class="hero">
-        <div class="container">
-            <div class="row">
-                <!-- 검색 -->
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div style="z-index: 2;">
+	        <div class="container">
+	            <div class="row">
+	                <!-- 검색 -->
+	                <div class="col-lg-9">
+	                    <div class="hero__search">
+	                        <div class="hero__search__form">
+	                           <form id="searchForm" action="#" method="get">
+								    <input type="text" placeholder="What do you need?" name="search">
+								    <button type="submit" class="site-btn">SEARCH</button>
+								</form>
+								<script>
+								document.getElementById("searchForm").addEventListener("submit", function(event) {
+								    event.preventDefault();
+								    
+								    var searchInput = document.querySelector("input[name='search']").value;
+								    var encodedSearchInput = encodeURIComponent(searchInput);
+								    
+								    var newUrl = "/goods/search/" + encodedSearchInput;
+								    window.location.href = newUrl;
+								});
+								</script>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+    	<div style="z-index: 2;">
             <ul>
-            
-                <li><a href="">메인화면</a></li>
-                <li><a href="#">about</a></li>
-                <li><a href="#">Pages +</a>
-                    <ul>
-                        <li><a href="">수입명품</a>
-                            <ul>
-                                <li><a href="">여성신발</a></li>
-                                <li><a href="">남성신발</a></li>
-                                <li><a href="">가방/핸드백</a></li>
-                                <li><a href="">지갑/벨트</a></li>
-                                <li><a href="">여성의류</a></li>
-                                <li><a href="">남성의류</a></li>
-                                <li><a href="">패션잡화</a></li>
-                                <li><a href="">시계/쥬얼리</a></li>
-                                <li><a href="">육아</a></li>
-                                <li><a href="">기타</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">패션의류</a>
-                            <ul>
-                                <li><a href="">여성의류</a></li>
-                                <li><a href="">남성의류</a></li>
-                                <li><a href="">교복/단체복</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">패션잡화</a>
-                            <ul>
-                                <li><a href="">운동화</a></li>
-                                <li><a href="">여성신발</a></li>
-                                <li><a href="">남성신발</a></li>
-                                <li><a href="">가방/핸드백</a></li>
-                                <li><a href="">지갑/벨트</a></li>
-                                <li><a href="">악세서리/귀금속</a></li>
-                                <li><a href="">시계</a></li>
-                                <li><a href="">선글라스/안경</a></li>
-                                <li><a href="">모자</a></li>
-                                <li><a href="">기타/잡화</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">뷰티</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">모바일/테블릿</a>
-                            <ul>
-                                <li><a href="">스마트폰_삼성</a></li>
-                                <li><a href="">스마트폰_애플</a></li>
-                                <li><a href="">스마트폰_엘지</a></li>
-                                <li><a href="">스마트폰_기타</a></li>
-                                <li><a href="">테블릿PC_삼성</a></li>
-                                <li><a href="">운동화</a></li>
-                                <li><a href="">여성신발</a></li>
-                                <li><a href="">남성신발</a></li>
-                                <li><a href="">가방/핸드백</a></li>
-                                <li><a href="">지갑/벨트</a></li>
-                                <li><a href="">운동화</a></li>
-                                <li><a href="">여성신발</a></li>
-                                <li><a href="">남성신발</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">가전제품</a>
-                            <ul>
-                                <li><a href=""></a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">노트북/PC</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">카메라/캠코더</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">가구/인테리어</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">리빙/생활</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">게임</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">반려동물</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">도서/음반</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">스포츠</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">공구/산업용품</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">무료나눔</a>
-                            <ul>
-                                <li><a href="">html</a></li>
-                                <li><a href="">css</a></li>
-                                <li><a href="">js</a></li>
-                                <li><a href="">java</a></li>
-                                <li><a href="">jsp</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                <li><a href="/">메인화면</a></li>
+                <li><a href="">about</a></li>
+                <li><a href="">카테고리</a>
+                    <ul class="category1"></ul>
                 </li>
                 <li><a href="#">Review</a></li>
                 <li><a href="#">Gallery +</a>
@@ -304,27 +170,31 @@ menu.addEventListener("click",slide_menu);
                         <li><a href="">flex gallery</a></li>
                     </ul>
                 </li>
-                
-               
             </ul>
     	</div>
-        
         </nav>
-        <div class="login_set"><a href="/member/login"><i class="fa fa-user"></i> Login</a></div>
-        
+        <sec:authorize access="isAnonymous()">
+	        <div class="login_set"><a href="/member/login"><i class="fa fa-user"></i> Login</a></div>
+        </sec:authorize>
+        <sec:authorize access="isAuthenticated()">
+        <div class="login_set">
+	         <a href="/goods/goods_insert">상품등록</a>
+	         <a href="/logout">Logout</a>
+	         <a href="/member/detail">마이페이지</a>
+        </div>
+         </sec:authorize>
     </header>
-				<div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
-                    </div>
-                </div>
-           
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>	
+	<div class="col-lg-3">
+	    <div class="header__cart">
+	        <ul>
+	            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+	            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+	        </ul>
+	        <div class="header__cart__price">item: <span>$150.00</span></div>
+	    </div>
+	</div>
+    <div class="humberger__open">
+        <i class="fa fa-bars"></i>
+    </div>	
 </body>
 </html>

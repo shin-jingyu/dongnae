@@ -1,5 +1,6 @@
 package com.marketdongnae.controller.member;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
@@ -48,25 +50,6 @@ public class MemberController {
 		model.addAttribute("test", "test");	// 임시로
 	}
 	
-//	
-//	@GetMapping("login")
-//	public void login(Model model) {
-//		model.addAttribute("login", "notyet");	// 임시로
-//	}
-//	
-//	@GetMapping("loginFail")
-//	public String loginFail(Model model) { 
-//		model.addAttribute("login", "fail");
-//		System.out.println("E####fail");
-//		return "login";
-//	}
-//	// ("member/loginSuccess")는 CustomLoginSuccessHandler에서 이동함
-//	
-//	@GetMapping("logout")
-//	public String logout(HttpServletRequest request ) {
-//		return "redirect:/";
-//	}
-//	
 	@GetMapping("regist")
 	public void regist() {
 	}
@@ -93,15 +76,15 @@ public class MemberController {
 	
 	@PostMapping("regist/do_area")
 	@ResponseBody
-	public List<Do_areaDTO> regist_do_area() {
-		 List<Do_areaDTO> doList =  memberService.getDoList();
+	public List<AllDTO> regist_do_area() {
+		 List<AllDTO> doList =  memberService.getDoList();
 		return doList;		
 	}
 
 	@PostMapping("regist/si_area")
 	@ResponseBody
-	public List<Si_areaDTO> regist_si_area(@RequestBody int do_id) {
-		 List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+	public List<AllDTO> regist_si_area(@RequestBody int do_id) {
+		 List<AllDTO> siList =  memberService.getSiList(do_id);
 		return siList;		
 	}
 	
@@ -110,19 +93,23 @@ public class MemberController {
 		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("member", customUserDetails);
 	}
-
 	
-	@PostMapping("detail/do_area")
+	@PostMapping("detail/my_area")
 	@ResponseBody
-	public List<Do_areaDTO> detail_do_area( ) {
-		 List<Do_areaDTO> doList =  memberService.getDoList();
-		return doList;		
+	public Map<String, List<AllDTO>> detail_do_area( ) {
+		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 List<AllDTO> doList =  memberService.getDoList();
+		 List<AllDTO> siList =  memberService.getSiList(customUserDetails.getDo_id());
+		 Map<String, List<AllDTO>> dosimap = new HashMap<String, List<AllDTO>>();
+		 dosimap.put("doList", doList);
+		 dosimap.put("siList", siList);
+		return dosimap;		
 	}
 	
 	@PostMapping("detail/si_area")
 	@ResponseBody
-	public List<Si_areaDTO> detail_si_area(@RequestBody int do_id ) {
-		List<Si_areaDTO> siList =  memberService.getSiList(do_id);
+	public List<AllDTO> detail_si_area(@RequestBody int do_id ) {
+		List<AllDTO> siList =  memberService.getSiList(do_id);
 		return siList;		
 	}
 	

@@ -76,9 +76,11 @@
 					                            </ul>
 					                        </div>
 					                        <div class="featured__item__text">
-					                            <a class="move" href="<c:out value='goods/goods_detail/${goods.g_id}' />">
-					                                <h6><c:out value="${goods.g_name }"/></h6>
-					                            </a>
+					                            <h6>
+						                            <a class="move" href="<c:out value='${pageContext.request.contextPath }/goods/goods_detail/${goods.g_id}' />">
+						                                <c:out value="${goods.g_name }"/>
+						                            </a>
+					                            </h6>
 					                            <h5><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/>원</h5>
 					                        </div>
 					                    </div>

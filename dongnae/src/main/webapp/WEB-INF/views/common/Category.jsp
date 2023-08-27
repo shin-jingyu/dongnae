@@ -28,7 +28,6 @@
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
 var token = $("meta[name='_csrf']").attr('content');
 var header = $("meta[name='_csrf_header']").attr('content');

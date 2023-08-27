@@ -9,25 +9,31 @@
 <title>Insert title here</title>
 
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="/resources/js/summernote-lite.js"></script>
+<link rel="stylesheet" href="/resources/css/summernote-lite.css" type="text/css">
+<script src="/resources/js/summernote-ko-KR.js"></script>
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet" > 
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 
 	
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
+	crossorigin="anonymous" >
 <!-- JavaScript Bundle with Popper -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+
 
 </head>
-
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -176,16 +182,35 @@ $(document).ready(function() {
 
 </script>
 <body>
-
-	<div class="container">
+<jsp:include page="../common/Category.jsp"></jsp:include>
+<div style="display: flex;">		
+	
+	<div style=" width: 15%; float: left; box-sizing: border-box;">
+		<div >
+			<table class="table table-borderless">	
+			<thead>
+			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
+			</thead>
+			<tbody>		
+			<c:forEach var="categorys" items="${categorys}"  >
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			</c:forEach>
+			</tbody>
+			</table>
+		</div>	
+	</div>  
+	
+	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+	
+	
 		<h2>글쓰기</h2>
 		<P> 반갑습니다. ${member.m_id}님! </P>
 		<div>
 			<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">
-			<input type="hidden" name="m_number" value="${member.m_number }">
+				<input type="hidden" name="m_number" value="${member.m_number }">
 				<table class="table table-borderd table table-hover">
 				
-					<tr>
+					<tr><td>
 						<label class="form-label">카테고리</label>
 						<select name="ca_id"  >
 							<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
@@ -194,7 +219,7 @@ $(document).ready(function() {
 							<option value="4" ${ (ca_id == "4")? "selected" : "" }>맛집</option>
 							<option value="5" ${ (ca_id == "4")? "selected" : "" }>취미</option>
 							<option value="6" ${ (ca_id == "4")? "selected" : "" }>동네질문</option>
-						</select>
+						</select></td>
 					</tr>
 					<tr>
 						<td>글제목<input type="text" id="mu_name" name="mu_name">
@@ -216,8 +241,10 @@ $(document).ready(function() {
 			</form>
 			<button id="back" >목록으로</button>
 		</div>
-	</div>
 	
+	</div>  
+ </div>  
+<jsp:include page="../common/footer.jsp"></jsp:include>	
 </body>
 
 </html>

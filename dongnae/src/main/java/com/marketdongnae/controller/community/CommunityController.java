@@ -102,13 +102,17 @@ public class CommunityController {
 		List<CommunityAllDTO> list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
 		List<CategoryDTO> categorys = communityService.category();
 		
+		 List<CommunityAllDTO> sorted = new ArrayList<>(list);
+		 sorted.sort((dto1, dto2) -> Integer.compare(dto2.getMu_c(), dto1.getMu_c()));
+		
+		
 		 for (CommunityAllDTO dto : list) {
 		        String content = dto.getMu_detail();
 		        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
 		        dto.setPreviewImageUrl(imageUrl);
 		    }
-
-		
+		 
+		view.addObject("sorted", sorted);
 		view.addObject("member", customUserDetails);
 		view.addObject("categorys", categorys);
 		view.addObject("list",list);
@@ -118,7 +122,40 @@ public class CommunityController {
 		
 		return view;
 	}
-
+	@GetMapping("/community/page")
+	public ModelAndView communityPage(@RequestParam(value = "num", defaultValue = "1") int num,
+									  @RequestParam(value = "key") int key) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		ModelAndView view = new ModelAndView();
+		PageDTO page =new PageDTO();
+		
+		page.setNum(num);
+		page.setCount(communityService.counts());
+		
+		List<CommunityAllDTO> list = communityService.listPage(page.getDisplayPost(), page.getPostNum());
+		List<CategoryDTO> categorys = communityService.category();
+		
+		 List<CommunityAllDTO> sorted = new ArrayList<>(list);
+		 sorted.sort((dto1, dto2) -> Integer.compare(dto2.getMu_c(), dto1.getMu_c()));
+		
+		
+		 for (CommunityAllDTO dto : list) {
+		        String content = dto.getMu_detail();
+		        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+		        dto.setPreviewImageUrl(imageUrl);
+		    }
+		view.addObject("key", key); 
+		view.addObject("sorted", sorted);
+		view.addObject("member", customUserDetails);
+		view.addObject("categorys", categorys);
+		view.addObject("list",list);
+		view.addObject("page", page);
+		view.addObject("select", num);
+		view.setViewName("community/communityPage");
+		
+		return view;
+	}
+	
 	@GetMapping("/community/pageCategory")
 	public String getpageCategory(Model model,@RequestParam(value = "num", defaultValue = "1") int num,
 											  @RequestParam(value = "ca_l") String ca_l) {
@@ -207,6 +244,7 @@ public class CommunityController {
 	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
 	        dto.setPreviewImageUrl(imageUrl);
 	    }
+		System.out.println(list);
 		view.addObject("categorys", categorys);
 		view.addObject("member",customUserDetails);
 		view.addObject("list",list);
@@ -232,13 +270,14 @@ public class CommunityController {
 		communityService.updateCount(mu_id);
 		
 		HeartDTO heartview = communityService.heartview(m_number, mu_id); 
-		 
+		
+		List<CategoryDTO> categorys = communityService.category(); 
 		
 		
 		
 		List<CommentDTO> lists  = communityService.selectComment(Integer.parseInt(mu_id));
 		view.addObject("member",customUserDetails);
-		
+		view.addObject("categorys", categorys);
 		view.addObject("comment",lists);
 		view.addObject("communityDetail", communityDetail);
 		view.addObject("heartview", heartview); 
@@ -252,6 +291,8 @@ public class CommunityController {
 	@GetMapping("/community/insertCommunity")
 	public String insertCommunity(Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<CategoryDTO> categorys = communityService.category();
+		model.addAttribute("categorys",categorys);
 		model.addAttribute("member",customUserDetails);
 		return "community/insertCommunity";
 	}
@@ -401,7 +442,7 @@ public class CommunityController {
 	 @ResponseBody
 	 @PostMapping("/updateComment")
 	 public String updateComment (@ModelAttribute CommentDTO CommentDTO ) {
-		 // String data= null;
+		 
 		 communityService.updateComment(CommentDTO);
 		 return "success";
 	 }

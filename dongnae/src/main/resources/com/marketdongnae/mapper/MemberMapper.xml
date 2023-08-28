@@ -8,8 +8,8 @@
 	</select>
 	
  	<select id="regist" parameterType="com.marketdongnae.domain.member.MemberDTO">	 
-		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id , do_id)
-		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}  ) ;
+		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id , do_id,  m_pic, m_picpath)
+		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}, #{m_pic}, #{m_picpath}  ) ;
 	</select>
 	
 	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 

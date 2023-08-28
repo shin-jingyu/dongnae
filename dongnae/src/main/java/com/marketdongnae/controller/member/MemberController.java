@@ -56,6 +56,7 @@ public class MemberController {
 	public void detail(Model model) {
 		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("member", customUserDetails);
+		System.out.println("##getM_pic###:"+customUserDetails.getM_pic());
 	}
 	
 	@PostMapping("detail/my_area")

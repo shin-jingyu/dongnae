@@ -123,6 +123,10 @@ public class GoodsController {
 				}
 	        }
 	    }
+	    // path 확인!!
+	    System.out.println("####:"+getFolder());
+	    
+	    
 	    goodsDTO.setG_picpath(getFolder());
 		goodsDTO.setG_pic01(picFileNames[0]);
 		goodsDTO.setG_pic02(picFileNames[1]);

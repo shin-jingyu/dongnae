@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>내 프로필</title>
 
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.ajax({
@@ -79,6 +78,7 @@
 <%-- <sec:authentication property="principal" var="member"/> --%>
 
 <jsp:include page="../header_member.jsp"></jsp:include>
+<%-- <jsp:include page="../common/Category.jsp"></jsp:include> --%>
 
  <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">

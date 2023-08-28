@@ -15,14 +15,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println("1번) CustomAuthenticationProvider에 들어와서 id, pwd 비교함");
 		//userName means m_id
 		String username = (String)authentication.getPrincipal();
 		String password = (String)authentication.getCredentials();
 		CustomUserDetails user = (CustomUserDetails)userDetilasService.loadUserByUsername(username);
 		
 		if(!matchPassword(password, user.getPassword())) {
-			System.out.println("1-1) pwd 틀리면 더 진행 안함");
 			throw new BadCredentialsException("비밀번호 틀림");
 		}
 		

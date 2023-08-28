@@ -94,5 +94,12 @@
 	<select id="countWishGoodsByG_id" resultType="int">
 		select count(*) from wishlist where g_id = #{g_id}
 	</select>
+	
+	<select id="getGoodsListOnSaleByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		 <![CDATA[
+			select * from goods 
+			where m_number = #{m_number}  AND g_status = '판매중'
+		]]>
+	</select>
 
 </mapper>    

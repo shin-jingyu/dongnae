@@ -25,6 +25,9 @@
 <link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
+<link rel="stylesheet" href="/resources/css/summernote-lite.css" type="text/css">
+
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 

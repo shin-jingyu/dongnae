@@ -7,6 +7,7 @@ console.log("Reply Module......");
 var replyService = (function() {
 
 	function add(keyword, callback, error) {
+		console.log("add reply,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 
 		$.ajax({
 			type : 'POST',
@@ -25,7 +26,7 @@ var replyService = (function() {
 			}
 		})
 	}
-	
+
 	function getList(param, callback, error) {
 		$.getJSON("/keywordapi/keyword.json",
 				function(data) {
@@ -42,7 +43,7 @@ var replyService = (function() {
 	function remove(rno, callback, error) {
 		$.ajax({
 			type : 'delete',
-			url : '/keywordapi/' + key_id,
+			url : '/replies/' + rno,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
 					callback(deleteResult);
@@ -56,6 +57,38 @@ var replyService = (function() {
 		});
 	}
 
+	function update(reply, callback, error) {
+		console.log("RNO : " + reply.rno);
+
+		$.ajax({
+			type : 'put',
+			url : '/replies/' + reply.rno,
+			data : JSON.stringify(reply),
+			contentType : "application/json; charset=UTF-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		});
+	}
+	
+	function get(rno, callback, error){
+		$.get("/replies/" + rno + ".json" , function(result){
+			if(callback){
+				callback(result);
+			}
+		}).fail(function(xhr,status,err){
+			if(error){
+				error();
+			}
+		});
+	}
 	
 	function displayTime(timeValue){
 		var today = new Date();
@@ -87,6 +120,8 @@ var replyService = (function() {
 		add : add,
 		getList : getList,
 		remove : remove,
+		update : update,
+		get	: get,
 		displayTime : displayTime
 	};
 })();

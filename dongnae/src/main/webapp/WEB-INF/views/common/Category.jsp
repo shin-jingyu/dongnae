@@ -16,6 +16,8 @@
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
+
+
 <!-- Css Styles -->
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
@@ -25,10 +27,11 @@
 <link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>
 var token = $("meta[name='_csrf']").attr('content');
 var header = $("meta[name='_csrf_header']").attr('content');
@@ -58,29 +61,8 @@ function fetchCategories() {
                 // 카테고리1 li 생성
                 category1List.forEach(function (categoryMain) {
                     var category1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
-                    var category2Container = $('<ul class="category2 category2Container"></ul>');
-                    
                     var listCategory1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
-
-                    listCategory1Item.on('click', function() {
-                        var categoryId = categoryMain.c1_id; // 카테고리 ID 가져오기
-                        var searchValue = document.querySelector(".searchName").textContent.trim();; // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
-                        var encodedSearchInput = encodeURIComponent(searchValue);
-                        console.log(searchValue)
-                        var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
-                        var query = "";
-                        
-                        if (searchValue != null) {
-                            query = encodedSearchInput +"?category=" + categoryId;
-                        } else {
-                            query = "?category=" + categoryId;
-                        }
-                        
-                        var newUrl = baseNewUrl + query;
-                        
-                        // 페이지 이동
-                        window.location.href = newUrl;
-                    });
+                    var category2Container = $('<ul class="category2 category2Container"></ul>');
                     
                     // filter 를 통해 category2 list 정리
                     var category2List = data.category_2.filter(function(category2) {
@@ -120,8 +102,6 @@ function fetchCategories() {
             }
         });
     }
-    
-    
 </script>
 
 <body>
@@ -139,6 +119,7 @@ function fetchCategories() {
 								    <input type="text" placeholder="What do you need?" name="search">
 								    <button type="submit" class="site-btn">SEARCH</button>
 								</form>
+								
 								<script>
 								document.getElementById("searchForm").addEventListener("submit", function(event) {
 								    event.preventDefault();

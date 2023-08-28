@@ -9,18 +9,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
 
 
 <body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
 	<jsp:include page="../common/Category.jsp"></jsp:include>
 
 
 <div style="display: flex;">	
-	<div style=" width: 15%; float: left; box-sizing: border-box;">
+	<div style=" width: 15%;   float: left; position: fixed ; box-sizing: border-box;">
 		
-		
+		<div class="container" >
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -34,9 +38,9 @@
 			</tbody>
 			
 			</table>
-
+		</div>
 	</div>
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+	<div class="container"  style="  width: 85%; margin-left:300px; float: right; box-sizing: border-box;">
 		${communityDetail.si_area } / ${communityDetail.ca_l }
 		<div class="card">	 
 		  

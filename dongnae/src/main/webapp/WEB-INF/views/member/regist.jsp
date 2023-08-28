@@ -131,7 +131,7 @@
 	                           		<h2>회원가입</h2>
 	                           	</div>
 	                        	<div class="row  my-3">
-	                            	<form id="regist" name="regist" action="regist" method="post" class="form-horizontal" enctype="multipart/form-data">
+	                            	<form id="regist" name="regist" action="regist" method="post" class="form-horizontal">
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		아이디
@@ -188,15 +188,7 @@
 												</select> 
 											</div>
 										</div>	
-										<div class="form-group row">
-											<div class="col-12 col-sm-4 align-self-center " >
-											    프로필 사진   		
-											</div>
-											<div class="col-12 col-sm-5 align-self-center">
-												<input type="file" name="uploadFile" multiple="multiple">
-											</div>	
-										</div>
-											
+									
 										 
 										
 										<div class="form-group  row">

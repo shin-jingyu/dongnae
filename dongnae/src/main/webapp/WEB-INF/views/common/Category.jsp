@@ -178,18 +178,10 @@ function fetchCategories() {
 	    </section>
     	<div style="z-index: 2;">
             <ul>
-                <li><a href="/">메인화면</a></li>
-                <li><a href="">about</a></li>
                 <li><a href="">카테고리</a>
                     <ul class="category1"></ul>
                 </li>
                 <li><a href="#">Review</a></li>
-                <li><a href="#">Gallery +</a>
-                    <ul>
-                        <li><a href="">grid gallery</a></li>
-                        <li><a href="">flex gallery</a></li>
-                    </ul>
-                </li>
             </ul>
     	</div>
         </nav>
@@ -198,9 +190,7 @@ function fetchCategories() {
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
         <div class="login_set">
-	         <a href="/goods/goods_insert">상품등록</a>
-	         <a href="/logout">Logout</a>
-	         <a href="/member/detail">마이페이지</a>
+	         <a href="../member/userDetail.jsp"><i class="fa fa-user"></i></a>
         </div>
          </sec:authorize>
     </header>
@@ -213,8 +203,6 @@ function fetchCategories() {
 	        <div class="header__cart__price">item: <span>$150.00</span></div>
 	    </div>
 	</div>
-    <div class="humberger__open">
-        <i class="fa fa-bars"></i>
-    </div>	
+    
 </body>
 </html>

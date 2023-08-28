@@ -227,7 +227,7 @@ li:hover {
     padding: 0;
     box-sizing: border-box; 
     font-family: 'TheJamsil';
-    text-transform: capitalize;
+    text-transform:lowercase;;
     text-decoration: none;
 
 }
@@ -291,11 +291,15 @@ header .navbar ul li ul{
     width: 200px;
     background: #ffffff;
     display: none;
+    border-style: solid;
+    border-color: #6098F2;
+    
 }
 
 header .navbar ul li ul li{
     width: 100%;
     border-top: 1px solid rgba(0, 0, 0, .1);
+    
 }
 
 header .navbar ul li ul li ul{
@@ -315,6 +319,12 @@ header .login_set{
 	position: fixed;
 	right: 20px;
 }
+
+@media screen and (max-width: 890px) {
+  .hero__search__form {
+    display: none;
+  }
+} 
 
 /*---------------------
   Helper CSS
@@ -902,7 +912,7 @@ transparent;
 	overflow: hidden;
 	margin-bottom: 30px;
 	position: absolute;
-	left: 600px
+	left: 300px
 }
 
 .hero__search__form {
@@ -3191,7 +3201,7 @@ transparent;
 		margin-bottom: 30px;
 	}
 	.hero__search__form {
-		width: 485px;
+		width: 400px;
 	}
 	.categories__slider.owl-carousel .owl-nav button {
 		left: -20px;

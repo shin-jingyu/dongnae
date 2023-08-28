@@ -22,5 +22,6 @@ public class MemberDTO {
 
 	private int do_id;
 	private String m_pic;
+	private String m_picpath;
 
 }

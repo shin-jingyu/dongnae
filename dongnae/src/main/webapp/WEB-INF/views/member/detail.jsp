@@ -158,6 +158,15 @@
 											</div>
 										</div>	
 										
+										<div class="form-group row">
+											<div class="col-12 col-sm-4 align-self-center " >
+											   프로필 사진  ${member.m_picpath} ### ${member.m_pic}
+											</div>
+											<div class="col-12 col-sm-5 align-self-center">
+												<img alt="" src="/resources/upload/member/${member.m_picpath}/${member.m_pic}"> 
+											</div>	
+										</div>
+										
 										<div class="form-group  row">
 										<div class="col-12  mt-3">
 						                    <input type="submit" class="btn btn-primary" value="수정 ">

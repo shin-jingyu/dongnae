@@ -7,19 +7,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
- 
+  
 <jsp:include page="../common/Category.jsp"></jsp:include>
 <div style="display: flex;">		
 	
-	<div style=" width: 15%; float: left; box-sizing: border-box;">
-		<div >
+	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
+	<div class="container" >
+	
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -30,18 +30,18 @@
 			</c:forEach>
 			</tbody>
 			</table>
-		</div>	
-	</div>  
 	
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+	</div>
+	</div>
 	
-	
-		<div>
-			<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">
+	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;" >
+	 <p class="text-dark fw-bold " >글작성</p>
+	<div class="card shadow" >
+		<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">
 				<input type="hidden" name="m_number" value="${member.m_number }">
-				<table class="table table-borderd table table-hover">
-				
-					<tr><td>
+				<table class=" table table-borderless align-middle table-hover">
+					<tr>
+					<td>
 						<label class="form-label">카테고리</label>
 						<select class="form-select" name="ca_id"  >
 							<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
@@ -50,7 +50,8 @@
 							<option value="4" ${ (ca_id == "4")? "selected" : "" }>맛집</option>
 							<option value="5" ${ (ca_id == "4")? "selected" : "" }>취미</option>
 							<option value="6" ${ (ca_id == "4")? "selected" : "" }>동네질문</option>
-						</select></td>
+						</select>
+					</td>
 					</tr>
 					<tr>
 						<td>제목: <input class="form-control" type="text" id="mu_name" name="mu_name"> </td>
@@ -59,7 +60,7 @@
 						<td>내용</td>
 					</tr>
 					<tr>
-						<td colspan="2"><textarea  class="summernote"  name="mu_detail" id="mu_detail"></textarea></td>
+						<td colspan="2"><textarea   name="mu_detail" id="mu_detail"></textarea></td>
 					</tr>
 					
 					<tr>
@@ -224,71 +225,6 @@ $(document).ready(function() {
 
 </script>
 
-<body>
-<jsp:include page="../common/Category.jsp"></jsp:include>
-<div style="display: flex;">		
-	
-	<div style=" width: 15%; float: left; box-sizing: border-box;">
-		<div >
-			<table class="table table-borderless">	
-			<thead>
-			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
-			</thead>
-			<tbody>		
-			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
-			</c:forEach>
-			</tbody>
-			</table>
-		</div>	
-	</div>  
-	
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
-	
-	
-		<h2>글쓰기</h2>
-		<P> 반갑습니다. ${member.m_id}님! </P>
-		<div>
-			<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">
-				<input type="hidden" name="m_number" value="${member.m_number }">
-				<table class="table table-borderd table table-hover">
-				
-					<tr><td>
-						<label class="form-label">카테고리</label>
-						<select name="ca_id"  >
-							<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
-							<option value="2" ${ (ca_id == "2")? "selected" : "" }>분실/실종</option>
-							<option value="3" ${ (ca_id == "3")? "selected" : "" }>일상</option>
-							<option value="4" ${ (ca_id == "4")? "selected" : "" }>맛집</option>
-							<option value="5" ${ (ca_id == "4")? "selected" : "" }>취미</option>
-							<option value="6" ${ (ca_id == "4")? "selected" : "" }>동네질문</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td>글제목<input type="text" id="mu_name" name="mu_name">
-						</td>
-					</tr>
-					<tr>
-						<td>글내용</td>
-					</tr>
-					<tr>
-						<td colspan="2"><textarea  class="summernote"  name="mu_detail" id="mu_detail"></textarea></td>
-					</tr>
-					
-					<tr>
-					
-						<td><input id="submits" type="submit" value="등록" ></td>
-					</tr>
-					
-				</table>
-			</form>
-			<button id="back" >목록으로</button>
-		</div>
-	
-	</div>  
- </div>  
-<jsp:include page="../common/footer.jsp"></jsp:include>	
-</body>
 
 
 </html>

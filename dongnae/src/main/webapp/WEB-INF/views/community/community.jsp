@@ -19,8 +19,6 @@
  
 <jsp:include page="../common/Category.jsp"></jsp:include>
 
-	
-
 <div style="display: flex;">
 
 	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
@@ -188,7 +186,7 @@
 	
  
  
-	 <a href="/community/page?key=1" class="btn btn-light" >더보기</a>
+	 <a href="/community/page?key=2" class="btn btn-light" >더보기</a>
  
   </div>
  </div> 

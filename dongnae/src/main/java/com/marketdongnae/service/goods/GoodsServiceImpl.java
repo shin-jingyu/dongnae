@@ -36,12 +36,12 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public Map<String, Object> getGoodsList(int m_number) {
+	public List<GoodsDTO> getGoodsList(int m_number) {
 		// TODO Auto-generated method stub
-		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("memberGoods", goodsMapper.getGoodsListByMemberNumber(m_number));
-		
-		return maps;
+//		Map<String, Object> maps = new HashMap<String, Object>();
+		List<GoodsDTO> list = goodsMapper.getGoodsListByMemberNumber(m_number);
+//		maps.put("memberGoods", goodsMapper.getGoodsListByMemberNumber(m_number));
+		return list;
 	}
 	
 	@Override

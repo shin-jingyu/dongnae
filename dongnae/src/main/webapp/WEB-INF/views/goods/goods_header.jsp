@@ -131,7 +131,7 @@
                             </div>
                             <sec:authentication property="principal" var="member"/>
                             <div class="header__top__right__auth">
-                                <a href="/member/login"><i class="fa fa-user"></i> Login</a>
+                                <a href="/login"><i class="fa fa-user"></i> Login</a>
                                  <sec:authorize access="isAuthenticated()">
                                  <a href="/goods/goods_insert">상품등록</a>
                                  <a href="/member/logout">Logout</a>

@@ -38,8 +38,8 @@ function check(){
 	 }
 };
 </script>
-<body>
 </head>
+<body>
 
 <sec:authentication property="principal" var="member"/>
 
@@ -85,13 +85,6 @@ function check(){
 												<input name="current_password" id="current_password" type="password" value="" class="form-control" required  maxlength="20">
 											</div>	
 										</div>
-										<div class="form-group row">
-											<div class="col-12 col-sm-4 align-self-center " ></div>
-											<div ${ (password.message == "wrongCurrent")? '' : 'style="display: none;"' }   
-											class="alert alert-danger align-self-center mb-3" role="alert" >
-											  현재 비밀번호를 잘못 입력하셨습니다.
-											</div>
-										</div>
 										
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
@@ -109,11 +102,6 @@ function check(){
 											<div class="col-12 col-sm-5 align-self-center">
 												<input  name="new_password_confirm" id="new_password_confirm" type="password" value="" class="form-control" required  maxlength="20">
 											</div>		
-										</div>
-										<div class="form-group row">
-											<div ${ (password.message == "WrongConfirm")? '' : 'style="display: none;"' }   class="alert alert-danger" role="alert"  class="mb-3">
-											  비밀번호가 서로 일치하지 않습니다.
-											</div>
 										</div>
 										
 	                        			<div class="form-group  row">

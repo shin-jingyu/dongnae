@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.ajax({
-			url:"/member/regist/do_area", 
+			url:"/regist/do_area", 
 			type: 'POST',
 			dataType: "json",
 			success: function(data){
@@ -29,7 +29,7 @@
 	function do_select(){
 		let doData = $("#do_id option:selected").val();
 		$.ajax({
-			url: '/member/regist/si_area',
+			url: '/regist/si_area',
 			type:'POST',
 			data: doData, 
 			contentType: 'application/json',  /* 이거 넣으니까 오류 해결: 여기는 보내는 do_id */ 
@@ -51,7 +51,7 @@
 	function checkId(){
 		let checkId = $("#m_id").val();
 		$.ajax({
-			url: '/member/checkId',
+			url: '/checkId',
 			type:'POST',
 			data: checkId,
 			success:function(response){
@@ -73,7 +73,7 @@
 		let checkId = $("#m_id").val();
 		 if($("#regist")[0].checkValidity()) {
 			$.ajax({
-				url: '/member/checkId_post',
+				url: '/checkId_post',
 				type:'POST',
 				data: checkId,
 				success:function(response){
@@ -131,7 +131,7 @@
 	                           		<h2>회원가입</h2>
 	                           	</div>
 	                        	<div class="row  my-3">
-	                            	<form id="regist" name="regist" action="regist" method="post" class="form-horizontal">
+	                            	<form id="regist" name="regist" action="regist" method="post" class="form-horizontal" enctype="multipart/form-data">
 										<div class="form-group row">
 											<div class="col-12 col-sm-4 align-self-center " >
 						                   		아이디
@@ -175,7 +175,6 @@
 											<div class="col-12 col-sm-5 align-self-center">
 												<input   name="m_phone"  type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"  class="form-control" required  maxlength="20" >
 											</div>	
-
 										</div>
 										<div class="form-group row">
 											<label class="col-sm-4">내 동네</label>
@@ -189,10 +188,20 @@
 												</select> 
 											</div>
 										</div>	
+										<div class="form-group row">
+											<div class="col-12 col-sm-4 align-self-center " >
+											    프로필 사진   		
+											</div>
+											<div class="col-12 col-sm-5 align-self-center">
+												<input type="file" name="uploadFile" multiple="multiple">
+											</div>	
+										</div>
+											
+										 
 										
 										<div class="form-group  row">
 										<div class="col-12  mt-3">
-						                    <input type="submit" class="btn btn-primary" onclick="checkId_post()" value="회원가입 ">
+						                    <input type="submit" class="btn btn-primary" value="회원가입 ">
 					                	</div> 
 					                	</div>
 									</form>

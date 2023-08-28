@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
@@ -29,6 +30,7 @@ import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
+import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
 
 import lombok.AllArgsConstructor;
@@ -42,52 +44,14 @@ import lombok.extern.log4j.Log4j;
 public class MemberController {
 	
 	private final MemberService memberService;
-	private final CustomAuthenticationProvider customAuthenticationProvider;
-	private final BCryptPasswordEncoder passwordEncoder;
+	private final GoodsService goodsService;
+//	private final CustomAuthenticationProvider customAuthenticationProvider;
+//	private final BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("test")
 	public void test(Model model) {
 		model.addAttribute("test", "test");	// 임시로
 	}
-	
-	@GetMapping("regist")
-	public void regist() {
-	}
-	
-	@PostMapping("regist")
-	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
-		memberService.regist(memberDTO);
-		return "login";		
-	}
-	
-	@PostMapping("checkId")
-	@ResponseBody
-	public String checkId(@RequestBody String checkId) {
-		String msg =  memberService.checkId(checkId.replace("=", ""));
-		return msg ; 
-	}
-	
-	@PostMapping("checkId_post")
-	@ResponseBody
-	public String checkId_post(@RequestBody String checkId) {
-		String msg =  memberService.checkId(checkId.replace("=", ""));
-		return msg ; 
-	}
-	
-	@PostMapping("regist/do_area")
-	@ResponseBody
-	public List<AllDTO> regist_do_area() {
-		 List<AllDTO> doList =  memberService.getDoList();
-		return doList;		
-	}
-
-	@PostMapping("regist/si_area")
-	@ResponseBody
-	public List<AllDTO> regist_si_area(@RequestBody int do_id) {
-		 List<AllDTO> siList =  memberService.getSiList(do_id);
-		return siList;		
-	}
-	
 	@GetMapping("detail")
 	public void detail(Model model) {
 		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -162,7 +126,9 @@ public class MemberController {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "onSale");
 		List<Deal_viewDTO> onSaleList = memberService.getDealPageList( customUserDetails, "onSale", pageDTO);
-		model.addAttribute("onSaleList", onSaleList);
+		List<GoodsDTO> goodsListOnSale = goodsService.getGoodsList(customUserDetails.getDo_id());
+		System.out.println(goodsListOnSale);
+		model.addAttribute("onSaleList", goodsListOnSale);
 		model.addAttribute("page", pageDTO);
 	}
 

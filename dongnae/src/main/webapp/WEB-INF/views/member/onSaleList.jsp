@@ -57,7 +57,7 @@
 		                        		<c:set var="g_id" value="${o.g_id}" />
 		                        		<div class="row col-12 col-md-11 container border my-3 rounded-5" style="float: none; margin: 0 auto;">
 		                        			<div class ="col-6 col-md-3 m-auto">
-		                        				<img src="https://image.istarbucks.co.kr/upload/store/skuimg/2021/08/[11123351]_20210803101044084.jpg" style="width: 100%" />
+		                        				<img src="/resources/upload/goods/${goods.g_picpath}/${goods.g_pic01 }" style="width: 100%" />
 		                        			</div>
 		                        			
 		                        			<div class ="col-12 col-md-9 my-auto">
@@ -82,7 +82,7 @@
 			                        				등록 일시
 			                        				</div>
 			                        				<div class="col-lg-8 col-md-6  col-sm-12 col-12 ">
-			                        				${o.d_regdate}
+			                        				${o.g_regdate}
 			                        				</div>
 			                        			</div>	
 			                        			<div class="row my-3 col-lg-3 col-md-6 col-sm-12  col-12">

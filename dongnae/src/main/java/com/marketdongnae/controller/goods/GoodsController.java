@@ -51,40 +51,32 @@ public class GoodsController {
 //		return goodsService.getGoodsList();
 //	}
 	@GetMapping(value = "search/{search}")
-
-	public String searchGoods(@PathVariable("search") String search, Model model,
-	        @RequestParam(name = "category", required = false) Integer category) {
+	public String searchGoods(@PathVariable(required = false) String search, Model model,
+	                          @RequestParam(name = "category", required = false) Integer category) {
 
 	    SearchDTO searchDTO = new SearchDTO();
-        searchDTO.setKeyword(search);
+
+	    if (search != null && !search.isEmpty()) {
+	        searchDTO.setKeyword(search);
+	    }
+
 	    if (category != null) {
 	        searchDTO.setCategory(category);
 	    }
+	    System.out.println(searchDTO);
 	    List<GoodsDTO> goodsList = goodsService.getSearchGoods(searchDTO);
 	    model.addAttribute("goodsLists", goodsList);
 	    model.addAttribute("search", search);
-
+	    System.out.println(goodsList);
 	    return "goods/goods_list";
 	}
-	
-	@GetMapping(value = "search/")
+
+	@GetMapping(value = "search")
 	public String searchGoodsNoSearch(Model model,
-	        @RequestParam(name = "category", required = false) Integer category) {
-
-	    SearchDTO searchDTO = new SearchDTO();
-
-
-	    if (category != null) {
-	        searchDTO.setCategory(category);
-	    }
-
-	    List<GoodsDTO> goodsList = goodsService.getSearchGoods(searchDTO);
-	    model.addAttribute("goodsLists", goodsList);
-
-	    return "goods/goods_list";
+	                                  @RequestParam(name = "category", required = false) Integer category) {
+	    return searchGoods(null, model, category);
+	
 	}
-	
-	
 
 	
 	@GetMapping(value = "/goods_detail/{g_id}")
@@ -152,15 +144,15 @@ public class GoodsController {
 	    return "/goods/getList";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "memberGetGoodsList" ,method = RequestMethod.POST)
-	public Map<String, Object> memberGoodsList(@RequestParam(value = "m_number",required=false) int m_number) {
-		Map<String, Object> maps = new HashMap<String, Object>();
-		
-		maps = goodsService.getGoodsList(m_number);
-		
-		return maps;
-	}
+//	@ResponseBody
+//	@RequestMapping(value = "memberGetGoodsList" ,method = RequestMethod.POST)
+//	public Map<String, Object> memberGoodsList(@RequestParam(value = "m_number",required=false) int m_number) {
+//		Map<String, Object> maps = new HashMap<String, Object>();
+//		
+//		maps = goodsService.getGoodsList(m_number);
+//		
+//		return maps;
+//	}
 	
 	
 	

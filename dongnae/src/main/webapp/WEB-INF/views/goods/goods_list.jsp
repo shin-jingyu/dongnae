@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-lg-9 col-md-7">
                     <div class="product__discount">
-                        <div class="section-title product__discount__title">
+                        <div class="section-title product__discount__title searchName">
                             <h2>${search }</h2>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
 					                            </ul>
 					                        </div>
 					                        <div class="featured__item__text">
-					                            <a class="move" href="<c:out value='goods/goods_detail/${goods.g_id}' />">
+					                            <a class="move" href="<c:out value='${pageContext.request.contextPath }/goods/goods_detail/${goods.g_id}' />">
 					                                <h6><c:out value="${goods.g_name }"/></h6>
 					                            </a>
 					                            <h5><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/>원</h5>

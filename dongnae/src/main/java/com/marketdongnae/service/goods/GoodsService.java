@@ -13,7 +13,7 @@ public interface GoodsService {
 	
 	List<GoodsDTO> getSearchGoods(SearchDTO search);
 	
-	Map<String, Object> getGoodsList(int m_number);
+	List<GoodsDTO> getGoodsList(int m_number);
 
 	void insertGoods(GoodsDTO goodsDTO);
 

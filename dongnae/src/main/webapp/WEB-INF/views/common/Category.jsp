@@ -75,7 +75,7 @@ function fetchCategories() {
                     
                     listCategory1Item.on('click', function() {
                         var categoryId = category1.c1_id; // 카테고리 ID 가져오기
-                        var searchValue = document.querySelector(".searchName").textContent.trim();; // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
+                        var searchValue = document.querySelector(".searchName").textContent.trim(); // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
                         var encodedSearchValue = encodeURIComponent(searchValue);
                         console.log(searchValue)
                         var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";

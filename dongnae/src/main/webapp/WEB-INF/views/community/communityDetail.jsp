@@ -9,74 +9,68 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- CSS only -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 </head>
 
 
 <body>
-	<h2>상세보기</h2>
-	<P>반갑습니다. ${member.m_id} 님!</P>
-	<div class="container">
-		<table class="table table-borderd table table-hover">
-			<tr>
-				<td>글이름</td>
-				<td>${communityDetail.mu_name }</td>
-			</tr>
-				
-			<tr>
-				<td>지역 ${sessionScope.m_number}</td>
-				<td>${communityDetail.si_area }</td>
-			</tr>
-			<tr>
-				<td>카테고리</td>
-				<td>${communityDetail.ca_l }</td>
-			</tr>
-			<tr>
-				<td>작성자</td>
-				<td>${communityDetail.m_id }</td>
-			</tr>
-			<tr>
-				<td>작성시간</td>
-				<td><fmt:formatDate value="${communityDetail.mu_data }" pattern="yyyy-MM-dd HH:mm" /></td>
-			</tr>
-			<tr>
-				<td colspan="2">글 내용</td>
-			</tr>
-			<tr>
-				<td colspan="2">${communityDetail.mu_detail }</td>
-			</tr>
+	<jsp:include page="../common/Category.jsp"></jsp:include>
 
-			<tr>
-				<td colspan="2" class="text-center"><a class="text-dark heart"
-					style="text-decoration-line: none;"> <img id="heart" width="30"
-						src="/resources/img/blog/icon/HeartF.png">좋아요</a>
+
+<div style="display: flex;">	
+	<div style=" width: 15%; float: left; box-sizing: border-box;">
+		
+		
+			<table class="table table-borderless">	
+			<thead>
+			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
+			</thead>
+			<tbody>		
+			
+			<c:forEach var="categorys" items="${categorys}"  >
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			</c:forEach>
+			
+			</tbody>
+			
+			</table>
+
+	</div>
+	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+		${communityDetail.si_area } / ${communityDetail.ca_l }
+		<div class="card">	 
+		  
+		  <div class="card-header">
+		   작성자 : ${communityDetail.m_id }
+		   <div style="float: right;"><fmt:formatDate value="${communityDetail.mu_data }" pattern="yy.MM.dd HH:mm" /></div>
+		  </div>
+		  <div class="card-header">
+		   제목 : ${communityDetail.mu_name }
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title"></h5>
+		    <p class="card-text">${communityDetail.mu_detail }</p>
+		   
+		  </div>
+		  <div class="card-footer text-muted">
+		   <a class="text-dark heart"style="text-decoration-line: none;"> 
+		   	<img id="heart" width="30" src="/resources/img/blog/icon/HeartF.png">좋아요
+		   </a>
 
 					
-					<button id="goBack" type="button" >목록으로</button>
+			<button class="btn btn-outline-info" id="goBack" type="button" >목록으로</button>
 					
 					
 					<!--작성자만 보이는 버튼   -->
 					<c:if test = '${member.m_id == communityDetail.m_id}'>
-					<button onclick="location.href='/community/updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
-					<button id="deleteCommunity" type="button">삭제하기</button>
+					<button class="btn btn-outline-info" onclick="location.href='/community/updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
+					<button class="btn btn-outline-info" id="deleteCommunity" type="button">삭제하기</button>
 					</c:if>
-				</td>
-			</tr>
-
-
+		  </div>
+		  <div class="card-footer text-muted">
 		
-		</table>
+		
+
 		<!-- 로그인 한사람만 댓글 작성가능  -->
 			<c:if test='${member.m_id != null}'>	
 				<form method="post" action="/comment">
@@ -85,44 +79,45 @@
 						<input type="hidden" name="m_number"value="${member.m_number}">
 						<input type="hidden" name="mu_id" value="${communityDetail.mu_id }">
 					</p>
-					<p>
-						<textarea rows="5" cols="50" name="com_c"></textarea>
+					<p class="input-group mb-3">
+						<textarea style="resize: none;" class="form-control" rows="5" cols="50" name="com_c"></textarea>
+						<button class="btn btn-outline-secondary" type="submit">댓글 작성</button>
 					</p>
-					<p>
-						<button type="submit">댓글 작성</button>
-					</p>
+					
 				</form>
 			</c:if>
-		
-			
+		 </div>
+		 <div class="card-footer text-muted">	
 			<c:forEach var="comment" items="${comment}"  >
-				<li>	
-					<input type="hidden" name="m_number"
-						   value="<sec:authentication property="principal.m_number"/>">
+					
+					<input type="hidden" name="m_number" value="${member.m_number}">
 					<input type="hidden" name="mu_id" value="${comment.mu_id }">
 					<input type="hidden" name="com_id" value="${comment.com_id }">
-					<p>	작성자: ${m_id} 작성시간: <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </p>
-					
-					<div id="modifyComment" >
-						<p>내용: <input id="updateid"  type="text" value="${comment.com_c}" readonly/>	
-							<button id ="buttony" hidden="true" data-com_id="${comment.com_id }" >완료</button>
-							<button id ="buttons" hidden="true" >취소</button>
-						</p>
-					</div>	
-					
+
+					<div id="modifyComment" style="margin-top:10px;" >
+					<p> 
+					<span > ${member.m_id}</span> 
+					<span style="margin-left: 320px;"> <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </span>
+					</p>
+					<p> <textarea  class="form-control " maxlength="100" style="width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
+					</div>
+	
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
 					<c:if test = '${member.m_number == comment.m_number}'>
-					<button type="button" class="updateComment" >댓글 수정</button>
-					<button type="button" id="deleteComments" class="deleteComment" data-com_id="${comment.com_id }">댓글 삭제</button>
+					<button type="button" class="btn btn-outline-info" id="updateComment" >댓글 수정</button>
+					<button type="button" class="btn btn-outline-info" id="deleteComments"  data-com_id="${comment.com_id }">댓글 삭제</button>
 					</c:if>
 					
-				</li>	
+				
 			</c:forEach>
-			
-			
+			</div>
+			 </div>
+		</div>
 		
-	</div>
+		
+	</div>	
 
+<jsp:include page="../common/footer.jsp"></jsp:include>
 
 </body>
 
@@ -159,7 +154,7 @@ $("#deleteCommunity").on('click',function(){
 
 
 //댓글 수정 버특 클릭시 
-$(".updateComment").on('click',function(){
+$("#updateComment").on('click',function(){
 	//댓글 수정 활성화
 	$('#updateid').attr('readonly',false);
 	//버튼보이기
@@ -191,7 +186,7 @@ $(".updateComment").on('click',function(){
 
 });
 // 댓글 삭제 
-$(".deleteComment").on('click',function(){
+$("#deleteComments").on('click',function(){
 	var com_id = $("#buttony").data("com_id");
 	var deletes= confirm("삭제하시겠습니까?");
 	$.ajax({

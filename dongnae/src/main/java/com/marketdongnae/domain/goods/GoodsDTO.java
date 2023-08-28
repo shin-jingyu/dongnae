@@ -8,7 +8,6 @@ import lombok.Data;
 public class GoodsDTO {
 	
 	private int g_id;
-	private int c1_id;
 	private int c2_id;
 	private int m_number;
 	private String g_name;

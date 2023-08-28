@@ -8,6 +8,17 @@
 	<sql id="available">
 		AND g_status = '판매중'
 	</sql>
+	
+	<sql id="categoryCheck">
+	    <trim prefix="AND" prefixOverrides="AND">
+	        c2_id = #{category}
+	    </trim>
+	</sql>
+	<sql id="categoryCheckConditionally">
+	    <if test="category != null">
+	        <include refid="categoryCheck"></include>
+	    </if>
+	</sql>
 
 
 	<select id="getGoodsList" resultType="com.marketdongnae.domain.goods.GoodsDTO">
@@ -25,14 +36,20 @@
 
 	<select id="getSearchGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 	    <![CDATA[
-	        SELECT * FROM goods WHERE g_name LIKE CONCAT('%', #{keyword}, '%')
+	        SELECT * FROM goods WHERE 1 = 1
 	    ]]>
-	    <include refid="available"></include>
 	    <if test="keyword != null">
 	        AND g_name LIKE CONCAT('%', #{keyword}, '%')
 	    </if>
 	    <if test="category != null and category != 0">
-	        AND c2_id = #{category}
+	        <choose>
+	            <when test="category &lt; 100">
+	                AND c1_id = #{category}
+	            </when>
+	            <otherwise>
+	                AND c2_id = #{category}
+	            </otherwise>
+	        </choose>
 	    </if>
 	    AND g_status = '판매중'
 	</select>
@@ -44,8 +61,8 @@
 
 	<insert id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
 		insert into goods (g_name, g_price, g_pic01, g_pic02,
-		g_pic03, c2_id , m_number , g_picpath , g_text)
-		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id},
+		g_pic03, c2_id, c1_id,  m_number , g_picpath , g_text)
+		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id}, #{c1_id},
 		#{m_number} , #{g_picpath}, #{g_text})
 	</insert>
 

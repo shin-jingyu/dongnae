@@ -13,6 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Ogani | Template</title>
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
@@ -28,7 +29,7 @@
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 <script>
 var token = $("meta[name='_csrf']").attr('content');
 var header = $("meta[name='_csrf_header']").attr('content');

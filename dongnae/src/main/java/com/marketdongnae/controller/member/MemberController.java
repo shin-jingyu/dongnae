@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
@@ -29,6 +30,7 @@ import com.marketdongnae.domain.member.PointDTO;
 import com.marketdongnae.domain.member.Si_areaDTO;
 import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
+import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
 
 import lombok.AllArgsConstructor;
@@ -42,8 +44,9 @@ import lombok.extern.log4j.Log4j;
 public class MemberController {
 	
 	private final MemberService memberService;
-	private final CustomAuthenticationProvider customAuthenticationProvider;
-	private final BCryptPasswordEncoder passwordEncoder;
+	private final GoodsService goodsService;
+//	private final CustomAuthenticationProvider customAuthenticationProvider;
+//	private final BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("test")
 	public void test(Model model) {
@@ -162,7 +165,9 @@ public class MemberController {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "onSale");
 		List<Deal_viewDTO> onSaleList = memberService.getDealPageList( customUserDetails, "onSale", pageDTO);
-		model.addAttribute("onSaleList", onSaleList);
+		List<GoodsDTO> goodsListOnSale = goodsService.getGoodsList(customUserDetails.getDo_id());
+		System.out.println(goodsListOnSale);
+		model.addAttribute("onSaleList", goodsListOnSale);
 		model.addAttribute("page", pageDTO);
 	}
 

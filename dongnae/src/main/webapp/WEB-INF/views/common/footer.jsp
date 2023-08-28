@@ -69,16 +69,11 @@
     
     <!-- Js Plugins -->
 
-  	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-	
-   
-
      <script src="/resources/js/summernote-ko-KR.js"></script>
     <script src="/resources/js/summernote-lite.js"></script>
     <script src="/resources/js/jquery-3.3.1.min.js"></script>
-
     <script src="/resources/js/bootstrap.min.js"></script>
     <script src="/resources/js/jquery.nice-select.min.js"></script>
     <script src="/resources/js/jquery-ui.min.js"></script>
@@ -87,9 +82,6 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
 
-   
-
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <!--     <script src="/resources/js/alarm.js"></script> -->
 

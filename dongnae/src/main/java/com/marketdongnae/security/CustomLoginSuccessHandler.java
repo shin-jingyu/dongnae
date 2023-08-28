@@ -31,7 +31,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		
 		log.warn("Login success");
-		System.out.println("3번) 성공하면 CustomLoginSuccessHandler로 감");
 
 		clearSession(request);
 		
@@ -74,19 +73,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		});
 		
-//		log.warn("ROLE NAMES : " + roleNames);
-//
-//		if (roleNames.contains("ROLE_ADMIN")) {
-//			response.sendRedirect("/");
-//			return;
-//		}
-//		if (roleNames.contains("ROLE_MEMBER")) {
-//			response.sendRedirect("/member/detail"); // test 용
-//			return;
-//		}
-//
-//		response.sendRedirect("/");
-//		System.out.println("이건 무슨 경우지?");
 	}
 	
 	  // 로그인 실패 후 성공 시 남아있는 에러 세션 제거

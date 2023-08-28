@@ -49,45 +49,6 @@ public class MemberController {
 	public void test(Model model) {
 		model.addAttribute("test", "test");	// 임시로
 	}
-	
-	@GetMapping("regist")
-	public void regist() {
-	}
-	
-	@PostMapping("regist")
-	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
-		memberService.regist(memberDTO);
-		return "login";		
-	}
-	
-	@PostMapping("checkId")
-	@ResponseBody
-	public String checkId(@RequestBody String checkId) {
-		String msg =  memberService.checkId(checkId.replace("=", ""));
-		return msg ; 
-	}
-	
-	@PostMapping("checkId_post")
-	@ResponseBody
-	public String checkId_post(@RequestBody String checkId) {
-		String msg =  memberService.checkId(checkId.replace("=", ""));
-		return msg ; 
-	}
-	
-	@PostMapping("regist/do_area")
-	@ResponseBody
-	public List<AllDTO> regist_do_area() {
-		 List<AllDTO> doList =  memberService.getDoList();
-		return doList;		
-	}
-
-	@PostMapping("regist/si_area")
-	@ResponseBody
-	public List<AllDTO> regist_si_area(@RequestBody int do_id) {
-		 List<AllDTO> siList =  memberService.getSiList(do_id);
-		return siList;		
-	}
-	
 	@GetMapping("detail")
 	public void detail(Model model) {
 		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

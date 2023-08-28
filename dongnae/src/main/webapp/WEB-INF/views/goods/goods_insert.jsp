@@ -97,7 +97,7 @@
                    		카테고리
                     </div>
                     <div class="form-floating col-12 col-md-3 my-3 align-self-center">
-                        <select class="form-select c1" id="floatingSelect" name="" >
+                        <select class="form-select c1" id="floatingSelect" name="c1_id" >
                             <!-- DB 에서 받아온 값 AJAX 처리 -->
                         </select>
                     </div>

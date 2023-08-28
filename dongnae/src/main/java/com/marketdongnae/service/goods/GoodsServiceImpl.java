@@ -36,12 +36,12 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 	
 	@Override
-	public List<GoodsDTO> getGoodsList(int m_number) {
+	public Map<String, Object> getGoodsList(int m_number) {
 		// TODO Auto-generated method stub
-//		Map<String, Object> maps = new HashMap<String, Object>();
-		List<GoodsDTO> list = goodsMapper.getGoodsListByMemberNumber(m_number);
-//		maps.put("memberGoods", goodsMapper.getGoodsListByMemberNumber(m_number));
-		return list;
+		Map<String, Object> maps = new HashMap<String, Object>();
+//		List<GoodsDTO> list = goodsMapper.getGoodsListByMemberNumber(m_number);
+		maps.put("memberGoods", goodsMapper.getGoodsListByMemberNumber(m_number));
+		return maps;
 	}
 	
 	@Override
@@ -88,6 +88,12 @@ public class GoodsServiceImpl implements GoodsService {
 	public int getCountWishGoods(int g_id) {
 		// TODO Auto-generated method stub
 		return goodsMapper.countWishGoodsByG_id(g_id);
+	}
+
+	@Override
+	public List<GoodsDTO> getGoodsListOnSaleList(int m_number) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getGoodsListOnSaleByMemberNumber(m_number);
 	}
 	
 	

@@ -320,6 +320,12 @@ header .login_set{
 	right: 20px;
 }
 
+@media screen and (max-width: 890px) {
+  .hero__search__form {
+    display: none;
+  }
+} 
+
 /*---------------------
   Helper CSS
 -----------------------*/
@@ -906,7 +912,7 @@ transparent;
 	overflow: hidden;
 	margin-bottom: 30px;
 	position: absolute;
-	left: 600px
+	left: 300px
 }
 
 .hero__search__form {
@@ -3195,7 +3201,7 @@ transparent;
 		margin-bottom: 30px;
 	}
 	.hero__search__form {
-		width: 485px;
+		width: 400px;
 	}
 	.categories__slider.owl-carousel .owl-nav button {
 		left: -20px;

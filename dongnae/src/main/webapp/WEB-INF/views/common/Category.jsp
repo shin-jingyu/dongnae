@@ -202,8 +202,6 @@ function fetchCategories() {
 	        <div class="header__cart__price">item: <span>$150.00</span></div>
 	    </div>
 	</div>
-    <div class="humberger__open">
-        <i class="fa fa-bars"></i>
-    </div>	
+    
 </body>
 </html>

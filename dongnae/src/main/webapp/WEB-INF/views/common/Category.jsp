@@ -56,22 +56,33 @@ function fetchCategories() {
                 category1Container.empty();
 
                 // 카테고리1 li 생성
-                category1List.forEach(function (categoryMain) {
-                    var category1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
-                    var category2Container = $('<ul class="category2 category2Container"></ul>');
+                category1List.forEach(function (category1) {
+                    var category1Item = $('<li><a href="#">' + category1.c1_category + '</a></li>');
+                	var category2Container = $('<ul class="category2 category2Container"></ul>');
                     
-                    var listCategory1Item = $('<li><a href="#">' + categoryMain.c1_category + '</a></li>');
-
+                    var listCategory1Item = $('<li><a href="#">' + category1.c1_category + '</a></li>');
+					
+                    category1Item.on('click', function(){
+                    	var categoryId = category1.c1_id; // 카테고리 ID 가져오기
+                    	var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+                   	 	var query = "";
+                   	 	query = "?category=" + categoryId;
+	                   	 var newUrl = baseNewUrl + query;
+	                     
+	                     // 페이지 이동
+	                     window.location.href = newUrl;
+                    })
+                    
                     listCategory1Item.on('click', function() {
-                        var categoryId = categoryMain.c1_id; // 카테고리 ID 가져오기
+                        var categoryId = category1.c1_id; // 카테고리 ID 가져오기
                         var searchValue = document.querySelector(".searchName").textContent.trim();; // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
-                        var encodedSearchInput = encodeURIComponent(searchValue);
+                        var encodedSearchValue = encodeURIComponent(searchValue);
                         console.log(searchValue)
                         var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
                         var query = "";
                         
                         if (searchValue != null) {
-                            query = encodedSearchInput +"?category=" + categoryId;
+                            query = encodedSearchValue +"?category=" + categoryId;
                         } else {
                             query = "?category=" + categoryId;
                         }
@@ -81,30 +92,37 @@ function fetchCategories() {
                         // 페이지 이동
                         window.location.href = newUrl;
                     });
-                    
                     // filter 를 통해 category2 list 정리
                     var category2List = data.category_2.filter(function(category2) {
-                        return category2.c1_id === categoryMain.c1_id;
+                        return category2.c1_id === category1.c1_id;
                     });
-
-                    category1Item.append(category2Container);
+                    
+                    
 
                     category1Item.on('mouseover', function () {
                     	// 기존의 category2Container 비우기
-                        category2Container.empty(); 
+//                         category2Item.empty(); 
                         
                         if (category2List.length > 0) {
                             category2List.forEach(function (category2) {
                                 var category2Item = $('<li><a href="#">' + category2.c2_category + '</a></li>');
                                 category2Container.append(category2Item);
+                                category2Item.on('click', function() {
+                                    var categoryId = category2.c2_id; // 카테고리 ID 가져오기
+                                    var baseNewUrl = "/goods/search/"; // 상대 경로로 URL 설정
+                                    var query = "?category=" + categoryId;
+                                    var newUrl = baseNewUrl + query;
+
+                                    // 페이지 이동
+                                    window.location.href = newUrl;
+                                });
+
                             });
                         }
                     });
+                    category1Item.append(category2Container);
                     
-//                     listCategory1Item.onclick(function(){
-                    
-//                     })
-
+                   
 //                     category1Item.on('mouseout', function () {
 //                         category2Container.empty();
 //                     });
@@ -114,6 +132,7 @@ function fetchCategories() {
                     category1Container.append(category1Item);
                     
                 });
+                
             },
             error: function (xhr, status, error) {
                 alert("데이터 안불러와지는중");
@@ -177,7 +196,7 @@ function fetchCategories() {
 	<div class="col-lg-3">
 	    <div class="header__cart">
 	        <ul>
-	            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+	            <li><a href="#"><i class="fa fa-heart"></i> <span>1++</span></a></li>
 	            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 	        </ul>
 	        <div class="header__cart__price">item: <span>$150.00</span></div>

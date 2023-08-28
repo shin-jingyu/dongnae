@@ -51,6 +51,7 @@ public class GoodsController {
 //		return goodsService.getGoodsList();
 //	}
 	@GetMapping(value = "search/{search}")
+
 	public String searchGoods(@PathVariable("search") String search, Model model,
 	        @RequestParam(name = "category", required = false) Integer category) {
 
@@ -84,6 +85,7 @@ public class GoodsController {
 	}
 	
 	
+
 	
 	@GetMapping(value = "/goods_detail/{g_id}")
 	public String goods_detail_get(@PathVariable("g_id") int g_id, Model model) {

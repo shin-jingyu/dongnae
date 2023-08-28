@@ -8,17 +8,6 @@
 	<sql id="available">
 		AND g_status = '판매중'
 	</sql>
-	
-	<sql id="categoryCheck">
-	    <trim prefix="AND" prefixOverrides="AND">
-	        c2_id = #{category}
-	    </trim>
-	</sql>
-	<sql id="categoryCheckConditionally">
-	    <if test="category != null">
-	        <include refid="categoryCheck"></include>
-	    </if>
-	</sql>
 
 
 	<select id="getGoodsList" resultType="com.marketdongnae.domain.goods.GoodsDTO">
@@ -36,8 +25,9 @@
 
 	<select id="getSearchGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 	    <![CDATA[
-	        SELECT * FROM goods WHERE 1 = 1
+	        SELECT * FROM goods WHERE g_name LIKE CONCAT('%', #{keyword}, '%')
 	    ]]>
+	    <include refid="available"></include>
 	    <if test="keyword != null">
 	        AND g_name LIKE CONCAT('%', #{keyword}, '%')
 	    </if>

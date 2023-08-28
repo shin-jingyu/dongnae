@@ -21,5 +21,6 @@ public class MemberDTO {
 	private String m_auth		;
 
 	private int do_id;
+	private String m_pic;
 
 }

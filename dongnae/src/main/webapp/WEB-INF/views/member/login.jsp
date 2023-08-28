@@ -80,7 +80,7 @@
 	                        			<div class="form-group  row">
 						                	<div class="col-12 mt-3 mb-5  text-center">
 							                    <button type="submit" class="btn btn-success ">로그인</button>
-							                    <a class="btn btn-success" href="/member/regist">회원가입</a>
+							                    <a class="btn btn-success" href="/regist">회원가입</a>
 						                	</div> 
 					                	</div>
 	                        	

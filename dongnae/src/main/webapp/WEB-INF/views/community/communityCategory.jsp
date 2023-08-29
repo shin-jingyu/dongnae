@@ -33,8 +33,8 @@
     
 <div style="display: flex;">	
 
-	<div  style=" width: 15%;  float: left  ; position: fixed ;box-sizing: border-box;">
-		<div class="container"  >
+	<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+	 	<div class="container" style="margin-left:50px;margin-top:100px;">
 			<table class="table table-borderless">	
 				<thead>
 					<tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -47,7 +47,7 @@
 			</table>
 		</div>
 	</div>
-	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box; margin-top:100px;" >
+	<div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;" >
 	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >

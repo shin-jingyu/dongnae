@@ -33,10 +33,9 @@
     </section>
 
 <div style="display: flex;">	
-	<div style=" width: 15%;   float: left; position: fixed ; box-sizing: border-box;">
-		
-		<div class="container" >
-			<table class="table table-borderless">	
+	<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+		<div class="container" style="margin-left:50px;margin-top:100px;">
+		<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
 			</thead>
@@ -51,7 +50,7 @@
 			</table>
 		</div>
 	</div>
-	<div class="container"  style="  width: 85%; margin-left:300px; float: right; box-sizing: border-box;margin-top:100px;">
+	<div class="container"  style="  width: 85%;  float: right; box-sizing: border-box;margin-top:100px;">
 		${communityDetail.si_area } / ${communityDetail.ca_l }
 		<div class="card">	 
 		  

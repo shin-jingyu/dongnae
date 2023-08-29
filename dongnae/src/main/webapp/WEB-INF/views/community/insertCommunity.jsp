@@ -28,9 +28,9 @@
     </section>
 <div style="display: flex;">		
 	
-	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
-	<div class="container" >
-	
+<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+	<div class="container" style="margin-left:50px;margin-top:100px;">
+
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -45,7 +45,7 @@
 	</div>
 	</div>
 	
-	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;margin-top:100px;" >
+	<div  class="container" style=" width: 85%;  box-sizing: border-box;margin-top:100px;" >
 	 <p class="text-dark fw-bold " >글작성</p>
 	<div class="card shadow" >
 		<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">

@@ -32,10 +32,10 @@
     </section>
 <div style="display: flex;">
 
-	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box; ">
+	<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
 
 
-		<div class="container" >
+		<div class="container" style="margin-left:50px;margin-top:100px;">
 
 		<div >
 			<table class="table table-borderless">	
@@ -59,8 +59,10 @@
 	</div>
 	</div>
 
-	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box; margin-top:100px;" >
-	<div class="container"  style="float: right; width: 400px;" >
+	<div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;" >
+		
+		
+		<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >
 		      <select class="form-select" name="searchType" id="searchType" style="width: 120px; ">
@@ -85,7 +87,7 @@
 			
 			
 		
-	
+	<div class="container"  >
 	 <p class="text-dark fw-bold " style="margin-top:30px;">최신게시물</p>
 	<div class="card shadow" >
 		
@@ -201,7 +203,7 @@
  
   </div>
  </div> 
-		
+</div>		
 	 </div> 	
 		
 <jsp:include page="../common/footer.jsp"></jsp:include>	

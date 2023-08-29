@@ -19,7 +19,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
 	<jsp:include page="../common/Category.jsp"></jsp:include>
-
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+                    <div class="breadcrumb__text">
+                   <h2 >Community</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <div style="display: flex;">	
 	<div style=" width: 15%;   float: left; position: fixed ; box-sizing: border-box;">
@@ -40,7 +51,7 @@
 			</table>
 		</div>
 	</div>
-	<div class="container"  style="  width: 85%; margin-left:300px; float: right; box-sizing: border-box;">
+	<div class="container"  style="  width: 85%; margin-left:300px; float: right; box-sizing: border-box;margin-top:100px;">
 		${communityDetail.si_area } / ${communityDetail.ca_l }
 		<div class="card">	 
 		  

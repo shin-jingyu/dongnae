@@ -20,7 +20,18 @@
 
 <jsp:include page="../common/Category.jsp"></jsp:include>
 
-
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+                    <div class="breadcrumb__text">
+                   <h2 >Community</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <div style="display: flex;">		
 	
 	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
@@ -39,7 +50,7 @@
 	</div>
 
 <c:if test="${key==1}">		
- <div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;" >
+ <div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box; margin-top:100px;" >
 	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >
@@ -62,7 +73,7 @@
 	 <p class="text-dark fw-bold">최신게시물</p>
 	<div class="card shadow" >
 		
-		<table class=" table table-borderless align-middle table-hover">
+		<table class=" table table-borderless align-middle table-hover" >
 			<thead class=" text-center">
 				<tr>
 					<th>지역</th>
@@ -151,7 +162,7 @@
  </c:if>
  
 <c:if test="${key==2}">
-	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;" >
+	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box; margin-top:100px;" >
 	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >

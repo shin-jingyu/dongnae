@@ -303,8 +303,8 @@ header .navbar ul li ul li{
 }
 
 header .navbar ul li ul li ul{
-    left: 200px;
-    top: 0px;
+    left: 195px;
+    top: -4px;
 }
 
 header .navbar ul li:focus-within > ul,
@@ -326,6 +326,11 @@ header .login_set{
   }
 } 
 
+
+#images_container{
+	width: 500px;
+	height: auto;
+}
 /*---------------------
   Helper CSS
 -----------------------*/

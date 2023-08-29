@@ -65,6 +65,24 @@
         }
     });
 }
+	
+	
+	function setDetailImage(event){
+		for(var image of event.target.files){
+			var reader = new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.createElement("img");
+				img.setAttribute("src", event.target.result);
+				img.setAttribute("class", "col-lg-6");
+				document.querySelector("div#images_container").appendChild(img);
+			};
+			
+			console.log(image);
+			reader.readAsDataURL(image);
+		}
+	}
+
 </script>
 <body>
 	 <sec:authentication property="principal" var="member"/>
@@ -74,7 +92,17 @@
 		<div class="container mx-auto" style="width: 80%;">
 			<form action="goods_insert" method="POST" enctype="multipart/form-data">
 				<input type="hidden" value="${member.m_number }" name="m_number">
-				<input type="file" name="uploadFile" multiple="multiple">
+				<div class="form-group">
+	 
+</div>
+
+										
+<div class="form-group">
+	<input class="form-control form-control-user" type="file" multiple="multiple"
+	name="product_detail_image" id="product_detail_image" onchange="setDetailImage(event);">
+	
+</div>
+<div id="images_container"></div>
 				<div class="row my-3">
 					<div class="col-12 col-md-4 align-self-center my-3" style="font-size: 1.5rem;">
                    		상품명

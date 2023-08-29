@@ -190,7 +190,7 @@ function fetchCategories() {
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
         <div class="login_set">
-	         <a href="../member/userDetail.jsp"><i class="fa fa-user"></i></a>
+	         <a href="/member/detail"><i class="fa fa-user"></i></a>
         </div>
          </sec:authorize>
     </header>

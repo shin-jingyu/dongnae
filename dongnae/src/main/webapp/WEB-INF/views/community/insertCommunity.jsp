@@ -8,18 +8,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  
 </head>
-
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-  
+ 
 <jsp:include page="../common/Category.jsp"></jsp:include>
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+                    <div class="breadcrumb__text">
+                   <h2 >Community</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <div style="display: flex;">		
 	
-	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
-	<div class="container" >
-	
+<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+	<div class="container" style="margin-left:50px;margin-top:100px;">
+
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -34,7 +45,7 @@
 	</div>
 	</div>
 	
-	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;" >
+	<div  class="container" style=" width: 85%;  box-sizing: border-box;margin-top:100px;" >
 	 <p class="text-dark fw-bold " >글작성</p>
 	<div class="card shadow" >
 		<form method="post" action="/community/insertCommunity" enctype="multipart/form-data">
@@ -60,7 +71,7 @@
 						<td>내용</td>
 					</tr>
 					<tr>
-						<td colspan="2"><textarea   name="mu_detail" id="mu_detail"></textarea></td>
+						<td ><textarea  name="mu_detail" id="mu_detail"></textarea></td>
 					</tr>
 					
 					<tr>
@@ -83,47 +94,46 @@ $(document).ready(function() {
 
 	
 	var setting = {
-		
-					 height : 500,
-			            minHeight : null,
-			            maxHeight : null,
-			            focus : true,
-			            lang : 'ko-KR',
-			            toolbar: [
-			                ['style', ['style']],
-			                ['font', ['bold', 'underline', 'clear']],
-			                ['color', ['color']],
-			                ['para', ['ul', 'ol', 'paragraph']],
-			                ['table', ['table']],
-			                ['insert', ['link', 'picture', 'video']],
-			                ['view', ['fullscreen', 'codeview', 'help']]
-			              ],
-            //콜백 함수
-            callbacks : { 
-            	onImageUpload : function(files, editor, welEditable) {
-            // 파일 업로드(다중업로드를 위해 반복문 사용)
-            	for (var i = files.length - 1; i >= 0; i--) {
-            		uploadSummernoteImageFile(files[i],this);
-            		}
-            	},
-            	onMediaDelete: function ($target, editor, $editable) {
-                    if (confirm('이미지를 삭제 하시겠습니까?')) {
-                        var deletedImageUrl = $target
-                            .attr('src')
-                            .split('/')
-                            .pop()
-						
-                            
-                        // ajax 함수 호출
-                        deleteSummernoteImageFile(deletedImageUrl)
-                       
-                    }
-                }
-			   }
-            };
-        
-	
-    $('#mu_detail').summernote(setting);
+			
+			 height : 500,
+	            minHeight : null,
+	            maxHeight : null,
+	            focus : true,
+	            lang : 'ko-KR',
+	            toolbar: [
+	                ['style', ['style']],
+	                ['font', ['bold', 'underline', 'clear']],
+	                ['color', ['color']],
+	                ['para', ['ul', 'ol', 'paragraph']],
+	                ['table', ['table']],
+	                ['insert', ['link', 'picture', 'video']],
+	                ['view', ['fullscreen', 'codeview', 'help']]
+	              ],
+					   //콜백 함수
+					   callbacks : { 
+					   	onImageUpload : function(files, editor, welEditable) {
+					   // 파일 업로드(다중업로드를 위해 반복문 사용)
+					   	for (var i = files.length - 1; i >= 0; i--) {
+					   		uploadSummernoteImageFile(files[i],this);
+					   		}
+					   	},
+					   	onMediaDelete: function ($target, editor, $editable) {
+					           if (confirm('이미지를 삭제 하시겠습니까?')) {
+					               var deletedImageUrl = $target
+					                   .attr('src')
+					                   .split('/')
+					                   .pop()
+									
+					                   
+					               // ajax 함수 호출
+					               deleteSummernoteImageFile(deletedImageUrl)
+					              
+					           }
+					       }
+						   }
+					   };
+	$("#mu_detail").summernote('code',  '${community.mu_detail }');  
+	$('#mu_detail').summernote(setting);
     
     function deleteSummernoteImageFile(imageName) {
     	
@@ -148,6 +158,8 @@ $(document).ready(function() {
         
     };
 
+    
+    
     function uploadSummernoteImageFile(file, el) {
     	data = new FormData();
     	data.append("file", file);
@@ -160,14 +172,14 @@ $(document).ready(function() {
     		dataType:"json",
     		processData : false,
     		success : function(data) {
+    			console.log(data);
     			$(el).summernote('editor.insertImage', data.url);
-    			
+    			console.log(data);
     		}
     	});
     	
     };	
     
-   
 
    
 

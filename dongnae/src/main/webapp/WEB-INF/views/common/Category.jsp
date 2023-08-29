@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 
 <script>
 var token = $("meta[name='_csrf']").attr('content');
@@ -132,7 +132,7 @@ function fetchCategories() {
                 <li><a href="">카테고리</a>
                     <ul class="category1"></ul>
                 </li>
-                <li><a href="#">Review</a></li>
+                <li><a href="/community/main">커뮤니티</a></li>
             </ul>
     	</div>
         </nav>

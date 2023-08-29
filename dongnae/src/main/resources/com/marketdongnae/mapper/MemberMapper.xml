@@ -35,8 +35,20 @@
 		select * from member where m_id = #{m_id}
 	</select>
 	
-	
 	<select id="updateMember" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
+		update member
+			set 
+				m_name = #{m_name}, 
+				m_email = #{m_email}, 
+				m_phone=#{m_phone}, 
+				si_id = #{si_id},
+				do_id = #{do_id},
+				m_pic = #{m_pic},
+				m_picpath = #{m_picpath}
+		where m_number = #{m_number}
+	</select>
+	
+	<select id="updateMember_noPhoto" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set 
 				m_name = #{m_name}, 
@@ -80,7 +92,6 @@
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
 	
-	
 	<select id="updatePoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set m_point = #{m_point}
@@ -92,18 +103,26 @@
 		 values (  #{m_number} ,  #{p_type} , #{p_price} ) ;
 	</select>
 	
-	<insert id="insertKeyword">
+	<insert id="insertKeyword"  parameterType="com.marketdongnae.domain.member.KeywordDTO">
 		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
 	</insert>
 	
-	<select id="getListKeyword">
-		<![CDATA[
-			select * from keyword where key_id > 0
-		]]>
+	<select id="getListKeyword" resultType="com.marketdongnae.domain.member.KeywordDTO">
+		<!-- <![CDATA[ -->
+		select * from keyword where m_number = #{m_number} ;
+		<!-- ]]> -->
 	</select>
 	
-	<delete id="deleteKeyword">
-		delete from keyword where key_id = #{key_id}
+	<delete id="deleteKeyword" parameterType="int">
+		delete from keyword where key_id = #{key_id};
 	</delete>
+	
+	
+	<select id="getListKeywordItem" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+	<![CDATA[ 
+		select * from goods where g_name like #{g_name} and #{key_regdate} < g_regdate ;
+	]]>
+	</select>
+	
 	
 </mapper> 

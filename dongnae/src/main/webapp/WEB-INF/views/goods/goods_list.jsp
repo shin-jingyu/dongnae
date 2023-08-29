@@ -8,16 +8,88 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- Css Styles -->
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
 </head>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+
+$(function(){
+	var token = $("meta[name='_csrf']").attr('content');
+	var header = $("meta[name='_csrf_header']").attr('content');
+    if(token && header) {
+        $(document).ajaxSend(function(event, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+    }
+	getListCategoryAjax();
+
+})
+		 
+function getListCategoryAjax() {
+	    $.ajax({
+	        url: '/api/getCategories',
+	        type: 'post',
+	        dataType: 'json',
+	        success: function (data) {
+	            var listContainer1 = $('.list_category');
+	            var listCategory1 = data.category_1;
+				
+	            listCategory1.forEach(function(category1){
+	            	var list1 = $('<li><h5>' + category1.c1_category + '</h5></li>');
+	            	var listContainer2;	
+	            	
+	            	var listCategory2 = data.category_2.filter(function(category2){
+	            		return category2.c1_id === category1.c1_id;	
+	            	});
+	            	
+	            	list1.mouseover(function(){
+	            		if(!listContainer2){
+	            			listContainer2 = $('<ul class = "list_category2"></ul>');
+	            			
+	            		listCategory2.forEach(function(category2){
+	            			var category2Id = category2.c2_id;
+	            			var list2 = $('<li><a href="${pageContext.request.contextPath }/goods/search/?category=' + category2Id + '">' + category2.c2_category + '</a></li>');
+	            			listContainer2.append(list2);	
+	            		});	
+							list1.append(listContainer2);	            		
+	            		}	
+	            		listContainer2.css('display','block');
+	            	});
+	            	listContainer1.append(list1);
+	            	
+	            	list1.on('click', function() {
+                        var categoryId = category1.c1_id; // 카테고리 ID 가져오기
+                        var searchValue = document.querySelector(".searchName").textContent.trim(); // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
+//                         var encodedSearchValue = encodeURIComponent(searchValue);
+//                         console.log(searchValue)
+//                         var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+//                         var query = "";
+                        
+//                         if (searchValue != null) {
+//                             query = encodedSearchValue +"?category=" + categoryId;
+//                         } else {
+//                             query = "?category=" + categoryId;
+//                         }
+                        
+//                         var newUrl = baseNewUrl + query;
+                        
+//                         // 페이지 이동
+//                         window.location.href = newUrl;
+
+							console.log(searchValue);
+
+                    });
+	            });
+	            listContainer1.mouseout(function () {
+	                $('.list_category2').css('display', 'none');
+	            });
+	            
+	        },
+	        error: function (xhr, status, error) {
+	        }
+	    });
+	}
+</script>
 <body>
 	<jsp:include page="../common/Category.jsp"></jsp:include>
 	
@@ -34,8 +106,7 @@
                             </div>
                             <hr>
                             <h4>카테고리</h4>
-                            <ul class="list_category">
-                            </ul>
+                            <ul class="list_category"></ul>
                         </div>
                     </div>
                 </div>
@@ -64,7 +135,7 @@
                         </div>
                     </div>
                     <!-- 상품 리스트 -->
-                       <div class="row">
+                       <div class="row goodsList">
 					    <c:choose>
 					        <c:when test="${not empty goodsLists}">
 					            <c:forEach items="${goodsLists}" var="goods">

@@ -98,9 +98,7 @@
 
 										
 <div class="form-group">
-	<input class="form-control form-control-user" type="file" multiple="multiple"
-	name="product_detail_image" id="product_detail_image" onchange="setDetailImage(event);">
-	
+	<input class="form-control form-control-user" type="file" multiple="multiple" name="uploadFile" id="product_detail_image" onchange="setDetailImage(event);">
 </div>
 <div id="images_container"></div>
 				<div class="row my-3">

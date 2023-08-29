@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+
 
 <script>
 var token = $("meta[name='_csrf']").attr('content');
@@ -44,55 +44,86 @@ $(function(){
 })
 		 
 function fetchCategories() {
-	    $.ajax({
-	        url: '/api/getCategories',
-	        type: 'post',
-	        dataType: 'json',
-	        success: function (data) {
-	            var category1Container = $('.category1');
-	            var category1List = data.category_1;
-				
-	            category1List.forEach(function (category1) {
-	            	// main header category
-	            	var category1Id = category1.c1_id; 
-	            	var category1Item = $('<li><a href="${pageContext.request.contextPath }/goods/search/?category=' + category1Id + '">' + category1.c1_category + '</a></li>');
-	                var category2Container;
+        $.ajax({
+            url: '/api/getCategories',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                var category1Container = $('.category1');
+                var listCategortContainer1 = $('.list_category');
+                var category1List = data.category_1;
+                
+                category1Container.empty();
+
+                // 카테고리1 li 생성
+                category1List.forEach(function (category1) {
+                    var category1Item = $('<li><a href="#">' + category1.c1_category + '</a></li>');
+                	var category2Container = $('<ul class="category2 category2Container"></ul>');
+                    
+                    var listCategory1Item = $('<li><a href="#">' + category1.c1_category + '</a></li>');
 					
-	                var category2List = data.category_2.filter(function (category2) {
-	                    return category2.c1_id === category1.c1_id;
-	                });
-	
-	                category1Item.mouseover(function () {
-	                    if (!category2Container) {
-	                        category2Container = $('<ul class="category2"></ul>');
-	
-	                        category2List.forEach(function (category2) {
-	                        	var category2Id = category2.c2_id;
-	                            var category2Item = $('<li><a href="${pageContext.request.contextPath }/goods/search/?category=' + category2Id + '">' + category2.c2_category + '</a></li>');
-	                            category2Container.append(category2Item);
-	                        });
-	
-	                        category1Item.append(category2Container);
-	                    }
-	                    category2Container.css('display', 'block');
-	                });
-	
-	                category1Container.append(category1Item); 
-	                // header category end
-	                
-	                
-	                
-	            });
-	            
-	            category1Container.mouseout(function () {
-	                $('.category2').css('display', 'none');
-	            });
-	
-	        },
-	        error: function (xhr, status, error) {
-	        }
-	    });
-	}
+                    category1Item.on('click', function(){
+                    	var categoryId = category1.c1_id; // 카테고리 ID 가져오기
+                    	var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+                   	 	var query = "";
+                   	 	query = "?category=" + categoryId;
+	                   	 var newUrl = baseNewUrl + query;
+	                     
+	                     // 페이지 이동
+	                     window.location.href = newUrl;
+                    })
+                    
+                    
+                    // filter 를 통해 category2 list 정리
+                    var category2List = data.category_2.filter(function(category2) {
+                        return category2.c1_id === category1.c1_id;
+                    });
+                    
+                    
+
+                    category1Item.on('mouseover', function () {
+                    	// 기존의 category2Container 비우기
+//                         category2Item.empty(); 
+                        
+                        if (category2List.length > 0) {
+                            category2List.forEach(function (category2) {
+                                var category2Item = $('<li><a href="#">' + category2.c2_category + '</a></li>');
+                                category2Container.append(category2Item);
+                                category2Item.on('click', function() {
+                                    var categoryId = category2.c2_id; // 카테고리 ID 가져오기
+                                    var baseNewUrl = "/goods/search/"; // 상대 경로로 URL 설정
+                                    var query = "?category=" + categoryId;
+                                    var newUrl = baseNewUrl + query;
+
+                                    // 페이지 이동
+                                    window.location.href = newUrl;
+                                });
+
+                            });
+                        }
+                    });
+                    category1Item.append(category2Container);
+                    
+                   
+//                     category1Item.on('mouseout', function () {
+//                         category2Container.empty();
+//                     });
+
+                    //goods_list 테스트
+                    listCategortContainer1.append(listCategory1Item);
+                    category1Container.append(category1Item);
+                    
+                });
+                
+            },
+            error: function (xhr, status, error) {
+                alert("데이터 안불러와지는중");
+            }
+        });
+    }
+    
+    
 </script>
 
 <body>
@@ -132,7 +163,7 @@ function fetchCategories() {
                 <li><a href="">카테고리</a>
                     <ul class="category1"></ul>
                 </li>
-                <li><a href="/community/main">커뮤니티</a></li>
+                <li><a href="#">Review</a></li>
             </ul>
     	</div>
         </nav>

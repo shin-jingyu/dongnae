@@ -181,7 +181,7 @@ function fetchCategories() {
                 <li><a href="">카테고리</a>
                     <ul class="category1"></ul>
                 </li>
-                <li><a href="#">Review</a></li>
+                <li><a href="/community/main">커뮤니티</a></li>
             </ul>
     	</div>
         </nav>

@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 </head>
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
 
 <script>
 var token = $("meta[name='_csrf']").attr('content');

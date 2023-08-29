@@ -54,9 +54,13 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	@Override
-	public Integer updateMember(MemberDTO memberDTO) {
-		Integer result = memberMapper.updateMember(memberDTO);
-		return result ;
+	public void updateMember(MemberDTO memberDTO) {
+		if(memberDTO.getM_pic() == null) {
+			memberMapper.updateMember_noPhoto(memberDTO);
+		} else {
+			//@@@
+			memberMapper.updateMember(memberDTO);
+		}
 	}
 
 	@Override

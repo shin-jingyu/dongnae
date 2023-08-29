@@ -72,16 +72,9 @@ public class LoginController {
 		return "member/regist";
 	}
 	
-//	@PostMapping("regist")
-//	public String regist_post(@ModelAttribute MemberDTO memberDTO) {
-//		memberService.regist(memberDTO);
-//		return "redirect:/login";	
-//	}
 	
 	@PostMapping("regist")
 	public String regist_post(@ModelAttribute MemberDTO memberDTO, @RequestParam ("uploadFile") MultipartFile [] uploadFile) {
-		System.out.println(uploadFile[0]);
-		System.out.println(uploadFile[0]);
 		String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/member";
 		File uploadPath = new File(uploaderFolder, getFolder());
 
@@ -109,7 +102,6 @@ public class LoginController {
 					e.printStackTrace();
 				}
 	        }
-	        // path 확인!!
 		memberDTO.setM_pic(picFileNames[0]);
 		memberDTO.setM_picpath(getFolder());
 		memberService.regist(memberDTO);

@@ -28,7 +28,7 @@ public interface MemberService {
 	
 	MemberDTO getMember(CustomUserDetails customUserDetails);
 
-	Integer updateMember(MemberDTO memberDTO);
+	void updateMember(MemberDTO memberDTO);
 	
 	
 	Integer regist(MemberDTO memberDTO);

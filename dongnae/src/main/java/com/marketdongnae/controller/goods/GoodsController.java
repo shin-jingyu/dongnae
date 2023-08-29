@@ -111,7 +111,6 @@ public class GoodsController {
 	            picFileNames[i] = uuid.toString() + "_" + picFileNames[i];
 	            log.info("only-file-name" + picFileNames[i]);
 	            File saveFile = new File(uploadPath, picFileNames[i]);
-	            System.out.println("파일명 확인 !!!: " + picFileNames[i]);
 	            try {
 	            	uploadFile[i].transferTo(saveFile);
 				} catch (IllegalStateException e) {
@@ -123,6 +122,10 @@ public class GoodsController {
 				}
 	        }
 	    }
+	    // path 확인!!
+	    System.out.println("####:"+getFolder());
+	    
+	    
 	    goodsDTO.setG_picpath(getFolder());
 		goodsDTO.setG_pic01(picFileNames[0]);
 		goodsDTO.setG_pic02(picFileNames[1]);
@@ -144,15 +147,15 @@ public class GoodsController {
 	    return "/goods/getList";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value = "memberGetGoodsList" ,method = RequestMethod.POST)
-//	public Map<String, Object> memberGoodsList(@RequestParam(value = "m_number",required=false) int m_number) {
-//		Map<String, Object> maps = new HashMap<String, Object>();
-//		
-//		maps = goodsService.getGoodsList(m_number);
-//		
-//		return maps;
-//	}
+	@ResponseBody
+	@RequestMapping(value = "memberGetGoodsList" ,method = RequestMethod.POST)
+	public Map<String, Object> memberGoodsList(@RequestParam(value = "m_number",required=false) int m_number) {
+		Map<String, Object> maps = new HashMap<String, Object>();
+		
+		maps = goodsService.getGoodsList(m_number);
+		
+		return maps;
+	}
 	
 	
 	

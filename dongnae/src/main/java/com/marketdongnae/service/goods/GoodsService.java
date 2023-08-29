@@ -13,7 +13,7 @@ public interface GoodsService {
 	
 	List<GoodsDTO> getSearchGoods(SearchDTO search);
 	
-	List<GoodsDTO> getGoodsList(int m_number);
+	Map<String, Object> getGoodsList(int m_number);
 
 	void insertGoods(GoodsDTO goodsDTO);
 
@@ -27,7 +27,8 @@ public interface GoodsService {
 	boolean checkWishGoods(WishGoodsDTO wish);
 	//상품 좋아요 갯수 확인
 	int getCountWishGoods(int g_id);
-
+	// 멤버페이지 판매중 상품
+	List<GoodsDTO> getGoodsListOnSaleList(int m_number);
 
 
 

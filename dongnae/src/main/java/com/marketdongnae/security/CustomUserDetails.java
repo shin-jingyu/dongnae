@@ -25,6 +25,9 @@ public class CustomUserDetails implements UserDetails {
 	private String m_auth;
 	private boolean ENABLED;
 	
+	private String m_pic;
+	private String m_picpath;
+	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -32,6 +35,14 @@ public class CustomUserDetails implements UserDetails {
 		ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
 		auth.add(new SimpleGrantedAuthority(m_auth));
 		return auth;
+	}
+	
+	public String getM_pic() {
+		return m_pic;
+	}
+	
+	public String getM_picpath() {
+		return m_picpath;
 	}
 	
 	public int getM_point() {

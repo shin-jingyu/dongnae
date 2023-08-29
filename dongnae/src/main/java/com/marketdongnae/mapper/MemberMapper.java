@@ -24,7 +24,9 @@ public interface MemberMapper {
 	
 	public MemberDTO getMember(int m_number);
 	
-	public Integer updateMember(MemberDTO memberDTO);
+	public void updateMember(MemberDTO memberDTO);
+	
+	public void updateMember_noPhoto(MemberDTO memberDTO);
 	
 	
 	public String changePassword(@Param ("m_number") int m_number

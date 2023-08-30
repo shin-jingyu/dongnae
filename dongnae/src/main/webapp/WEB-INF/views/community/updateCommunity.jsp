@@ -16,8 +16,9 @@
 <jsp:include page="../common/Category.jsp"></jsp:include>
 <div style="display: flex;">		
 	
-	<div style=" width: 15%; float: left; box-sizing: border-box;">
-		<div >
+	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
+	<div class="container" >
+	
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -28,50 +29,42 @@
 			</c:forEach>
 			</tbody>
 			</table>
-		</div>	
-	</div>  	
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
-
-	<div class="container">
+	
+	</div>
+	</div>  
 		
-		<div>
+	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;" >
+	<p> ${community.si_area }</p>
+		
+		<div class="card shadow" >
 		<form method="post" action="/community/updateCommunity">
 				<input type="hidden" name="mu_id" value="${community.mu_id }">
 				<input type="hidden" name="num" value="${page.num }">
 				<input type="hidden" name="m_number" value="${community.m_number }">
-				<table class="table table-borderd table table-hover">
-				
-		
-		<tr>
-			<td style="width: 100px;">글제목</td>
+		<table class=" table table-borderless align-middle table-hover">
+			<tr>
 			<td>
-			<input class="form-control" id="mu_name" type="text" name="mu_name" value="${community.mu_name }"> 
+					<label class="form-label">카테고리</label>
+						<select class="form-select" name="ca_id"  >
+							<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
+							<option value="2" ${ (ca_id == "2")? "selected" : "" }>분실/실종</option>
+							<option value="3" ${ (ca_id == "3")? "selected" : "" }>일상</option>
+							<option value="4" ${ (ca_id == "4")? "selected" : "" }>맛집</option>
+							<option value="5" ${ (ca_id == "4")? "selected" : "" }>취미</option>
+							<option value="6" ${ (ca_id == "4")? "selected" : "" }>동네질문</option>
+						</select>
 			</td>
+		</tr>	
+		
+		<tr>
+			<td>제목: <input class="form-control" type="text" id="mu_name" name="mu_name" value="${community.mu_name }"> </td>
 		</tr>
 		
 		<tr>
-			<td>지역</td>
-			<td>${community.si_area }</td>
-		</tr>
-		<tr>
-			<td>카테고리</td>
-			<td>
-			<select class="form-select"  name="ca_id"  >
-					<option value="1" ${ (ca_id == "1")? "selected" : "" }>사건사고</option>
-					<option value="2" ${ (ca_id == "2")? "selected" : "" }>분실/실종</option>
-					<option value="3" ${ (ca_id == "3")? "selected" : "" }>일상</option>
-					<option value="4" ${ (ca_id == "4")? "selected" : "" }>맛집</option>
-					<option value="5" ${ (ca_id == "4")? "selected" : "" }>취미</option>
-					<option value="6" ${ (ca_id == "4")? "selected" : "" }>동네질문</option>
-			</select>
-			</td>
-		</tr>
-		
-		<tr>
-			<td colspan="2">글 내용</td>
+			<td >글 내용</td>
 		</tr>	
 		<tr>	
-			<td colspan="2"><textarea name="mu_detail" id="mu_detail"  ></textarea></td>
+			<td ><textarea name="mu_detail" id="mu_detail"  ></textarea></td>
 		</tr>
 		<tr>
 			<td><input class="btn btn-outline-info" id="back" id="submits" type="submit" value="수정하기"></td>
@@ -86,7 +79,7 @@
 	</div>
 	
 		</div>	
-	</div>  		
+			
 	<jsp:include page="../common/footer.jsp"></jsp:include>	
 </body>
 
@@ -137,8 +130,7 @@ $(document).ready(function() {
 					       }
 						   }
 					   };
-	$("#mu_detail").summernote('code',  '${community.mu_detail }');  
-
+	$("#mu_detail").summernote('code',  '${community.mu_detail }'); 
     $('#mu_detail').summernote(setting);
     
 	 function deleteSummernoteImageFile(imageName) {

@@ -287,7 +287,7 @@ public class CommunityController {
 	}
 	
 	
-	
+
 	@GetMapping("/community/insertCommunity")
 	public String insertCommunity(Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -387,11 +387,12 @@ public class CommunityController {
 							   @RequestParam(value = "num", defaultValue = "1") int num) {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+		List<CategoryDTO> categorys = communityService.category(); 
 		ModelAndView view = new ModelAndView();
 		CommunityAllDTO detailDTO = communityService.communityDetail(mu_id);
 		PageDTO page =new PageDTO();
 		page.setNum(num);
+		view.addObject("categorys", categorys);
 		view.addObject("member",customUserDetails);
 		view.addObject("page", page);
 		view.addObject("community",detailDTO);

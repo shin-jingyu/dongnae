@@ -19,10 +19,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
 <jsp:include page="../common/Category.jsp"></jsp:include>
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+                    <div class="breadcrumb__text">
+                   <h2 >Community</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <div style="display: flex;">	
 	
-	<div  style=" width: 15%; float: left  ; position: fixed ;box-sizing: border-box;">
-	 <div class="container" >
+	<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+	 	<div class="container" style="margin-left:50px;margin-top:100px;">
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -37,7 +49,7 @@
 	</div>
 
 	
-	<div  class="container" style=" width: 85%;  margin-left:300px; box-sizing: border-box;" >
+	<div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;" >
 		<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >

@@ -33,4 +33,6 @@ public interface GoodsMapper {
 
 	int countWishGoodsByG_id(int g_id);
 
+	List<GoodsDTO> getGoodsListOnSaleByMemberNumber(int m_number);
+
 }

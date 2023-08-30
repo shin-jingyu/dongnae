@@ -65,17 +65,8 @@
         </div>
     </footer>
     <!-- Footer Section End -->
-    
-
-
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-
-
-   
-
-   
-
     <script src="/resources/js/bootstrap.min.js"></script>
     <script src="/resources/js/jquery.nice-select.min.js"></script>
     <script src="/resources/js/jquery-ui.min.js"></script>
@@ -83,11 +74,6 @@
     <script src="/resources/js/mixitup.min.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-
-
-   
-
-   
 
 
 <!--     <script src="/resources/js/alarm.js"></script> -->

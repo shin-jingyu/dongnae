@@ -10,10 +10,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +26,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
-import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
-import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
@@ -173,8 +168,7 @@ public class MemberController {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "onSale");
 		List<Deal_viewDTO> onSaleList = memberService.getDealPageList( customUserDetails, "onSale", pageDTO);
-		List<GoodsDTO> goodsListOnSale = goodsService.getGoodsList(customUserDetails.getDo_id());
-		System.out.println(goodsListOnSale);
+		List<GoodsDTO> goodsListOnSale = goodsService.getGoodsListOnSaleList(customUserDetails.getMemberNumber());
 		model.addAttribute("onSaleList", goodsListOnSale);
 		model.addAttribute("page", pageDTO);
 	}

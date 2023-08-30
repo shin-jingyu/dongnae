@@ -1,5 +1,6 @@
 package com.marketdongnae.service.member;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.KeywordDTO;
 import com.marketdongnae.domain.member.KeywordVO;
+import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
@@ -218,7 +220,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public KeywordDTO getListKeyword(int m_number) {
-		// TODO Auto-generated method stub
 		return new KeywordDTO(memberMapper.getListKeyword(m_number));
 	}
 
@@ -229,6 +230,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.deleteKeyword(key_id);
 	}
 	
+	
+	
+	@Override
+	public List<GoodsDTO> getListKeywordGoods(int m_number) {
+		List<KeywordVO> keywordList = memberMapper.getListKeyword(m_number);
+		List<GoodsDTO> goodsList  = memberMapper.getListKeywordGoods(keywordList);
+		return goodsList;
+	}
 	
 
 

@@ -28,43 +28,33 @@ import lombok.AllArgsConstructor;
 public class RestMemberController {
 	
 	private MemberService memberService;
-	/*
-	@PostMapping(value = "keyword")
-	public ResponseEntity<String> create(@RequestBody KeywordVO keyword){
-		int insertCount = memberService.registKeyword(keyword); 
-		return insertCount == 1 ? new ResponseEntity<String>("success" , HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	
+	@PostMapping(value = "insertKeyword")
+	public String insert (@RequestBody String keyword){
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
+		memberService.insertKeyword(customUserDetails, keyword); 
+		return "success";
 	}
 	
 	@GetMapping(value = "keywordList")
-	public ResponseEntity<KeywordDTO> getKeywordList(){
+	public List<KeywordVO>  getKeywordList(){
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
-		return new ResponseEntity<KeywordDTO>(memberService.getListKeyword(customUserDetails.getM_number()) , HttpStatus.OK);
+		List<KeywordVO> keywordList = memberService.getListKeyword(customUserDetails);
+		return keywordList;
 	}
 	
 	@DeleteMapping(value = "delete_{key_id}")
-	public ResponseEntity<String> delete(@PathVariable("key_id") int key_id){
-		return memberService.deleteKeyword(key_id) == 1 ? new ResponseEntity<String>("success" , HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public void delete(@PathVariable("key_id") int key_id){
+		memberService.deleteKeyword(key_id);
 	}
 	
+	
 	@GetMapping(value = "keywordGoodsList")
-//	public ResponseEntity<List<GoodsDTO>> getGoodsList(){
 	public List<GoodsDTO> getGoodsList(){
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
-		// return new ResponseEntity<List<GoodsDTO>>(memberService.getListKeywordGoods(customUserDetails.getM_number()) , HttpStatus.OK);
-		return memberService.getListKeywordGoods(customUserDetails.getM_number()) ;
+		List<GoodsDTO> listKeywordGoods = memberService.getListKeywordGoods(customUserDetails);
+		return listKeywordGoods;
 	}
 	
-	
-	@GetMapping(value = "keywordGoodsList")
-	public ModelAndView getGoodsList(){
-		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
-		List<GoodsDTO> listKeywordGoods = memberService.getListKeywordGoods(customUserDetails.getM_number());
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("goodsLists", listKeywordGoods);
-		mav.setViewName("/member/keyword");
-		return mav ;
-	}
-	*/
 	
 }

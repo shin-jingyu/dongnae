@@ -216,14 +216,10 @@ public class MemberController {
 	}
 	
 	@GetMapping("keyword")
-	public void getKeywordList( Model model) {
-		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<KeywordVO> keywordList =  memberService.getListKeyword(customUserDetails);
-		List<GoodsDTO> keywordGoodsList = memberService.getListKeywordGoods(customUserDetails);
-		model.addAttribute("keywordList", keywordList);
-		model.addAttribute("keywordGoodsList", keywordGoodsList);
+	public void keyword() {
 	}
-//	
+	
+	
 //	@GetMapping("deleteKeyword")
 //	public String deleteKeyword(HttpServletRequest request ) {
 //		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

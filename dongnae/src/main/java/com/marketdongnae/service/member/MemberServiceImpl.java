@@ -212,9 +212,11 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public int insertKeyword(KeywordVO keyword) {
-		// TODO Auto-generated method stub
-		return memberMapper.insertKeyword(keyword);
+	public int insertKeyword( CustomUserDetails customUserDetails , String keyword) {
+		KeywordVO keywordVO = new KeywordVO();
+		keywordVO.setM_number(customUserDetails.getM_number());
+		keywordVO.setKeyword(keyword);
+		return memberMapper.insertKeyword(keywordVO);
 	}
 
 

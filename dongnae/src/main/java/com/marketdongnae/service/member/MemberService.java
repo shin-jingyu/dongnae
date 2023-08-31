@@ -64,7 +64,7 @@ public interface MemberService {
 
 	void deleteWish(int wish_id);
 	// 키워드 Service
-	int insertKeyword(KeywordVO keyword);
+	int insertKeyword(CustomUserDetails customUserDetails, String keyword);
 	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
 	int deleteKeyword(int key_id);
 	List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );

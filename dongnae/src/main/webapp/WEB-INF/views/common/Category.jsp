@@ -136,7 +136,7 @@ function fetchCategories() {
                 <li><a href="#">커뮤니티</a>
                 	<ul class="communityCategory"></ul></li>
 
-                <li><a href="/community/main">커뮤니티</a></li>
+                
 
             </ul>
     	</div>

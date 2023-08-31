@@ -212,29 +212,28 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public int registKeyword(KeywordVO keyword) {
+	public int insertKeyword(KeywordVO keyword) {
 		// TODO Auto-generated method stub
 		return memberMapper.insertKeyword(keyword);
 	}
 
 
 	@Override
-	public KeywordDTO getListKeyword(int m_number) {
-		return new KeywordDTO(memberMapper.getListKeyword(m_number));
+	public List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails ) {
+		return memberMapper.getListKeyword(customUserDetails.getM_number());
 	}
 
 
 	@Override
 	public int deleteKeyword(int key_id) {
-		// TODO Auto-generated method stub
 		return memberMapper.deleteKeyword(key_id);
 	}
 	
 	
 	
 	@Override
-	public List<GoodsDTO> getListKeywordGoods(int m_number) {
-		List<KeywordVO> keywordList = memberMapper.getListKeyword(m_number);
+	public List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails ) {
+		List<KeywordVO> keywordList = memberMapper.getListKeyword(customUserDetails.getM_number());
 		List<GoodsDTO> goodsList  = memberMapper.getListKeywordGoods(keywordList);
 		return goodsList;
 	}

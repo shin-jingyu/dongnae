@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
-import com.marketdongnae.domain.goods.SearchDTO;
+import com.marketdongnae.domain.member.KeywordVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -25,26 +25,15 @@ import lombok.extern.log4j.Log4j;
 public class MemberMapperTests {
 
 	@Autowired
-	private GoodsMapper mapper;
-	//상품 번호별 상세 가져오기
-//	@Test
-	public void getGoodsDetailTest() {
-		System.out.println(mapper.getGoodsDetail(4));
-	}
-	//회원의 상품 가져오기
-//	@Test
-	public void getMemberGoodsTest() {
-		System.out.println(mapper.getGoodsListByMemberNumber(1));
-	}
+	private MemberMapper memberMapper;
 	
-	//검색기능
 	@Test
-	public void searchGoodsTests() {
-		SearchDTO search = new SearchDTO();
-		search.setKeyword("샤");
-		List<GoodsDTO> list =  mapper.getSearchGoods(search);
-		list.forEach(x->System.out.println(x));
-		assertNotNull(list);
+	public void getListKeywordGoods(){
+		List<KeywordVO> keywordList = memberMapper.getListKeyword(22);
+		System.out.println(keywordList.toString());
+		System.out.println(0000000);
+		List<GoodsDTO> goodsList  = memberMapper.getListKeywordGoods(keywordList);
+		System.out.println(goodsList.toString());
 	}
 	
 }

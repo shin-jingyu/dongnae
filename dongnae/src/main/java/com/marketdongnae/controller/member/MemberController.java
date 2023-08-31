@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
+import com.marketdongnae.domain.member.KeywordVO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
@@ -215,7 +216,27 @@ public class MemberController {
 	}
 	
 	@GetMapping("keyword")
-	public void keyword() {
+	public void getKeywordList( Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<KeywordVO> keywordList =  memberService.getListKeyword(customUserDetails);
+		List<GoodsDTO> keywordGoodsList = memberService.getListKeywordGoods(customUserDetails);
+		model.addAttribute("keywordList", keywordList);
+		model.addAttribute("keywordGoodsList", keywordGoodsList);
 	}
+//	
+//	@GetMapping("deleteKeyword")
+//	public String deleteKeyword(HttpServletRequest request ) {
+//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		int key_id = Integer.parseInt(request.getParameter("id"));
+//		memberService.deleteKeyword(customUserDetails, key_id);
+//		return "redirect:/member/keyword";
+//	}
+//	
+//	@GetMapping("insertKeyword")
+//	public void insertKeyword(@ModelAttribute KeywordVO keywordVO) {
+//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		memberService.insertKeyword(customUserDetails, keywordVO);
+//	}
+//	
 
 }

@@ -57,8 +57,7 @@
                 <div class="col-lg-12">
                     <div class="footer__copyright">
                         <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+ <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
                         <div class="footer__copyright__payment"><img src="/resources/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
@@ -66,14 +65,8 @@
         </div>
     </footer>
     <!-- Footer Section End -->
-    
-    <!-- Js Plugins -->
-
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-     <script src="/resources/js/summernote-ko-KR.js"></script>
-    <script src="/resources/js/summernote-lite.js"></script>
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
     <script src="/resources/js/jquery.nice-select.min.js"></script>
     <script src="/resources/js/jquery-ui.min.js"></script>

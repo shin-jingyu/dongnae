@@ -6,6 +6,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.KeywordDTO;
 import com.marketdongnae.domain.member.KeywordVO;
+import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
@@ -28,7 +29,7 @@ public interface MemberService {
 	
 	MemberDTO getMember(CustomUserDetails customUserDetails);
 
-	Integer updateMember(MemberDTO memberDTO);
+	void updateMember(MemberDTO memberDTO);
 	
 	
 	Integer regist(MemberDTO memberDTO);
@@ -63,9 +64,10 @@ public interface MemberService {
 
 	void deleteWish(int wish_id);
 	// 키워드 Service
-	int registKeyword(KeywordVO keyword);
-	KeywordDTO getListKeyword(int m_number);
+	int insertKeyword(KeywordVO keyword);
+	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
 	int deleteKeyword(int key_id);
+	List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );
 
 
 

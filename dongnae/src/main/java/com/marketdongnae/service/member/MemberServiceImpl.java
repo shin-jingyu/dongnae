@@ -1,5 +1,6 @@
 package com.marketdongnae.service.member;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.KeywordDTO;
 import com.marketdongnae.domain.member.KeywordVO;
+import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
@@ -54,9 +56,13 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	@Override
-	public Integer updateMember(MemberDTO memberDTO) {
-		Integer result = memberMapper.updateMember(memberDTO);
-		return result ;
+	public void updateMember(MemberDTO memberDTO) {
+		if(memberDTO.getM_pic() == null) {
+			memberMapper.updateMember_noPhoto(memberDTO);
+		} else {
+			//@@@
+			memberMapper.updateMember(memberDTO);
+		}
 	}
 
 	@Override
@@ -206,25 +212,31 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public int registKeyword(KeywordVO keyword) {
+	public int insertKeyword(KeywordVO keyword) {
 		// TODO Auto-generated method stub
 		return memberMapper.insertKeyword(keyword);
 	}
 
 
 	@Override
-	public KeywordDTO getListKeyword(int m_number) {
-		// TODO Auto-generated method stub
-		return new KeywordDTO(memberMapper.getListKeyword(m_number));
+	public List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails ) {
+		return memberMapper.getListKeyword(customUserDetails.getM_number());
 	}
 
 
 	@Override
 	public int deleteKeyword(int key_id) {
-		// TODO Auto-generated method stub
 		return memberMapper.deleteKeyword(key_id);
 	}
 	
+	
+	
+	@Override
+	public List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails ) {
+		List<KeywordVO> keywordList = memberMapper.getListKeyword(customUserDetails.getM_number());
+		List<GoodsDTO> goodsList  = memberMapper.getListKeywordGoods(keywordList);
+		return goodsList;
+	}
 	
 
 

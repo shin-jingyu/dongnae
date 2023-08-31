@@ -1,14 +1,17 @@
 package com.marketdongnae.controller.member;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,17 +21,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
-import com.marketdongnae.domain.member.Do_areaDTO;
+import com.marketdongnae.domain.member.KeywordVO;
 import com.marketdongnae.domain.member.MemberDTO;
 import com.marketdongnae.domain.member.PageDTO;
 import com.marketdongnae.domain.member.PasswordDTO;
 import com.marketdongnae.domain.member.PointDTO;
-import com.marketdongnae.domain.member.Si_areaDTO;
-import com.marketdongnae.security.CustomAuthenticationProvider;
 import com.marketdongnae.security.CustomUserDetails;
 import com.marketdongnae.service.goods.GoodsService;
 import com.marketdongnae.service.member.MemberService;
@@ -48,14 +50,25 @@ public class MemberController {
 //	private final CustomAuthenticationProvider customAuthenticationProvider;
 //	private final BCryptPasswordEncoder passwordEncoder;
 	
+	private String getFolder() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date = new Date();
+		
+		String str = simpleDateFormat.format(date);
+		
+		return str.replace("-", File.separator);
+	}
+	
 	@GetMapping("test")
 	public void test(Model model) {
 		model.addAttribute("test", "test");	// 임시로
 	}
 	@GetMapping("detail")
 	public void detail(Model model) {
-		 CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("member", customUserDetails);
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		MemberDTO member = memberService.getMember(customUserDetails);
+		model.addAttribute("member", member);
 	}
 	
 	@PostMapping("detail/my_area")
@@ -78,7 +91,37 @@ public class MemberController {
 	}
 	
 	@PostMapping("detail")
-	public String modify(@ModelAttribute MemberDTO memberDTO) {		
+	public String regist_post(@ModelAttribute MemberDTO memberDTO, @RequestParam ("uploadFile") MultipartFile [] uploadFile) {
+			String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/member";
+			File uploadPath = new File(uploaderFolder, getFolder());
+	
+		    if (!uploadPath.exists()) {
+		        uploadPath.mkdirs();
+		    }
+		    // MultipartFile 필드들을 반복문으로 처리
+		    String[] picFileNames = new String[uploadFile.length];
+		    MultipartFile picFile = uploadFile[0];
+		        // 업로드한 이미지 있는지 확인
+		        if (picFile != null && !picFile.isEmpty()) {
+		            // 파일 업로드 처리 로직
+		            picFileNames[0] = picFile.getOriginalFilename();
+		            UUID uuid = UUID.randomUUID();
+		            picFileNames[0] = uuid.toString() + "_" + picFileNames[0];
+		            log.info("only-file-name" + picFileNames[0]);
+		            File saveFile = new File(uploadPath, picFileNames[0]);
+		            System.out.println("파일명 확인 !!!: " + picFileNames[0]);
+		            try {
+		            	uploadFile[0].transferTo(saveFile);
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		            memberDTO.setM_pic(picFileNames[0]);
+		            memberDTO.setM_picpath(getFolder());
+		        }
 		memberService.updateMember(memberDTO);
 		return "redirect:/member/detail"	;
 	}
@@ -126,8 +169,7 @@ public class MemberController {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		PageDTO pageDTO = memberService.getDealPageDTO(nowpage, customUserDetails, "onSale");
 		List<Deal_viewDTO> onSaleList = memberService.getDealPageList( customUserDetails, "onSale", pageDTO);
-		List<GoodsDTO> goodsListOnSale = goodsService.getGoodsList(customUserDetails.getDo_id());
-		System.out.println(goodsListOnSale);
+		List<GoodsDTO> goodsListOnSale = goodsService.getGoodsListOnSaleList(customUserDetails.getMemberNumber());
 		model.addAttribute("onSaleList", goodsListOnSale);
 		model.addAttribute("page", pageDTO);
 	}
@@ -172,5 +214,29 @@ public class MemberController {
 		memberService.deleteWish(wish_id);
 		return "redirect:/member/wishlist";
 	}
+	
+	@GetMapping("keyword")
+	public void getKeywordList( Model model) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<KeywordVO> keywordList =  memberService.getListKeyword(customUserDetails);
+		List<GoodsDTO> keywordGoodsList = memberService.getListKeywordGoods(customUserDetails);
+		model.addAttribute("keywordList", keywordList);
+		model.addAttribute("keywordGoodsList", keywordGoodsList);
+	}
+//	
+//	@GetMapping("deleteKeyword")
+//	public String deleteKeyword(HttpServletRequest request ) {
+//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		int key_id = Integer.parseInt(request.getParameter("id"));
+//		memberService.deleteKeyword(customUserDetails, key_id);
+//		return "redirect:/member/keyword";
+//	}
+//	
+//	@GetMapping("insertKeyword")
+//	public void insertKeyword(@ModelAttribute KeywordVO keywordVO) {
+//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		memberService.insertKeyword(customUserDetails, keywordVO);
+//	}
+//	
 
 }

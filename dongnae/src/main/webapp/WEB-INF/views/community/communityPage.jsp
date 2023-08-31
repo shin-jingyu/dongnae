@@ -12,24 +12,30 @@
 <title>Insert title here</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
- 
-
-
-
-</head>
-<body>
 
 <jsp:include page="../common/Category.jsp"></jsp:include>
 
-
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+                    <div class="breadcrumb__text">
+                   <h2 >Community</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <div style="display: flex;">		
 	
-	<div style=" width: 15%; float: left; box-sizing: border-box;">
-		<div >
+	<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+		<div class="container" style="margin-left:50px;margin-top:100px;">
 			<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
@@ -42,8 +48,9 @@
 			</table>
 		</div>	
 	</div>
+
 <c:if test="${key==1}">		
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+ <div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;" >
 	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >
@@ -62,30 +69,31 @@
 		    </div>
 		  </div>
 		</div>
-	 <p class="text-dark fw-bold">최신게시물</p>
-	<div class="card border-dark mb-3 " >
 		
-		<table class=" table-hover text-center">
-			<thead class="table-dark text-center">
+	 <p class="text-dark fw-bold">최신게시물</p>
+	<div class="card shadow" >
+		
+		<table class=" table table-borderless align-middle table-hover" >
+			<thead class=" text-center">
 				<tr>
 					<th>지역</th>
-					<th>내용</th>
+					<th>사진</th>
 					<th>제목</th>
 					<th>작성자</th>
-					<th>작성시간</th>
 					<th>조회수</th>
 					<th>좋아요</th>
 					<th>댓글수</th>
+					<th>작성시간</th>
 				</tr>
 			</thead>
 	
 			<tbody class=" text-center">
 				<c:forEach var="list" items="${list}" >
-					<tr>
-						<td>${list.si_area}</td>
+				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
-						        <td >
+						        <td class="align-middle">
 								  <img class="img-thumbnail" src="${list.previewImageUrl}" style="width: 100px;">
 							   </td>
 						    </c:when>
@@ -93,28 +101,24 @@
 						        <td></td>
 						    </c:otherwise>
 						</c:choose>
-						<td>
-							<a style="text-decoration: none;" href="/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}" >${list.mu_name}</a>
+						<td class="align-middle">
+							${list.mu_name}
 						</td>
-						<td>${list.m_id}</td>
-						<td >
+						<td class="align-middle">${list.m_id}</td>
+						<td class="align-middle"><i class="bi bi-eye fs-5">${list.mu_c}</i></td>
+						<td class="align-middle"><i class="bi bi-chat-square-heart fs-5">${list.heart}</i></td>
+						<td class="align-middle"><i class="bi bi-chat-right fs-5">${list.comment}</i></td>
+						<td class="align-middle" >
 							<fmt:formatDate value="${list.mu_data}" pattern="yyyy-MM-dd " />
 							<br>
 							<fmt:formatDate value="${list.mu_data}" pattern=" HH:mm" />
 						</td>
-						<td><i class="bi bi-eye fs-5">${list.mu_c}</i></td>
-						<td><i class="bi bi-chat-square-heart fs-5">${list.heart}</i></td>
-						<td><i class="bi bi-chat-right fs-5">${list.comment}</i></td>
 					</tr>
 				</c:forEach>
 			</tbody>	
-			<tfoot>
-			 <tr>
-			  <td colspan="8" align="right"><button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button></td>
-			 </tr>
-			</tfoot>		
+				
 		</table>
-	
+		<button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button>
  	</div>
  	<div  style="margin:auto;">
  		<nav class="nav justify-content-center bg-light">
@@ -158,8 +162,8 @@
  </c:if>
  
 <c:if test="${key==2}">
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
-	 <div class="container"  style="float: right; width: 400px;" >
+	<div  class="container" style=" width: 85%;  box-sizing: border-box; margin-top:100px;" >
+	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >
 		      <select class="form-select" name="searchType" id="searchType" style="width: 120px; ">
@@ -177,31 +181,31 @@
 		    </div>
 		  </div>
 		</div>
-	 
-	 <p class="text-dark fw-bold">인기게시물</p>
-	<div class="card border-dark mb-3 " >
 		
-		<table class=" table-hover text-center">
-			<thead class="table-dark text-center">
+	 <p class="text-dark fw-bold">인기게시물</p>
+	<div class="card shadow" >
+		
+		<table class=" table table-borderless align-middle table-hover">
+			<thead class=" text-center">
 				<tr>
 					<th>지역</th>
-					<th>내용</th>
+					<th>사진</th>
 					<th>제목</th>
 					<th>작성자</th>
-					<th>작성시간</th>
 					<th>조회수</th>
 					<th>좋아요</th>
 					<th>댓글수</th>
+					<th>작성시간</th>
 				</tr>
 			</thead>
 	
 			<tbody class=" text-center">
 				<c:forEach var="list" items="${sorted}" >
-					<tr>
-						<td>${list.si_area}</td>
+				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
-						        <td >
+						        <td class="align-middle">
 								  <img class="img-thumbnail" src="${list.previewImageUrl}" style="width: 100px;">
 							   </td>
 						    </c:when>
@@ -209,28 +213,24 @@
 						        <td></td>
 						    </c:otherwise>
 						</c:choose>
-						<td>
-							<a style="text-decoration: none;" href="/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}" }>${list.mu_name}</a>
+						<td class="align-middle">
+							${list.mu_name}
 						</td>
-						<td>${list.m_id}</td>
-						<td >
+						<td class="align-middle">${list.m_id}</td>
+						<td class="align-middle"><i class="bi bi-eye fs-5">${list.mu_c}</i></td>
+						<td class="align-middle"><i class="bi bi-chat-square-heart fs-5">${list.heart}</i></td>
+						<td class="align-middle"><i class="bi bi-chat-right fs-5">${list.comment}</i></td>
+						<td class="align-middle" >
 							<fmt:formatDate value="${list.mu_data}" pattern="yyyy-MM-dd " />
 							<br>
 							<fmt:formatDate value="${list.mu_data}" pattern=" HH:mm" />
 						</td>
-						<td><i class="bi bi-eye fs-5">${list.mu_c}</i></td>
-						<td><i class="bi bi-chat-square-heart fs-5">${list.heart}</i></td>
-						<td><i class="bi bi-chat-right fs-5">${list.comment}</i></td>
 					</tr>
 				</c:forEach>
 			</tbody>	
-			<tfoot>
-			 <tr>
-			  <td colspan="8" align="right"><button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button></td>
-			 </tr>
-			</tfoot>		
+				
 		</table>
-	
+		<button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button>
  	</div>
  	<div  style="margin:auto;">
  		<nav class="nav justify-content-center bg-light">
@@ -272,7 +272,7 @@
  	</div>
  	</div>
  </c:if>
-  </div>
+ </div>
   
 		<jsp:include page="../common/footer.jsp"></jsp:include>	
 </body>

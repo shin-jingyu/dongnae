@@ -9,19 +9,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
 
 
 <body>
-	<jsp:include page="../common/Category.jsp"></jsp:include>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
+	<jsp:include page="../common/Category.jsp"></jsp:include>
+<section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                 
+                    <div class="breadcrumb__text">
+                   <h2 >Community</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <div style="display: flex;">	
-	<div style=" width: 15%; float: left; box-sizing: border-box;">
-		
-		
-			<table class="table table-borderless">	
+	<div  style=" width: 15%; float: left  ; box-sizing: border-box; ">
+		<div class="container" style="margin-left:50px;margin-top:100px;">
+		<table class="table table-borderless">	
 			<thead>
 			 <tr><th><a href="/community/main" class="fs-3">Community</a></th></tr>
 			</thead>
@@ -34,9 +48,9 @@
 			</tbody>
 			
 			</table>
-
+		</div>
 	</div>
-	<div  style="max-height: calc(100vh - 200px); overflow-x: hidden; overflow-y: auto;  width: 75%; float: right; box-sizing: border-box;">
+	<div class="container"  style="  width: 85%;  float: right; box-sizing: border-box;margin-top:100px;">
 		${communityDetail.si_area } / ${communityDetail.ca_l }
 		<div class="card">	 
 		  

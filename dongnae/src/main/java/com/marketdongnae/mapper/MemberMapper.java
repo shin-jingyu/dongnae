@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
 import com.marketdongnae.domain.member.Deal_viewDTO;
 
 import com.marketdongnae.domain.member.Do_areaDTO;
+import com.marketdongnae.domain.member.KeywordDTO;
 import com.marketdongnae.domain.member.KeywordVO;
 
 import com.marketdongnae.domain.member.MemberDTO;
@@ -24,7 +26,9 @@ public interface MemberMapper {
 	
 	public MemberDTO getMember(int m_number);
 	
-	public Integer updateMember(MemberDTO memberDTO);
+	public void updateMember(MemberDTO memberDTO);
+	
+	public void updateMember_noPhoto(MemberDTO memberDTO);
 	
 	
 	public String changePassword(@Param ("m_number") int m_number
@@ -64,11 +68,11 @@ public interface MemberMapper {
 
 	public int insertKeyword(KeywordVO keyword);
 
-
 	public List<KeywordVO> getListKeyword(int m_number);
 
-
 	public int deleteKeyword(int key_id);
+	
+	public List<GoodsDTO> getListKeywordGoods(List<KeywordVO> keywordVOList);
 
 
 }

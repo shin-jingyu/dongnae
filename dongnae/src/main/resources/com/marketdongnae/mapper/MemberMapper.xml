@@ -8,8 +8,8 @@
 	</select>
 	
  	<select id="regist" parameterType="com.marketdongnae.domain.member.MemberDTO">	 
-		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id , do_id)
-		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}  ) ;
+		insert into member  ( m_id, m_pwd,  m_name ,  m_email, m_phone,  si_id , do_id,  m_pic, m_picpath)
+		 values (#{m_id}, #{m_pwd} ,  #{m_name} , #{m_email}, #{m_phone}, #{si_id} , #{do_id}, #{m_pic}, #{m_picpath}  ) ;
 	</select>
 	
 	<select id="changePassword" parameterType="com.marketdongnae.domain.member.PasswordDTO" > 
@@ -35,8 +35,20 @@
 		select * from member where m_id = #{m_id}
 	</select>
 	
-	
 	<select id="updateMember" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
+		update member
+			set 
+				m_name = #{m_name}, 
+				m_email = #{m_email}, 
+				m_phone=#{m_phone}, 
+				si_id = #{si_id},
+				do_id = #{do_id},
+				m_pic = #{m_pic},
+				m_picpath = #{m_picpath}
+		where m_number = #{m_number}
+	</select>
+	
+	<select id="updateMember_noPhoto" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set 
 				m_name = #{m_name}, 
@@ -80,7 +92,6 @@
 		delete from wishlist where wish_id = #{wish_id} ;
 	</select>
 	
-	
 	<select id="updatePoint" parameterType="com.marketdongnae.domain.member.MemberDTO" > 
 		update member
 			set m_point = #{m_point}
@@ -92,18 +103,26 @@
 		 values (  #{m_number} ,  #{p_type} , #{p_price} ) ;
 	</select>
 	
-	<insert id="insertKeyword">
+	<insert id="insertKeyword"  parameterType="com.marketdongnae.domain.member.KeywordVO">
 		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
 	</insert>
 	
-	<select id="getListKeyword">
-		<![CDATA[
-			select * from keyword where key_id > 0
-		]]>
+	<select id="getListKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
+		<!-- <![CDATA[ -->
+		select * from keyword where m_number = #{m_number} ;
+		<!-- ]]> -->
 	</select>
 	
-	<delete id="deleteKeyword">
-		delete from keyword where key_id = #{key_id}
+	<delete id="deleteKeyword" parameterType="int">
+		delete from keyword where key_id = #{key_id};
 	</delete>
-	
+   
+	<select id="getListKeywordGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		select * from goods where 
+		<foreach item="keywordVO" collection="list" open = "(" close=")"  separator = " or ">
+		<![CDATA[ 
+			g_name like	CONCAT('%',#{keywordVO.keyword},'%')  and #{keywordVO.key_regdate} < g_regdate 
+		]]>
+		</foreach>
+	</select>
 </mapper> 

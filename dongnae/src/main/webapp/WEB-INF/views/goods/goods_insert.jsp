@@ -98,9 +98,7 @@
 
 										
 <div class="form-group">
-	<input class="form-control form-control-user" type="file" multiple="multiple"
-	name="product_detail_image" id="product_detail_image" onchange="setDetailImage(event);">
-	
+	<input class="form-control form-control-user" type="file" multiple="multiple" name="uploadFile" id="product_detail_image" onchange="setDetailImage(event);">
 </div>
 <div id="images_container"></div>
 				<div class="row my-3">
@@ -125,7 +123,7 @@
                    		카테고리
                     </div>
                     <div class="form-floating col-12 col-md-3 my-3 align-self-center">
-                        <select class="form-select c1" id="floatingSelect" name="" >
+                        <select class="form-select c1" id="floatingSelect" name="c1_id" >
                             <!-- DB 에서 받아온 값 AJAX 처리 -->
                         </select>
                     </div>

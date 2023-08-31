@@ -60,10 +60,8 @@
 
 
 	<insert id="insertGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
-		insert into goods (g_name, g_price, g_pic01, g_pic02,
-		g_pic03, c2_id, c1_id,  m_number , g_picpath , g_text)
-		values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id}, #{c1_id},
-		#{m_number} , #{g_picpath}, #{g_text})
+		insert into goods (g_name,     g_price,   g_pic01,   g_pic02,   g_pic03,    c2_id,    c1_id,    m_number ,    g_picpath ,   g_text)
+				   values (#{g_name},#{g_price},#{g_pic01},#{g_pic02},#{g_pic03}, #{c2_id}, #{c1_id}, #{m_number} , #{g_picpath}, #{g_text})
 	</insert>
 
 	<update id="updateGoods" parameterType="com.marketdongnae.domain.goods.GoodsDTO">
@@ -93,6 +91,13 @@
 	
 	<select id="countWishGoodsByG_id" resultType="int">
 		select count(*) from wishlist where g_id = #{g_id}
+	</select>
+	
+	<select id="getGoodsListOnSaleByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		 <![CDATA[
+			select * from goods 
+			where m_number = #{m_number}  AND g_status = '판매중'
+		]]>
 	</select>
 
 </mapper>    

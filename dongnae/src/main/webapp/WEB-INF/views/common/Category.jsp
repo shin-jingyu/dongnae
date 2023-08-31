@@ -186,7 +186,7 @@ function fetchCategories() {
     	</div>
         </nav>
         <sec:authorize access="isAnonymous()">
-	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i></a></div>
+	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i></a></div> 
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
         <div class="login_set">

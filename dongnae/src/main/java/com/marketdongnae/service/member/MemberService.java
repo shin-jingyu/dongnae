@@ -64,10 +64,10 @@ public interface MemberService {
 
 	void deleteWish(int wish_id);
 	// 키워드 Service
-	int registKeyword(KeywordVO keyword);
-	KeywordDTO getListKeyword(int m_number);
+	int insertKeyword(KeywordVO keyword);
+	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
 	int deleteKeyword(int key_id);
-	List<GoodsDTO> getListKeywordGoods(int m_number);
+	List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );
 
 
 

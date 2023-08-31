@@ -116,27 +116,13 @@
 	<delete id="deleteKeyword" parameterType="int">
 		delete from keyword where key_id = #{key_id};
 	</delete>
-	
-	
+   
 	<select id="getListKeywordGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
-	<![CDATA[ 
-		select * from goods where g_name like #{keyword} and #{key_regdate} < g_regdate ;
-	]]>
-	</select>
-	
-	<select id="getListKeywordGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
-		select * from goods where
-		<foreach item="keywordVO" collection="list" open = "(" close=")" separator = " or ">
-			 g_name like #{keywordVO.keyword} 
+		select * from goods where 
+		<foreach item="keywordVO" collection="list" open = "(" close=")"  separator = " or ">
+		<![CDATA[ 
+			g_name like	CONCAT('%',#{keywordVO.keyword},'%')  and #{keywordVO.key_regdate} < g_regdate 
+		]]>
 		</foreach>
 	</select>
-		
-<!-- 	
-	<select id="getListKeywordGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
-		select * from goods where
-		<foreach item="keywordVO" collection="list" open = "(" close=")" separator = " or ">
-			 g_name like '%||#{keywordVO.keyword}||%' and #{keywordVO.key_regdate} < g_regdate
-		</foreach>
-	</select>
-	 -->
 </mapper> 

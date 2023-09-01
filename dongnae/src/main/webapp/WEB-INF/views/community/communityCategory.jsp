@@ -41,7 +41,7 @@
 				</thead>
 				<tbody>		
 					<c:forEach var="category" items="${category}"  >
-						<tr><td><a  href="/community/pageCategory?ca_l=${category.ca_l}"> ${category.ca_l}</a></td></tr>
+						<tr><td><a  href="/community/pageCategory?ca_l=${category.ca_l}&num=1"> ${category.ca_l}</a></td></tr>
 					</c:forEach>
 				</tbody>
 			</table>
@@ -87,7 +87,7 @@
 	
 				<tbody class=" text-center">
 				<c:forEach var="list" items="${list}" >
-				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}' ">
 						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
@@ -133,13 +133,13 @@
 					
 			<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 				 	 <span>
-				 		<c:if test="${select != num}">
+				 		<c:if test="${page.num != num}">
 				 			<li class="page-item">
 					  			<a class="page-link" href="/community/pageCategory?ca_l=${page.ca_l}&num=${num}">${num}</a>
 					  		</li>
 						</c:if>    
 					  		
-						<c:if test="${select == num}">
+						<c:if test="${page.num == num}">
 							 <li class="page-item">
 							 	<a class="page-link" >${num}</a>
 							 </li>
@@ -170,12 +170,8 @@
 $("#search").on('click',function(){
 	var keyword = $("#keyword").val();
 	var searchType = $("#searchType").val();
-	var urlParams = new URLSearchParams(window.location.search);
-	var ca_l = urlParams.get('ca_l');
-	console.log(ca_l);
-	console.log(keyword);
-	console.log(searchType);
 	
+
 	if (keyword == "") {
 		confirm("검색할 키워드를 입력하세요");
 		return;
@@ -185,12 +181,15 @@ $("#search").on('click',function(){
 			url: "/community/categorySearch",
 			method:"GET",
 			data:{
-				"ca_l":ca_l,
+				"ca_l":'${page.ca_l}',
 				"keyword":keyword,
-				"searchType":searchType
+				"searchType":searchType,
+				"num":1
+				
 			},
 			success:function(){
-				window.location.href='/community/categorySearch?num=1'+"&ca_l="+ca_l+"&keyword="+keyword+"&searchType="+searchType;
+				
+				window.location.href='/community/categorySearch?num=1&ca_l=${page.ca_l}&keyword='+keyword+'&searchType='+searchType;
 			
 			}
 	});
@@ -198,7 +197,7 @@ $("#search").on('click',function(){
 	
   });
 	
- 
+sessionStorage.setItem('previousURL', window.location.href);
  
  
 </script>

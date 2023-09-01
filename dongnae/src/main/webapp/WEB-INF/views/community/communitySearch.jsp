@@ -38,7 +38,7 @@
 			</thead>
 			<tbody>		
 			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}&num=1"> ${categorys.ca_l}</a></td></tr>
 			</c:forEach>
 			</tbody>
 			</table>
@@ -83,7 +83,7 @@
 	
 			<tbody class=" text-center">
 				<c:forEach var="list" items="${list}" >
-				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}' ">
 						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
@@ -128,13 +128,13 @@
 					
 			<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 				 	 <span>
-				 		<c:if test="${select != num}">
+				 		<c:if test="${page.num != num}">
 				 			<li class="page-item">
 					  			<a class="page-link" href="/community/communitySearch?num=${num}${page.searchTypeKeyword}">${num}</a>
 					  		</li>
 						</c:if>    
 					  		
-						<c:if test="${select == num}">
+						<c:if test="${page.num == num}">
 							 <li class="page-item">
 							 	<a class="page-link" >${num}</a>
 							 </li>
@@ -162,6 +162,7 @@
 $("#search").on('click',function(){
 	var keyword = $("#keyword").val();
 	var searchType = $("#searchType").val();
+	
 	if (keyword == null) {
 		confirm("검색할 키워드를 입력하세요");
 		location.reload(); 
@@ -172,7 +173,8 @@ $("#search").on('click',function(){
 			method:"GET",
 			data:{
 				"keyword":keyword,
-				"searchType":searchType
+				"searchType":searchType,
+				"num":1
 			},
 			success:function(){
 				
@@ -183,6 +185,7 @@ $("#search").on('click',function(){
 	}	
 	
   });
+sessionStorage.setItem('previousURL', window.location.href);
 	
 </script>
 </html>

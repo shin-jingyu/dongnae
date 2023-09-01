@@ -45,7 +45,7 @@
 			<tbody>		
 			
 			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}&num=1"> ${categorys.ca_l}</a></td></tr>
 			</c:forEach>
 			
 			</tbody>
@@ -107,7 +107,7 @@
 	
 			<tbody class=" text-center" >
 				<c:forEach var="list" items="${list}" begin="0" end="4" >
-					<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+					<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}' ">
 						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
@@ -141,7 +141,9 @@
 			</tbody>	
 			
 		</table>
-  <a href="/community/page?key=1" class="btn btn-light" >더보기</a>
+  
+ 	 <a href="/community/page?key=1&num=1"  class="btn btn-light" >더보기</a>
+	
  
  </div>
  <p class="text-dark fw-bold" style="margin-top:50px;">인기게시물</p>
@@ -163,7 +165,7 @@
 		
 			<tbody class=" text-center" >
 				<c:forEach var="list" items="${sorted}" begin="0" end="4" >
-					<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+					<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}'" >
 						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
@@ -198,9 +200,8 @@
 		</table>
 	
  
- 
-	 <a href="/community/page?key=2" class="btn btn-light" >더보기</a>
- 
+ 	<a href="/community/page?key=2&num=1" class="btn btn-light" >더보기</a>
+	
   </div>
  </div> 
 </div>		
@@ -222,7 +223,8 @@ $("#search").on('click',function(){
 			method:"GET",
 			data:{
 				"keyword":keyword,
-				"searchType":searchType
+				"searchType":searchType,
+				"num":1
 			},
 			success:function(){
 				
@@ -234,7 +236,8 @@ $("#search").on('click',function(){
 	
   });
 	
-
+	
+sessionStorage.setItem('previousURL', window.location.href);
  
 </script>
 </html>

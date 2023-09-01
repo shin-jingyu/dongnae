@@ -33,7 +33,6 @@ public class RestMemberController {
 	public String insert (@RequestBody String keyword) throws Exception{
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
 		keyword = keyword.replace("=", "");
-		System.out.println(keyword); //@@@@@@@
 		if( memberService.is_exist_Keyword(customUserDetails, keyword) ) {
 			throw new Exception("이미 있는 키워드");
 		}

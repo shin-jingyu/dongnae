@@ -7,6 +7,5 @@ public class HeartDTO {
 	private int h_id  ;
 	private int mu_id ; 
 	private int m_number ; 
-	private int h_num ;
 	
 }

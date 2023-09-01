@@ -15,7 +15,7 @@
 	</select>
 	
 	<!-- 조회수 증가 -->
-	<update id="updateCount" parameterType="string" >
+	<update id="updateCount" parameterType="int" >
 		update community 
 		set community.mu_c =  community.mu_c +1
 		where community.mu_id = #{mu_id}	
@@ -43,22 +43,20 @@
 	
 	
 	
-	<select id="heartview" resultType="com.marketdongnae.domain.community.HeartDTO">
-		select * from heart where m_number = #{m_number} and mu_id = #{mu_id}
+	<select id="heartview" resultType="int">
+		select count(*) from heart where m_number = #{m_number} and mu_id = #{mu_id}
 	</select>
 	
 	<insert id="insertHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
-		insert into heart(mu_id,m_number,h_num)
-			values(#{mu_id},#{m_number},1)
+		insert into heart(mu_id,m_number)
+			values(#{mu_id},#{m_number})
 	</insert>
 	
-	<update id="updateHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
-		update heart set h_num = 0 where m_number = #{m_number} and mu_id = #{mu_id}
-	</update>
 	
-	<update id="updateHearts" parameterType="com.marketdongnae.domain.community.HeartDTO">
-		update heart set h_num = 1 where m_number = #{m_number} and mu_id = #{mu_id}
-	</update>
+	<delete id="deleteHeart" parameterType="com.marketdongnae.domain.community.HeartDTO">
+		delete from heart where m_number = #{m_number} and mu_id = #{mu_id}  
+	</delete>
+	
 	
 	<insert id="insertComment" parameterType="com.marketdongnae.domain.community.CommentDTO" >
 		insert into comment(com_c,m_number,mu_id)

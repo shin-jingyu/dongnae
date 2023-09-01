@@ -11,6 +11,7 @@
   
 </head>
 <body>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
  
 <jsp:include page="../common/Category.jsp"></jsp:include>
@@ -37,7 +38,7 @@
 			</thead>
 			<tbody>		
 			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}&num=1"> ${categorys.ca_l}</a></td></tr>
 			</c:forEach>
 			</tbody>
 			</table>
@@ -71,7 +72,9 @@
 						<td>내용</td>
 					</tr>
 					<tr>
-						<td ><textarea  name="mu_detail" id="mu_detail"></textarea></td>
+						<td ><textarea  name="mu_detail" id="mu_detail"></textarea>
+							
+						</td>
 					</tr>
 					
 					<tr>
@@ -92,26 +95,24 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	
+
 	var setting = {
 			
-			 height : 500,
+			 height : 600,
 	            minHeight : null,
 	            maxHeight : null,
 	            focus : true,
 	            lang : 'ko-KR',
-	            toolbar: [
-	                ['style', ['style']],
-	                ['font', ['bold', 'underline', 'clear']],
-	                ['color', ['color']],
-	                ['para', ['ul', 'ol', 'paragraph']],
-	                ['table', ['table']],
-	                ['insert', ['link', 'picture', 'video']],
-	                ['view', ['fullscreen', 'codeview', 'help']]
-	              ],
+	            
+	             
 					   //콜백 함수
 					   callbacks : { 
-					   	onImageUpload : function(files, editor, welEditable) {
+						   onInit: function() {
+							     
+							      $("#mu_detail").summernote('code',  '${community.mu_detail }');
+							    },
+					   	onImageUpload : function(files) {
+					   		console.log(this);
 					   // 파일 업로드(다중업로드를 위해 반복문 사용)
 					   	for (var i = files.length - 1; i >= 0; i--) {
 					   		uploadSummernoteImageFile(files[i],this);
@@ -132,8 +133,29 @@ $(document).ready(function() {
 					       }
 						   }
 					   };
-	$("#mu_detail").summernote('code',  '${community.mu_detail }');  
+	
 	$('#mu_detail').summernote(setting);
+	function uploadSummernoteImageFile(file, el) {
+    	data = new FormData();
+    	data.append("file", file);
+    	$.ajax({
+    		data : data,
+    		type : "POST",
+    		url : "/community/upload",
+    		dataType:"JSON",
+    		contentType : false,
+    		processData : false,
+    		success : function(data) {
+    			 $(el).summernote("insertImage", data.url);
+    			
+    	
+    			
+    		   
+    			
+    		}
+    	})
+    	
+    };	
     
     function deleteSummernoteImageFile(imageName) {
     	
@@ -160,25 +182,6 @@ $(document).ready(function() {
 
     
     
-    function uploadSummernoteImageFile(file, el) {
-    	data = new FormData();
-    	data.append("file", file);
-    	$.ajax({
-    		data : data,
-    		type : "POST",
-    		url : "/upload",
-    		contentType : false,
-    		enctype : 'multipart/form-data',
-    		dataType:"json",
-    		processData : false,
-    		success : function(data) {
-    			console.log(data);
-    			$(el).summernote('editor.insertImage', data.url);
-    			console.log(data);
-    		}
-    	});
-    	
-    };	
     
 
    
@@ -218,7 +221,7 @@ $(document).ready(function() {
     		event.preventDefault(); // 폼 제출 기본 동작을 막음
             alert("글 제목을 입력해주세요.");
     	}else if (confirm("글을 등록하시겠습니까?")) {
-    		deleteSession()
+    		
         	shouldDeleteImages = false;
             $('form').submit(); // 폼 제출을 수행
         }

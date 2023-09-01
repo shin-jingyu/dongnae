@@ -125,4 +125,9 @@
 		]]>
 		</foreach>
 	</select>
+	
+		
+	<select id="getKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
+		select * from keyword where m_number = #{m_number} and keyword = #{keyword} ;
+	</select>
 </mapper> 

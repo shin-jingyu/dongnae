@@ -30,8 +30,13 @@ public class RestMemberController {
 	private MemberService memberService;
 	
 	@PostMapping(value = "insertKeyword")
-	public String insert (@RequestBody String keyword){
+	public String insert (@RequestBody String keyword) throws Exception{
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
+		keyword = keyword.replace("=", "");
+		System.out.println(keyword); //@@@@@@@
+		if( memberService.is_exist_Keyword(customUserDetails, keyword) ) {
+			throw new Exception("이미 있는 키워드");
+		}
 		memberService.insertKeyword(customUserDetails, keyword); 
 		return "success";
 	}
@@ -43,9 +48,10 @@ public class RestMemberController {
 		return keywordList;
 	}
 	
-	@DeleteMapping(value = "delete_{key_id}")
-	public void delete(@PathVariable("key_id") int key_id){
+	@DeleteMapping(value = "delete/{key_id}")
+	public String delete(@PathVariable("key_id") int key_id){
 		memberService.deleteKeyword(key_id);
+		return "success";
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -238,6 +239,15 @@ public class MemberServiceImpl implements MemberService {
 		List<KeywordVO> keywordList = memberMapper.getListKeyword(customUserDetails.getM_number());
 		List<GoodsDTO> goodsList  = memberMapper.getListKeywordGoods(keywordList);
 		return goodsList;
+	}
+	@Override
+	public boolean is_exist_Keyword(CustomUserDetails customUserDetails, String keyword) {
+		KeywordVO keyword_exist = memberMapper.getKeyword(customUserDetails.getM_number(), keyword);
+		if(keyword_exist == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 

@@ -2,6 +2,8 @@ package com.marketdongnae.service.member;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
+
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.KeywordDTO;
@@ -50,10 +52,6 @@ public interface MemberService {
 	
 	List<Deal_viewDTO> getDealPageList( CustomUserDetails customUserDetails, String d_type, PageDTO pageDTO);
 	
-	
-//	int getPoint(CustomUserDetails customUserDetails);
-//	void putPoint(PointDTO pointDTO);
-	
 	int getPoint(CustomUserDetails customUserDetails);
 
 	void putPoint(PointDTO pointDTO);
@@ -63,11 +61,17 @@ public interface MemberService {
 	int getAvgScore(CustomUserDetails customUserDetails);
 
 	void deleteWish(int wish_id);
+	
 	// 키워드 Service
 	int insertKeyword(CustomUserDetails customUserDetails, String keyword);
+	
 	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
+	
 	int deleteKeyword(int key_id);
+	
 	List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );
+
+	boolean is_exist_Keyword(CustomUserDetails customUserDetails, String keyword);
 
 
 

@@ -249,6 +249,7 @@ $(document).ready(function (){
         $.ajax({
 	    	url :'/heart',
 	        type :'POST',
+	        dataType:'json',
 	        data : {
 	        	'mu_id':${communityDetail.mu_id},
 	        	'm_number': ${member.m_number}
@@ -258,10 +259,10 @@ $(document).ready(function (){
 	    		console.log(data);
 	    		if(data==1) {
 	        		$("#heart").prop("src","/resources/img/blog/icon/HeartS.png");
-	        		location.reload();       
+	        		
 	        	} else {
 	        		$("#heart").prop("src","/resources/img/blog/icon/HeartF.png");	
-	        		location.reload();       
+	        	 
 	        	}
 	    		}
 	        });

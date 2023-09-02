@@ -145,9 +145,11 @@ function fetchCategories() {
 	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i> Login</a></div>
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-        <div class="login_set">
-	         <a href="/member/detail"><i class="fa fa-user"></i></a>
-        </div>
+	        <div class="login_set">
+		         <a href="/member/detail"><i class="fa fa-user"></i></a>
+		         <a href="/goods/goods_insert"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+		         <a href="/logout">Logout</a>
+	        </div>
          </sec:authorize>
     </header>
 	<div class="col-lg-3">

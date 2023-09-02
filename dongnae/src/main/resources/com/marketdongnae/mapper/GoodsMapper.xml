@@ -6,7 +6,7 @@
 <mapper namespace="com.marketdongnae.mapper.GoodsMapper">
 
 	<sql id="available">
-		AND g_status = '판매중'
+		AND g_status = 1
 	</sql>
 	
 	<sql id="categoryCheck">
@@ -26,6 +26,7 @@
 			select * from goods where g_id > 0
 		]]>
 		<include refid="available"></include>
+		ORDER BY g_regdate DESC;
 	</select>
 
 	<select id="getGoodsListByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
@@ -51,7 +52,7 @@
 	            </otherwise>
 	        </choose>
 	    </if>
-	    AND g_status = '판매중'
+	    AND g_status = 1
 	</select>
 
 	<select id="getGoodsDetail" resultType="com.marketdongnae.domain.goods.GoodsDTO">
@@ -96,8 +97,9 @@
 	<select id="getGoodsListOnSaleByMemberNumber" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		 <![CDATA[
 			select * from goods 
-			where m_number = #{m_number}  AND g_status = '판매중'
+			where m_number = #{m_number}  AND g_status = 1
 		]]>
+		ORDER BY g_regdate DESC;
 	</select>
 
 </mapper>    

@@ -1,11 +1,11 @@
 package com.marketdongnae.domain.community;
 
-import lombok.Data;
+
 
 public class PageDTO {
 	// 현재 페이지 번호
 	private int num;
-
+	private int key;
 	// 게시물 총 갯수
 	private int count;
 
@@ -24,6 +24,8 @@ public class PageDTO {
 	// 표시되는 페이지 번호 중 마지막 번호
 	private int endPageNum;
 
+	
+
 	// 표시되는 페이지 번호 중 첫번째 번호
 	private int startPageNum;
 
@@ -31,6 +33,17 @@ public class PageDTO {
 	private boolean prev;
 	private boolean next;
 	private String ca_l;
+	
+	
+	public int getKey() {
+		return key;
+	}
+
+	public void setKey(int key) {
+		this.key = key;
+	}
+	
+	
 	
 	public String getCa_l() {
 		return ca_l;

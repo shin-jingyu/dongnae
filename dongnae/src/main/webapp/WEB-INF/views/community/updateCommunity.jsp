@@ -37,7 +37,7 @@
 			</thead>
 			<tbody>		
 			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}&num=1"> ${categorys.ca_l}</a></td></tr>
 			</c:forEach>
 			</tbody>
 			</table>
@@ -51,7 +51,6 @@
 		<div class="card shadow" >
 		<form method="post" action="/community/updateCommunity">
 				<input type="hidden" name="mu_id" value="${community.mu_id }">
-				<input type="hidden" name="num" value="${page.num }">
 				<input type="hidden" name="m_number" value="${community.m_number }">
 		<table class=" table table-borderless align-middle table-hover">
 			<tr>
@@ -85,42 +84,29 @@
 		</table>
 				
 	</form>
-			<button class="btn btn-outline-info" id="back" id="back"> 이전으로</button>
-			<button class="btn btn-outline-info" id="back" onclick="location.href='/community/main?num=${page.num}'">목록으로</button>
+			<button class="btn btn-outline-info" onclick="location.href='/community/communityDetail?mu_id=${community.mu_id }' "> 이전으로</button>
 		</div>
-	</div>
-	
-		</div>	
+	</div>	
+</div>	
 			
 	<jsp:include page="../common/footer.jsp"></jsp:include>	
 </body>
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-	$("#back").on('click',function(){	
-   	 window.history.back();
-   	 
-   });
-	
 	var setting = {
 			
-			 height : 500,
+				height : 600,
 	            minHeight : null,
 	            maxHeight : null,
 	            focus : true,
 	            lang : 'ko-KR',
-	            toolbar: [
-	                ['style', ['style']],
-	                ['font', ['bold', 'underline', 'clear']],
-	                ['color', ['color']],
-	                ['para', ['ul', 'ol', 'paragraph']],
-	                ['table', ['table']],
-	                ['insert', ['link', 'picture', 'video']],
-	                ['view', ['fullscreen', 'codeview', 'help']]
-	              ],
+	            
 					   //콜백 함수
 					   callbacks : { 
+						   onInit: function() {
+							      $("#mu_detail").summernote('code',  '${community.mu_detail }');
+							    },  
 					   	onImageUpload : function(files, editor, welEditable) {
 					   // 파일 업로드(다중업로드를 위해 반복문 사용)
 					   	for (var i = files.length - 1; i >= 0; i--) {
@@ -142,8 +128,27 @@ $(document).ready(function() {
 					       }
 						   }
 					   };
-	$("#mu_detail").summernote('code',  '${community.mu_detail }'); 
+	 
     $('#mu_detail').summernote(setting);
+    function uploadSummernoteImageFile(file, el,imageName) {
+    	data = new FormData();
+    	data.append("file", file);
+    	data.append("imageName", imageName);
+    	$.ajax({
+    		data : data,
+    		type : "POST",
+    		url : "/community/upload",
+    		contentType : false,
+    		dataType:"json",
+    		processData : false,
+    		success : function(data) {
+    			
+    			 $(el).summernote("insertImage", data.url);
+    			
+    		}
+    	});
+    	
+    };	
     
 	 function deleteSummernoteImageFile(imageName) {
 	    	
@@ -158,7 +163,6 @@ $(document).ready(function() {
 	            type: 'POST',
 	            url: '/deleteSummernoteImageFile',
 	            contentType: false,
-	            enctype: 'multipart/form-data',
 	            processData: false,
 	            success : function(data) {
 	            	
@@ -166,32 +170,6 @@ $(document).ready(function() {
 	            }
 	        });	
 	        
-	    };
-
-	    function uploadSummernoteImageFile(file, el) {
-	    	data = new FormData();
-	    	data.append("file", file);
-	    	$.ajax({
-	    		data : data,
-	    		type : "POST",
-	    		url : "/upload",
-	    		contentType : false,
-	    		enctype : 'multipart/form-data',
-	    		dataType:"json",
-	    		processData : false,
-	    		success : function(data) {
-	    			$(el).summernote('editor.insertImage', data.url);
-	    			
-	    		}
-	    	});
-	    	
-	    };	
-	    
-	    function deleteSession() {
-	        $.ajax({
-	            type: 'POST',
-	            url: '/deleteSession'
-	        });	
 	    };
 	    //저장하지않고 다른곳으로 이동했을때 콜백된 이미지 삭제하기 
 	    var shouldDeleteImages = true;
@@ -207,24 +185,21 @@ $(document).ready(function() {
 	        }
 	    	
 	    });
-	    // 글 등록 버튼 클릭 시 이미지 삭제를 방지하기 위해 shouldDeleteImages를 false로 설정
+	    // 글 수정 버튼 클릭 시 이미지 삭제를 방지하기 위해 shouldDeleteImages를 false로 설정
 	    $('#submits').on('click', function() {
-	    	var muNameValue = $('#mu_name').val();
 	    	
-	    	console.log(muDetail);
+	    	var muNameValue = $('#mu_name').val();
 	    	if(muNameValue.trim() === ''){
 	    		event.preventDefault(); // 폼 제출 기본 동작을 막음
 	            alert("글 제목을 입력해주세요.");
 	    	}else if (confirm("글을 수정하시겠습니까?")) {
-	    		deleteSession()
-	        	shouldDeleteImages = false;
-	    		
-	    		
-	            $('form').submit(); // 폼 제출을 수행
+	    		shouldDeleteImages = false;
+	    		$('form').submit(); // 폼 제출을 수행
 	        }
 	    	
 	    });
-
-});
+	    
+	   
+	    	
 </script>
 </html>

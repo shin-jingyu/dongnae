@@ -42,7 +42,7 @@
 			<tbody>		
 			
 			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}&num=1"> ${categorys.ca_l}</a></td></tr>
 			</c:forEach>
 			
 			</tbody>
@@ -77,7 +77,7 @@
 					
 					<!--작성자만 보이는 버튼   -->
 					<c:if test = '${member.m_id == communityDetail.m_id}'>
-					<button class="btn btn-outline-info" onclick="location.href='/community/updateCommunity?mu_id=${communityDetail.mu_id }&&num=${page.num}'">수정하기</button>
+					<button class="btn btn-outline-info" onclick="location.href='/community/updateCommunity?mu_id=${communityDetail.mu_id }'">수정하기</button>
 					<button class="btn btn-outline-info" id="deleteCommunity" type="button">삭제하기</button>
 					</c:if>
 		  </div>
@@ -137,9 +137,25 @@
 
 <script type="text/javascript">
 
-$("#goBack").on('click',function(){
-    window.history.back(); // 브라우저의 뒤로 가기 기능
+document.addEventListener('DOMContentLoaded', function() {
+    var goBackButton = document.getElementById('goBack');
+    
+    if (goBackButton) {
+        goBackButton.addEventListener('click', function() {
+            // 세션 스토리지에서 이전 URL 가져오기
+            var previousURL = sessionStorage.getItem('previousURL');
+            
+            if (previousURL) {
+                // 이전 URL로 이동
+                window.location.href = previousURL;
+            } else {
+                // 이전 URL이 없는 경우 기본 경로로 이동
+                window.location.href = "/";
+            }
+        });
+    }
 });
+
 
 
 
@@ -219,13 +235,12 @@ $("#deleteComments").on('click',function(){
 
 //좋아요 구현
 $(document).ready(function (){
-	var heartval = '${heartview.h_num}';
+	var heartval = '${heartview}';
 	if(heartval>0){
 		$("#heart").prop("src","/resources/img/blog/icon/HeartS.png");
 		$(".heart").prop("name",heartval)
 	}
 	else {
-		console.log(heartval);
 		$("#heart").prop("src","/resources/img/blog/icon/HeartF.png");
 		$(".heart").prop("name",heartval)
 	}
@@ -234,6 +249,7 @@ $(document).ready(function (){
         $.ajax({
 	    	url :'/heart',
 	        type :'POST',
+	        dataType:'json',
 	        data : {
 	        	'mu_id':${communityDetail.mu_id},
 	        	'm_number': ${member.m_number}
@@ -243,10 +259,10 @@ $(document).ready(function (){
 	    		console.log(data);
 	    		if(data==1) {
 	        		$("#heart").prop("src","/resources/img/blog/icon/HeartS.png");
-	        		location.reload();
-	        		} else {
+	        		
+	        	} else {
 	        		$("#heart").prop("src","/resources/img/blog/icon/HeartF.png");	
-	        		location.reload();
+	        	 
 	        	}
 	    		}
 	        });

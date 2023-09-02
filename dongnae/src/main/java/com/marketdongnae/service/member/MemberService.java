@@ -2,6 +2,8 @@ package com.marketdongnae.service.member;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
+
 import com.marketdongnae.domain.member.Deal_viewDTO;
 import com.marketdongnae.domain.member.Do_areaDTO;
 import com.marketdongnae.domain.member.KeywordDTO;
@@ -19,10 +21,6 @@ public interface MemberService {
 	
 	CustomUserDetails loginID(String m_id);
 	
-//	List<Do_areaDTO> getDoList();
-//	
-//	List<Si_areaDTO> getSiList(int do_id);
-	
 	List<AllDTO> getDoList();
 	
 	List<AllDTO> getSiList(int do_id);
@@ -37,9 +35,8 @@ public interface MemberService {
 	String checkId(String checkId);
 	
 	String checkPassword(CustomUserDetails customUserDetails, Map<String, Object>  passwordDTO);
+	
 	void changePassword(CustomUserDetails customUserDetails, String new_password);
-//	String changePassword(CustomUserDetails customUserDetails, PasswordDTO passwordDTO);
-
 	
 	PageDTO getPageDTO( String table, String table_id ,int nowpage , CustomUserDetails customUserDetails);
 
@@ -50,10 +47,6 @@ public interface MemberService {
 	
 	List<Deal_viewDTO> getDealPageList( CustomUserDetails customUserDetails, String d_type, PageDTO pageDTO);
 	
-	
-//	int getPoint(CustomUserDetails customUserDetails);
-//	void putPoint(PointDTO pointDTO);
-	
 	int getPoint(CustomUserDetails customUserDetails);
 
 	void putPoint(PointDTO pointDTO);
@@ -63,11 +56,19 @@ public interface MemberService {
 	int getAvgScore(CustomUserDetails customUserDetails);
 
 	void deleteWish(int wish_id);
-	// 키워드 Service
-	int insertKeyword(KeywordVO keyword);
-	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
-	int deleteKeyword(int key_id);
+	
+	
 	List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );
+	
+	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
+	
+	boolean is_exist_Keyword(CustomUserDetails customUserDetails, String keyword);
+	
+	int insertKeyword(CustomUserDetails customUserDetails, String keyword);
+	
+	int deleteKeyword(int key_id);
+	
+
 
 
 

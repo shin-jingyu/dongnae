@@ -3,6 +3,7 @@ package com.marketdongnae.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.AllDTO;
@@ -53,7 +54,6 @@ public interface MemberMapper {
 											, @Param ("d_type") String d_type
 											,@Param ("displayStart") int displayStart );
 	
-
 	
 	public List<Deal_viewDTO> getSoldList(int m_number);
 
@@ -73,6 +73,9 @@ public interface MemberMapper {
 	public int deleteKeyword(int key_id);
 	
 	public List<GoodsDTO> getListKeywordGoods(List<KeywordVO> keywordVOList);
+
+	public KeywordVO getKeyword(@Param ("m_number") int m_number
+			, @Param ("keyword") String keyword);
 
 
 }

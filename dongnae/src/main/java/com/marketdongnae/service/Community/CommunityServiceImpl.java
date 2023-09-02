@@ -1,9 +1,12 @@
 package com.marketdongnae.service.Community;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,29 +15,55 @@ import com.marketdongnae.domain.community.CommentDTO;
 import com.marketdongnae.domain.community.CommunityAllDTO;
 import com.marketdongnae.domain.community.HeartDTO;
 import com.marketdongnae.domain.community.communityDetailDTO;
-import com.marketdongnae.domain.member.MemberDTO;
+
 import com.marketdongnae.mapper.CommunityMapper;
+
+
+
+
 
 
 @Service("CommunityService")
 public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private CommunityMapper communityMapper ;
+	
+	
 
+    private  String extractImageUrlFromContent(String content) {
+    	  Document doc = Jsoup.parse(content);
+		    Elements imgTags = doc.select("img"); // img 태그들을 선택
+
+		    for (Element imgTag : imgTags) {
+		        String imageUrl = imgTag.attr("src"); // img 태그의 src 속성 추출
+		        if (!imageUrl.isEmpty()) {
+		            return imageUrl; // 이미지 URL이 비어있지 않다면 반환
+		        }
+		    }
+
+	    return ""; // 이미지가 없을 경우 빈 문자열 반환
+    }
+
+	
 	@Override
 	public List<CommunityAllDTO> communityAll() {
 		List<CommunityAllDTO> list = communityMapper.communityAll();
+		 for (CommunityAllDTO dto : list) {
+	            String content = dto.getMu_detail();
+	            String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	            dto.setPreviewImageUrl(imageUrl);
+	        }
 		return list;
 	}
 
 	@Override
-	public CommunityAllDTO communityDetail(String mu_id) {
+	public CommunityAllDTO communityDetail(int mu_id) {
 	
 		return communityMapper.communityDetail(mu_id);
 	}
 
 	@Override
-	public void updateCount(String mu_id) {
+	public void updateCount(int mu_id) {
 		communityMapper.updateCount(mu_id);
 		
 	}
@@ -56,35 +85,27 @@ public class CommunityServiceImpl implements CommunityService {
 		communityMapper.deleteCommunity(mu_id);
 	}
 
+	
 	@Override
-	public HeartDTO heartview(String m_number,String mu_id) {
-		
+	public int heartview(int m_number, int mu_id) {
+	
 		return communityMapper.heartview(m_number,mu_id);
 	}
-
 	
-	  @Override public int insertHeart(HeartDTO heart) { 
-		 Map<String, Object> map = new HashMap<String, Object>();
-		 int result =0;
-		 
-		 int m_numberInt = heart.getM_number();
-		 int mu_idInt = heart.getMu_id();
-		 String m_number = String.valueOf(m_numberInt);
-		 String mu_id = String.valueOf(mu_idInt);
-		 
-		 HeartDTO find = communityMapper.heartview(m_number,mu_id);
-		 
-		 
-		 if (find == null ) { 
-			communityMapper.insertHeart(heart);
-			result = 1;
-		 }else if(find.getH_num()==0){ 
-			communityMapper.updateHearts(heart);
-			 result=1;
-		 }else {
-			  communityMapper.updateHeart(heart); 
-			  result=0;
+	@Override public int insertHeart(HeartDTO heart) { 
+		
+		int result =0;
+		int m_number = heart.getM_number(); int mu_id = heart.getMu_id();
+		int find = communityMapper.heartview(m_number,mu_id);
+		
+		if (find == 0 ) { 
+			communityMapper.insertHeart(heart); 
+			result = 1;  
+		}else{ 
+			communityMapper.deleteHeart(heart);
+			result=0; 
 		}
+			 
 		
 		 return result; 
 		 
@@ -122,15 +143,28 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<CommunityAllDTO> listPage(int displaypost, int postnum) {
-	
-		return communityMapper.listPage(displaypost, postnum);
+		
+		List<CommunityAllDTO> list=communityMapper.listPage(displaypost, postnum);
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	    }
+		return list;
 		
 	}
 
 	@Override
 	public List<CommunityAllDTO> listPageSearch(int displayPost, int postNum, String searchType, String keyword) {
+		List<CommunityAllDTO> list=communityMapper.listPageSearch(displayPost, postNum, searchType, keyword);
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	    }
 		
-		return communityMapper.listPageSearch(displayPost, postNum, searchType, keyword);
+		
+		return list;
 	}
 
 	@Override
@@ -141,8 +175,16 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<CommunityAllDTO> pageCategory(int displayPost, int postNum, String ca_l) {
+		List<CommunityAllDTO> list=communityMapper.pageCategory(displayPost, postNum, ca_l);
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	    }
 		
-		return communityMapper.pageCategory(displayPost, postNum, ca_l);
+		
+		return list;
+		
 	}
 	
 	@Override
@@ -159,13 +201,30 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public List<CommunityAllDTO> listPageSearchs(int displayPost, int postNum, String ca_l, String keyword,
 			String searchType) {
-		return communityMapper.listPageSearchs(displayPost, postNum, ca_l, keyword, searchType);
+		System.out.println(keyword);
+		System.out.println(ca_l);
+		System.out.println(displayPost);
+		System.out.println(postNum);
+		List<CommunityAllDTO> list=communityMapper.listPageSearchs(displayPost, postNum, ca_l, keyword, searchType);
+		for (CommunityAllDTO dto : list) {
+	        String content = dto.getMu_detail();
+	        String imageUrl = extractImageUrlFromContent(content); // 이미지 URL 추출 메서드 호출
+	        dto.setPreviewImageUrl(imageUrl);
+	    }
+		
+		return list;
+		
 	}
 
 	@Override
 	public int listPageSearchsCount(String ca_l, String keyword, String searchType) {
+		
+		
 		return communityMapper.listPageSearchsCount(ca_l, keyword, searchType);
 	}
+
+
+	
 
 	
 	

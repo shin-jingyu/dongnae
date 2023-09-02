@@ -42,14 +42,14 @@
 			</thead>
 			<tbody>		
 			<c:forEach var="categorys" items="${categorys}"  >
-			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}"> ${categorys.ca_l}</a></td></tr>
+			<tr><td><a  href="/community/pageCategory?ca_l=${categorys.ca_l}&num=1"> ${categorys.ca_l}</a></td></tr>
 			</c:forEach>
 			</tbody>
 			</table>
 		</div>	
 	</div>
 
-<c:if test="${key==1}">		
+<c:if test="${page.key==1}">		
  <div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;" >
 	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
@@ -89,7 +89,7 @@
 	
 			<tbody class=" text-center">
 				<c:forEach var="list" items="${list}" >
-				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}' ">
 						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
@@ -126,42 +126,42 @@
 			
 			<c:if test="${page.prev}">
 			 <li class="page-item">
-	      		<a class="page-link" href="/community/page?num=${page.startPageNum - 1}&key=${key}" aria-label="Previous">
+	      		<a class="page-link" href="/community/page?num=${page.startPageNum - 1}&key=${page.key}" aria-label="Previous">
 	        	<span aria-hidden="true">&laquo;</span>
 	      		</a>
 	    	 </li>
-			</c:if>
+			</c:if> 
 					
-			<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
+			 <c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 				 	 <span>
-				 		<c:if test="${select != num}">
+				 		<c:if test="${page.num != num}">
 				 			<li class="page-item">
-					  			<a class="page-link" href="/community/page?num=${num}&key=${key}">${num}</a>
+					  			<a class="page-link" href="/community/page?num=${num}&key=${page.key}">${num}</a>
 					  		</li>
 						</c:if>    
 					  		
-						<c:if test="${select == num}">
+						<c:if test="${page.num == num}">
 							 <li class="page-item">
-							 	<a class="page-link" >${num}</a>
+							 	<a class="page-link" >${page.num}</a>
 							 </li>
 						</c:if>
 					 </span>
-			</c:forEach>
+			</c:forEach> 
 			
-			<c:if test="${page.next}">
+			 <c:if test="${page.next}">
 				<li class="page-item">
-			    	<a class="page-link" href="/community/page?num=${page.endPageNum + 1}&key=${key}" aria-label="Next">
+			    	<a class="page-link" href="/community/page?num=${page.endPageNum + 1}&key=${page.key}" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			    	</a>
 		    	</li>
-			</c:if>
+			</c:if>  
 	  </ul>
 	</nav> 
  	</div>
  	</div>
  </c:if>
  
-<c:if test="${key==2}">
+<c:if test="${page.key==2}">
 	<div  class="container" style=" width: 85%;  box-sizing: border-box; margin-top:100px;" >
 	<div class="container"  style="float: right; width: 400px;" >
 		  <div class="row no-gutters" >
@@ -201,7 +201,7 @@
 	
 			<tbody class=" text-center">
 				<c:forEach var="list" items="${sorted}" >
-				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}&&m_number=${member.m_number}' ">
+				<tr onclick="location.href='/community/communityDetail?mu_id=${list.mu_id}' ">
 						<td class="align-middle">${list.si_area}</td>
 						<c:choose>
 						    <c:when test="${not empty list.previewImageUrl}">
@@ -236,37 +236,37 @@
  		<nav class="nav justify-content-center bg-light">
 		 <ul class="pagination">
 			
-			<c:if test="${page.prev}">
+		<c:if test="${page.prev}">
 			 <li class="page-item">
-	      		<a class="page-link" href="/community/page?num=${page.startPageNum - 1}&key=${key}" aria-label="Previous">
+	      		<a class="page-link" href="/community/page?num=${page.startPageNum - 1}&key=${page.key}" aria-label="Previous">
 	        	<span aria-hidden="true">&laquo;</span>
 	      		</a>
 	    	 </li>
-			</c:if>
+			</c:if> 
 					
-			<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
+			 <c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 				 	 <span>
-				 		<c:if test="${select != num}">
+				 		<c:if test="${page.num != num}">
 				 			<li class="page-item">
-					  			<a class="page-link" href="/community/page?num=${num}&key=${key}">${num}</a>
+					  			<a class="page-link" href="/community/page?num=${num}&key=${page.key}">${num}</a>
 					  		</li>
 						</c:if>    
 					  		
-						<c:if test="${select == num}">
+						<c:if test="${page.num == num}">
 							 <li class="page-item">
-							 	<a class="page-link" >${num}</a>
+							 	<a class="page-link" >${page.num}</a>
 							 </li>
 						</c:if>
 					 </span>
-			</c:forEach>
+			</c:forEach> 
 			
-			<c:if test="${page.next}">
+			 <c:if test="${page.next}">
 				<li class="page-item">
-			    	<a class="page-link" href="/community/page?num=${page.endPageNum + 1}&key=${key}" aria-label="Next">
+			    	<a class="page-link" href="/community/page?num=${page.endPageNum + 1}&key=${page.key}" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			    	</a>
 		    	</li>
-			</c:if>
+			</c:if>  
 	  </ul>
 	</nav> 
  	</div>
@@ -290,7 +290,8 @@ $("#search").on('click',function(){
 			method:"GET",
 			data:{
 				"keyword":keyword,
-				"searchType":searchType
+				"searchType":searchType,
+				"num":1
 			},
 			success:function(){
 				
@@ -303,7 +304,7 @@ $("#search").on('click',function(){
   });
 	
  
- 
+sessionStorage.setItem('previousURL', window.location.href); 
  
 </script>
 </html>

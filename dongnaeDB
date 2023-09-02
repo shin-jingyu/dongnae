@@ -26,24 +26,6 @@ ALTER TABLE `Goods` ADD CONSTRAINT `PK_GOODS` PRIMARY KEY (
 ALTER TABLE `dongnae`.`Goods` 
 CHANGE COLUMN `g_id` `g_id` INT NOT NULL AUTO_INCREMENT ;
 
-
-
--- 키워드 테이블
-CREATE TABLE `keyword` (
-	`key_id`	int	NOT NULL,
-	`m_number`	int	NOT NULL,
-	`keyword`	varchar(255)	NOT NULL,
-	`key_regdate`	datetime	NULL	DEFAULT CURRENT_TIMESTAMP
-);
-
-ALTER TABLE `keyword` ADD CONSTRAINT `PK_KEYWORD` PRIMARY KEY (
-	`key_id`
-);
-
-ALTER TABLE `dongnae`.`keyword` 
-CHANGE COLUMN `key_id` `key_id` INT NOT NULL AUTO_INCREMENT ;
-
-
 -- 카테고리 대분류 테이블
 CREATE TABLE `category_goods_1` (
 	`c1_id`	int	NOT NULL,
@@ -146,33 +128,38 @@ values('동네질문');
 
 
 
+-- 키워드 테이블
+DROP TABLE  if exists keyword;
+CREATE TABLE `keyword` (
+	`key_id`	int	NOT NULL primary key AUTO_INCREMENT,
+	`m_number`	int	NOT NULL,
+	`keyword`	varchar(255)	NOT NULL,
+	`key_regdate`	datetime	NULL	DEFAULT CURRENT_TIMESTAMP
+);
 
-
-
--- 회원 --
+-- 회원 테이블
 drop table if exist member; 
 CREATE TABLE `Member` (
 	`m_number`	int	NOT NULL	unique primary key  auto_increment,
 	`m_id`	varchar(255)	NOT NULL	unique,
 	`m_pwd`	varchar(255)	NOT NULL,
 	`m_name`	varchar(255)	NOT NULL,
-	`m_email`	varchar(255)	NOT NULL,
+	`m_email`	varchar(255)	NOT NULL	unique,
 	`m_phone`	varchar(255)	NOT NULL,
 	`m_point`	int	NULL DEFAULT 0 ,
 	`m_regdate`	timestamp	NULL	DEFAULT CURRENT_TIMESTAMP,
 	`si_id`	int	NOT NULL,
+	`do_id`	int	NULL,
+    `m_pic` varchar(255)	NULL,
+    `m_picpath` varchar(255)	NULL,
     `m_auth`	varchar(50)	NOT NULL	DEFAULT 'ROLE_MEMBER'
 );
 
-ALTER TABLE member add COLUMN do_id int NULL;
-ALTER TABLE `Member` ADD COLUMN `m_pic` varchar(255)	NULL;
-ALTER TABLE `Member` ADD COLUMN `m_picpath` varchar(255)	NULL;
-
-
 
 -- point 테이블
-drop table  if exist point; 
- CREATE TABLE `point` (
+-- p_type 설정: plus(송금받은 경우) , minus(송금한 경우), put(충전한 경우)
+drop table  if exists point; 
+CREATE TABLE `point` (
 	`p_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_id`	varchar(255)	NOT NULL,
     	`p_type`	varchar(255)	NULL	,
@@ -180,17 +167,9 @@ drop table  if exist point;
 	`p_regdate`	timestamp	NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- pont 테이블 insert 예시 ( ? 부분은 조회하고 싶은 멤버에 맞게 넣기 )
--- p_type 설정: plus(송금받은 경우) , minus(송금한 경우), put(충전한 경우)
-
-insert into point  (  m_id,  p_type ,  p_price  )  values ( '?', 'plus', '20000' );
-insert into point  (  m_id,  p_type ,  p_price  )  values ( '?', 'minus', '3000' );
-insert into point  (  m_id,  p_type ,  p_price  )  values ( '?', 'put', '3000' );
- 
-
--- 거래 
-drop table  if exist deal; 
- CREATE TABLE `deal` (
+-- 거래 테이블
+drop table  if exists deal; 
+CREATE TABLE `deal` (
 	`d_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_number`	int	NOT NULL,
    	`d_type`	varchar(255)	NULL	,
@@ -202,16 +181,15 @@ drop table  if exist deal;
      unique ( m_number, d_type, d_m_number, g_id)
 );
 
-
 -- 거래 + 상품 조회 view
-drop view  if exist deal_view; 
+drop view  if exists deal_view; 
 create view deal_view
 as select  D.d_id, D.m_number, D.d_type, D.d_m_number, D.d_regdate, D.d_score, D.d_review, G.g_id, G.g_price, G.g_name
 from deal as D, goods as G
 where G.m_number = D.m_number ;
 
--- 찜목록
-drop TABLE if exist wishlist; 
+-- 찜목록 테이블
+drop TABLE if exists wishlist; 
 CREATE TABLE `wishlist` (
 	`wish_id`	int	NOT NULL primary key auto_increment,
 	`m_number`	int	NOT NULL	,
@@ -220,53 +198,27 @@ CREATE TABLE `wishlist` (
 );
 
 -- 찜목록 조회 위한 wish_view
-drop view  if exist wish_view; 
+drop view  if exists wish_view; 
 create view wish_view
 as select W.wish_id , W.m_number  , G.g_id , G.g_name  , G.g_price
 from wishlist as W, goods as G
 where W.m_number = G.m_number ;
 
--- deal 테이블 insert 예시 ( ? 부분은 조회하고 싶은 멤버에 맞게 넣기, 거래상대번호d_m_number, 상품 아이디g_id는 임의로 넣었습니다. )
-insert into deal  ( m_number, d_m_number ,d_type, g_id ,  d_score )
- values ('?', '4' , 'buy', '1' , '95') ;
- 
- insert into deal  ( m_number, d_m_number ,d_type, g_id ,  d_score )
- values ('?', '4' , 'buy', '2' ,  '100') ;
- 
-  insert into deal  ( m_number, d_m_number ,d_type, g_id ,   d_score, d_review)
- values ('?', '4', 'sold', '3' , '80', 'good!') ;
- 
-  insert into deal  ( m_number, d_m_number,  d_type, g_id ,  d_score, d_review)
- values ('?', '4', 'sold', '4' ,  '97', 'thanks!') ;
- 
-insert into deal  ( m_number,  d_type, g_id  )
- values ('?', 'onSale', '5'  ) ;
- 
- insert into deal  (m_number,  d_type, g_id)
- values ('?',  'onSale', '6'  ) ;
- 
- insert into deal  ( m_number,  d_type, g_id  )
- values ('?', 'onSale', '7'  ) ;
- 
- insert into deal  (m_number,  d_type, g_id)
- values ('?',  'onSale', '8'  ) ;
-
-
-
--- 시 도
-drop TABLE if exist Do_area; 
+-- 시 도  테이블
+drop TABLE if exists Do_area; 
 CREATE TABLE `Do_area` (
 	`do_id`	int	NOT NULL primary key ,
 	`do_area`	varchar(255)	NOT NULL
 );
 
-drop TABLE if exist Si_area; 
+drop TABLE if exists Si_area; 
 CREATE TABLE `Si_area` (
 	`si_id`	int	NOT NULL  primary key ,
 	`si_area`	varchar(255)	NOT NULL,
 	`do_id`	int	NOT NULL
 );
 
+-- 시 도  테이블 기본 데이터 insert 
 insert into Do_area ( do_id, do_area ) values ('123', '서울' );
 insert into Do_area ( do_id, do_area ) values ('456', '경기' );
 insert into Do_area ( do_id, do_area ) values ('700', '인천' );

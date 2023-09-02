@@ -158,7 +158,7 @@ CREATE TABLE `Member` (
 
 -- point 테이블
 -- p_type 설정: plus(송금받은 경우) , minus(송금한 경우), put(충전한 경우)
-drop table  if exist point; 
+drop table  if exists point; 
 CREATE TABLE `point` (
 	`p_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_id`	varchar(255)	NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE `point` (
 );
 
 -- 거래 테이블
-drop table  if exist deal; 
+drop table  if exists deal; 
 CREATE TABLE `deal` (
 	`d_id`		int	NOT NULL unique primary key  auto_increment,
 	`m_number`	int	NOT NULL,
@@ -182,14 +182,14 @@ CREATE TABLE `deal` (
 );
 
 -- 거래 + 상품 조회 view
-drop view  if exist deal_view; 
+drop view  if exists deal_view; 
 create view deal_view
 as select  D.d_id, D.m_number, D.d_type, D.d_m_number, D.d_regdate, D.d_score, D.d_review, G.g_id, G.g_price, G.g_name
 from deal as D, goods as G
 where G.m_number = D.m_number ;
 
 -- 찜목록 테이블
-drop TABLE if exist wishlist; 
+drop TABLE if exists wishlist; 
 CREATE TABLE `wishlist` (
 	`wish_id`	int	NOT NULL primary key auto_increment,
 	`m_number`	int	NOT NULL	,
@@ -198,20 +198,20 @@ CREATE TABLE `wishlist` (
 );
 
 -- 찜목록 조회 위한 wish_view
-drop view  if exist wish_view; 
+drop view  if exists wish_view; 
 create view wish_view
 as select W.wish_id , W.m_number  , G.g_id , G.g_name  , G.g_price
 from wishlist as W, goods as G
 where W.m_number = G.m_number ;
 
 -- 시 도  테이블
-drop TABLE if exist Do_area; 
+drop TABLE if exists Do_area; 
 CREATE TABLE `Do_area` (
 	`do_id`	int	NOT NULL primary key ,
 	`do_area`	varchar(255)	NOT NULL
 );
 
-drop TABLE if exist Si_area; 
+drop TABLE if exists Si_area; 
 CREATE TABLE `Si_area` (
 	`si_id`	int	NOT NULL  primary key ,
 	`si_area`	varchar(255)	NOT NULL,

@@ -137,30 +137,37 @@ function fetchCategories() {
                 <li><a href="">카테고리</a>
                     <ul class="category1"></ul>
                 </li>
-                <li><a href="/community/main">커뮤니티</a></li>
+
+                <li><a href="#">커뮤니티</a>
+                	<ul class="communityCategory"></ul></li>
             </ul>
     	</div>
         </nav>
         <sec:authorize access="isAnonymous()">
-	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i> Login</a></div>
+	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i></a></div> 
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-	        <div class="login_set">
-		         <a href="/member/detail"><i class="fa fa-user"></i></a>
-		         <a href="/goods/goods_insert"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
-		         <a href="/logout">Logout</a>
-	        </div>
+
+				  <div class="btn-group">
+				  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				    <i class="fa fa-user"></i>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-end">
+				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				  </ul>
+				</div>
+
          </sec:authorize>
-    </header>
-	<div class="col-lg-3">
+	
 	    <div class="header__cart">
 	        <ul>
-	            <li><a href="#"><i class="fa fa-heart"></i> <span>1++</span></a></li>
-	            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+	            <li><a class="heart" href="#"><i class="fa fa-heart"></i></a></li>
 	        </ul>
-	        <div class="header__cart__price">item: <span>$150.00</span></div>
+	        <div class="header__cart__price">내 페이포인트: <span>000.0P</span></div>
 	    </div>
-	</div>
+    </header>
     
 </body>
 </html>

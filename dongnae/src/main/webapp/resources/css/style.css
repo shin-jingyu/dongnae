@@ -209,6 +209,11 @@ li:hover {
 	transition: all, 0.3s;
 }
 
+.fa-heart:hover {
+	color: #6098F2;
+	text-decoration: underline
+}
+
 /* .category1 {
 	display: none;
 	background: #eee;
@@ -320,7 +325,7 @@ header .login_set{
 	right: 20px;
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 1100px) {
   .hero__search__form {
     display: none;
   }
@@ -768,7 +773,7 @@ transparent;
 	text-align: right;
 	padding: 24px 0;
 	position: relative;
-	left: 1000px;
+	left: -50px;
 }
 
 .header__cart ul {
@@ -3173,12 +3178,12 @@ transparent;
 }
 
 /* Medium Device = 1200px */
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+@media only screen and (min-width: 992px) and (max-width: 1301px) {
 	.header__menu ul li {
 		margin-right: 45px;
 	}
 	.hero__search__form {
-		width: 490px;
+		width: 400px;
 	}
 	.hero__categories__all {
 		padding: 10px 25px 10px 20px;

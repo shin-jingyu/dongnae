@@ -56,8 +56,9 @@ public interface MemberService {
 	int getAvgScore(CustomUserDetails customUserDetails);
 
 	void deleteWish(int wish_id);
-	
-	List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );
+
+  
+  List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails );
 	
 	List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails );
 	

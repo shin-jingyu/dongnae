@@ -20,5 +20,5 @@ public class GoodsDTO {
 	private String g_picpath;
 	private int g_like;
 	private Timestamp g_regdate;
-	private String g_status;
+	private int g_status;
 }

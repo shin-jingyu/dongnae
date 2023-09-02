@@ -35,7 +35,7 @@
                         <h3><c:out value="${goods.g_name }"/></h3>
                         <div class="product__details__price"><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/>원</div>
                         <p><c:out value="${goods.g_text }"></c:out></p>
-                        <a href="#" class="primary-btn">구매하기</a>
+                        <a href="/chat" class="primary-btn">구매하기</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                     </div>
                     <div class="mt-5">

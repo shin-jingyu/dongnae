@@ -164,7 +164,8 @@
 											   프로필 사진
 											</div>
 											<div class="col-12 col-sm-5 align-self-center">
-												<img alt="" src="/resources/upload/member/${member.m_picpath}/${member.m_pic}"> 
+												<img alt="" src="/resources/upload/member/${member.m_pic}"> 
+												<!-- <img alt="" src="/resources/upload/member/${member.m_picpath}/${member.m_pic}">   -->
 												<!-- <img alt="" src="/resources/upload/member/2023/08/28/e18bd4a1-89bc-47b9-9563-c0f0ad7a0a51_java.png">  -->
 											</div>	
 										</div>

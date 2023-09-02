@@ -54,7 +54,6 @@ public interface MemberMapper {
 											, @Param ("d_type") String d_type
 											,@Param ("displayStart") int displayStart );
 	
-
 	
 	public List<Deal_viewDTO> getSoldList(int m_number);
 

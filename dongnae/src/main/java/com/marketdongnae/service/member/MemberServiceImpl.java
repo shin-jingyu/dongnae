@@ -210,29 +210,13 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteWish( wish_id);
 		
 	}
-
-
-	@Override
-	public int insertKeyword( CustomUserDetails customUserDetails , String keyword) {
-		KeywordVO keywordVO = new KeywordVO();
-		keywordVO.setM_number(customUserDetails.getM_number());
-		keywordVO.setKeyword(keyword);
-		return memberMapper.insertKeyword(keywordVO);
-	}
-
-
+	
+	
+	
 	@Override
 	public List<KeywordVO> getListKeyword(CustomUserDetails customUserDetails ) {
 		return memberMapper.getListKeyword(customUserDetails.getM_number());
 	}
-
-
-	@Override
-	public int deleteKeyword(int key_id) {
-		return memberMapper.deleteKeyword(key_id);
-	}
-	
-	
 	
 	@Override
 	public List<GoodsDTO> getListKeywordGoods(CustomUserDetails customUserDetails ) {
@@ -240,6 +224,7 @@ public class MemberServiceImpl implements MemberService {
 		List<GoodsDTO> goodsList  = memberMapper.getListKeywordGoods(keywordList);
 		return goodsList;
 	}
+
 	@Override
 	public boolean is_exist_Keyword(CustomUserDetails customUserDetails, String keyword) {
 		KeywordVO keyword_exist = memberMapper.getKeyword(customUserDetails.getM_number(), keyword);
@@ -249,9 +234,18 @@ public class MemberServiceImpl implements MemberService {
 			return true;
 		}
 	}
-	
 
+	@Override
+	public int insertKeyword( CustomUserDetails customUserDetails , String keyword) {
+		KeywordVO keywordVO = new KeywordVO();
+		keywordVO.setM_number(customUserDetails.getM_number());
+		keywordVO.setKeyword(keyword);
+		return memberMapper.insertKeyword(keywordVO);
+	}
 
-
+	@Override
+	public int deleteKeyword(int key_id) {
+		return memberMapper.deleteKeyword(key_id);
+	}
 
 }

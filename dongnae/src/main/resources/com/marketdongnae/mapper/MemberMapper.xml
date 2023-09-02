@@ -107,16 +107,15 @@
 		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
 	</insert>
 	
-	<select id="getListKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
-		<!-- <![CDATA[ -->
-		select * from keyword where m_number = #{m_number} ;
-		<!-- ]]> -->
+	<select id="getKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
+		select * from keyword where m_number = #{m_number} and keyword = #{keyword} ;
 	</select>
 	
-	<delete id="deleteKeyword" parameterType="int">
-		delete from keyword where key_id = #{key_id};
-	</delete>
-   
+	
+	<select id="getListKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
+		select * from keyword where m_number = #{m_number} ;
+	</select>
+	
 	<select id="getListKeywordGoods" resultType="com.marketdongnae.domain.goods.GoodsDTO">
 		select * from goods where 
 		<foreach item="keywordVO" collection="list" open = "(" close=")"  separator = " or ">
@@ -125,9 +124,9 @@
 		]]>
 		</foreach>
 	</select>
+
+	<delete id="deleteKeyword" parameterType="int">
+		delete from keyword where key_id = #{key_id};
+	</delete>
 	
-		
-	<select id="getKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
-		select * from keyword where m_number = #{m_number} and keyword = #{keyword} ;
-	</select>
 </mapper> 

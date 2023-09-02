@@ -19,9 +19,9 @@ public interface CommunityMapper {
 	// 글 불러오기
 	public List<CommunityAllDTO> communityAll();
 	// 글 상세보기
-	public CommunityAllDTO communityDetail(String mu_id);
+	public CommunityAllDTO communityDetail(int mu_id);
 	// 조회수 증가
-	public void  updateCount(String mu_id); 
+	public void  updateCount(int mu_id); 
 	//글쓰기
 	public void insertCommunity(communityDetailDTO community);
 	//수정하기
@@ -30,13 +30,12 @@ public interface CommunityMapper {
 	public  void deleteCommunity(int mu_id);
 	
 	//좋아요 조회
-	public HeartDTO heartview(@Param("m_number") String m_number,@Param("mu_id") String mu_id);
+	public int heartview(@Param("m_number") int m_number,@Param("mu_id") int mu_id);
 	
 	//좋아요 생성
 	public int insertHeart(HeartDTO heart );
-	//좋아요 변경
-	public int updateHeart(HeartDTO heart);
-	public int updateHearts(HeartDTO heart);
+
+	public void deleteHeart(HeartDTO heart);
 	
 	//댓글
 	public void insertComment (CommentDTO insertComment);

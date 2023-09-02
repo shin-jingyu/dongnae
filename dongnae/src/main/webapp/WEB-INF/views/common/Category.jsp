@@ -14,6 +14,11 @@
 <title>Ogani | Template</title>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
@@ -142,7 +147,7 @@ function fetchCategories() {
 	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i></a></div> 
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-  
+
 				  <div class="btn-group">
 				  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 				    <i class="fa fa-user"></i>
@@ -153,6 +158,7 @@ function fetchCategories() {
 				    <li><a class="dropdown-item" href="#">Menu item</a></li>
 				  </ul>
 				</div>
+
          </sec:authorize>
 	
 	    <div class="header__cart">

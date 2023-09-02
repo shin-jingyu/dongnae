@@ -47,23 +47,14 @@ public class MemberController {
 	
 	private final MemberService memberService;
 	private final GoodsService goodsService;
-//	private final CustomAuthenticationProvider customAuthenticationProvider;
-//	private final BCryptPasswordEncoder passwordEncoder;
 	
 	private String getFolder() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
 		Date date = new Date();
-		
 		String str = simpleDateFormat.format(date);
-		
 		return str.replace("-", File.separator);
 	}
 	
-	@GetMapping("test")
-	public void test(Model model) {
-		model.addAttribute("test", "test");	// 임시로
-	}
 	@GetMapping("detail")
 	public void detail(Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -93,9 +84,10 @@ public class MemberController {
 	@PostMapping("detail")
 	public String regist_post(@ModelAttribute MemberDTO memberDTO, @RequestParam ("uploadFile") MultipartFile [] uploadFile) {
 			String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/member";
-			File uploadPath = new File(uploaderFolder, getFolder());
-	
-		    if (!uploadPath.exists()) {
+			// File uploadPath = new File(uploaderFolder, getFolder());		// @오류로 변경
+			File uploadPath = new File(uploaderFolder);						// @오류로 변경
+		    
+			if (!uploadPath.exists()) {
 		        uploadPath.mkdirs();
 		    }
 		    // MultipartFile 필드들을 반복문으로 처리
@@ -108,7 +100,8 @@ public class MemberController {
 		            UUID uuid = UUID.randomUUID();
 		            picFileNames[0] = uuid.toString() + "_" + picFileNames[0];
 		            log.info("only-file-name" + picFileNames[0]);
-		            File saveFile = new File(uploadPath, picFileNames[0]);
+		            //File saveFile = new File(uploadPath, picFileNames[0]); 	// @오류로 변경
+		            File saveFile = new File(uploadPath, picFileNames[0]);		// @오류로 변경
 		            System.out.println("파일명 확인 !!!: " + picFileNames[0]);
 		            try {
 		            	uploadFile[0].transferTo(saveFile);
@@ -120,7 +113,7 @@ public class MemberController {
 						e.printStackTrace();
 					}
 		            memberDTO.setM_pic(picFileNames[0]);
-		            memberDTO.setM_picpath(getFolder());
+		    		// memberDTO.setM_picpath(getFolder());	// @오류로 변경
 		        }
 		memberService.updateMember(memberDTO);
 		return "redirect:/member/detail"	;
@@ -187,7 +180,7 @@ public class MemberController {
 	@GetMapping("point")
 	public void point( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		PageDTO pageDTO = memberService.getPageDTO("point","p_id",  nowpage, customUserDetails);
+		PageDTO pageDTO = memberService.getPageDTO("point", "p_id",  nowpage, customUserDetails);
 		model.addAttribute("pointList", memberService.getPageList("point", pageDTO, customUserDetails ));
 		model.addAttribute("page", pageDTO);
 		
@@ -216,27 +209,6 @@ public class MemberController {
 	}
 	
 	@GetMapping("keyword")
-	public void getKeywordList( Model model) {
-		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<KeywordVO> keywordList =  memberService.getListKeyword(customUserDetails);
-		List<GoodsDTO> keywordGoodsList = memberService.getListKeywordGoods(customUserDetails);
-		model.addAttribute("keywordList", keywordList);
-		model.addAttribute("keywordGoodsList", keywordGoodsList);
+	public void keyword() {
 	}
-//	
-//	@GetMapping("deleteKeyword")
-//	public String deleteKeyword(HttpServletRequest request ) {
-//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		int key_id = Integer.parseInt(request.getParameter("id"));
-//		memberService.deleteKeyword(customUserDetails, key_id);
-//		return "redirect:/member/keyword";
-//	}
-//	
-//	@GetMapping("insertKeyword")
-//	public void insertKeyword(@ModelAttribute KeywordVO keywordVO) {
-//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		memberService.insertKeyword(customUserDetails, keywordVO);
-//	}
-//	
-
 }

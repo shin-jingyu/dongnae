@@ -76,8 +76,9 @@ public class LoginController {
 	@PostMapping("regist")
 	public String regist_post(@ModelAttribute MemberDTO memberDTO, @RequestParam ("uploadFile") MultipartFile [] uploadFile) {
 		String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/member";
-		File uploadPath = new File(uploaderFolder, getFolder());
-
+		// File uploadPath = new File(uploaderFolder, getFolder());		// @오류로 변경
+		File uploadPath = new File(uploaderFolder);						// @오류로 변경
+	    
 	    if (!uploadPath.exists()) {
 	        uploadPath.mkdirs();
 	    }
@@ -90,7 +91,8 @@ public class LoginController {
 	            UUID uuid = UUID.randomUUID();
 	            picFileNames[0] = uuid.toString() + "_" + picFileNames[0];
 	            log.info("only-file-name" + picFileNames[0]);
-	            File saveFile = new File(uploadPath, picFileNames[0]);
+	            //File saveFile = new File(uploadPath, picFileNames[0]); 	// @오류로 변경
+	            File saveFile = new File(uploadPath, picFileNames[0]);		// @오류로 변경
 	            System.out.println("파일명 확인 !!!: " + picFileNames[0]);
 	            try {
 	            	uploadFile[0].transferTo(saveFile);
@@ -103,7 +105,7 @@ public class LoginController {
 				}
 	        }
 		memberDTO.setM_pic(picFileNames[0]);
-		memberDTO.setM_picpath(getFolder());
+		// memberDTO.setM_picpath(getFolder());	// @오류로 변경
 		memberService.regist(memberDTO);
 		return "redirect:/login";	
 	}

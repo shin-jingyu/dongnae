@@ -1,9 +1,9 @@
 package com.marketdongnae.mapper;
 
-import com.marketdongnae.domain.chatting.ChatRoomVO;
+import com.marketdongnae.domain.chatting.ChatRoom;
 
 public interface ChatMapper {
 
-	void createRoom(ChatRoomVO vo);
+	void createRoom(ChatRoom vo);
 
 }

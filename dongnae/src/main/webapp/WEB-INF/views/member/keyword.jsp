@@ -72,6 +72,7 @@ function updatePage(){
 	        $("#keywordListDiv").html(keywordListDiv);
 	    }
 	});
+	
 	$.ajax({
 	    url: "/keywordapi/keywordGoodsList",
 	    type: "get",

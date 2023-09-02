@@ -47,13 +47,6 @@ public class RestMemberController {
 		return keywordList;
 	}
 	
-	@DeleteMapping(value = "delete/{key_id}")
-	public String delete(@PathVariable("key_id") int key_id){
-		memberService.deleteKeyword(key_id);
-		return "success";
-	}
-	
-	
 	@GetMapping(value = "keywordGoodsList")
 	public List<GoodsDTO> getGoodsList(){
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
@@ -61,5 +54,9 @@ public class RestMemberController {
 		return listKeywordGoods;
 	}
 	
-	
+	@DeleteMapping(value = "delete/{key_id}")
+	public String delete(@PathVariable("key_id") int key_id){
+		memberService.deleteKeyword(key_id);
+		return "success";
+	}
 }

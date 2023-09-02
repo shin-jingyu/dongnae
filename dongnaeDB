@@ -2,8 +2,10 @@
 -- 테이블 생성 SQL
 
 --상품 테이블
+DROP TABLE  if exists goods;
 CREATE TABLE `Goods` (
-	`g_id`	int	NOT NULL,
+	`g_id`	int	NOT NULL primary key AUTO_INCREMENT,
+    `c1_id` int NOT NULL,
 	`c2_id`	int	NOT NULL,
 	`m_number`	int	NOT NULL,
 	`g_name`	varchar(255)	NULL,
@@ -15,43 +17,31 @@ CREATE TABLE `Goods` (
 	`g_picpath`	varchar(255)	NULL,
 	`g_like`	int	NULL,
 	`g_regdate`	DATETIME	NULL	DEFAULT CURRENT_TIMESTAMP,
-	`g_status`	varchar(255)	NULL	DEFAULT '판매중'
+	`g_status`	int default 1
 );
 
 
-ALTER TABLE `Goods` ADD CONSTRAINT `PK_GOODS` PRIMARY KEY (
-	`g_id`
+DROP TABLE  if exists keyword;
+CREATE TABLE `keyword` (
+	`key_id`	int not null primary key  auto_increment,
+	`m_number`	int	NOT NULL,
+	`keyword`	varchar(255)	NOT NULL,
+	`key_regdate`	datetime	NULL	DEFAULT CURRENT_TIMESTAMP
 );
 
-ALTER TABLE `dongnae`.`Goods` 
-CHANGE COLUMN `g_id` `g_id` INT NOT NULL AUTO_INCREMENT ;
 
--- 카테고리 대분류 테이블
+DROP TABLE  if exists category_goods_1;
 CREATE TABLE `category_goods_1` (
-	`c1_id`	int	NOT NULL,
+	`c1_id`	int	NOT NULL primary key  auto_increment,
 	`c1_category`	varchar(255)	NOT NULL
 );
-
--- 카테고리 중분류 테이블
+DROP TABLE  if exists category_goods_2;
 CREATE TABLE `category_goods_2` (
-	`c2_id`	int	NOT NULL ,
+	`c2_id`	int	NOT NULL PRIMARY KEY,
 	`c2_category`	varchar(255)	NOT NULL,
 	`c1_id`	int	NOT NULL
 );
 
-ALTER TABLE `category_goods_1` ADD CONSTRAINT `PK_CATEGORY_GOODS_1` PRIMARY KEY (
-	`c1_id`
-);
-
-ALTER TABLE `dongnae`.`category_goods_1` 
-CHANGE COLUMN `c1_id` `c1_id` INT NOT NULL AUTO_INCREMENT ;
-
-ALTER TABLE `category_goods_2` ADD CONSTRAINT `PK_CATEGORY_GOODS_2` PRIMARY KEY (
-	`c2_id`
-);
-
-ALTER TABLE `dongnae`.`category_goods_2` 
-CHANGE COLUMN `c2_id` `c2_id` INT NOT NULL AUTO_INCREMENT ;
 
 
 -- community 테이블 -------------------------------------------------

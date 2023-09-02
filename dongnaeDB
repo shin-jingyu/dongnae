@@ -369,3 +369,13 @@ insert into category_goods_2(c2_id, c1_id , c2_category) values (710, 7, '공유
 insert into category_goods_2(c2_id, c1_id , c2_category) values (711, 7, '소프트웨어');
 insert into category_goods_2(c2_id, c1_id , c2_category) values (712, 7, '기타 주변기기');
 
+
+INSERT INTO `Goods` (`c1_id`, `c2_id`, `m_number`, `g_name`, `g_text`, `g_price`, `g_pic01`, `g_pic02`, `g_pic03`, `g_picpath`,`g_regdate`, `g_status`)
+VALUES
+('7', '703', '1', '맥북 팔아요~ 애플', '사용 안했습니다.', '123123123', '84ba4f78-fd79-499c-b992-7f3c752c366d_laptop.jpeg', 'e6d699b7-d49f-4d74-9e80-779e2cff6e28_phone.jpeg', '50e5ba74-ea69-4445-8ca9-8e24a3fbe9c3_ipad.jpeg', '2023/08/27', '2023-08-27 14:20:48', 1),
+('5', '506', '1', '아이패드 팔아요', '아이패드 팔아요', '123123', '78399350-6ddf-41b7-ab19-c0921a6bc292_ipad.jpeg', '87939eaa-dc1b-4595-b33c-d916f0c8b0b6_laptop.jpeg', '61391d46-3eb0-4e72-a174-4df394f384d5_phone.jpeg', '2023/08/28','2023-08-28 17:54:31', 1),
+('5', '502', '1', '아이폰 팝니다~', '아이폰 팝니다~', '123123123', 'a7663dfb-2989-44cb-a01f-cad1322073ee_phone.jpeg', 'b8433de2-eeec-46d1-b2b0-295cfb3ec029_ipad.jpeg', '48ffdfa0-ae90-4b82-b763-d2025cf71602_laptop.jpeg','2023/08/29', '2023-08-29 14:07:29', 1),
+('1', '101', '1', '샤넬 가방 팔아요', '샤넬 팝니다 \r\n\r\n구매 후 사용은 별로 안했어요\r\n\r\n상품은 A급 입니다!', '123132', '2f5c3a74-f7ca-49dc-acbd-f3c8a59657d6_chanel.jpg', '5f9e1c93-5881-4356-9f10-d455f8844fbe_laptop.jpeg', 'de168e2e-c126-443e-a251-2499a8f183f3_phone.jpeg','2023/08/29', '2023-08-29 14:12:57', 1),
+('1', '101', '1', 'TEST', 'test', '123123', 'cfe6cde8-8613-46e4-b99c-43da19dd98c2_chanel.jpg', 'c6dff6ea-bb32-4ab2-a76f-6ea341e87bfe_laptop.jpeg', '3c473509-f91d-4399-98f1-2d5417882732_phone.jpeg','2023/08/29', '2023-08-29 15:36:04', 1);
+
+

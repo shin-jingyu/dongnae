@@ -135,9 +135,6 @@ function fetchCategories() {
 
                 <li><a href="#">커뮤니티</a>
                 	<ul class="communityCategory"></ul></li>
-
-                
-
             </ul>
     	</div>
         </nav>
@@ -145,9 +142,17 @@ function fetchCategories() {
 	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i></a></div> 
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-        <div class="login_set">
-	         <a href="/member/detail"><i class="fa fa-user"></i></a>
-        </div>
+  
+				  <div class="btn-group">
+				  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				    <i class="fa fa-user"></i>
+				  </button>
+				  <ul class="dropdown-menu dropdown-menu-end">
+				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				  </ul>
+				</div>
          </sec:authorize>
 	
 	    <div class="header__cart">

@@ -69,7 +69,7 @@
 				
 	
 	
-<div class="card shadow" style="margin-top:40px;" >
+<div class="card shadow" style="margin-top:50px;" >
 		
 		<table class=" table table-borderless align-middle table-hover">
 			<thead class=" text-center">
@@ -119,7 +119,7 @@
 		<button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button>
  	</div>	
 		
-	<div  style="margin:auto;">
+	<div  style="margin-top:20px;">
  		<nav class="nav justify-content-center bg-light">
 		 <ul class="pagination">
 			

@@ -50,8 +50,8 @@
 	</div>
 
 <c:if test="${page.key==1}">		
- <div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;" >
-	<div class="container"  style="float: right; width: 400px;" >
+ <div  class="container" style=" width: 85%;   box-sizing: border-box; margin-top:100px;  " >
+	<div class="container"  style="float: right; width: 400px; " >
 		  <div class="row no-gutters" >
 		    <div class="col-sm-1 " >
 		      <select class="form-select" name="searchType" id="searchType" style="width: 120px; ">
@@ -70,7 +70,8 @@
 		  </div>
 		</div>
 		
-	 <p class="text-dark fw-bold">최신게시물</p>
+	<div class="container"  >
+	 <p class="text-dark fw-bold " style="margin-top:20px;">최신게시물</p>
 	<div class="card shadow" >
 		
 		<table class=" table table-borderless align-middle table-hover" >
@@ -120,7 +121,7 @@
 		</table>
 		<button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button>
  	</div>
- 	<div  style="margin:auto;">
+ 	<div  style="margin-top:20px;">
  		<nav class="nav justify-content-center bg-light">
 		 <ul class="pagination">
 			
@@ -159,6 +160,7 @@
 	</nav> 
  	</div>
  	</div>
+ 	</div>
  </c:if>
  
 <c:if test="${page.key==2}">
@@ -181,8 +183,8 @@
 		    </div>
 		  </div>
 		</div>
-		
-	 <p class="text-dark fw-bold">인기게시물</p>
+	<div class="container"  >
+	 <p class="text-dark fw-bold " style="margin-top:20px;">인기게시물</p>
 	<div class="card shadow" >
 		
 		<table class=" table table-borderless align-middle table-hover">
@@ -232,7 +234,7 @@
 		</table>
 		<button class="btn btn-outline-info"  onclick="location.href='/community/insertCommunity'">글쓰기</button>
  	</div>
- 	<div  style="margin:auto;">
+ 	<div  style="margin-top:20px;">
  		<nav class="nav justify-content-center bg-light">
 		 <ul class="pagination">
 			
@@ -269,6 +271,7 @@
 			</c:if>  
 	  </ul>
 	</nav> 
+ 	</div>
  	</div>
  	</div>
  </c:if>

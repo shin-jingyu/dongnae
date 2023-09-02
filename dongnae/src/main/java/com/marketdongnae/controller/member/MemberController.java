@@ -180,7 +180,7 @@ public class MemberController {
 	@GetMapping("point")
 	public void point( @RequestParam(value = "p", defaultValue = "1" ) int nowpage , Model model) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		PageDTO pageDTO = memberService.getPageDTO("point","p_id",  nowpage, customUserDetails);
+		PageDTO pageDTO = memberService.getPageDTO("point", "p_id",  nowpage, customUserDetails);
 		model.addAttribute("pointList", memberService.getPageList("point", pageDTO, customUserDetails ));
 		model.addAttribute("page", pageDTO);
 		

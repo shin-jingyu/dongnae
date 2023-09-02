@@ -78,7 +78,7 @@
 			<td ><textarea name="mu_detail" id="mu_detail"  ></textarea></td>
 		</tr>
 		<tr>
-			<td><input class="btn btn-outline-info" id="back" id="submits" type="submit" value="수정하기"></td>
+			<td><input class="btn btn-outline-info" id="submits" type="submit" value="수정하기"></td>
 			
 		</tr>
 		</table>

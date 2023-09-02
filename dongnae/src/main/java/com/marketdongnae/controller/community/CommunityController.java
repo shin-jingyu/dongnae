@@ -45,6 +45,7 @@ import com.marketdongnae.service.Community.CommunityService;
 public class CommunityController {
 	@Autowired
 	CommunityService communityService;
+	private String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\"; 
 	
 	
 	@GetMapping("/community/main")
@@ -164,7 +165,6 @@ public class CommunityController {
 	@PostMapping("/community/upload")
 	public String upload( @RequestParam("file") MultipartFile[] upload,HttpSession session) {
 		JsonObject jsonObject = new JsonObject();
-		String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\"; 
 		@SuppressWarnings("unchecked")
 	    List<String> uploadedImageNames = (List<String>) session.getAttribute("uploadedImageNames");
 		if (uploadedImageNames == null) {
@@ -198,10 +198,9 @@ public class CommunityController {
 	@PostMapping("/deleteSummernoteImageFile")
 	public void deleteSummernoteImageFile(@RequestParam("file") List<String> fileNames) {
 	    // 폴더 위치
-	    String filePath = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\";
-	    for (String fileName : fileNames) {
+	      for (String fileName : fileNames) {
 		    // 해당 파일 삭제
-		    Path path = Paths.get(filePath, fileName);
+		    Path path = Paths.get(fileRoot, fileName);
 		    try {
 		        Files.delete(path);
 		    } catch (Exception e) {

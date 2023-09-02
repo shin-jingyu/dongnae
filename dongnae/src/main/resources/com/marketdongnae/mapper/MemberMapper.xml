@@ -103,14 +103,10 @@
 		 values (  #{m_number} ,  #{p_type} , #{p_price} ) ;
 	</select>
 	
-	<insert id="insertKeyword"  parameterType="com.marketdongnae.domain.member.KeywordVO">
-		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
-	</insert>
 	
 	<select id="getKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
 		select * from keyword where m_number = #{m_number} and keyword = #{keyword} ;
 	</select>
-	
 	
 	<select id="getListKeyword" resultType="com.marketdongnae.domain.member.KeywordVO">
 		select * from keyword where m_number = #{m_number} ;
@@ -125,6 +121,10 @@
 		</foreach>
 	</select>
 
+	<insert id="insertKeyword"  parameterType="com.marketdongnae.domain.member.KeywordVO">
+		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
+	</insert>
+	
 	<delete id="deleteKeyword" parameterType="int">
 		delete from keyword where key_id = #{key_id};
 	</delete>

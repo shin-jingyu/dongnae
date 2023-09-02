@@ -45,6 +45,7 @@ CREATE TABLE `category_goods_2` (
 
 
 -- community 테이블 -------------------------------------------------
+DROP TABLE  if exists community;
 CREATE TABLE `community` (
   `mu_id` int NOT NULL AUTO_INCREMENT,
   `mu_name` varchar(255) NOT NULL,
@@ -56,14 +57,14 @@ CREATE TABLE `community` (
   PRIMARY KEY (`mu_id`),
   UNIQUE KEY `mu_id_UNIQUE` (`mu_id`)
 );
-
+DROP TABLE  if exists category;
 CREATE TABLE `category` (
   `ca_id` int NOT NULL AUTO_INCREMENT,
   `ca_l` varchar(255) NOT NULL,
   PRIMARY KEY (`ca_id`),
   UNIQUE KEY `ca_id_UNIQUE` (`ca_id`)
 ) ;
-
+DROP TABLE  if exists comment;
 CREATE TABLE `comment` (
   `com_id` int NOT NULL AUTO_INCREMENT,
   `com_c` varchar(255) NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`com_id`),
   UNIQUE KEY `com_id_UNIQUE` (`com_id`)
 ) ;
-
+DROP TABLE  if exists heart;
 CREATE TABLE `heart` (
   `h_id` int NOT NULL AUTO_INCREMENT,
   `mu_id` int NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE `heart` (
   UNIQUE KEY `h_id_UNIQUE` (`h_id`)
 );
 
-
+DROP view  if exists communityall;
 create view communityall
 as
 select DISTINCT

@@ -109,7 +109,6 @@ public class MemberController {
 		            picFileNames[0] = uuid.toString() + "_" + picFileNames[0];
 		            log.info("only-file-name" + picFileNames[0]);
 		            File saveFile = new File(uploadPath, picFileNames[0]);
-		            System.out.println("파일명 확인 !!!: " + picFileNames[0]);
 		            try {
 		            	uploadFile[0].transferTo(saveFile);
 					} catch (IllegalStateException e) {

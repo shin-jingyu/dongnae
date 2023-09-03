@@ -187,11 +187,6 @@
 		</dependency>
 
 
-		<!-- 시큐리티 버전 설정 중 추가해봄 <dependency> <groupId>org.springframework.boot</groupId> 
-			<artifactId>spring-boot-starter-security</artifactId> <version>2.3.12.RELEASE</version> 
-			</dependency> -->
-
-
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -263,12 +258,6 @@
 		    <artifactId>spring-integration-stomp</artifactId>
 		    <version>5.3.2.RELEASE</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper 
-			<dependency> <groupId>com.github.pagehelper</groupId> <artifactId>pagehelper</artifactId> 
-			<version>5.3.3</version> </dependency> <dependency> <groupId>org.springframework.data</groupId> 
-			<artifactId>spring-data-commons</artifactId> <version>2.2.9.RELEASE</version> 
-			</dependency> -->
 
 
 		<!-- Test -->

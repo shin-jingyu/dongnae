@@ -247,5 +247,19 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteKeyword(int key_id) {
 		return memberMapper.deleteKeyword(key_id);
 	}
-
+		
+	
+	@Override
+	public int getGoodsInsert(String g_name, int m_number) {
+		GoodsDTO goodsDTO = memberMapper.getGoodsInsert(g_name, m_number);
+		int g_id =  goodsDTO.getG_id();
+		return g_id;
+	}
+	@Override
+	public void insertDeal(int g_id, int m_number) {
+		GoodsDTO goodsDTO = new GoodsDTO();
+		goodsDTO.setG_id(g_id);
+		goodsDTO.setM_number(m_number);
+		memberMapper.insertDeal(goodsDTO);
+	}
 }

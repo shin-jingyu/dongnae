@@ -76,6 +76,10 @@ public interface MemberMapper {
 
 	public KeywordVO getKeyword(@Param ("m_number") int m_number
 			, @Param ("keyword") String keyword);
+	
+	public GoodsDTO getGoodsInsert( @Param ("g_name") String g_name, @Param ("m_number") int m_number);
+
+	public void insertDeal(GoodsDTO goodsDTO);
 
 
 }

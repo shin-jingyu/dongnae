@@ -153,9 +153,9 @@ function fetchCategories() {
 				    <i class="fa fa-user"></i>
 				  </button>
 				  <ul class="dropdown-menu dropdown-menu-end">
-				    <li><a class="dropdown-item" href="#">Menu item</a></li>
-				    <li><a class="dropdown-item" href="#">Menu item</a></li>
-				    <li><a class="dropdown-item" href="#">Menu item</a></li>
+				    <li><a class="dropdown-item" href="/member/detail">마이 페이지</a></li>
+				    <li><a class="dropdown-item" href="/goods/goods_insert">상품 등록</a></li>
+				    <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
 				  </ul>
 				</div>
 
@@ -163,7 +163,7 @@ function fetchCategories() {
 	
 	    <div class="header__cart">
 	        <ul>
-	            <li><a class="heart" href="#"><i class="fa fa-heart"></i></a></li>
+	            <li><a class="heart" href="/member/keyword"><i class="fa fa-heart"></i></a></li>
 	        </ul>
 	        <div class="header__cart__price">내 페이포인트: <span>000.0P</span></div>
 	    </div>

@@ -134,7 +134,7 @@ CREATE TABLE `keyword` (
 );
 
 -- 회원 테이블
-drop table if exist member; 
+drop table if exists member; 
 CREATE TABLE `Member` (
 	`m_number`	int	NOT NULL	unique primary key  auto_increment,
 	`m_id`	varchar(255)	NOT NULL	unique,

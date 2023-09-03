@@ -9,13 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 </head>
 
 
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
 	<jsp:include page="../common/Category.jsp"></jsp:include>
 <section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
@@ -112,7 +110,7 @@
 					<span > ${member.m_id}</span> 
 					<span style="margin-left: 320px;"> <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </span>
 					</p>
-					<p> <textarea  class="form-control " maxlength="100" style="width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
+					<p> <textarea  class="form-control " maxlength="100" style=" width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
 					</div>
 	
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
@@ -177,7 +175,6 @@ $("#deleteCommunity").on('click',function(){
 	}
   });
 	
-
 
 
 

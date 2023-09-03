@@ -129,4 +129,12 @@
 		delete from keyword where key_id = #{key_id};
 	</delete>
 	
+	
+	<select id="getGoodsInsert" resultType="com.marketdongnae.domain.goods.GoodsDTO">
+		select * from goods where g_name = #{g_name} and m_number =  #{m_number} ;
+	</select>
+	
+	<insert id="insertDeal"  parameterType="com.marketdongnae.domain.goods.GoodsDTO">
+		insert into deal ( m_number,  d_type, g_id  ) values ( #{m_number}, 'onSale', #{g_id}  ) ;
+	</insert>
 </mapper> 

@@ -2,6 +2,8 @@ package com.marketdongnae.controller.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,10 +41,11 @@ public class RestMemberController {
 		return listKeywordGoods;
 	}
 	
-	@PostMapping(value = "insertKeyword")
-	public String insert (@RequestBody String keyword) throws Exception{
+	@PostMapping(value = "insertKeyword" )
+	public String insert (HttpServletRequest request) throws Exception{
 		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext () .getAuthentication ().getPrincipal ();
-		keyword = keyword.replace("=", "");
+		// keyword = keyword.replace("=", "");
+		String keyword = request.getParameter("msg");
 		if( memberService.is_exist_Keyword(customUserDetails, keyword) ) {
 			throw new Exception("이미 있는 키워드");
 		}

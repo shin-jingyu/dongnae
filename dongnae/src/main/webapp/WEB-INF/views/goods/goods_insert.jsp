@@ -74,7 +74,7 @@
 			reader.onload = function(event){
 				var img = document.createElement("img");
 				img.setAttribute("src", event.target.result);
-				img.setAttribute("class", "col-lg-6");
+				img.setAttribute("class", "col-4");
 				document.querySelector("div#images_container").appendChild(img);
 			};
 			
@@ -94,13 +94,13 @@
 				<input type="hidden" value="${member.m_number }" name="m_number">
 				<div class="form-group">
 	 
-</div>
-
-										
-<div class="form-group">
-	<input class="form-control form-control-user" type="file" multiple="multiple" name="uploadFile" id="product_detail_image" onchange="setDetailImage(event);">
-</div>
-<div id="images_container"></div>
+				</div>
+				<div class="form-group">
+					<input class="form-control form-control-user" type="file" multiple="multiple" name="uploadFile" id="product_detail_image" onchange="setDetailImage(event);">
+				</div>
+				<div class="row my-3">
+					<div id="images_container"></div>
+				</div>
 				<div class="row my-3">
 					<div class="col-12 col-md-4 align-self-center my-3" style="font-size: 1.5rem;">
                    		상품명

@@ -9,7 +9,7 @@
        width: 100px;
     }
 </style>
-
+ 	<sec:authentication property="principal" var="member"/>
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
@@ -35,8 +35,10 @@
                         <h3><c:out value="${goods.g_name }"/></h3>
                         <div class="product__details__price"><fmt:formatNumber value="${goods.g_price}"  pattern="#,###"/>원</div>
                         <p><c:out value="${goods.g_text }"></c:out></p>
-                        <a href="/chat" class="primary-btn">구매하기</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <form action="/chat">
+                        	<input type="hidden" name="g_id" value="${goods.g_id }">
+                        	<button class="btn primary-btn" type="submit">구매하기</button>
+                        </form>
                     </div>
                     <div class="mt-5">
                     	<p>판매자의 다른 상품</p>

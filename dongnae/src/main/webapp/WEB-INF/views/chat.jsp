@@ -21,16 +21,36 @@
 		});
 	})
 	
-	
-	
-	var sock = new SockJS('http://localhost:8080/chatting');
+	var buyer_M_Number = ${roomVO.buyer_M_Number};
+    var seller_M_Number = ${roomVO.seller_M_Number};
+    var g_id = ${roomVO.g_id};
+    
+	var sock = new SockJS('http://localhost:8080/chatting?g_id='+g_id);
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	sock.onopen = onOpen;
 	
 	function sendMessage() {
 		console.log("Send Message");
-		sock.send($("#msg").val());
+	   
+		var msg = $("#msg").val();
+		
+	    
+	    console.log("buyer_M_Number: " + buyer_M_Number);
+	    console.log("seller_M_Number: " + seller_M_Number);
+	    console.log("g_id: " + g_id);
+	    
+		if(msg != ""){
+			 var message = {
+			            chat_message: $("#msg").val(),
+			            buyer_M_Number: buyer_M_Number,
+			            seller_M_Number: seller_M_Number,
+			            g_id: g_id
+			        };
+		}
+		console.log(message);
+		sock.send(JSON.stringify(message));
+		$("#msg").val("");
 	}
 	//서버에서 메시지를 받았을 때
 	function onMessage(msg) {
@@ -93,7 +113,7 @@
 	
 	<div class="container">
 		<div class="col-6">
-			<label><b>채팅방</b></label>
+			<label><b>채팅방 </b></label>
 		</div>
 		<div>
 			<div id="msgArea" class="col">

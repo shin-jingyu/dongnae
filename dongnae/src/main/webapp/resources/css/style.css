@@ -338,7 +338,7 @@ header .login_set{
 }
 
 .btn-group {
-	position: fixed;
+	position: relative;
 	right: 10px;	
 	
 }

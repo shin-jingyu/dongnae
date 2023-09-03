@@ -103,24 +103,6 @@ CREATE TABLE `heart` (
   UNIQUE KEY `h_id_UNIQUE` (`h_id`)
 );
 
-DROP view  if exists communityall;
-create view communityall
-as
-select DISTINCT
-	C.mu_id,Ca.ca_l, S.si_area, C.mu_name, C.mu_detail, M.m_id, C.mu_data , C.mu_c ,
-	(select
-count(*)
-from heart
-where heart.mu_id = C.mu_id ) as heart,
-(select
-count(*)
-from comment 
-where comment.mu_id =C.mu_id) as comment
-from community as C, si_area as S, member as M ,category as Ca
-where   M.m_number=C.m_number and M.si_id = S.si_id and Ca.ca_id = C.ca_id;
-
-
-
 
 insert into category(ca_l)
 values('사건사고');
@@ -191,12 +173,6 @@ CREATE TABLE `deal` (
      unique ( m_number, d_type, d_m_number, g_id)
 );
 
--- 거래 + 상품 조회 view
-drop view  if exists deal_view; 
-create view deal_view
-as select  D.d_id, D.m_number, D.d_type, D.d_m_number, D.d_regdate, D.d_score, D.d_review, G.g_id, G.g_price, G.g_name
-from deal as D, goods as G
-where G.m_number = D.m_number ;
 
 -- 찜목록 테이블
 drop TABLE if exists wishlist; 
@@ -207,12 +183,7 @@ CREATE TABLE `wishlist` (
     unique ( m_number, g_id)
 );
 
--- 찜목록 조회 위한 wish_view
-drop view  if exists wish_view; 
-create view wish_view
-as select W.wish_id , W.m_number  , G.g_id , G.g_name  , G.g_price
-from wishlist as W, goods as G
-where W.m_number = G.m_number ;
+
 
 insert into wishList (m_number, g_id )
 values ('1', '5' );
@@ -489,3 +460,38 @@ insert into community( mu_name, mu_detail, ca_id, m_number)
 		value('오랜만에 비갠 오후','<div><img src="/resources/upload/community/b1fe2fb3-bab6-4503-aeda-ca0dbc4c1a73.jpg" style="width: 50%;"><br></div><div><br></div><div><br></div><div><br></div><div><img src="/resources/upload/community/30ca3b44-8fe7-4959-8eb5-cdb4a55cbc4b.jpg" style="width: 50%;"><br></div><div><br></div><div><br></div><div><img src="/resources/upload/community/455e32d3-c973-444a-889a-4530f7e6cfea.jpg" style="width: 50%;"><br></div><div><br></div><div><br></div><div><br></div><div>고삼저수지. 바람쐬러 다녀옴.. 아침 저녁으로 가을 냄새가 나니.. 참..좋다~</div>',3,4);        
 insert into community( mu_name, mu_detail, ca_id, m_number)
 		value('날씨 좋은날','<div><br></div><div><br></div><div><img src="/resources/upload/community/24dc66ac-492b-47a2-9a53-b56972361939.jpg" style="width: 962px;"><br></div><div><br></div><div><br></div><div>산책하다 우연찮게 찍은 사진들을 보면 괜히 뿌듯하고 기분 좋고</div><div><br></div>',3,5);       
+
+
+-- view 모음
+DROP view  if exists communityall;
+create view communityall
+as
+select DISTINCT
+	C.mu_id,Ca.ca_l, S.si_area, C.mu_name, C.mu_detail, M.m_id, C.mu_data , C.mu_c ,
+	(select
+count(*)
+from heart
+where heart.mu_id = C.mu_id ) as heart,
+(select
+count(*)
+from comment 
+where comment.mu_id =C.mu_id) as comment
+from community as C, si_area as S, member as M ,category as Ca
+where   M.m_number=C.m_number and M.si_id = S.si_id and Ca.ca_id = C.ca_id;
+
+
+
+-- 거래 + 상품 조회 view
+drop view  if exists deal_view; 
+create view deal_view
+as select  D.d_id, D.m_number, D.d_type, D.d_m_number, D.d_regdate, D.d_score, D.d_review, G.g_id, G.g_price, G.g_name
+from deal as D, goods as G
+where G.m_number = D.m_number ;
+
+
+-- 찜목록 조회 위한 wish_view
+drop view  if exists wish_view; 
+create view wish_view
+as select W.wish_id , W.m_number  , G.g_id , G.g_name  , G.g_price
+from wishlist as W, goods as G
+where W.m_number = G.m_number ;

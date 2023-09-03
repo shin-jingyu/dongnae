@@ -93,9 +93,6 @@
 			<form action="goods_insert" method="POST" enctype="multipart/form-data">
 				<input type="hidden" value="${member.m_number }" name="m_number">
 				<div class="form-group">
-	 
-				</div>
-				<div class="form-group">
 					<input class="form-control form-control-user" type="file" multiple="multiple" name="uploadFile" id="product_detail_image" onchange="setDetailImage(event);">
 				</div>
 				<div class="row my-3">

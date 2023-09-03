@@ -35,14 +35,14 @@ function getListCategoryAjax() {
 	            var listCategory1 = data.category_1;
 				
 	            listCategory1.forEach(function(category1){
-	            	var list1 = $('<li><h5>' + category1.c1_category + '</h5></li>');
+	            	var list1 = $('<li><h3>' + category1.c1_category + '</h3> <p class= "more"> 더보기 </p></li>');
 	            	var listContainer2;	
-	            	
+	            	var moreLook = $('.more');
 	            	var listCategory2 = data.category_2.filter(function(category2){
 	            		return category2.c1_id === category1.c1_id;	
 	            	});
 	            	
-	            	list1.mouseover(function(){
+	            	list1.find('.more').on('mouseover',function(){
 	            		if(!listContainer2){
 	            			listContainer2 = $('<ul class = "list_category2"></ul>');
 	            			
@@ -59,25 +59,22 @@ function getListCategoryAjax() {
 	            	
 	            	list1.on('click', function() {
                         var categoryId = category1.c1_id; // 카테고리 ID 가져오기
-                        var searchValue = document.querySelector(".searchName").textContent.trim(); // .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
-//                         var encodedSearchValue = encodeURIComponent(searchValue);
-//                         console.log(searchValue)
-//                         var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
-//                         var query = "";
+                        var searchValue = document.querySelector(".searchName").textContent.trim();// .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
+                        console.log(searchValue);
+                        var encodedSearchValue = encodeURIComponent(searchValue);
+                        var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+                        var query = "";
                         
-//                         if (searchValue != null) {
-//                             query = encodedSearchValue +"?category=" + categoryId;
-//                         } else {
-//                             query = "?category=" + categoryId;
-//                         }
+                        if (searchValue != null) {
+                            query = encodedSearchValue +"?category=" + categoryId;
+                        } else {
+                            query = "?category=" + categoryId;
+                        }
                         
-//                         var newUrl = baseNewUrl + query;
+                        var newUrl = baseNewUrl + query;
                         
-//                         // 페이지 이동
-//                         window.location.href = newUrl;
-
-							console.log(searchValue);
-
+                        // 페이지 이동
+                        window.location.href = newUrl;
                     });
 	            });
 	            listContainer1.mouseout(function () {

@@ -147,8 +147,7 @@ function fetchCategories() {
 	        <div class="login_set"><a href="/login"><i class="fa fa-user"></i></a></div> 
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-
-				  <div class="btn-group">
+				  <div class="btn-group login_set">
 				  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 				    <i class="fa fa-user"></i>
 				  </button>
@@ -158,9 +157,7 @@ function fetchCategories() {
 				    <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
 				  </ul>
 				</div>
-
          </sec:authorize>
-	
 	    <div class="header__cart">
 	        <ul>
 	            <li><a class="heart" href="/member/keyword"><i class="fa fa-heart"></i></a></li>

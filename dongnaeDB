@@ -42,6 +42,25 @@ CREATE TABLE `category_goods_2` (
 	`c1_id`	int	NOT NULL
 );
 
+-- 채팅
+CREATE TABLE `chatmessage` (
+	`message_id`	int	NOT NULL primary key AUTO_INCREMENT,
+	`chatroom_id`	int	NOT NULL,
+	`seller_M_Number`	int	NULL,
+	`buyer_M_Number`	int	NOT NULL,
+	`chat_message`	varchar(500)	NULL,
+	`message_date`	datetime	NULL	DEFAULT CURRENT_TIMESTAMP,
+	`g_id`	int	NULL
+);
+select * from chatroom where buyer_m_number = 0 and seller_m_number = 0 and g_id = 1;
+CREATE TABLE `chatroom` (
+	`chatroom_id`	int	NOT NULL primary key AUTO_INCREMENT,
+	`buyer_M_Number`	int	NOT NULL	COMMENT 'unique',
+	`seller_M_Number`	VARCHAR(255)	NULL,
+	`g_id`	int	NOT NULL,
+	`chat_regdate`	datetime	NULL	DEFAULT CURRENT_TIMESTAMP
+);
+
 
 
 -- community 테이블 -------------------------------------------------

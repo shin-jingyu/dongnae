@@ -95,6 +95,18 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		return goodsMapper.getGoodsListOnSaleByMemberNumber(m_number);
 	}
+
+	@Override
+	public List<GoodsDTO> getGoodsListSold(int m_number) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getGoodsListSoldByMemberNumber(m_number);
+	}
+
+	@Override
+	public List<GoodsDTO> getGoodsListBuy(int m_number) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getGoodsListBuyByMemberNumber(m_number);
+	}
 	
 	
 

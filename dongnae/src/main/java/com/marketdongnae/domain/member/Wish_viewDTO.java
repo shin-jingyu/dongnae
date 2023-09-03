@@ -12,5 +12,7 @@ public class Wish_viewDTO  {
 	private int g_id ;
 	private String	 g_name ;
 	private int g_price ;
+	private String g_pic01;
+	private String g_picpath;
 
 }

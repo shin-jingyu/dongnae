@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.goods.SearchDTO;
 import com.marketdongnae.service.goods.GoodsService;
+import com.marketdongnae.service.member.MemberService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -35,6 +36,8 @@ import lombok.extern.log4j.Log4j;
 public class GoodsController {
 
 	private final GoodsService goodsService;
+	private final MemberService memberService;
+	
 	
 	private String getFolder() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,7 +96,8 @@ public class GoodsController {
 	@PostMapping(value = "goods_insert")
 	public String goods_Add_Post(@ModelAttribute GoodsDTO goodsDTO, @RequestParam("uploadFile") MultipartFile [] uploadFile) {
 
-		String uploaderFolder = "/Users/nohbin/git/Spring_dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
+//		String uploaderFolder = "/Users/nohbin/git/Spring_dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
+		String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
 
 		File uploadPath = new File(uploaderFolder, getFolder());
 
@@ -128,6 +132,8 @@ public class GoodsController {
 		goodsDTO.setG_pic02(picFileNames[1]);
 		goodsDTO.setG_pic03(picFileNames[2]);
 	    goodsService.insertGoods(goodsDTO);
+	    int g_id = memberService.getGoodsInsert(goodsDTO.getG_name(), goodsDTO.getM_number());
+	    memberService.insertDeal(g_id, goodsDTO.getM_number());
 	    return "redirect:/";
 	}
 	

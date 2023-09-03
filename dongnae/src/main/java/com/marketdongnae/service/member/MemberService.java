@@ -68,6 +68,9 @@ public interface MemberService {
 	
 	int deleteKeyword(int key_id);
 	
+	int getGoodsInsert(String g_name, int m_number);
+	
+	void insertDeal(int g_id, int m_number);
 
 
 

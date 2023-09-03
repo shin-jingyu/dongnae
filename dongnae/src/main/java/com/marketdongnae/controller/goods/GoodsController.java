@@ -96,8 +96,8 @@ public class GoodsController {
 	@PostMapping(value = "goods_insert")
 	public String goods_Add_Post(@ModelAttribute GoodsDTO goodsDTO, @RequestParam("uploadFile") MultipartFile [] uploadFile) {
 
-//		String uploaderFolder = "/Users/nohbin/git/Spring_dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
-		String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
+		String uploaderFolder = "/Users/nohbin/git/Spring_dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
+//		String uploaderFolder = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/goods";
 
 		File uploadPath = new File(uploaderFolder, getFolder());
 

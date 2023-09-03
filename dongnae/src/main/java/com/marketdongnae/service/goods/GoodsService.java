@@ -29,6 +29,8 @@ public interface GoodsService {
 	int getCountWishGoods(int g_id);
 	// 멤버페이지 판매중 상품
 	List<GoodsDTO> getGoodsListOnSaleList(int m_number);
+	List<GoodsDTO> getGoodsListSold(int m_number);
+	List<GoodsDTO> getGoodsListBuy(int m_number);
 
 
 

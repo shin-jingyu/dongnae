@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class AllDTO {
 	private int	 m_number 	;
+	private String g_pic01;
+	private String g_picpath;
 	
 	// Do_areaDTO
 	private int do_id	;	

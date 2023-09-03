@@ -35,4 +35,8 @@ public interface GoodsMapper {
 
 	List<GoodsDTO> getGoodsListOnSaleByMemberNumber(int m_number);
 
+	List<GoodsDTO> getGoodsListSoldByMemberNumber(int m_number);
+
+	List<GoodsDTO> getGoodsListBuyByMemberNumber(int m_number);
+
 }

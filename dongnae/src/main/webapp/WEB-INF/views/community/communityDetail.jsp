@@ -112,7 +112,7 @@
 					<span > ${member.m_id}</span> 
 					<span style="margin-left: 320px;"> <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </span>
 					</p>
-					<p> <textarea  class="form-control " maxlength="100" style="width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
+					<p> <textarea  class="form-control " maxlength="100" style=" width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
 					</div>
 	
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
@@ -177,7 +177,6 @@ $("#deleteCommunity").on('click',function(){
 	}
   });
 	
-
 
 
 

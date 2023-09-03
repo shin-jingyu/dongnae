@@ -336,6 +336,12 @@ header .login_set{
 	width: 500px;
 	height: auto;
 }
+
+.btn-group {
+	position: fixed;
+	right: 10px;	
+	
+}
 /*---------------------
   Helper CSS
 -----------------------*/
@@ -773,7 +779,7 @@ transparent;
 	text-align: right;
 	padding: 24px 0;
 	position: relative;
-	left: -50px;
+	left: -70px;
 }
 
 .header__cart ul {

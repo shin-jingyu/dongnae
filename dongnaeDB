@@ -1,7 +1,7 @@
 
 -- 테이블 생성 SQL
 
---상품 테이블
+-- 상품 테이블
 DROP TABLE  if exists goods;
 CREATE TABLE `Goods` (
 	`g_id`	int	NOT NULL primary key AUTO_INCREMENT,

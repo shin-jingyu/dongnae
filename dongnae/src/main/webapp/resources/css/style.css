@@ -337,10 +337,8 @@ header .login_set{
 	height: auto;
 }
 
-.btn-group {
-	position: relative;
-	right: -710px;	
-	
+.btn-group.login_set{
+	position: absolute;
 }
 /*---------------------
   Helper CSS

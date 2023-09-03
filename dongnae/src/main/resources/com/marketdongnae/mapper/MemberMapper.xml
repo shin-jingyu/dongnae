@@ -135,6 +135,6 @@
 	</select>
 	
 	<insert id="insertDeal"  parameterType="com.marketdongnae.domain.goods.GoodsDTO">
-		insert into deal ( m_number,  d_type, g_id  ) values ( #{m_number}, 'onSale', #{g_id}  ) ;
+		insert into deal ( m_number,  d_type, g_id, g_pic01 , g_picpath  ) values ( #{m_number}, 'onSale', #{g_id}, #{g_pic01}, #{g_picpath}  ) ;
 	</insert>
 </mapper> 

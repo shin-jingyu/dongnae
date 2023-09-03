@@ -17,6 +17,8 @@ public class Deal_viewDTO  {
 	private String g_name ;
 	private int d_score ;
 	private String d_review ;
+	private String g_picpath ;
+	private String g_pic01 ;
 	
 	private int avgScore ;  // ?
 

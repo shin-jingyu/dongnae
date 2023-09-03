@@ -58,7 +58,8 @@
 		                        		<c:set var="wish_id" value="${w.wish_id}" />
 		                        		<div class="row col-12 col-md-11 container border my-3 rounded-5" style="float: none; margin: 0 auto;">
 		                        			<div class ="col-6 col-md-3 m-auto">
-		                        				<img src="https://image.istarbucks.co.kr/upload/store/skuimg/2021/08/[11123351]_20210803101044084.jpg" style="width: 100%" />
+		                        				<!-- <img src="https://image.istarbucks.co.kr/upload/store/skuimg/2021/08/[11123351]_20210803101044084.jpg" style="width: 100%" /> -->
+		                        				<img src="/resources/upload/goods/${w.g_picpath}/${w.g_pic01 }" style="width: 100%" /> 
 		                        			</div>
 		                        			
 		                        			<div class ="col-12 col-md-9 my-auto">

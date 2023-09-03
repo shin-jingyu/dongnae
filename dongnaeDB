@@ -117,7 +117,7 @@ count(*)
 from comment 
 where comment.mu_id =C.mu_id) as comment
 from community as C, si_area as S, member as M ,category as Ca
-where   M.si_id = S.si_id and Ca.ca_id = C.ca_id;
+where   M.m_number=C.m_number and M.si_id = S.si_id and Ca.ca_id = C.ca_id;
 
 
 

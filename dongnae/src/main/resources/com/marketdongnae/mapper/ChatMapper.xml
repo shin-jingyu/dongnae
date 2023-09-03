@@ -5,7 +5,17 @@
 
 <mapper namespace="com.marketdongnae.mapper.ChatMapper">
 	
+	<select id ="isRoom" resultType = "com.marketdongnae.domain.chatting.ChatRoom">
+		select * from CHATROOM 
+		WHERE 
+		buyer_M_Number = #{buyer_M_Number} 
+		and seller_M_Number = #{seller_M_Number} 
+		and g_id = #{g_id} 
+	</select>
 	
-	
+	<insert id = "createRoom">
+		insert into CHATROOM (buyer_M_Number , seller_M_Number, g_id) 
+		values(#{buyer_M_Number}, #{seller_M_Number} , #{g_id} )
+	</insert>
 	
 </mapper>    

@@ -259,6 +259,7 @@ public class CommunityController {
 	 @ResponseBody
 	 @PostMapping("/deleteComment")
 	 public String deleteComment (@ModelAttribute CommentDTO commentDTO) {
+		
 		communityService.deleteComment(commentDTO);
 		 return "success";
 	 }

@@ -110,7 +110,14 @@
 					<span > ${member.m_id}</span> 
 					<span style="margin-left: 320px;"> <fmt:formatDate value="${comment.com_data}" pattern="yyyy-MM-dd HH:mm" /> </span>
 					</p>
-					<p> <textarea  class="form-control " maxlength="100" style=" width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea></p>	
+					<p> <textarea  class="form-control " maxlength="100" style=" width:500px; resize: none;  overflow-y: hidden;   border: none; word-break:normal;  " id="updateid"   readonly>${comment.com_c}</textarea>
+						<button type="button" hidden="true" class="btn btn-outline-info" id="buttony" >완료</button>
+						<button type="button" hidden="true" class="btn btn-outline-info" id="buttons" >취소</button>
+					</p>	
+						
+						
+						
+
 					</div>
 	
 					<!-- 댓글 사용자만 수정및 삭제 가능 -->
@@ -190,7 +197,7 @@ $("#updateComment").on('click',function(){
 	$("#buttony").on('click',function(){
 		var updatedComment = $("#updateid").val();
 		var com_id = $("#deleteComments").data("com_id");
-		
+		console.log(com_id);
 		$.ajax({
 	        url: '/updateComment', // 컨트롤러 URL
 	        method: 'POST', // POST 요청
@@ -213,7 +220,8 @@ $("#updateComment").on('click',function(){
 });
 // 댓글 삭제 
 $("#deleteComments").on('click',function(){
-	var com_id = $("#buttony").data("com_id");
+	var com_id = $("#deleteComments").data("com_id");
+	
 	var deletes= confirm("삭제하시겠습니까?");
 	$.ajax({
         url: '/deleteComment', // 컨트롤러 URL

@@ -102,7 +102,7 @@ CREATE TABLE `heart` (
   `h_id` int NOT NULL AUTO_INCREMENT,
   `mu_id` int NOT NULL,
   `m_number` int NOT NULL,
-  `h_num` int NOT NULL,
+ 
   PRIMARY KEY (`h_id`),
   UNIQUE KEY `h_id_UNIQUE` (`h_id`)
 );

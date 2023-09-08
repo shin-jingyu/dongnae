@@ -14,106 +14,99 @@
 	<script type="text/javascript">
 
 	$(document).ready(function(){
-		//전송 버튼 누르는 이벤트
-		$("#button-send").click(function(e) {
-			sendMessage();
-			$('#msg').val('')
-		});
+//전송 버튼 누르는 이벤트
+$("#button-send").on("click", function(e) {
+	sendMessage();
+	$('#msg').val('')
+});
 	})
+
+var sock = new SockJS('http://localhost:8080/chatting');
+sock.onmessage = onMessage;
+sock.onclose = onClose;
+sock.onopen = onOpen;
+
+function sendMessage() {
+	sock.send($("#msg").val());
+}
+//서버에서 메시지를 받았을 때
+function onMessage(msg) {
 	
-	var buyer_M_Number = ${roomVO.buyer_M_Number};
-    var seller_M_Number = ${roomVO.seller_M_Number};
-    var g_id = ${roomVO.g_id};
-    
-	var sock = new SockJS('http://localhost:8080/chatting?g_id='+g_id);
-	sock.onmessage = onMessage;
-	sock.onclose = onClose;
-	sock.onopen = onOpen;
+	var data = msg.data;
+	var sessionId = null; //데이터를 보낸 사람
+	var message = null;
 	
-	function sendMessage() {
-		console.log("Send Message");
-	   
-		var msg = $("#msg").val();
-		
-	    
-	    console.log("buyer_M_Number: " + buyer_M_Number);
-	    console.log("seller_M_Number: " + seller_M_Number);
-	    console.log("g_id: " + g_id);
-	    
-		if(msg != ""){
-			 var message = {
-			            chat_message: $("#msg").val(),
-			            buyer_M_Number: buyer_M_Number,
-			            seller_M_Number: seller_M_Number,
-			            g_id: g_id
-			        };
-		}
-		console.log(message);
-		sock.send(JSON.stringify(message));
-		$("#msg").val("");
+	var arr = data.split(":");
+	
+	for(var i=0; i<arr.length; i++){
+		console.log('arr[' + i + ']: ' + arr[i]);
 	}
-	//서버에서 메시지를 받았을 때
-	function onMessage(msg) {
+	
+	var cur_session = '${userid}'; //현재 세션에 로그인 한 사람
+	console.log("cur_session : " + cur_session);
+	
+	sessionId = arr[0];
+	message = arr[1];
+	
+    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+	if(sessionId == cur_session){
 		
-		var data = msg.data;
-		var sessionId = null; //데이터를 보낸 사람
-		var message = null;
-		
-		var arr = data.split(":");
-		
-		for(var i=0; i<arr.length; i++){
-			console.log('arr[' + i + ']: ' + arr[i]);
-		}
-		
-		var cur_session = '${userid}'; //현재 세션에 로그인 한 사람
-		console.log("cur_session : " + cur_session);
-		
-		sessionId = arr[0];
-		message = arr[1];
-		
-	    //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-		if(sessionId == cur_session){
-			
-			var str = "<div class='col-6'>";
-			str += "<div class='alert alert-secondary'>";
-			str += "<b>" + sessionId + " : " + message + "</b>";
-			str += "</div></div>";
-			
-			$("#msgArea").append(str);
-		}
-		else{
-			
-			var str = "<div class='col-6'>";
-			str += "<div class='alert alert-warning'>";
-			str += "<b>" + sessionId + " : " + message + "</b>";
-			str += "</div></div>";
-			
-			$("#msgArea").append(str);
-		}
-		
-	}
-	//채팅창에서 나갔을 때
-	function onClose(evt) {
-		
-		var user = '${pr.username}';
-		var str = user + " 님이 퇴장하셨습니다.";
+		var str = "<div class='col-6'>";
+		str += "<div class='alert alert-secondary'>";
+		str += "<b>" + sessionId + " : " + message + "</b>";
+		str += "</div></div>";
 		
 		$("#msgArea").append(str);
 	}
-	//채팅창에 들어왔을 때
-	function onOpen(evt) {
+	else{
 		
-		var user = '${pr.username}';
-		var str = user + "님이 입장하셨습니다.";
+		var str = "<div class='col-6'>";
+		str += "<div class='alert alert-warning'>";
+		str += "<b>" + sessionId + " : " + message + "</b>";
+		str += "</div></div>";
 		
 		$("#msgArea").append(str);
 	}
+	
+}
+//채팅창에서 나갔을 때
+function onClose(evt) {
+	
+// 	var user = '${pr.username}';
+// 	var str = user + " 님이 퇴장하셨습니다.";
+	
+// 	$("#msgArea").append(str);
+}
+//채팅창에 들어왔을 때
+function onOpen(evt) {
+	
+// 	var user = '${pr.username}';
+// 	var str = user + "님이 입장하셨습니다.";
+	
+// 	$("#msgArea").append(str);
+}
+
+
+function showPopup() { 
+	  // g_id 값을 가져오기
+// 	  var g_id = document.querySelector('input[name="g_id"]').value;
+	  var g_id = ${goods.g_id};
+	  // URL에 g_id 매개변수 추가
+	  var url = "pay?g_id=" + g_id;
+
+	  // 팝업 창 열기
+	  window.open(url, "pop", "width=850, height=700, left=100, top=200");
+	}
+
 
 </script>
 	
 	<div class="container">
-		<div class="col-6">
+		<div class="col-6 my-5 title">
 			<label><b>채팅방 </b></label>
+		</div>
+		<div class="col-6 my-5 title">
+			<button class="btn btn-outline-secondary" type="button" onclick="showPopup();">송금</button>
 		</div>
 		<div>
 			<div id="msgArea" class="col">

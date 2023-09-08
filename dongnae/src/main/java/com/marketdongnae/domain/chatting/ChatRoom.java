@@ -7,9 +7,12 @@ import lombok.Data;
 
 @Data
 public class ChatRoom {
-	private int chatroom_id;
-    private int buyer_M_Number;
-    private int seller_M_Number;
-    private int g_id;
-    private Timestamp chatRegdate;
+	private String roomId;        // 방 번호
+    
+    private String userEmail;    // 사용자 이메일
+    private String userName;    // 사용자 이름
+    
+    private String masterEmail; // 상대방 이메일
+    private String masterName;    // 상대방 이름
+    
 }

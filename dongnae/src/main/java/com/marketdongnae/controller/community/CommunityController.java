@@ -45,7 +45,7 @@ import com.marketdongnae.service.Community.CommunityService;
 public class CommunityController {
 	@Autowired
 	CommunityService communityService;
-	private String fileRoot = "C:\\Users\\jingyu\\git\\Spring_dongnaeMarket\\dongnae\\src\\main\\webapp\\resources\\upload\\community\\"; 
+	private String fileRoot = "/Users/hyeonjilee/git/dongnaeMarket/dongnae/src/main/webapp/resources/upload/community/"; 
 	
 	
 	@GetMapping("/community/main")

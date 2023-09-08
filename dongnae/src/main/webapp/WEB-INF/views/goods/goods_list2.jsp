@@ -35,58 +35,52 @@ function getListCategoryAjax() {
 	            var listCategory1 = data.category_1;
 				
 	            listCategory1.forEach(function(category1){
-	            	var list1 = $('<li></li>'); // <li> 요소 생성
-
-	            	var divContainer = $('<div class="justify-content-between"></div>'); // <div> 요소 생성
-	            	var labelElement = $('<label class="flex"><span class="relative">' + category1.c1_category + '</span></label>'); // <label> 요소 생성
-
-	            	var add = $('<div class="justify-end cursir-pointer"><i class="fa fa-plus"></i></div>');
+	            	var list1 = $('<li class="col-6">' + category1.c1_category + '</li>');
+	            	var add = $('<i class="fa fa-plus col-6"></i>');
 	            	var listContainer2;	
-	            	
-	            	
-	            	divContainer.append(labelElement); // <label> 요소를 <div> 요소 내에 추가
-	            	divContainer.append(add); // <label> 요소를 <div> 요소 내에 추가
-	            
-	            	list1.append(divContainer); // <div> 요소를 <li> 요소 내에 추가
+	            	var moreLook = $('.more');
 	            	var listCategory2 = data.category_2.filter(function(category2){
 	            		return category2.c1_id === category1.c1_id;	
 	            	});
 	            	
-	            	add.on('click', function() {
-	            	    listContainer2.toggleClass('hidden');
+	            	add.on('click',function(){
+	            		if(!listContainer2){
+	            			listContainer2 = $('<ul class = "list_category2 col-12"></ul>');
+	            			
+	            		listCategory2.forEach(function(category2){
+	            			var category2Id = category2.c2_id;
+	            			var list2 = $('<li class="mt-2">- ' + category2.c2_category + '</li>');
+	            			listContainer2.append(list2);	
+	            			
+	            			list2.on('click', function() {
+	                            var categoryId = category2.c2_id; // 카테고리 ID 가져오기
+	                            var searchValue = document.querySelector(".searchName").textContent.trim();// .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
+	                            console.log(searchValue);
+	                            var encodedSearchValue = encodeURIComponent(searchValue);
+	                            var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
+	                            var query = "";
+	                            
+	                            if (searchValue != null) {
+	                                query = encodedSearchValue +"?category=" + categoryId;
+	                            } else {
+	                                query = "?category=" + categoryId;
+	                            }
+	                            
+	                            var newUrl = baseNewUrl + query;
+	                            
+	                            // 페이지 이동
+	                            window.location.href = newUrl;
+	                        });
+	            			
+	            		});	
+							list1.append(listContainer2);	            		
+	            		}	
+	            		listContainer2.css('display','block');
 	            	});
-	            	
-	            	listContainer2 = $('<ul class = "pt-4 hidden"></ul>');
-	            	listCategory2.forEach(function(category2){
-	            		var category2Id = category2.c2_id;
-	            		var list2 = $('<li class="mt-2">- ' + category2.c2_category + '</li>');
-	            		listContainer2.append(list2);
-	            		
-	            		list2.on('click', function() {
-                            var categoryId = category2.c2_id; // 카테고리 ID 가져오기
-                            var searchValue = document.querySelector(".searchName").textContent.trim();// .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
-                            console.log(searchValue);
-                            var encodedSearchValue = encodeURIComponent(searchValue);
-                            var baseNewUrl = "${pageContext.request.contextPath }/goods/search/";
-                            var query = "";
-                            
-                            if (searchValue != null) {
-                                query = encodedSearchValue +"?category=" + categoryId;
-                            } else {
-                                query = "?category=" + categoryId;
-                            }
-                            
-                            var newUrl = baseNewUrl + query;
-                            
-                            // 페이지 이동
-                            window.location.href = newUrl;
-                        });
-	            	});
-	            	
-	            	list1.append(listContainer2);
 	            	listContainer1.append(list1);
+	            	listContainer1.append(add);
 	            	
-	            	labelElement.on('click', function() {
+	            	list1.on('click', function() {
                         var categoryId = category1.c1_id; // 카테고리 ID 가져오기
                         var searchValue = document.querySelector(".searchName").textContent.trim();// .search 클래스를 가진 요소의 텍스트 콘텐츠 가져오기
                         console.log(searchValue);
@@ -105,27 +99,19 @@ function getListCategoryAjax() {
                         // 페이지 이동
                         window.location.href = newUrl;
                     });
-	        	});
+	            	
+	            	
+	            });
+// 	            add.on(;click(function () {
+// 	                $('.list_category2').css('display', 'none');
+// 	            });
+	            
 	        },
 	        error: function (xhr, status, error) {
 	        }
 	    });
 	}
 </script>
-
-
-<style>
-	li:hover {
-    	color: black !important;
-    }
-    li{
-    	cursor: pointer !important;
-    }
-    span{
-    	cursor: pointer !important;
-    }
-}
-</style>
 <body>
 	<jsp:include page="../common/Category.jsp"></jsp:include>
 	
@@ -141,9 +127,9 @@ function getListCategoryAjax() {
 	                           	<c:out value="${search }"></c:out>
                             </div>
                             <hr>
-                            <div class="category row ">
+                            <div class="category row">
 	                            <h4>카테고리</h4>
-	                            <ul class="list_category mt-2"></ul>
+	                            <ul class="list_category row mt-2"></ul>
                             </div>
                         </div>
                     </div>

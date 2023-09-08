@@ -51,7 +51,6 @@ public class HomeController {
 //			model.addAttribute("m_point", "0");
 //		}
 		
-		model.addAttribute("m_point", "0");
 		return "common/main";
 	}
 	

@@ -116,11 +116,11 @@
 		select * from goods where 
 		<foreach item="keywordVO" collection="list" open = "(" close=")"  separator = " or ">
 		<![CDATA[ 
-			g_name like	CONCAT('%',#{keywordVO.keyword},'%')  and #{keywordVO.key_regdate} < g_regdate 
+			g_name like	CONCAT('%',#{keywordVO.keyword},'%')  
 		]]>
 		</foreach>
 	</select>
-
+<!-- and #{keywordVO.key_regdate} < g_regdate  -->
 	<insert id="insertKeyword"  parameterType="com.marketdongnae.domain.member.KeywordVO">
 		insert into keyword(m_number, keyword) values(#{m_number},#{keyword})
 	</insert>
@@ -135,6 +135,6 @@
 	</select>
 	
 	<insert id="insertDeal"  parameterType="com.marketdongnae.domain.goods.GoodsDTO">
-		insert into deal ( m_number,  d_type, g_id, g_pic01 , g_picpath  ) values ( #{m_number}, 'onSale', #{g_id}, #{g_pic01}, #{g_picpath}  ) ;
+		insert into deal ( m_number,  d_type, g_id ) values ( #{m_number}, 'onSale', #{g_id} ) ;
 	</insert>
 </mapper> 

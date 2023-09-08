@@ -161,7 +161,8 @@ function fetchCategories() {
 	        <ul>
 	            <li><a class="heart" href="/member/keyword"><i class="fa fa-heart"></i></a></li>
 	        </ul>
-	        <div class="header__cart__price">내 페이포인트: <span>${m_point}P</span></div>
+	        <%-- <div class="header__cart__price">내 페이포인트: <span>${m_point}P</span></div> --%>
+	        <div class="header__cart__price">내 페이포인트: <span>0P</span></div>
 	    </div>
     </header>
     

@@ -15,7 +15,7 @@
 <body>
 <sec:authentication property="principal" var="member"/>
 
-<jsp:include page="../common/Category.jsp"></jsp:include>de>
+<jsp:include page="../common/Category.jsp"></jsp:include>
 
  <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="/resources/img/breadcrumb.jpg">
@@ -80,7 +80,7 @@
 			                        				구매자번호
 			                        				</div>
 			                        				<div class="col-lg-8 col-md-6  col-sm-12 col-12 ">
-			                        				${s.d_m_id}
+			                        				${s.d_m_number}
 			                        				</div>
 			                        			</div>	
 			                        			<div class="row my-3">

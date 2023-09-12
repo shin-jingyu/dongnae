@@ -9,8 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.domain.member.MemberDTO;
@@ -41,15 +43,22 @@ public class HomeController {
 		List<GoodsDTO> goodsList =  goodsService.getGoodsList();
 		model.addAttribute("goodsList", goodsList);
 		
-//		if(request.getSession() != null) {
-//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		MemberDTO member = memberService.getMember(customUserDetails);
-//		model.addAttribute("m_point", member.getM_point());
-//		} else {
-//			model.addAttribute("m_point", "0");
-//		}
-		
+		model.addAttribute("m_point", "0");
 		return "common/main";
+	}
+	
+	@GetMapping("/pay")
+    public void pay(@RequestParam(name = "g_id") Integer g_id, Model model) {
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    model.addAttribute("goods", goodsService.getGoodsDetail(g_id));
+	    model.addAttribute("userid", user.getUsername());
+    }
+	
+	@PostMapping(value = "/doPay")
+		public String doPay() {
+			
+		return "common/main";		
+		
 	}
 	
 	

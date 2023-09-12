@@ -1,11 +1,20 @@
 package com.marketdongnae.controller.chat;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.marketdongnae.domain.chatting.ChatMessage;
 import com.marketdongnae.domain.chatting.ChatRoom;
 import com.marketdongnae.domain.goods.GoodsDTO;
 import com.marketdongnae.security.CustomUserDetails;
@@ -29,17 +38,27 @@ public class ChatController {
 	    CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    log.info("==================================");
 	    log.info("@ChatController, GET Chat / Username : " + user.getUsername());
-	    ChatRoom roomVO = new ChatRoom();
-	    GoodsDTO goods = goodsService.getGoodsDetail(g_id);
+//	    ChatRoom roomVO = new ChatRoom();
+//	    GoodsDTO goods = goodsService.getGoodsDetail(g_id);
 	    
-	    roomVO.setSeller_M_Number(goods.getM_number());
-	    roomVO.setG_id(goods.getG_id());
-	    roomVO.setBuyer_M_Number(user.getM_number());
+//	    roomVO.setSeller_M_Number(goods.getM_number());
+//	    roomVO.setG_id(goods.getG_id());
+//	    roomVO.setBuyer_M_Number(user.getM_number());
 	    
 	    
 	    
-	    model.addAttribute("roomVO",roomVO);
+//	    model.addAttribute("roomVO",roomVO);
 	    model.addAttribute("goods", goodsService.getGoodsDetail(g_id));
 	    model.addAttribute("userid", user.getUsername());
+	}
+	
+	@RequestMapping(value = "{roomId}")
+	public void messageList(@PathVariable String roomId, String userName, Model model, HttpServletResponse response ) {
+		
+//		List<ChatMessage> mList = chatService.messageList(roomId);
+//		response.setContentType("applicatin/json; charset=utf-8");
+		
+//		Gson gson = new GsonBuilder().setDateFormat
+		
 	}
 }

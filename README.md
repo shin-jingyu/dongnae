@@ -15,7 +15,7 @@
 
 # ⚒️ 프로젝트 기술 스택
 - Frontend : HTML, CSS, JavaScript, AJAX, Thymeleaf
-- Backend : Spring, Spring Security, Spring Data JPA
+- Backend : Spring Legacy, Spring Security, Spring Data JPA
 - Database : MySQL, MyBatis
 - OpenAPI : 카카오페이 결제 API, BootStrap
 

@@ -43,14 +43,7 @@ public class HomeController {
 		List<GoodsDTO> goodsList =  goodsService.getGoodsList();
 		model.addAttribute("goodsList", goodsList);
 		
-//		if(request.getSession() != null) {
-//		CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		MemberDTO member = memberService.getMember(customUserDetails);
-//		model.addAttribute("m_point", member.getM_point());
-//		} else {
-//			model.addAttribute("m_point", "0");
-//		}
-		
+		model.addAttribute("m_point", "0");
 		return "common/main";
 	}
 	
